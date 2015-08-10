@@ -9,6 +9,9 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 
+import xpert.dom.JsonDomParser;
+import xpert.dom.DomNode;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -123,6 +126,20 @@ public class Redecheck {
         String current = new java.io.File( "." ).getCanonicalPath();
         String script = Utils.readFile(current +"/../src/main/java/twalsh/redecheck/webdiff2.js");
         return (String) js.executeScript(script);
+    }
 
+    private static Map<String, DomNode> loadDoms(String[] widths, String url, boolean testing) {
+        Map<String, DomNode> doms = new HashMap<String, DomNode>();
+        JsonDomParser parser = new JsonDomParser();
+        for (String width : widths) {
+            String file = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + width + "/dom.js";
+            try {
+                String domStr = FileUtils.readFileToString(new File(file));
+                doms.put(width, parser.parseJsonDom(domStr));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return doms;
     }
 }
