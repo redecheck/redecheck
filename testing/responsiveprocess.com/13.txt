@@ -1,0 +1,12 @@
+Changed term from 0.0 to 5.0
+#intro h1, h2 {
+	float: right;
+	width: 48.0%;
+	margin-left: 0.0;
+}
+
+#intro h1, h2 {
+	float: right;
+	width: 48.0%;
+	margin-left: 5.0px;
+}

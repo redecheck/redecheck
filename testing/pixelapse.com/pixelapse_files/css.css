@@ -1,0 +1,826 @@
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTaOCaDZZVv73zpFSwE4Va2k.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTdWlIHla9B101mdmTHF3-q0.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTVMRqIICSqEqsEoDxn8ddME.woff2) format('woff2');
+  unicode-range: U+02BC, U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200B-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTaWHppw2c1XOp6B2yhU8z7c.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTeji7H8UD0RUWSM-55zrR4g.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTcw0n1X1lV_hRH3yZFpIE9Q.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTSYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTRampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/K88pR3goAWT7BTt32Z01m5Bw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/RjgO7rYTmqiVp7vzi-Q5UZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/ttwNtsRpgsxVmgGGmiUOEpBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+02BC, U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200B-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/LWCjsQkB6EMdfHrEVqA1KZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/xozscpT2726on7jbcb_pApBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/59ZRklaO5bWGqF5A9baEEZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/u-WUoqrET9fUeobQW7jkRZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSqOCaDZZVv73zpFSwE4Va2k.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNStWlIHla9B101mdmTHF3-q0.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSlMRqIICSqEqsEoDxn8ddME.woff2) format('woff2');
+  unicode-range: U+02BC, U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200B-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSqWHppw2c1XOp6B2yhU8z7c.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSuji7H8UD0RUWSM-55zrR4g.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSsw0n1X1lV_hRH3yZFpIE9Q.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSiYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNShampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzKOCaDZZVv73zpFSwE4Va2k.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzNWlIHla9B101mdmTHF3-q0.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzFMRqIICSqEqsEoDxn8ddME.woff2) format('woff2');
+  unicode-range: U+02BC, U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200B-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzKWHppw2c1XOp6B2yhU8z7c.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzOji7H8UD0RUWSM-55zrR4g.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzMw0n1X1lV_hRH3yZFpIE9Q.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzCYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hqOCaDZZVv73zpFSwE4Va2k.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-htWlIHla9B101mdmTHF3-q0.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hlMRqIICSqEqsEoDxn8ddME.woff2) format('woff2');
+  unicode-range: U+02BC, U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200B-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hqWHppw2c1XOp6B2yhU8z7c.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-huji7H8UD0RUWSM-55zrR4g.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hsw0n1X1lV_hRH3yZFpIE9Q.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hiYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hhampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+    font-family: 'pixelapseicons';
+    src: url(pixelapseicons-84e260b437ce581f8d96db4544384957.woff);
+    src: url(https://d340syr2dan8gj.cloudfront.net/assets/pixelapseicons-3f1d908a04a9fffbedc94584b8c341d4.eot?#iefix) format("embedded-opentype"), url(pixelapseicons-84e260b437ce581f8d96db4544384957.woff) format("woff"), url(https://d340syr2dan8gj.cloudfront.net/assets/pixelapseicons-32eb692ad069cbec922c1cd9272eb8c7.ttf) format("truetype"), url(https://d340syr2dan8gj.cloudfront.net/assets/pixelapseicons-7d48b7b253c2502c1f4ff1a5354fa146.svg#pixelapseicons) format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url("glyphicons-halflings-regular-9666c20b13248a72eff20f8929c0fa15.eot");
+    src: url("glyphicons-halflings-regular-9666c20b13248a72eff20f8929c0fa15.eot?#iefix") format("embedded-opentype"), url("https://d340syr2dan8gj.cloudfront.net/assets/bootstrap/glyphicons-halflings-regular-06579c442a78fe38cb733cd80fba7f3b.woff") format("woff"), url("https://d340syr2dan8gj.cloudfront.net/assets/bootstrap/glyphicons-halflings-regular-9d549387572ccdbb3473c7449b43fe0a.ttf") format("truetype"), url("https://d340syr2dan8gj.cloudfront.net/assets/bootstrap/glyphicons-halflings-regular-cc5f44ba3f709d70bc4c06bcc377fa45.svg#glyphicons_halflingsregular") format("svg");
+}
+
+.icon-jump-first:before {
+    content: "\e65d"}
+.icon-jump-last:before {
+    content: "\e6f1"}
+.icon-play-circle-solid:before {
+    content: "\e6f2"}
+.icon-play-circle:before {
+    content: "\e6f3"}
+.icon-trash-prev:before {
+    content: "\e6f4"}
+.icon-trash:before {
+    content: "\e6f5"}
+.icon-behance:before {
+    content: "\e6ec"}
+.icon-google-plus:before {
+    content: "\e6ed"}
+.icon-profile-circle:before {
+    content: "\e6ee";}
+.icon-arrow-left:before {
+    content: "\e6ef"}
+.icon-arrow-right:before {
+    content: "\e6f0"}
+.icon-file-mp3:before {
+    content: "\e6d3"}
+.icon-file-css:before {
+    content: "\e6ea"}
+.icon-file-ttf:before {
+    content: "\e6eb"}
+.icon-file-3d:before {
+    content: "\e6cf"}
+.icon-file-ai:before {
+    content: "\e6d0"}
+.icon-file-code:before {
+    content: "\e6d1"}
+.icon-file-css-alt:before {
+    content: "\e6d2"}
+.icon-file-default:before {
+    content: "\e6d4"}
+.icon-file-docx:before {
+    content: "\e6d5"}
+.icon-file-fla:before {
+    content: "\e6d6"}
+.icon-file-graffle:before {
+    content: "\e6d7"}
+.icon-file-html:before {
+    content: "\e6d8"}
+.icon-file-ico:before {
+    content: "\e6d9"}
+.icon-file-indd:before {
+    content: "\e6da"}
+.icon-file-jpg:before {
+    content: "\e6db"}
+.icon-file-js:before {
+    content: "\e6dc"}
+.icon-file-md:before {
+    content: "\e6dd"}
+.icon-file-mov:before {
+    content: "\e6de"}
+.icon-file-pdf:before {
+    content: "\e6df"}
+.icon-file-png:before {
+    content: "\e6e0"}
+.icon-file-pptx:before {
+    content: "\e6e1"}
+.icon-file-psd:before {
+    content: "\e6e2"}
+.icon-file-pxm:before {
+    content: "\e6e3"}
+.icon-file-sketch:before {
+    content: "\e6e4"}
+.icon-file-svg:before {
+    content: "\e6e5"}
+.icon-file-txt:before {
+    content: "\e6e6"}
+.icon-file-xlsx:before {
+    content: "\e6e7"}
+.icon-file-xml:before {
+    content: "\e6e8"}
+.icon-file-zip:before {
+    content: "\e6e9"}
+.icon-eraser-clear:before {
+    content: "\e6b9"}
+.icon-eraser:before {
+    content: "\e6ba"}
+.icon-file-drop-add:before {
+    content: "\e6bb"}
+.icon-file-drop:before {
+    content: "\e6bc"}
+.icon-cross-circle:before {
+    content: "\e6bd"}
+.icon-minus-circle:before {
+    content: "\e6be"}
+.icon-plus-circle:before {
+    content: "\e6bf"}
+.icon-guide-horizontal:before {
+    content: "\e6c0"}
+.icon-ruler-horizontal:before {
+    content: "\e6c1"}
+.icon-loupe-4x:before {
+    content: "\e6c2"}
+.icon-loupe-8x:before {
+    content: "\e6c3"}
+.icon-loupe-16x:before {
+    content: "\e6c4"}
+.icon-loupe-grid:before {
+    content: "\e6c5"}
+.icon-loupe-2x:before {
+    content: "\e6c6"}
+.icon-loupe:before {
+    content: "\e6c7"}
+.icon-guide-cross:before {
+    content: "\e6c8"}
+.icon-guide-vertical:before {
+    content: "\e6c9"}
+.icon-hand-left:before {
+    content: "\e6ca"}
+.icon-hand-right:before {
+    content: "\e6cb"}
+.icon-marks:before {
+    content: "\e6cc"}
+.icon-ruler-vertical:before {
+    content: "\e6cd"}
+.icon-theme:before {
+    content: "\e6ce"}
+.icon-bold-italics:before {
+    content: "\e6af"}
+.icon-bold:before {
+    content: "\e6b0"}
+.icon-buzz:before {
+    content: "\e6b1"}
+.icon-food:before {
+    content: "\e6b2"}
+.icon-html:before {
+    content: "\e6b3"}
+.icon-italics:before {
+    content: "\e6b4"}
+.icon-lorem-ipsum:before {
+    content: "\e6b5"}
+.icon-markdown:before {
+    content: "\e6b6"}
+.icon-quill:before {
+    content: "\e6b7"}
+.icon-text:before {
+    content: "\e6b8"}
+.icon-background-solid:before {
+    content: "\e6a9"}
+.icon-background-transparent:before {
+    content: "\e6aa"}
+.icon-show-grid-dense:before {
+    content: "\e6ab"}
+.icon-show-grid:before {
+    content: "\e6ac"}
+.icon-show-pixels-alt:before {
+    content: "\e6ad"}
+.icon-show-pixels:before {
+    content: "\e6ae"}
+.icon-inspector:before {
+    content: "\e6a1"}
+.icon-crosshair-thick:before {
+    content: "\e6a2"}
+.icon-crosshair:before {
+    content: "\e6a3"}
+.icon-dimensions:before {
+    content: "\e6a4"}
+.icon-guide-horizontial:before {
+    content: "\e6a5"}
+.icon-guide-vertical2:before {
+    content: "\e6a6"}
+.icon-measure:before {
+    content: "\e6a7"}
+.icon-zoom-16x:before {
+    content: "\e6a8"}
+.icon-character:before {
+    content: "\e697"}
+.icon-color-scheme:before {
+    content: "\e699"}
+.icon-eye-dropper:before {
+    content: "\e69a"}
+.icon-ipsum:before {
+    content: "\e69b"}
+.icon-ruler:before {
+    content: "\e69c"}
+.icon-texture:before {
+    content: "\e69d"}
+.icon-zoom-2x:before {
+    content: "\e69e"}
+.icon-zoom-4x:before {
+    content: "\e69f"}
+.icon-zoom-8x:before {
+    content: "\e6a0"}
+.icon-color-converter:before {
+    content: "\e696"}
+.icon-toolkit:before {
+    content: "\e698"}
+.icon-stack-add:before {
+    content: "\e695"}
+.icon-share-alt:before {
+    content: "\e694"}
+.icon-file-add:before {
+    content: "\e681"}
+.icon-file-delete:before {
+    content: "\e682"}
+.icon-file-move:before {
+    content: "\e683"}
+.icon-file:before {
+    content: "\e684"}
+.icon-folder-add:before {
+    content: "\e685"}
+.icon-folder-delete:before {
+    content: "\e686"}
+.icon-folder-move:before {
+    content: "\e687"}
+.icon-folder:before {
+    content: "\e688"}
+.icon-notification-alt:before {
+    content: "\e689"}
+.icon-notification:before {
+    content: "\e68a"}
+.icon-profile-add:before {
+    content: "\e68b"}
+.icon-profile-delete:before {
+    content: "\e68c"}
+.icon-profile:before {
+    content: "\e68d"}
+.icon-project-add:before {
+    content: "\e68e"}
+.icon-project-delete:before {
+    content: "\e68f"}
+.icon-project-move:before {
+    content: "\e690"}
+.icon-project:before {
+    content: "\e691"}
+.icon-sort:before {
+    content: "\e692"}
+.icon-transfer-ownership:before {
+    content: "\e693"}
+.icon-org:before {
+    content: "\e600"}
+.icon-arrow-right-circle:before {
+    content: "\e601"}
+.icon-arrow-left-circle:before {
+    content: "\e602"}
+.icon-arrow-down-circle:before {
+    content: "\e603"}
+.icon-arrow-up-circle:before {
+    content: "\e604"}
+.icon-pixelapse-fit:before {
+    content: "\e605"}
+.icon-pixelapse:before {
+    content: "\e606"}
+.icon-globe:before {
+    content: "\e607"}
+.icon-sync-alt:before {
+    content: "\e608"}
+.icon-google-drive:before {
+    content: "\e609"}
+.icon-dropbox:before {
+    content: "\e60a"}
+.icon-tick-circle:before {
+    content: "\e60b"}
+.icon-design-tennis:before {
+    content: "\e60c"}
+.icon-tennis-ball-alt:before {
+    content: "\e60d"}
+.icon-tennis-racket:before {
+    content: "\e60e"}
+.icon-shoe:before {
+    content: "\e60f"}
+.icon-tshirt:before {
+    content: "\e610"}
+.icon-tennis-net:before {
+    content: "\e611"}
+.icon-divider-3:before {
+    content: "\e612"}
+.icon-divider-2:before {
+    content: "\e613"}
+.icon-divider-1:before {
+    content: "\e614"}
+.icon-player:before {
+    content: "\e615"}
+.icon-three-stars:before {
+    content: "\e616"}
+.icon-trophy:before {
+    content: "\e617"}
+.icon-tennis-racket-right:before {
+    content: "\e618"}
+.icon-tennis-racket-left:before {
+    content: "\e619"}
+.icon-tennis-rackets-cross:before {
+    content: "\e61a"}
+.icon-tennis-ball:before {
+    content: "\e61b"}
+.icon-tick-thick:before {
+    content: "\e61c"}
+.icon-broadcast:before {
+    content: "\e61d"}
+.icon-reply:before {
+    content: "\e61e"}
+.icon-notify:before {
+    content: "\e61f"}
+.icon-tag:before {
+    content: "\e620"}
+.icon-tag-alt:before {
+    content: "\e621"}
+.icon-hide:before {
+    content: "\e622"}
+.icon-checkbox-checked:before {
+    content: "\e623"}
+.icon-checkbox:before {
+    content: "\e624"}
+.icon-facebook:before {
+    content: "\e625"}
+.icon-googleplus:before {
+    content: "\e626"}
+.icon-windows8:before {
+    content: "\e627"}
+.icon-apple:before {
+    content: "\e628"}
+.icon-trending:before {
+    content: "\e629"}
+.icon-star:before {
+    content: "\e62a"}
+.icon-compare-swipe:before {
+    content: "\e62b"}
+.icon-folder-list:before {
+    content: "\e62c"}
+.icon-help:before {
+    content: "\e62d"}
+.icon-project-add2:before {
+    content: "\e62e"}
+.icon-access:before {
+    content: "\e62f"}
+.icon-rename:before {
+    content: "\e630"}
+.icon-compare-diff:before {
+    content: "\e631"}
+.icon-compare-stack:before {
+    content: "\e632"}
+.icon-compare-top-bottom:before {
+    content: "\e633"}
+.icon-compare-left-right:before {
+    content: "\e634"}
+.icon-compare-alt:before {
+    content: "\e635"}
+.icon-flag:before {
+    content: "\e636"}
+.icon-collaborators:before {
+    content: "\e637"}
+.icon-gallery:before {
+    content: "\e638"}
+.icon-cursor:before {
+    content: "\e639"}
+.icon-infinity:before {
+    content: "\e63a"}
+.icon-dribbble:before {
+    content: "\e63b"}
+.icon-twitter:before {
+    content: "\e63c"}
+.icon-compare:before {
+    content: "\e63d"}
+.icon-zoom-width:before {
+    content: "\e63e"}
+.icon-settings:before {
+    content: "\e63f"}
+.icon-share:before {
+    content: "\e640"}
+.icon-plus-circle2:before {
+    content: "\e641"}
+.icon-location:before {
+    content: "\e642"}
+.icon-folder-add2:before {
+    content: "\e643"}
+.icon-folder-shared:before {
+    content: "\e644"}
+.icon-show-deleted:before {
+    content: "\e645"}
+.icon-edit:before {
+    content: "\e646"}
+.icon-restore:before {
+    content: "\e647"}
+.icon-all:before {
+    content: "\e648"}
+.icon-comment:before {
+    content: "\e649"}
+.icon-view-grid:before {
+    content: "\e64a"}
+.icon-view-main:before {
+    content: "\e64b"}
+.icon-view-timeline:before {
+    content: "\e64c"}
+.icon-mail:before {
+    content: "\e64d"}
+.icon-usage:before {
+    content: "\e64e"}
+.icon-profile2:before {
+    content: "\e64f"}
+.icon-tick:before {
+    content: "\e650"}
+.icon-cross:before {
+    content: "\e651"}
+.icon-na:before {
+    content: "\e652"}
+.icon-handle:before {
+    content: "\e653"}
+.icon-dot:before {
+    content: "\e654"}
+.icon-grip:before {
+    content: "\e655"}
+.icon-heart:before {
+    content: "\e656"}
+.icon-sync:before {
+    content: "\e657"}
+.icon-new-window:before {
+    content: "\e658"}
+.icon-list:before {
+    content: "\e659"}
+.icon-project2:before {
+    content: "\e65a"}
+.icon-plus:before {
+    content: "\e65b"}
+.icon-path-divider:before {
+    content: "\e65c"}
+.icon-view:before {
+    content: "\e65e"}
+.icon-lock:before {
+    content: "\e65f"}
+.icon-zoom-actual:before {
+    content: "\e660"}
+.icon-zoom-to-fit:before {
+    content: "\e661"}
+.icon-zoom-out:before {
+    content: "\e662"}
+.icon-zoom-in:before {
+    content: "\e663"}
+.icon-back:before {
+    content: "\e664"}
+.icon-fullscreen:before {
+    content: "\e665"}
+.icon-go:before {
+    content: "\e666"}
+.icon-search:before {
+    content: "\e667"}
+.icon-gear:before {
+    content: "\e668"}
+.icon-write:before {
+    content: "\e669"}
+.icon-annotate:before {
+    content: "\e66a"}
+.icon-timeline-plus:before {
+    content: "\e66b"}
+.icon-arrow-up:before {
+    content: "\e66c"}
+.icon-arrow-down:before {
+    content: "\e66d"}
+.icon-timeline-file:before {
+    content: "\e66e"}
+.icon-timeline-comment:before {
+    content: "\e66f"}
+.icon-timeline-start:before {
+    content: "\e670"}
+.icon-timeline-view-alt:before {
+    content: "\e671"}
+.icon-timeline-view:before {
+    content: "\e672"}
+.icon-info:before {
+    content: "\e673"}
+.icon-file2:before {
+    content: "\e674"}
+.icon-list-small:before {
+    content: "\e675"}
+.icon-grid-small:before {
+    content: "\e676"}
+.icon-folder2:before {
+    content: "\e677"}
+.icon-link:before {
+    content: "\e678"}
+.icon-dots:before {
+    content: "\e679"}
+.icon-download:before {
+    content: "\e67a"}
+.icon-grid-large:before {
+    content: "\e67b"}
+.icon-grid:before {
+    content: "\e67c"}
+.icon-information:before {
+    content: "\e67d"}
+.icon-time:before {
+    content: "\e67e"}
+.icon-home:before {
+    content: "\e67f"}
+.icon-files:before {
+    content: "\e680"}

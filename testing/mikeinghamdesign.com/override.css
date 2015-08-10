@@ -1,0 +1,64 @@
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 300.0;
+	src: local('Raleway Light'), local('Raleway-Light'), url('http://fonts.gstatic.com/s/raleway/v9/-_Ctzj9b56b8RgXW8FAriS3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 400.0;
+	src: local('Raleway'), url('http://fonts.gstatic.com/s/raleway/v9/bIcY3_3JNqUVRAQQRNVteQ.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 500.0;
+	src: local('Raleway Medium'), local('Raleway-Medium'), url('http://fonts.gstatic.com/s/raleway/v9/CcKI4k9un7TZVWzRVT-T8y3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 600.0;
+	src: local('Raleway SemiBold'), local('Raleway-SemiBold'), url('http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12by3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 700.0;
+	src: local('Raleway Bold'), local('Raleway-Bold'), url('http://fonts.gstatic.com/s/raleway/v9/JbtMzqLaYbbbCL9X6EvaIy3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 800.0;
+	src: local('Raleway ExtraBold'), local('Raleway-ExtraBold'), url('http://fonts.gstatic.com/s/raleway/v9/1ImRNPx4870-D9a1EBUdPC3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 900.0;
+	src: local('Raleway Heavy'), local('Raleway-Heavy'), url('http://fonts.gstatic.com/s/raleway/v9/PKCRbVvRfd5n7BTjtGiFZC3USBnSvpkopQaUR-2r7iU.ttf') format('truetype');
+}
+@font-face  {
+	font-family: 'Varela Round';
+	font-style: normal;
+	font-weight: 400.0;
+	src: local('Varela Round'), local('VarelaRound-Regular'), url('http://fonts.gstatic.com/s/varelaround/v6/APH4jr0uSos5wiut5cpjronF5uFdDttMLvmWuJdhhgs.ttf') format('truetype');
+}
+
+.img img  {
+     width:  -webkit-calc(100% + 40px) !important;
+     width:  calc(100% + 40px) !important;
+ }
+/*
+.fa-twitter:before {
+	content: '\f099';
+}
+
+.fa-dribbble:before {
+    content: "\f17d";
+}
+.fa-envelope-o:before {
+    content: "\f003";
+}*/

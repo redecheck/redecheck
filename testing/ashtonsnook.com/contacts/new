@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-4.newrelic.com","errorBeacon":"bam.nr-data.net","licenseKey":"cff53ea284","applicationID":"4174441","transactionName":"IVcMQxEOClwDRBdVDAxMA1QXEkleA0E=","queueTime":6,"applicationTime":39,"ttGuid":"","agentToken":null,"agent":"js-agent.newrelic.com/nr-536.min.js"}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(n,e,t){function r(t){if(!e[t]){var o=e[t]={exports:{}};n[t][0].call(o.exports,function(e){var o=n[t][1][e];return r(o?o:e)},o,o.exports)}return e[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({QJf3ax:[function(n,e){function t(n){function e(e,t,a){n&&n(e,t,a),a||(a={});for(var u=c(e),f=u.length,s=i(a,o,r),p=0;f>p;p++)u[p].apply(s,t);return s}function a(n,e){f[n]=c(n).concat(e)}function c(n){return f[n]||[]}function u(){return t(e)}var f={};return{on:a,emit:e,create:u,listeners:c,_events:f}}function r(){return{}}var o="nr@context",i=n("gos");e.exports=t()},{gos:"7eSDFh"}],ee:[function(n,e){e.exports=n("QJf3ax")},{}],3:[function(n,e){function t(n){return function(){r(n,[(new Date).getTime()].concat(i(arguments)))}}var r=n("handle"),o=n(1),i=n(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","trackUserAction","finished","traceEvent","inlineHit","noticeError"];o(a,function(n,e){window.NREUM[e]=t("api-"+e)}),e.exports=window.NREUM},{1:12,2:13,handle:"D5DuLP"}],gos:[function(n,e){e.exports=n("7eSDFh")},{}],"7eSDFh":[function(n,e){function t(n,e,t){if(r.call(n,e))return n[e];var o=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(n,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return n[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=t},{}],D5DuLP:[function(n,e){function t(n,e,t){return r.listeners(n).length?r.emit(n,e,t):(o[n]||(o[n]=[]),void o[n].push(e))}var r=n("ee").create(),o={};e.exports=t,t.ee=r,r.q=o},{ee:"QJf3ax"}],handle:[function(n,e){e.exports=n("D5DuLP")},{}],XL7HBI:[function(n,e){function t(n){var e=typeof n;return!n||"object"!==e&&"function"!==e?-1:n===window?0:i(n,o,function(){return r++})}var r=1,o="nr@id",i=n("gos");e.exports=t},{gos:"7eSDFh"}],id:[function(n,e){e.exports=n("XL7HBI")},{}],G9z0Bl:[function(n,e){function t(){var n=v.info=NREUM.info;if(n&&n.licenseKey&&n.applicationID&&f&&f.body){c(d,function(e,t){e in n||(n[e]=t)}),v.proto="https"===l.split(":")[0]||n.sslForHttp?"https://":"http://",a("mark",["onload",i()]);var e=f.createElement("script");e.src=v.proto+n.agent,f.body.appendChild(e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=n("handle"),c=n(1),u=(n(2),window),f=u.document,s="addEventListener",p="attachEvent",l=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-536.min.js"},v=e.exports={offset:i(),origin:l,features:{}};f[s]?(f[s]("DOMContentLoaded",o,!1),u[s]("load",t,!1)):(f[p]("onreadystatechange",r),u[p]("onload",t)),a("mark",["firstbyte",i()])},{1:12,2:3,handle:"D5DuLP"}],loader:[function(n,e){e.exports=n("G9z0Bl")},{}],12:[function(n,e){function t(n,e){var t=[],o="",i=0;for(o in n)r.call(n,o)&&(t[i]=e(o,n[o]),i+=1);return t}var r=Object.prototype.hasOwnProperty;e.exports=t},{}],13:[function(n,e){function t(n,e,t){e||(e=0),"undefined"==typeof t&&(t=n?n.length:0);for(var r=-1,o=t-e||0,i=Array(0>o?0:o);++r<o;)i[r]=n[e+r];return i}e.exports=t},{}]},{},["G9z0Bl"]);</script>
+  <title>AshtonSnook | Making every interaction delightful. </title>
+  <link data-turbolinks-track="true" href="../assets/application-adc1ca383b28ffae22db97e820c40844.css" media="all" rel="stylesheet" />
+  <script data-turbolinks-track="true" src="../assets/application-c472de0c830e5c58074f19591e3d210f.js"></script>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="hc2lmt5TfFOyUPSi7843YVo7Gk782TG9NU7tEI7/mVI=" name="csrf-token" />
+  <meta name='keywords' content='AshtonSnook, Interface Design, User Experience, UI, UX, Art Direction, App, Mobile Application, Art Director, Graphic Design, Digital Design'>
+  <meta name='description' content='Designing user interfaces and digital experiences'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="google-site-verification" content="0V-Mr4nCvuLnnRzalOklSHJebXiNWCoUPEDU9h_Ie2o" />
+</head>
+<body>
+  <header class="headroom header--fixed slide sb-slide">
+    <div class="menu-toggle toggle-right navbar-icon-right">
+     <div class="line top" style='background-color: black'></div>
+     <div class="line middle" style='background-color: black'></div>
+     <div class="line bottom" style='background-color: black'></div>
+    </div>
+    <a href="../index.html"><img alt="Logo ashton nav dark@2x" class="cover-icon-left navbar-icon-left" src="../assets/icons/nav/logo_ashton_nav_dark@2x-982d75cbe8336b28a473fb993e7e6975.png" /></a>
+  </header>
+
+<div id="sb-site">
+  <div class="container" style="width: 100%">
+  <!-- Cover -->
+  <div class="row" style="margin-right: 0">
+    <div class="col-md-12 contact">
+      <div class='title-paragraphs'>
+        <h1>CONTACT</h1>
+        <h6 style='text-align: center'>Let's Chat</h6>  
+      </div>
+      <form accept-charset="UTF-8" action="http://www.ashtonsnook.com/contacts" class="contact-form" id="new_contact" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="hc2lmt5TfFOyUPSi7843YVo7Gk782TG9NU7tEI7/mVI=" /></div>
+        <div class="form-group">
+          <input class="form-control contact-control" id="contact_name" name="contact[name]" placeholder="Name" style="font-size: 34px;font-family: noto_serifitalic;padding-bottom: 28px;" type="text" />
+        </div>
+        <div class="form-group" style='margin-bottom: 24px;'>
+          <input class="form-control contact-control" id="contact_email" name="contact[email]" placeholder="Email" type="email" />
+        </div>
+        <div class="form-group">
+          <textarea class="form-control contact-control" id="contact_message" name="contact[message]" placeholder="Message">
+</textarea>
+        </div>
+        <input type="submit" class="btn btn-default btn-contact label1" name="SUBMIT" />
+</form>      <div>
+        <div class="menu-toggle toggle-right navbar-icon-right">
+         <div class="line top"></div>
+         <div class="line middle"></div>
+         <div class="line bottom"></div>
+        </div>
+        <a href="../index.html"><img alt="Logo ashton nav small white@2x" class="cover-icon-left" src="../assets/icons/nav/logo_ashton_nav_small_white@2x-ce0add5a644084ba098e769ef93a7521.png" /></a>
+      </div> 
+      <p class='email h9 contact-form'>EMAIL: hello@ashtonsnook.com</p>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="menu sb-slidebar sb-right">
+  <ul>
+    <li>
+      <a href="../index.html">HOME</a>
+    </li>
+    <li>
+      <a href="../work">WORK</a>
+    </li>
+    <li>
+      <a href="new">CONTACT</a>
+    </li>
+    <li>
+      <a href="https://medium.com/@AshtonSnook">BLOG</a>
+    </li>
+  </ul>
+
+  <div class='menu-social'>
+    <a href="https://twitter.com/AshtonSnook"><img alt="Ic twitter default@2x" class="img-social twitter-social" src="../assets/icons/social/ic_twitter_default@2x-c762963361de947e52ce254d6d89b862.png" /></a>
+    <a href="https://twitter.com/AshtonSnook"><img alt="Ic dribbble default@2x" class="img-social dribbble-social" src="../assets/icons/social/ic_dribbble_default@2x-deb7b9a208f263d5a648ba908327e243.png" /></a>
+    <a href="https://twitter.com/AshtonSnook"><img alt="Ic behance default@2x" class="img-social behance-social" src="../assets/icons/social/ic_behance_default@2x-73d936b89cda15a15ae7cd7a26c4cc6a.png" /></a>
+    <a href="http://tinyurl.com/nnvfkyb"><img alt="Ic linkedin default@2x" class="img-social linkedin-social" src="../assets/icons/social/ic_linkedin_default@2x-423205769e4cb7dde906270120ae27d2.png" /></a>
+  </div>
+</div>
+  <footer class='row'>
+  <div class='logo-rights visible-lg col-lg-5 col-md-5'>
+    <img alt="Logo ashton footer white@2x" class="footer-brand" src="../assets/icons/footer/logo_ashton_footer_white@2x-a6838c9aefb9e7ead9acfef250069ae8.png" />
+    <p class='rights'>&#169 Aston Snook. 2013. All Rights Reserved</p>
+  </div>
+  <div class='col-lg-6 col-md-12 col-sm-12 col-xs-12'>
+    <ul class="nav footer-menu col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <li><a href="../index.html" style="padding-left: 0;">HOME</a></li>
+      <li><a href="../work">WORK</a></li>
+      <li><a href="new">CONTACT</a></li>
+      <li><a href="https://medium.com/@AshtonSnook">BLOG</a></li>
+    </ul>
+
+    <div class='social-buttons col-lg-6 col-md-6 col-sm-6 col-xs-12' style='margin-top: 6px;'>
+      <a href="https://twitter.com/AshtonSnook"><img alt="Ic twitter default@2x" class="img-social twitter-social footer-social" src="../assets/icons/social/ic_twitter_default@2x-c762963361de947e52ce254d6d89b862.png" /></a>
+      <a href="https://twitter.com/AshtonSnook"><img alt="Ic dribbble default@2x" class="img-social dribbble-social footer-social" src="../assets/icons/social/ic_dribbble_default@2x-deb7b9a208f263d5a648ba908327e243.png" /></a>
+      <a href="https://twitter.com/AshtonSnook"><img alt="Ic behance default@2x" class="img-social behance-social footer-social" src="../assets/icons/social/ic_behance_default@2x-73d936b89cda15a15ae7cd7a26c4cc6a.png" /></a>
+      <a href="http://tinyurl.com/nnvfkyb"><img alt="Ic linkedin default@2x" class="img-social linkedin-social footer-social" src="../assets/icons/social/ic_linkedin_default@2x-423205769e4cb7dde906270120ae27d2.png" style="padding-right: 0;" /></a>
+    </div>
+  </div>
+
+  <div class='logo-rights visible-md visible-sm visible-xs col-sm-12 col-xs-12'>
+    <img alt="Logo ashton footer white@2x" class="footer-brand" src="../assets/icons/footer/logo_ashton_footer_white@2x-a6838c9aefb9e7ead9acfef250069ae8.png" />
+    <p class='rights'>&#169 Ashton Snook. 2014. All Rights Reserved</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>
+

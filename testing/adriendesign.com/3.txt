@@ -1,0 +1,16 @@
+Changed term from 47.0 to 51.0
+body.single-portfolio-pieces div.site-inner div.content-sidebar-wrap article div.entry-content section.sub {
+	width: 47.0%;
+	float: left;
+	overflow: hidden;
+	font-size: 1.2em;
+	margin-bottom: 3.0em;
+}
+
+body.single-portfolio-pieces div.site-inner div.content-sidebar-wrap article div.entry-content section.sub {
+	width: 51.0%;
+	float: left;
+	overflow: hidden;
+	font-size: 1.2em;
+	margin-bottom: 3.0em;
+}

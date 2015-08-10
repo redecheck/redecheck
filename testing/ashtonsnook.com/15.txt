@@ -1,0 +1,12 @@
+Changed media query from 992.0 to 1001.0
+@media (min-width: 992.0px) {
+	.container {
+		width: 970.0px;
+	}
+}
+
+@media (min-width: 1001.0px) {
+	.container {
+		width: 970.0px;
+	}
+}

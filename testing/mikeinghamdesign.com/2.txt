@@ -1,0 +1,130 @@
+Changed media query from 480.0 to 484.0
+@media screen AND (max-width: 480.0px) {
+	.wrapper {
+		background: #f3f5f8;
+		height: 640.0px;
+	}
+
+	.iphone {
+		display: none;
+	}
+
+	.fluid-white {
+		display: none;
+	}
+
+	.wp2, .wp4, .wp5, .light-box {
+		margin-bottom: 30.0px;
+	}
+
+	.legals {
+		text-align: center;
+		margin: 0.0;
+		padding: 0.0;
+	}
+
+	.credit {
+		text-align: center;
+	}
+
+	.hero {
+		padding: 20.0px 0.0 100.0px 0.0;
+	}
+
+	.hero h1 {
+		font-size: 28.0px;
+	}
+
+	.hero h2 {
+		font-size: 11.0px;
+	}
+
+	.inner {
+		padding-top: 120.0px;
+	}
+
+	.wp4 {
+		margin-bottom: 0.0px;
+	}
+
+	body.home footer {
+		padding: 20.0px 0.0px !important;
+	}
+
+	.learn-more-btn {
+		margin-top: 20.0px;
+	}
+
+	.flex-direction-nav {
+		display: none;
+	}
+
+	.flexslider {
+		padding-top: 40.0px;
+	}
+}
+
+@media screen AND (max-width: 484.0px) {
+	.wrapper {
+		background: #f3f5f8;
+		height: 640.0px;
+	}
+
+	.iphone {
+		display: none;
+	}
+
+	.fluid-white {
+		display: none;
+	}
+
+	.wp2, .wp4, .wp5, .light-box {
+		margin-bottom: 30.0px;
+	}
+
+	.legals {
+		text-align: center;
+		margin: 0.0;
+		padding: 0.0;
+	}
+
+	.credit {
+		text-align: center;
+	}
+
+	.hero {
+		padding: 20.0px 0.0 100.0px 0.0;
+	}
+
+	.hero h1 {
+		font-size: 28.0px;
+	}
+
+	.hero h2 {
+		font-size: 11.0px;
+	}
+
+	.inner {
+		padding-top: 120.0px;
+	}
+
+	.wp4 {
+		margin-bottom: 0.0px;
+	}
+
+	body.home footer {
+		padding: 20.0px 0.0px !important;
+	}
+
+	.learn-more-btn {
+		margin-top: 20.0px;
+	}
+
+	.flex-direction-nav {
+		display: none;
+	}
+
+	.flexslider {
+		padding-top: 40.0px;
+	}
+}

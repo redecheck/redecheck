@@ -1,0 +1,10 @@
+Changed term from 0.0 to 7.0
+.CMSvNextComp, .CMSvNextComp div, .CMSvNextComp h1, .CMSvNextComp h2, .CMSvNextComp h3, .CMSvNextComp h4, .CMSvNextComp h5, .CMSvNextComp h6, .CMSvNextComp li, .CMSvNextComp ol, .CMSvNextComp p, .CMSvNextComp ul {
+	margin: 0.0;
+	padding: 0.0;
+}
+
+.CMSvNextComp, .CMSvNextComp div, .CMSvNextComp h1, .CMSvNextComp h2, .CMSvNextComp h3, .CMSvNextComp h4, .CMSvNextComp h5, .CMSvNextComp h6, .CMSvNextComp li, .CMSvNextComp ol, .CMSvNextComp p, .CMSvNextComp ul {
+	margin: 0.0;
+	padding: 7.0px;
+}

@@ -1,0 +1,48 @@
+Changed media query from 992.0 to 991.0
+@media screen AND (min-width: 992.0px) {
+	section h1 {
+		font-size: 6.0em;
+	}
+
+	#intro h1, h2 {
+		float: right;
+		width: 48.0%;
+		margin-left: 0.0;
+	}
+
+	step p {
+		margin: 0.0 0.0 20.0px;
+	}
+
+	section#intro {
+		margin-top: 110.0px;
+	}
+
+	section#intro h1 {
+		font-size: 3.0em;
+	}
+}
+
+@media screen AND (min-width: 991.0px) {
+	section h1 {
+		font-size: 6.0em;
+	}
+
+	#intro h1, h2 {
+		float: right;
+		width: 48.0%;
+		margin-left: 0.0;
+	}
+
+	step p {
+		margin: 0.0 0.0 20.0px;
+	}
+
+	section#intro {
+		margin-top: 110.0px;
+	}
+
+	section#intro h1 {
+		font-size: 3.0em;
+	}
+}

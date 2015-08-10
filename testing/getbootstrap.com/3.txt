@@ -1,0 +1,10 @@
+Changed term from 0.0 to 5.0
+.navbar-nav {
+	float: left;
+	margin: 0.0;
+}
+
+.navbar-nav {
+	float: left;
+	margin: 5.0px;
+}

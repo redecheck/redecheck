@@ -1,0 +1,122 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/DIV[2]/DIV/P[2]
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 576.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 580.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[3]/A/IMG
+
+Unmatched constraint in graph 1: Between 0 and 1300 => 100.0% of parent + -2.0
+Unmatched constraint in graph 2: Between 0 and 1300 => 99.56644788342254% of parent + -0.7327632925871512
+
+/HTML/BODY/FOOTER/DIV/UL/LI[7]
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 78.0
+Unmatched constraint in graph 2: Between 0 and 1300 => 0.015989969927959216% of parent + 77.69932496888312
+
+/HTML/BODY/FOOTER/DIV/DIV/UL
+
+Unmatched constraint in graph 1: Between 640 and 1300 =>  + 600.0
+Unmatched constraint in graph 2: Between 640 and 1300 => -0.14565945457445112% of parent + 601.5554728616236
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 750.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 755.0
+
+/HTML/BODY/DIV/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 750.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 755.0
+
+/HTML/BODY/DIV/DIV/P[2]
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 576.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 580.0
+
+/HTML/BODY/HEADER/DIV/NAV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 720.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 725.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 180.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 182.0
+
+/HTML/BODY/MAIN/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 750.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 755.0
+
+/HTML/BODY/DIV/DIV/DIV/DIV[3]
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 250.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 252.0
+
+/HTML/BODY/DIV[2]/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 750.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 755.0
+
+/HTML/BODY/DIV/DIV/P
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 576.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 580.0
+
+/HTML/BODY/DIV/DIV/DIV/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 250.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 252.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[4]/A/IMG
+
+Unmatched constraint in graph 1: Between 0 and 1300 => 99.64423663346209% of parent + -0.518798655872214
+Unmatched constraint in graph 2: Between 0 and 1300 => 100.0734870071567% of parent + -1.7729470479885896
+
+/HTML/BODY/DIV[2]/DIV/P
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 576.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 580.0
+
+/HTML/BODY/FOOTER/DIV/UL/LI[11]
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 37.0
+Unmatched constraint in graph 2: Between 0 and 1300 => -0.01598996992795322% of parent + 37.30067503111684
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[4]
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 180.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 182.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[2]/A/IMG
+
+Unmatched constraint in graph 1: Between 0 and 1300 => 99.64423663346209% of parent + -0.518798655872214
+Unmatched constraint in graph 2: Between 0 and 1300 => 100.0734870071567% of parent + -1.7729470479885896
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 750.0
+Unmatched constraint in graph 2: Between 768 and 991 =>  + 755.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV/DIV/DIV[4]-/HTML/BODY/DIV[2]/DIV/DIV/DIV[3])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV/DIV/DIV[2]-/HTML/BODY/DIV[2]/DIV/DIV/DIV[3])","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV/DIV/DIV[3]-/HTML/BODY/DIV[2]/DIV/DIV/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV/DIV/DIV[3]-/HTML/BODY/DIV[2]/DIV/DIV/DIV[4])"
+
+1024
+
+
+1200
+

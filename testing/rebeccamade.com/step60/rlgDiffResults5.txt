@@ -1,0 +1,12 @@
+
+/HTML/BODY/DIV/DIV/DIV
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 768 : 100% of parent
+Unmatched constraint in graph 2: 769 -> 991 :  + 750
+Unmatched constraint in graph 2: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 1170
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 768 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV    0 -> 768 [0,10,0,6]
+Unmatched contains in graph 2 : 769 -> 1300 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV    769 -> 1300 [0,30,0,46]
+Unmatched sibling in graph 2 : Between 769 and 1300 => /HTML/BODY/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV leftEdge rightEdge bottomAlign

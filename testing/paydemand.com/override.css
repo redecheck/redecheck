@@ -1,0 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400, 600, 700, 800, 300italic, 300, 400italic, 700italic, 600italic, 800italic);
+
+.fa-facebook:before {
+  content: "\f09a";
+}
+
+.fa-twitter:before {
+  content: "\f099";
+}
+
+#teasers dl:first-child,  #teasers dl:last-child  {
+     width:  29%;
+ }

@@ -1,0 +1,575 @@
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION/DIV
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV    0 -> 518 [0,80,0,10765]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV    519 -> 521 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[4]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/FOOTER
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV below
+Unmatched sibling in graph 2 : Between 1119 and 1121 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV/DIV
+Unmatched sibling in graph 2 : Between 1122 and 1300 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV below
+Unmatched sibling in graph 2 : Between 522 and 818 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV below
+Unmatched sibling in graph 2 : Between 519 and 521 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV/DIV
+Unmatched sibling in graph 2 : Between 819 and 821 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV/DIV
+Unmatched sibling in graph 2 : Between 822 and 1118 => /HTML/BODY/FOOTER -> /HTML/BODY/DIV below
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV topAlign
+Unmatched sibling in graph 2 : Between 822 and 1118 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV topAlign
+Unmatched sibling in graph 2 : Between 819 and 821 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV/DIV
+Unmatched sibling in graph 2 : Between 1119 and 1121 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV/DIV
+Unmatched sibling in graph 2 : Between 522 and 818 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV topAlign
+Unmatched sibling in graph 2 : Between 1122 and 1300 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV topAlign
+Unmatched sibling in graph 2 : Between 519 and 521 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV/DIV
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 992 and 1202 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 1203 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/P leftOf bottomAlign
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[2]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG below
+Unmatched sibling in graph 1 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 992 and 1008 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG rightOf bottomAlign
+Unmatched sibling in graph 1 : Between 1009 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG rightOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[2]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG below
+Unmatched sibling in graph 1 : Between 600 and 782 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 783 and 828 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 829 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 992 and 1021 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf
+Unmatched sibling in graph 1 : Between 1022 and 1067 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf bottomAlign
+Unmatched sibling in graph 1 : Between 1068 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG rightOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]    0 -> 518 [0,5715,0,5114]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]    519 -> 521 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG below
+Unmatched sibling in graph 1 : Between 600 and 806 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 807 and 828 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 829 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 992 and 1008 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG rightOf bottomAlign
+Unmatched sibling in graph 1 : Between 1009 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG rightOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5] above leftEdge rightEdge
+
+/HTML/BODY/DIV/DIV
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1044 : 100.1% of parent + -0.93
+Unmatched constraint in graph 2: 1045 -> 1300 : 100.91% of parent + -9.84
+Unmatched constraint in graph 2: 519 -> 521 : 84% of parent + 0.2
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV    0 -> 518 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY contains /HTML/BODY/DIV/DIV    519 -> 521 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]    0 -> 518 [0,6222,0,3193]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]    519 -> 521 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 2 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P above
+Unmatched sibling in graph 2 : Between 600 and 838 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 839 and 887 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 888 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1094 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf
+Unmatched sibling in graph 2 : Between 1095 and 1140 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 1141 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[4]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/IMG rightOf
+Unmatched sibling in graph 2 : Between 992 and 1024 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/IMG rightOf bottomAlign
+Unmatched sibling in graph 2 : Between 1025 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/IMG rightOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[2]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[5]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[5]    0 -> 518 [0,8253,0,30]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[5]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[5]    522 -> 1300 
+
+/HTML/BODY/HEADER/DIV/DIV/NAV/UL
+
+Unmatched constraint in graph 1: 470 -> 1300 : 90% of parent + 24
+Unmatched constraint in graph 2: 0 -> 1300 : 84.01% of parent + 23.89
+Unmatched contains in graph 1 : 470 -> 1300 : /HTML/BODY/HEADER/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL    470 -> 1300 
+Unmatched contains in graph 2 : 0 -> 1300 : /HTML/BODY/HEADER/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL    0 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf topAlign
+Unmatched sibling in graph 1 : Between 992 and 1059 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf
+Unmatched sibling in graph 1 : Between 1060 and 1097 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf bottomAlign
+Unmatched sibling in graph 1 : Between 1098 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf
+Unmatched sibling in graph 2 : Between 600 and 969 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 970 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[4]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]    0 -> 518 [0,3451,0,5224]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[3]    522 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/P leftOf
+Unmatched sibling in graph 2 : Between 992 and 1139 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/P leftOf
+Unmatched sibling in graph 2 : Between 1140 and 1184 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 1185 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[2]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]
+
+Unmatched constraint in graph 1: 0 -> 474 :  + 256
+Unmatched constraint in graph 1: 475 -> 1300 : 1.71% of parent + 324.25
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 3.97% of parent + 314.7
+Unmatched constraint in graph 2: 522 -> 1300 : 1.85% of parent + 323.63
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL/LI contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL/LI contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]    0 -> 518 [80,30,0,14]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/HEADER/DIV/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL/LI contains /HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]    522 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 681 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 682 and 727 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 728 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign
+Unmatched sibling in graph 2 : Between 600 and 729 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign
+Unmatched sibling in graph 2 : Between 730 and 779 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 780 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/IMG rightOf topAlign
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 2 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P above
+Unmatched sibling in graph 2 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1039 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 1040 and 1080 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 1081 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[3]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG
+
+Unmatched constraint in graph 1: 0 -> 631 : 100% of parent
+Unmatched constraint in graph 1: 632 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 0 -> 676 : 100% of parent
+Unmatched constraint in graph 2: 677 -> 1300 : 48% of parent + -0.06
+Unmatched contains in graph 1 : 0 -> 631 : /HTML/BODY/DIV/DIV/DIV/SECTION contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG    0 -> 631 
+Unmatched contains in graph 1 : 632 -> 1300 : /HTML/BODY/DIV/DIV/DIV/SECTION/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG    632 -> 1300 
+Unmatched contains in graph 2 : 0 -> 676 : /HTML/BODY/DIV/DIV/DIV/SECTION contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG    0 -> 676 
+Unmatched contains in graph 2 : 677 -> 1300 : /HTML/BODY/DIV/DIV/DIV/SECTION/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG    677 -> 1300 
+Unmatched sibling in graph 1 : Between 632 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION leftEdge
+Unmatched sibling in graph 1 : Between 632 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 677 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION leftEdge
+Unmatched sibling in graph 2 : Between 677 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/P leftOf topAlign
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/HEADER/DIV/DIV
+
+Unmatched constraint in graph 1: 0 -> 469 : 100% of parent
+Unmatched constraint in graph 1: 476 -> 1300 : 100% of parent + -24
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1300 : 99.99% of parent + -23.59
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + -1
+Unmatched contains in graph 1 : 0 -> 469 : /HTML/BODY/HEADER/DIV contains /HTML/BODY/HEADER/DIV/DIV    0 -> 469 [20,0,20,24]
+Unmatched contains in graph 1 : 476 -> 1300 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL contains /HTML/BODY/HEADER/DIV/DIV    476 -> 1300 [24,0,0,0]
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL contains /HTML/BODY/HEADER/DIV/DIV    0 -> 518 [24,0,0,0]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL contains /HTML/BODY/HEADER/DIV/DIV    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL/LI contains /HTML/BODY/HEADER/DIV/DIV    519 -> 521 [0,0,1,0]
+
+/HTML/BODY/HEADER/DIV/DIV/NAV
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + -24
+Unmatched constraint in graph 2: 522 -> 1044 : 100.1% of parent + -0.93
+Unmatched constraint in graph 2: 1045 -> 1300 : 100.91% of parent + -9.84
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/HEADER/DIV/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/HEADER/DIV/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV    0 -> 518 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/HEADER/DIV/DIV/NAV/UL contains /HTML/BODY/HEADER/DIV/DIV/NAV    519 -> 521 [24,0,0,0]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/HEADER/DIV/DIV contains /HTML/BODY/HEADER/DIV/DIV/NAV    522 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 681 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign
+Unmatched sibling in graph 1 : Between 682 and 722 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 723 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign
+Unmatched sibling in graph 2 : Between 600 and 729 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign
+Unmatched sibling in graph 2 : Between 730 and 774 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 775 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/P -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/IMG rightOf topAlign
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[2]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]/LI[2]
+
+Unmatched constraint in graph 1: 480 -> 1300 : 40% of parent + -58.8
+Unmatched constraint in graph 2: 480 -> 1300 : 41.01% of parent + -62.24
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV
+
+Unmatched constraint in graph 1: 0 -> 1300 : 90% of parent + -0
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 522 -> 1300 : 83.97% of parent + 0.48
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + -1
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY contains /HTML/BODY/DIV    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY contains /HTML/BODY/DIV    0 -> 518 [32,0,32,182]
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY contains /HTML/BODY/DIV    522 -> 1300 
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV    519 -> 521 [0,0,1,0]
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[5]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 984 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf topAlign
+Unmatched sibling in graph 1 : Between 985 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1178 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 1179 and 1186 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 1187 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[3]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]    0 -> 518 [0,571,0,7995]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]    522 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 2 : Between 0 and 599 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P above
+Unmatched sibling in graph 2 : Between 600 and 864 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 865 and 887 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 888 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1031 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf
+Unmatched sibling in graph 2 : Between 1032 and 1080 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 1081 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[2]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[4]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]/LI
+
+Unmatched constraint in graph 1: 480 -> 1300 : 30% of parent + -12.6
+Unmatched constraint in graph 2: 480 -> 1300 : 30.76% of parent + -15.18
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV[2]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 984 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P leftOf topAlign
+Unmatched sibling in graph 1 : Between 985 and 1222 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P leftOf
+Unmatched sibling in graph 1 : Between 1223 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P leftOf bottomAlign
+Unmatched sibling in graph 2 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P leftOf
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[4]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[2]/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]    0 -> 518 [0,7690,0,3083]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV[3]    522 -> 1300 
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+Unmatched sibling in graph 1 : Between 600 and 991 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P leftOf topAlign
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 600 and 969 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P leftOf topAlign
+Unmatched sibling in graph 2 : Between 970 and 1202 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P leftOf
+Unmatched sibling in graph 2 : Between 1203 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/IMG -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[3]/P leftOf bottomAlign
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]/H2
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5]
+
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV[5] -> /HTML/BODY/DIV/DIV/DIV/SECTION[5]/DIV below leftEdge rightEdge
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[4]/DIV/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]
+
+Unmatched constraint in graph 1: 0 -> 1300 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 518 : 100% of parent
+Unmatched constraint in graph 2: 519 -> 521 : 100% of parent + 1
+Unmatched constraint in graph 2: 522 -> 1300 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 518 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]    0 -> 518 [0,3047,0,7885]
+Unmatched contains in graph 2 : 519 -> 521 : /HTML/BODY/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]    519 -> 521 
+Unmatched contains in graph 2 : 522 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV/SECTION[2]/DIV[5]    522 -> 1300 
+
+/HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]/LI[3]
+
+Unmatched constraint in graph 1: 480 -> 1300 : 30% of parent + -15.6
+Unmatched constraint in graph 2: 480 -> 1300 : 30.76% of parent + -18.18
+
+/HTML/BODY/DIV/DIV/DIV/SECTION/DIV/H1
+
+Unmatched constraint in graph 1: 992 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 992 -> 1300 : 47.99% of parent + 0.1
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/H1 -> /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 0 and 677 => /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/H1 -> /HTML/BODY/DIV/DIV/DIV/SECTION/DIV/IMG above leftEdge rightEdge
+
+/HTML/BODY/DIV/DIV/DIV/SECTION/DIV/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19
+
+/HTML/BODY/DIV/DIV/DIV/SECTION[3]/DIV/P
+
+Unmatched constraint in graph 1: 600 -> 1300 : 48.15% of parent + -1.33
+Unmatched constraint in graph 2: 600 -> 1300 : 48.02% of parent + -0.19

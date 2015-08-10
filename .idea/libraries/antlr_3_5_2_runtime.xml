@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="antlr-3.5.2-runtime">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../JARs/antlr-3.5.2-runtime.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/antlr-4.4-complete.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/antlr-runtime-4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/fighting-layout-bugs-0.5-jar-with-dependencies.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/flanagan.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/jsoup-1.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../JARs/phloc-css-3.7.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../JARs/fighting-layout-bugs-0.5-jar-with-dependencies.jar!/" />
+    </SOURCES>
+  </library>
+</component>

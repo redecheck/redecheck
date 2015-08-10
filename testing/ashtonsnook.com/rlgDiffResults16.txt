@@ -1,0 +1,31 @@
+
+/HTML/BODY/DIV/FOOTER/DIV[2]
+
+Unmatched constraint in graph 1: 0 -> 768 : 100% of parent + -40
+Unmatched constraint in graph 1: 769 -> 1199 : 100% of parent + -64
+Unmatched constraint in graph 2: 768 -> 1199 : 100% of parent + -64
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/FOOTER contains /HTML/BODY/DIV/FOOTER/DIV[2]    0 -> 1300 
+Unmatched contains in graph 2 : 768 -> 1300 : /HTML/BODY/DIV/FOOTER contains /HTML/BODY/DIV/FOOTER/DIV[2]    768 -> 1300 
+Unmatched sibling in graph 2 : Between 768 and 1199 => /HTML/BODY/DIV/FOOTER/DIV[2] -> /HTML/BODY/DIV/FOOTER/DIV[3] above leftEdge rightEdge
+
+/HTML/BODY/DIV/FOOTER/DIV[2]/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/FOOTER/DIV[2] contains /HTML/BODY/DIV/FOOTER/DIV[2]/DIV    0 -> 1300 
+Unmatched contains in graph 2 : 768 -> 1300 : /HTML/BODY/DIV/FOOTER/DIV[2] contains /HTML/BODY/DIV/FOOTER/DIV[2]/DIV    768 -> 1300 
+Unmatched sibling in graph 1 : Between 0 and 767 => /HTML/BODY/DIV/FOOTER/DIV[2]/DIV -> /HTML/BODY/DIV/FOOTER/DIV[2]/UL below leftEdge rightEdge
+
+/HTML/BODY/DIV/FOOTER/DIV[2]/UL
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/FOOTER/DIV[2] contains /HTML/BODY/DIV/FOOTER/DIV[2]/UL    0 -> 1300 
+Unmatched contains in graph 2 : 768 -> 1300 : /HTML/BODY/DIV/FOOTER/DIV[2] contains /HTML/BODY/DIV/FOOTER/DIV[2]/UL    768 -> 1300 
+
+/HTML/BODY/DIV/FOOTER/DIV[3]
+
+Unmatched constraint in graph 1: 0 -> 768 : 100% of parent + -40
+Unmatched constraint in graph 1: 769 -> 1199 : 100% of parent + -64
+Unmatched constraint in graph 2: 768 -> 1199 : 100% of parent + -64
+Unmatched contains in graph 1 : 0 -> 1199 : /HTML/BODY/DIV/FOOTER contains /HTML/BODY/DIV/FOOTER/DIV[3]    0 -> 1199 
+Unmatched contains in graph 2 : 768 -> 1199 : /HTML/BODY/DIV/FOOTER contains /HTML/BODY/DIV/FOOTER/DIV[3]    768 -> 1199 [32,98,32,56]
+Unmatched sibling in graph 1 : Between 0 and 1200 => /HTML/BODY/DIV/FOOTER/DIV[3] -> /HTML/BODY/DIV/FOOTER/DIV[2] below leftEdge rightEdge

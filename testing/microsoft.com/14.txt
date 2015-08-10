@@ -1,0 +1,82 @@
+Changed media query from 899.0 to 892.0
+@media screen AND (max-width: 899.0px) {
+	.mscom-header .mscom-header-row-2 .mscom-header-section-2-3 {
+		margin-left: 0.0;
+	}
+
+	.mscom-header .mscom-header-search-section.span {
+		margin-left: 0.0;
+	}
+
+	.mscom-header .row-fluid .mscom-header-nav-section {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 {
+		width: 100.0%;
+	}
+
+	.mscom-header {
+		margin-top: 0.0;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-section-inline {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-section-account {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-box-width {
+		margin-top: 0.0;
+		margin-right: 0.0;
+		width: 98.0%;
+	}
+
+	#E824622F-7876-49E8-9C02-DF4D2C197703 {
+		width: 100.0% !important;
+		display: none;
+	}
+}
+
+@media screen AND (max-width: 892.0px) {
+	.mscom-header .mscom-header-row-2 .mscom-header-section-2-3 {
+		margin-left: 0.0;
+	}
+
+	.mscom-header .mscom-header-search-section.span {
+		margin-left: 0.0;
+	}
+
+	.mscom-header .row-fluid .mscom-header-nav-section {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 {
+		width: 100.0%;
+	}
+
+	.mscom-header {
+		margin-top: 0.0;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-section-inline {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-section-account {
+		display: none;
+	}
+
+	.mscom-header .mscom-header-section-2-4 .search-box-width {
+		margin-top: 0.0;
+		margin-right: 0.0;
+		width: 98.0%;
+	}
+
+	#E824622F-7876-49E8-9C02-DF4D2C197703 {
+		width: 100.0% !important;
+		display: none;
+	}
+}

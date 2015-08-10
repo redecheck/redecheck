@@ -1,0 +1,23 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/ARTICLE[2]/DIV/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 2: Between 0 and 767 => 100.0% of parent + -6.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+

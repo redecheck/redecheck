@@ -1,0 +1,8 @@
+Changed term from 50.0 to 56.0
+.col-sm-6 {
+	width: 50.0%;
+}
+
+.col-sm-6 {
+	width: 56.0%;
+}

@@ -1,0 +1,10 @@
+Changed term from 100.0 to 101.0
+.step {
+	float: left;
+	width: 100.0%;
+}
+
+.step {
+	float: left;
+	width: 101.0%;
+}

@@ -1,0 +1,8 @@
+Changed term from 100.0 to 91.0
+.grid-container {
+	width: 100.0%;
+}
+
+.grid-container {
+	width: 91.0%;
+}

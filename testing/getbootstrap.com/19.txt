@@ -1,0 +1,10 @@
+Changed term from -15.0 to -8.0
+.navbar-right {
+	float: right !important;
+	margin-right: -15.0px;
+}
+
+.navbar-right {
+	float: right !important;
+	margin-right: -8.0px;
+}

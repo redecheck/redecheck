@@ -1,0 +1,12 @@
+Changed term from 5.0 to -4.0
+label {
+	display: inline-block;
+	margin-bottom: 5.0px;
+	font-weight: bold;
+}
+
+label {
+	display: inline-block;
+	margin-bottom: -4.0px;
+	font-weight: bold;
+}

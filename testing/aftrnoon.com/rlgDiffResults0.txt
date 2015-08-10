@@ -1,0 +1,39 @@
+
+/HTML/BODY/FOOTER/BLOCKQUOTE/CITE
+
+Unmatched constraint in graph 1: Between 0 and 640 => 100.0% of parent
+Unmatched constraint in graph 1: Between 641 and 1300 =>  + 95.0
+Unmatched constraint in graph 2: Between 0 and 647 => 100.0% of parent
+Unmatched constraint in graph 2: Between 648 and 1300 =>  + 95.0
+Unmatched sibling in graph 1 : Between 0 and 640 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 641 and 1300 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above
+Unmatched sibling in graph 2 : Between 0 and 647 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 648 and 1300 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above
+
+/HTML/BODY/FOOTER/DIV/DIV[2]
+
+Unmatched sibling in graph 1 : Between 0 and 641 => /HTML/BODY/FOOTER/DIV/DIV[2] -> /HTML/BODY/FOOTER/DIV/DIV below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 642 and 1300 => /HTML/BODY/FOOTER/DIV/DIV[2] -> /HTML/BODY/FOOTER/DIV/DIV leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 646 => /HTML/BODY/FOOTER/DIV/DIV[2] -> /HTML/BODY/FOOTER/DIV/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 647 and 1300 => /HTML/BODY/FOOTER/DIV/DIV[2] -> /HTML/BODY/FOOTER/DIV/DIV leftOf topAlign bottomAlign
+
+/HTML/BODY/DIV[2]
+
+Unmatched constraint in graph 1: Between 0 and 640 => 100.0% of parent + -20.0
+Unmatched constraint in graph 1: Between 641 and 1300 => 90.0% of parent
+Unmatched constraint in graph 2: Between 0 and 647 => 100.0% of parent + -20.0
+Unmatched constraint in graph 2: Between 648 and 1300 => 90.0% of parent
+
+/HTML/BODY/FOOTER
+
+Unmatched constraint in graph 1: Between 0 and 640 => 100.0% of parent + -20.0
+Unmatched constraint in graph 1: Between 641 and 1300 => 90.0% of parent
+Unmatched constraint in graph 2: Between 0 and 647 => 100.0% of parent + -20.0
+Unmatched constraint in graph 2: Between 648 and 1300 => 90.0% of parent
+
+/HTML/BODY/HEADER
+
+Unmatched constraint in graph 1: Between 0 and 640 => 100.0% of parent + -20.0
+Unmatched constraint in graph 1: Between 641 and 1300 => 90.0% of parent
+Unmatched constraint in graph 2: Between 0 and 647 => 100.0% of parent + -20.0
+Unmatched constraint in graph 2: Between 648 and 1300 => 90.0% of parent

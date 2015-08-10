@@ -1,0 +1,44 @@
+Changed media query from 980.0 to 990.0
+@media (min-width: 980.0px) {
+	#header .container, #footer .container, #dashboard-nav .container {
+		width: 100.0%;
+	}
+
+	#header .container {
+		width: 100.0%;
+		padding-left: 0.0;
+		padding-right: 0.0;
+	}
+
+	#how-works {
+		width: 320.0px;
+		margin-left: 80.0px;
+	}
+
+	#header, #footer {
+		padding-left: 30.0px;
+		padding-right: 30.0px;
+	}
+}
+
+@media (min-width: 990.0px) {
+	#header .container, #footer .container, #dashboard-nav .container {
+		width: 100.0%;
+	}
+
+	#header .container {
+		width: 100.0%;
+		padding-left: 0.0;
+		padding-right: 0.0;
+	}
+
+	#how-works {
+		width: 320.0px;
+		margin-left: 80.0px;
+	}
+
+	#header, #footer {
+		padding-left: 30.0px;
+		padding-right: 30.0px;
+	}
+}

@@ -1,0 +1,255 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI[2]
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 40.0
+Unmatched constraint in graph 2: Between 0 and 1300 => -0.014098158428055334% of parent + 40.19857048820057
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV/A/IMG
+
+Unmatched constraint in graph 1: Between 0 and 519 => 100.0% of parent + -50.0
+Unmatched constraint in graph 1: Between 520 and 641 =>  + 450.0
+Unmatched constraint in graph 2: Between 0 and 504 => 100.0% of parent + -50.0
+Unmatched constraint in graph 2: Between 505 and 641 =>  + 450.0
+
+/HTML/BODY/DIV[2]/DIV[3]
+
+Unmatched constraint in graph 1: Between 0 and 1119 => 99.47124054901192% of parent + 3.0664081156492804
+Unmatched constraint in graph 1: Between 1120 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 0 and 403 => 100.0% of parent
+Unmatched constraint in graph 2: Between 1109 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 641 and 1108 => 92.67857142857143% of parent + 0.2857142857142857
+Unmatched contains in graph 1 : Between 0 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV[3]    Between 0 and 1300   
+Unmatched contains in graph 2 : Between 0 and 403   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV[3]    Between 0 and 403   [10,1595,1,412]
+Unmatched contains in graph 2 : Between 1109 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV[3]    Between 1109 and 1300   
+Unmatched contains in graph 2 : Between 641 and 1108   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV[3]    Between 641 and 1108   
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1300 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/FOOTER above leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1300 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2] leftEdge
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: Between 0 and 1119 => 99.47124054901192% of parent + 3.0664081156492804
+Unmatched constraint in graph 1: Between 1120 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 0 and 403 => 100.0% of parent
+Unmatched constraint in graph 2: Between 641 and 1108 => 92.67857142857143% of parent + 0.2857142857142857
+Unmatched constraint in graph 2: Between 1109 and 1300 =>  + 1000.0
+Unmatched contains in graph 1 : Between 0 and 1300   /HTML/BODY/FOOTER contains /HTML/BODY/FOOTER/DIV    Between 0 and 1300   
+Unmatched contains in graph 2 : Between 0 and 403   /HTML/BODY contains /HTML/BODY/FOOTER/DIV    Between 0 and 403   [10,2392,1,20]
+Unmatched contains in graph 2 : Between 641 and 1108   /HTML/BODY contains /HTML/BODY/FOOTER/DIV    Between 641 and 1108   
+Unmatched contains in graph 2 : Between 1109 and 1300   /HTML/BODY/FOOTER contains /HTML/BODY/FOOTER/DIV    Between 1109 and 1300   
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/FOOTER leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/DIV[2]/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/DIV[2]/DIV[3] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/HEADER/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/HEADER below leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/DIV[2]/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/FOOTER/DIV -> /HTML/BODY/DIV[2] below leftEdge
+
+/HTML/BODY/DIV[2]/DIV/DIV
+
+Unmatched sibling in graph 1 : Between 642 and 930 => /HTML/BODY/DIV[2]/DIV/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2] leftOf topAlign
+Unmatched sibling in graph 1 : Between 931 and 1300 => /HTML/BODY/DIV[2]/DIV/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 642 and 901 => /HTML/BODY/DIV[2]/DIV/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2] leftOf topAlign
+Unmatched sibling in graph 2 : Between 902 and 1300 => /HTML/BODY/DIV[2]/DIV/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2] leftOf topAlign bottomAlign
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV[2]/A/IMG
+
+Unmatched constraint in graph 1: Between 0 and 519 => 100.0% of parent + -50.0
+Unmatched constraint in graph 1: Between 520 and 641 =>  + 450.0
+Unmatched constraint in graph 1: Between 642 and 1300 => 99.99999999999956% of parent + -49.99999999999803
+Unmatched constraint in graph 2: Between 0 and 504 => 100.0% of parent + -50.0
+Unmatched constraint in graph 2: Between 505 and 641 =>  + 450.0
+Unmatched constraint in graph 2: Between 642 and 1300 => 100.37738844310964% of parent + -51.76774375107933
+
+/HTML/BODY/HEADER
+
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER -> /HTML/BODY/DIV[2]/DIV above leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER -> /HTML/BODY/DIV[2]/DIV[2] above leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER -> /HTML/BODY/DIV[2]/DIV[3] above leftEdge
+
+/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI[3]
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 30.0
+Unmatched constraint in graph 2: Between 0 and 1300 => -0.10265221605427792% of parent + 30.64804724956332
+
+/HTML/BODY/FOOTER/BLOCKQUOTE/CITE
+
+Unmatched sibling in graph 1 : Between 0 and 640 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 641 and 1300 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above
+Unmatched sibling in graph 2 : Between 1109 and 1300 => /HTML/BODY/FOOTER/BLOCKQUOTE/CITE -> /HTML/BODY/FOOTER/DIV above
+
+/HTML/BODY/DIV[2]/DIV
+
+Unmatched constraint in graph 1: Between 0 and 1119 => 99.47124054901192% of parent + 3.0664081156492804
+Unmatched constraint in graph 1: Between 1120 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 0 and 403 => 100.0% of parent
+Unmatched constraint in graph 2: Between 1109 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 641 and 1108 => 92.67857142857143% of parent + 0.2857142857142857
+Unmatched contains in graph 1 : Between 0 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV    Between 0 and 1300   
+Unmatched contains in graph 2 : Between 0 and 403   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV    Between 0 and 403   [10,307,1,1687]
+Unmatched contains in graph 2 : Between 1109 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV    Between 1109 and 1300   
+Unmatched contains in graph 2 : Between 641 and 1108   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV    Between 641 and 1108   
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2] leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV -> /HTML/BODY/FOOTER above leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1300 => /HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV[2] above leftEdge rightEdge
+
+/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI[4]
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 35.0
+Unmatched constraint in graph 2: Between 0 and 1300 => 0.06872852233676977% of parent + 34.487851222963414
+
+/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI
+
+Unmatched constraint in graph 1: Between 0 and 1300 =>  + 35.0
+Unmatched constraint in graph 2: Between 0 and 1300 => 0.12335888624548418% of parent + 34.17427293412739
+
+/HTML/BODY/DIV[2]/DIV[2]
+
+Unmatched constraint in graph 1: Between 0 and 1119 => 99.47124054901192% of parent + 3.0664081156492804
+Unmatched constraint in graph 1: Between 1120 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 0 and 403 => 100.0% of parent
+Unmatched constraint in graph 2: Between 1109 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 641 and 1108 => 92.67857142857143% of parent + 0.2857142857142857
+Unmatched contains in graph 1 : Between 0 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]    Between 0 and 1300   
+Unmatched contains in graph 2 : Between 0 and 403   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV[2]    Between 0 and 403   [10,951,1,1043]
+Unmatched contains in graph 2 : Between 1109 and 1300   /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]    Between 1109 and 1300   
+Unmatched contains in graph 2 : Between 641 and 1108   /HTML/BODY contains /HTML/BODY/DIV[2]/DIV[2]    Between 641 and 1108   
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2]/DIV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2] leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/DIV[2]/DIV[2] -> /HTML/BODY/FOOTER above leftEdge
+
+/HTML/BODY/DIV[2]/DIV[2]/DIV[2]
+
+Unmatched sibling in graph 1 : Between 642 and 930 => /HTML/BODY/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[2]/DIV rightOf topAlign
+Unmatched sibling in graph 1 : Between 931 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[2]/DIV rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 642 and 901 => /HTML/BODY/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[2]/DIV rightOf topAlign
+Unmatched sibling in graph 2 : Between 902 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[2]/DIV rightOf topAlign bottomAlign
+
+/HTML/BODY/HEADER/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 642 and 1300 => 75.08339962534308% of parent + -0.8994713746811461
+Unmatched constraint in graph 2: Between 642 and 1300 => 74.92796878025621% of parent + 0.6221053288964716
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: Between 0 and 1119 => 99.47124054901192% of parent + 3.0664081156492804
+Unmatched constraint in graph 1: Between 1120 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 0 and 403 => 100.0% of parent
+Unmatched constraint in graph 2: Between 1109 and 1300 =>  + 1000.0
+Unmatched constraint in graph 2: Between 641 and 1108 => 92.67857142857143% of parent + 0.2857142857142857
+Unmatched contains in graph 1 : Between 0 and 1300   /HTML/BODY/HEADER contains /HTML/BODY/HEADER/DIV    Between 0 and 1300   
+Unmatched contains in graph 2 : Between 0 and 403   /HTML/BODY contains /HTML/BODY/HEADER/DIV    Between 0 and 403   [10,30,1,2382]
+Unmatched contains in graph 2 : Between 1109 and 1300   /HTML/BODY/HEADER contains /HTML/BODY/HEADER/DIV    Between 1109 and 1300   
+Unmatched contains in graph 2 : Between 641 and 1108   /HTML/BODY contains /HTML/BODY/HEADER/DIV    Between 641 and 1108   
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV[2] above leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV[2]/DIV above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV[2]/DIV[2] above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/HEADER leftEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/DIV[2]/DIV[3] above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 641 and 1108 => /HTML/BODY/HEADER/DIV -> /HTML/BODY/FOOTER above leftEdge
+
+/HTML/BODY/HEADER/DIV/DIV
+
+Unmatched constraint in graph 1: Between 642 and 1300 => 24.916600374656706% of parent + 0.8994713746830788
+Unmatched constraint in graph 2: Between 642 and 1300 => 25.072031219743547% of parent + -0.6221053288942736
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+"MISSING-SIBLING-2","(/HTML/BODY/FOOTER/BLOCKQUOTE/CITE-/HTML/BODY/FOOTER/DIV)","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2]/DIV)","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2]/DIV[3])","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)","(*-*)"
+"CENTER-ALIGNMENT","(/HTML/BODY/DIV[2]/DIV/DIV[2]/A/IMG-/HTML/BODY/DIV[2]/DIV/DIV[2])","(/HTML/BODY/DIV[2]/DIV/DIV[2]/A/IMG-/HTML/BODY/DIV[2]/DIV/DIV[2])"
+"LEFT-JUSTIFICATION","(/HTML/BODY/DIV[2]/DIV/DIV[2]/A/IMG-/HTML/BODY/DIV[2]/DIV/DIV[2])","(/HTML/BODY/DIV[2]/DIV/DIV[2]/A/IMG-/HTML/BODY/DIV[2]/DIV/DIV[2])"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2]/DIV[3])","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)","(*-*)"
+"CENTER-ALIGNMENT","(/HTML/BODY/DIV[2]/DIV[2]/DIV/A/IMG-/HTML/BODY/DIV[2]/DIV[2]/DIV)","(/HTML/BODY/DIV[2]/DIV[2]/DIV/A/IMG-/HTML/BODY/DIV[2]/DIV[2]/DIV)"
+"LEFT-JUSTIFICATION","(/HTML/BODY/DIV[2]/DIV[2]/DIV/A/IMG-/HTML/BODY/DIV[2]/DIV[2]/DIV)","(/HTML/BODY/DIV[2]/DIV[2]/DIV/A/IMG-/HTML/BODY/DIV[2]/DIV[2]/DIV)"
+
+640
+
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV-/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2])"
+"MISSING-SIBLING-2","(/HTML/BODY/FOOTER/BLOCKQUOTE/CITE-/HTML/BODY/FOOTER/DIV)","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]-/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV)","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2]/DIV)","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2]/DIV[3])","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)","(*-*)"
+"MISSING-PARENT-2","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2]/DIV[3])","(*-*)"
+
+768
+
+"MISSING-SIBLING-2","(/HTML/BODY/FOOTER/BLOCKQUOTE/CITE-/HTML/BODY/FOOTER/DIV)","(*-*)"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/HEADER/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/HEADER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)","(/HTML/BODY/HEADER/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])"
+
+1024
+
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER-/HTML/BODY/DIV[2]/DIV)"
+"PARENTS DIFFER","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)","(/HTML/BODY/HEADER/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/HEADER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2]/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV-/HTML/BODY/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]-/HTML/BODY/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER-/HTML/BODY/DIV[2]/DIV)"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV-/HTML/BODY/DIV[2])"
+"PARENTS DIFFER","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/HEADER/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/HEADER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/FOOTER)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV[3])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2]/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/FOOTER/DIV-/HTML/BODY/DIV[2])"
+"MISSING-SIBLING-2","(/HTML/BODY/FOOTER/BLOCKQUOTE/CITE-/HTML/BODY/FOOTER/DIV)","(*-*)"
+"PARENTS DIFFER","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[3]-/HTML/BODY/DIV[2])"
+
+1200
+

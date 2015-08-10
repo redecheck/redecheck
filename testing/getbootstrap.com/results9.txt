@@ -1,0 +1,134 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/DIV[2]/DIV/P[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 286.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 286.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[3]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 286.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 286.0
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1170.0
+
+/HTML/BODY/DIV/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1170.0
+
+/HTML/BODY/DIV/DIV/P[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/HEADER/DIV/NAV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1140.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1140.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 285.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 285.0
+
+/HTML/BODY/MAIN/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1170.0
+
+/HTML/BODY/MAIN/DIV/P
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/DIV/DIV/DIV/DIV[3]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 390.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 390.0
+
+/HTML/BODY/DIV[2]/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1170.0
+
+/HTML/BODY/DIV/DIV/P
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/DIV/DIV/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 390.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 390.0
+Unmatched sibling in graph 1 : Between 768 and 1199 => /HTML/BODY/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV/DIV rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 1200 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV/DIV rightOf topAlign
+Unmatched sibling in graph 2 : Between 768 and 1207 => /HTML/BODY/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV/DIV rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 1208 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV/DIV rightOf topAlign
+
+/HTML/BODY/DIV/DIV/DIV/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 390.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 390.0
+Unmatched sibling in graph 1 : Between 768 and 1199 => /HTML/BODY/DIV/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV[3] leftOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 1200 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV[3] leftOf topAlign
+Unmatched sibling in graph 2 : Between 768 and 1207 => /HTML/BODY/DIV/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV[3] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 1208 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV[3] leftOf topAlign
+
+/HTML/BODY/MAIN/DIV/P[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/DIV[2]/DIV/P
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 912.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 912.0
+
+/HTML/BODY/DIV[2]/DIV/DIV/DIV[4]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 285.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 285.0
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1208 and 1300 =>  + 1170.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+
+"MISSING-SIBLING-2","(/HTML/BODY/DIV/DIV/DIV/DIV[2]-/HTML/BODY/DIV/DIV/DIV/DIV[3])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV/DIV/DIV/DIV[2]-/HTML/BODY/DIV/DIV/DIV/DIV)","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV/DIV/DIV/DIV[3]/P-/HTML/BODY/DIV/DIV/DIV/DIV[3]/IMG)","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV/DIV/DIV/DIV/IMG-/HTML/BODY/DIV/DIV/DIV/DIV/P)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV/H2-/HTML/BODY/DIV[2]/DIV/P[2])"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV/P[2]-/HTML/BODY/DIV[2]/DIV/H2)","(*-*)"
+"CENTER-ALIGNMENT","(/HTML/BODY/FOOTER/DIV/DIV/UL-/HTML/BODY/FOOTER/DIV/DIV)","(/HTML/BODY/FOOTER/DIV/DIV/UL-/HTML/BODY/FOOTER/DIV/DIV)"
+"LEFT-JUSTIFICATION","(/HTML/BODY/FOOTER/DIV/DIV/UL-/HTML/BODY/FOOTER/DIV/DIV)","(/HTML/BODY/FOOTER/DIV/DIV/UL-/HTML/BODY/FOOTER/DIV/DIV)"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV/DIV/DIV/DIV/P-/HTML/BODY/DIV/DIV/DIV/DIV/IMG)","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV/DIV/DIV/DIV[3]-/HTML/BODY/DIV/DIV/DIV/DIV[2])"
+"BOTTOM-EDGE-ALIGNMENT","(/HTML/BODY/DIV/DIV/DIV/DIV[3]-/HTML/BODY/DIV/DIV/DIV/DIV)","(/HTML/BODY/DIV/DIV/DIV/DIV[3]-/HTML/BODY/DIV/DIV/DIV/DIV)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV/DIV/DIV/DIV-/HTML/BODY/DIV/DIV/DIV/DIV[2])"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV/DIV/DIV/DIV[3]/IMG-/HTML/BODY/DIV/DIV/DIV/DIV[3]/P)"

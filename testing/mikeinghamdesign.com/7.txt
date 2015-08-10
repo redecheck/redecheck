@@ -1,0 +1,14 @@
+Changed term from 15.0 to 23.0
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 15.0px;
+	padding-right: 15.0px;
+}
+
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 15.0px;
+	padding-right: 23.0px;
+}

@@ -1,0 +1,16 @@
+Changed term from 0.0 to 3.0
+hr {
+	border: solid #eeeeee;
+	border-width: 1.0px 0.0 0.0;
+	clear: both;
+	margin: 0.0;
+	height: 0.0;
+}
+
+hr {
+	border: solid #eeeeee;
+	border-width: 1.0px 0.0 0.0;
+	clear: both;
+	margin: 3.0px;
+	height: 0.0;
+}

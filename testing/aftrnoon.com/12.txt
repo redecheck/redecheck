@@ -1,0 +1,12 @@
+Changed term from 10.0 to 6.0
+cite {
+	display: block;
+	padding-left: 0.0;
+	margin-top: 10.0px;
+}
+
+cite {
+	display: block;
+	padding-left: 0.0;
+	margin-top: 6.0px;
+}

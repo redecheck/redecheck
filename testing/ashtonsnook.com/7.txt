@@ -1,0 +1,12 @@
+Changed media query from 992.0 to 997.0
+@media (max-width: 992.0px) {
+	.boxes {
+		padding: 168.0px 17.0px 168.0px 17.0px;
+	}
+}
+
+@media (max-width: 997.0px) {
+	.boxes {
+		padding: 168.0px 17.0px 168.0px 17.0px;
+	}
+}

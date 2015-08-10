@@ -1,0 +1,10 @@
+Changed term from 20.0 to 11.0
+#header, #teasers, #content, #footer, #dashboard-nav, #progress-line {
+	padding-left: 20.0px !important;
+	padding-right: 20.0px !important;
+}
+
+#header, #teasers, #content, #footer, #dashboard-nav, #progress-line {
+	padding-left: 11.0px !important;
+	padding-right: 20.0px !important;
+}

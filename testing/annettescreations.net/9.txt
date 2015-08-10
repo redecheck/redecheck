@@ -1,0 +1,14 @@
+Changed term from 19.0 to 19.0
+.modal-footer {
+	padding: 19.0px 20.0px 20.0px;
+	margin-top: 15.0px;
+	text-align: right;
+	border-top: 1.0px solid #e5e5e5;
+}
+
+.modal-footer {
+	padding: 19.0px 20.0px 20.0px;
+	margin-top: 15.0px;
+	text-align: right;
+	border-top: 1.0px solid #e5e5e5;
+}

@@ -1,0 +1,168 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/DIV[2]/DIV/DIV[3]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 1170.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[17]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[4]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[16]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[11]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[18]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[14]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[12]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[13]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[6]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV
+
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 1170.0
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 1170.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[7]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[20]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[19]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[10]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 292.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.636363636363453% of parent + 277.27272727272566
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 292.0
+
+/HTML/BODY/DIV[2]/DIV/DIV[15]
+
+Unmatched constraint in graph 1: Between 768 and 1199 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 1: Between 1200 and 1300 =>  + 293.0
+Unmatched constraint in graph 2: Between 768 and 1203 => -3.1818181818181612% of parent + 273.8636363636362
+Unmatched constraint in graph 2: Between 1204 and 1300 =>  + 293.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+

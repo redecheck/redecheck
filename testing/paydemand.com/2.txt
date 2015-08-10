@@ -1,0 +1,236 @@
+Changed media query from 767.0 to 772.0
+@media (max-width: 767.0px) {
+	body {
+		padding-left: 20.0px;
+		padding-right: 20.0px;
+	}
+
+	.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+		margin-left: -20.0px;
+		margin-right: -20.0px;
+	}
+
+	.container-fluid {
+		padding: 0.0;
+	}
+
+	.dl-horizontal dt {
+		float: none;
+		clear: none;
+		width: auto;
+		text-align: left;
+	}
+
+	.dl-horizontal dd {
+		margin-left: 0.0;
+	}
+
+	.container {
+		width: auto;
+	}
+
+	.row-fluid {
+		width: 100.0%;
+	}
+
+	.row, .thumbnails {
+		margin-left: 0.0;
+	}
+
+	.thumbnails>li {
+		float: none;
+		margin-left: 0.0;
+	}
+
+	[class*='span'], .uneditable-input[class*='span'], .row-fluid [class*='span'] {
+		float: none;
+		display: block;
+		width: 100.0%;
+		margin-left: 0.0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.span12, .row-fluid .span12 {
+		width: 100.0%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.row-fluid [class*='offset']:first-child {
+		margin-left: 0.0;
+	}
+
+	.input-large, .input-xlarge, .input-xxlarge, input[class*='span'], select[class*='span'], textarea[class*='span'], .uneditable-input {
+		display: block;
+		width: 100.0%;
+		min-height: 36.0px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		display: block;
+		width: 100.0%;
+		min-height: 36.0px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.input-prepend input, .input-append input, .input-prepend input[class*='span'], .input-append input[class*='span'] {
+		display: inline-block;
+		width: auto;
+	}
+
+	.controls-row [class*='span']+[class*='span'] {
+		margin-left: 0.0;
+	}
+
+	.modal {
+		position: fixed;
+		top: 20.0px;
+		left: 20.0px;
+		right: 20.0px;
+		width: auto;
+		margin: 0.0;
+	}
+
+	.modal.fade {
+		top: -100.0px;
+	}
+
+	.modal.fade.in {
+		top: 20.0px;
+	}
+}
+
+@media (max-width: 772.0px) {
+	body {
+		padding-left: 20.0px;
+		padding-right: 20.0px;
+	}
+
+	.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+		margin-left: -20.0px;
+		margin-right: -20.0px;
+	}
+
+	.container-fluid {
+		padding: 0.0;
+	}
+
+	.dl-horizontal dt {
+		float: none;
+		clear: none;
+		width: auto;
+		text-align: left;
+	}
+
+	.dl-horizontal dd {
+		margin-left: 0.0;
+	}
+
+	.container {
+		width: auto;
+	}
+
+	.row-fluid {
+		width: 100.0%;
+	}
+
+	.row, .thumbnails {
+		margin-left: 0.0;
+	}
+
+	.thumbnails>li {
+		float: none;
+		margin-left: 0.0;
+	}
+
+	[class*='span'], .uneditable-input[class*='span'], .row-fluid [class*='span'] {
+		float: none;
+		display: block;
+		width: 100.0%;
+		margin-left: 0.0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.span12, .row-fluid .span12 {
+		width: 100.0%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.row-fluid [class*='offset']:first-child {
+		margin-left: 0.0;
+	}
+
+	.input-large, .input-xlarge, .input-xxlarge, input[class*='span'], select[class*='span'], textarea[class*='span'], .uneditable-input {
+		display: block;
+		width: 100.0%;
+		min-height: 36.0px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		display: block;
+		width: 100.0%;
+		min-height: 36.0px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.input-prepend input, .input-append input, .input-prepend input[class*='span'], .input-append input[class*='span'] {
+		display: inline-block;
+		width: auto;
+	}
+
+	.controls-row [class*='span']+[class*='span'] {
+		margin-left: 0.0;
+	}
+
+	.modal {
+		position: fixed;
+		top: 20.0px;
+		left: 20.0px;
+		right: 20.0px;
+		width: auto;
+		margin: 0.0;
+	}
+
+	.modal.fade {
+		top: -100.0px;
+	}
+
+	.modal.fade.in {
+		top: 20.0px;
+	}
+}

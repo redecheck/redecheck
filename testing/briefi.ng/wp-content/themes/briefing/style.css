@@ -1,0 +1,1136 @@
+/*
+Theme Name: briefing
+Theme URI: http://underscores.me/
+Author: Underscores.me
+Author URI: http://underscores.me/
+Description: Description
+Version: 1.0-wpcom
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: briefing
+Tags:
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+ briefing is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
+
+Resetting and rebuilding styles have been helped along thanks to the fine work of
+Eric Meyer http://meyerweb.com/eric/tools/css/reset/index.html
+along with Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
+and Blueprint http://www.blueprintcss.org/
+*/
+
+html, body {
+    font-family:"Helvetica", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    color:#000;
+    text-align:left;
+}
+
+div {
+    margin:0;
+}
+
+h1 {
+    font-family:"Crimson Text", serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:30px;
+    margin:0 0 30px;
+}
+
+p {
+    font-size:18px;
+    margin-top:27px;
+    line-height:140%;
+}
+
+.row .background {
+    font-weight:bold; 
+    font-size:19px; 
+    text-align:center; 
+    margin:60px auto;
+    text-transform:uppercase;
+}
+
+.row .background a {
+    text-decoration:none;
+}
+
+.line {
+    width:100%;
+    margin:40px auto;
+}
+
+html, body, #header, #footer, #bottom-form {
+    background-color:#f5f5f5;
+}
+
+/* Header */
+
+#header {
+        display:none;
+}
+
+#header a {
+    color:inherit;
+}
+
+#header a:hover {
+    text-decoration:none;
+}
+
+#header, .line {
+    border-bottom:1px solid;
+    border-color:#ececec;
+}
+
+.logo {
+    letter-spacing:-1.5px;
+}
+
+.form {
+    text-align:center;
+    margin-top:-4px;
+}
+
+.form p {
+    font-size:13px;
+    margin:0 0 2px;
+}
+
+.form p .logo {
+    letter-spacing:-0.5px;
+}
+
+input {
+    background-color:transparent;
+    border-radius:0;
+}
+
+input[type=email] {
+    border-width:0 0 1px 0;
+    border-color:#000;
+    margin-right:9px;
+    width:160px;
+    position:relative;
+    padding-bottom:2px;
+}
+
+input[type=submit] {
+    font-size:6px;
+    text-transform:uppercase;
+    padding:5px 5px 4px;
+    border:1px solid #000;
+    background-color:transparent;
+    letter-spacing:1px;
+    position:relative;
+    top:3px;
+}
+
+::-webkit-input-placeholder {
+    color:#c6c6c6;
+}
+
+input[type=submit]:hover {
+    background-color:#000;
+    color:#fff;
+    transition:background-color 0.3s, color 0.3s;
+}
+
+textarea:focus, input:focus {
+    outline:none;
+}
+
+/* Intro */
+
+#intro {
+    padding:40px 0;
+    text-align:center;
+    border-top:3px solid #000;
+    background-color:#fff;
+}
+
+#greeting {
+    border:1px solid #000;
+    padding:4px 4px 4px 6px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:7px;
+    display:inline;
+    line-height:350%;
+}
+
+#intro h1, .page-h1 {
+    font-family:"Crimson Text", serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:28px;
+    letter-spacing:-1px;
+    margin-top:15px;
+    margin-bottom:12px;
+}
+
+.year {
+    display:none;
+}
+
+#intro-line {
+    width:90%;
+    margin:6px auto 11px;
+}
+
+#teaser {
+    font-size:22px;
+    line-height:130%;
+    margin-top:0;
+}
+
+.arrow, .arrow-cover {
+    width:0;
+    height:0;
+    border-width: 15px 15px 0 15px;
+    -webkit-transform:rotate(360deg);
+}
+
+.arrow {
+  margin:50px auto 0;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+}
+
+.arrow-cover {
+  margin:0 auto;
+  position:relative;
+  top:-16px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+#arrow-link {
+    height:15px;
+    width:30px;
+    background-color:transparent;
+    position:relative;
+    top:-30px;
+    margin:0 auto;
+}
+
+/* Stories */
+
+.row {
+    padding:60px 0;
+    background-color:#fff;
+}
+
+.row a {
+    color:inherit;
+}
+
+.row p a {
+	border-bottom:1px solid;
+}
+
+.row p a:hover {
+    text-decoration:none;
+}
+
+.dark {
+    background-color:#000;
+    color:#fff;
+}
+
+.dark .line {
+    opacity:0.3;
+}
+
+/* Media logos */
+
+.media-logos {
+    text-align:right;
+        margin:0;
+}
+
+.media-logos img {
+    margin:35px auto;
+    display:block;
+}
+
+.last {
+    margin-bottom:10px!important;
+}
+
+.dark .media-logos img {
+    opacity:0.5;
+}
+
+/* retired */
+.bloomberg-businessweek {
+    height:28px;
+    width:auto;
+}
+
+.bloomberg {
+    height:31px;
+    width:auto;
+}
+
+.forbes {
+    width:85px;
+    height:auto;
+}
+
+.cnn {
+    width:50px;
+    height:auto;
+}
+
+.npr {
+    width:80px;
+}
+
+.abc {
+    height:36px;
+    width:auto;
+}
+
+.nyt, .wsj, .wapo {
+    width:160px;
+    height:auto;
+}
+
+.huffpo {
+    width:165px;
+}
+
+.cbsnews {
+    width:110px;
+    height:auto;
+}
+
+.cnbc {
+    width:43px;
+    height:auto;
+}
+
+.espn, .time {
+    width:80px;
+    height:auto;
+}
+
+.usatoday {
+    width:80px;
+    height:auto;
+}
+
+.yahoo {
+    width:100px;
+}
+
+/* Bottom Form */
+
+#bottom-form {
+    padding-bottom:40px;
+    padding-top:40px;
+    border-top:1px solid #ececec;
+}
+
+/* Wufoo */
+
+#comment, label {
+    display:none;
+}
+
+/* Nav */
+
+.nav {
+    background-color:#333333;
+        text-align:center;
+        color:#fff;
+        padding:6px 0 42px;
+}
+
+.nav .nav-category {
+        margin:38px 0 11px;
+        font-size:12px;
+        text-transform:uppercase;
+    }
+
+ .nav .nav-item {
+        margin: 7px 0 0;
+        font-size:16px;
+    }
+
+.nav .nav-item a {
+        text-decoration:none;
+	border:none;
+    }
+
+.nav .nav-item a:hover {
+        text-decoration:underline;
+    }
+
+/* Footer */
+
+#footer {
+    font-size:12px;
+    text-align:center;
+    font-family:"Crimson Text", serif;
+    font-style:italic;
+    letter-spacing:-0.5px;
+        padding-top:0;
+        padding-bottom:25px;
+}
+
+#footer a {
+    color:inherit;
+    text-decoration:underline;
+}
+
+.social-icon {
+    width:50px;
+    height:auto;
+    margin-bottom:18px;
+    margin-right:1px;
+}
+
+/* Other pages */
+
+input[type=button] {
+  font-size:8px; 
+  font-weight:700; 
+  letter-spacing:3px; 
+  padding:10px 8px 9px 12px; 
+  margin-top:40px;
+  border:1px solid #000;
+  text-transform:uppercase;
+}
+
+input[type=button]:hover {
+    background-color:#000;
+    color:#fff;
+    transition:background-color 0.3s, color 0.3s;
+}
+
+.video-embed {
+    width:210px;
+    height:157px; 
+    margin:35px auto 0;
+}
+
+/* Archive */
+
+
+.archive-container .col-xs-12 {
+    padding:0;
+}
+
+.archive-container .row {
+    padding:0;
+}
+
+.archive-container .row input[type=button] {
+    font-family:"Crimson Text", serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:28px;
+    letter-spacing:-1px;
+    margin:0;
+    padding:30px 0;
+    text-align:center;
+    background-color:#fff;
+    border-bottom:1px solid #ececec;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    width:100%;
+    height:100%;
+    text-transform:none;
+    transition:background-color 0.3s;
+}
+
+.archive-container .row input[type=button]:hover {
+    color:inherit;
+    background-color:#ececec;
+}
+
+/* Timeline, Map */
+
+.map .row {
+    text-align:center;
+    padding:0;
+}
+
+.map .map-row {
+    padding-top:45px;
+}
+
+.timeline {
+    text-align:center;
+}
+
+.timeline #greeting, .map #greeting {
+    font-size:8px;
+}
+
+.timeline .page-h1, .map .page-h1 {
+    font-size:33px;
+    line-height:110%;
+    letter-spacing:0;
+}
+
+.timeline .timeline-intro {
+    text-align:center;    
+}
+
+.timeline-lines-hor-long {
+    width:100%;
+    height:1px;
+    border-bottom:1px solid;
+    margin:50px auto 0;
+    border-color:#dddddd;
+}
+
+.timeline-lines-vertical {
+    width:1px;
+    border-right:1px solid;
+    height:150px;
+    margin:0 auto;
+    border-color:#dddddd;
+}
+
+.timeline-lines-hor-short {
+    width:75px;
+    height:1px;
+    border-bottom:1px solid;
+    margin:0 auto 45px;
+    border-color:#e2e2e2;
+}
+
+.timeline-date {
+    color:#ffffff;
+    background-color:#000000;
+    text-transform:uppercase;
+    padding:5px 8px 5px 8px;
+    font-size:10px;
+    display:inline;
+}
+
+.timeline-date .month {
+    letter-spacing:1px;
+}
+
+.timeline h2 {
+    font-family: "Crimson Text", serif;
+    font-style:italic;
+    font-size:35px;
+    margin:30px auto 0;
+}
+
+.timeline p {
+    font-size:18px;
+    margin:20px auto 0;
+}
+
+.map p {
+    font-size:18px;
+    margin:0 auto 35px;
+}
+
+.map p {
+    text-align:center;
+}
+
+.timeline p {
+    max-width:700px;
+    text-align:left;
+}
+
+.center-timeline p {
+    text-align:center;
+}
+
+.map-intro {
+    max-width:600px;
+}
+
+.map img {
+    width:100%;
+    margin-bottom:15px;
+}
+
+.map-legend {
+    padding:0;
+}
+
+.map-legend-color {
+        width:50px;
+        border-top:1px solid;
+        height:1px;
+        margin:0 auto;
+}
+
+.map-legend p {
+        margin:13px auto 25px;
+        font-size:13px;
+        text-align:center;
+}
+
+.map-credit-line {
+    display:none;
+    height:1px;
+    margin:20px auto;
+    border-top:1px solid #ececec;
+}
+
+.map-credit p {
+        font-size:9px;
+        text-align:center;
+        margin:20px auto 30px;
+        color:#a3a3a3;
+}
+
+.map-credit p a {
+        text-decoration:none;
+    }
+
+/* Briefing Beat */
+
+.beat-intro {
+    background-image:url('http://briefi.ng/briefing-beat/briefing_beat_background.jpg');
+    background-repeat:no-repeat;
+    padding:0;
+    text-align:center;
+    overflow:hidden;
+    background-position:0 -35px;
+    background-size:132% auto;
+}
+
+.pink-pattern {
+    position:absolute;
+    height:21px;
+    width:auto;
+    left:0;
+    top:0;
+}
+
+.beat-logo {
+    margin:55px auto 43px;;
+    width:175px;
+    height:auto;
+    position:relative;
+    right:53px;
+}
+
+.beat-logo-in-post {
+    width:170px;
+    height:auto;
+    margin-top:40px;
+}
+
+.beat-row {
+    padding:10px 0;
+}
+
+.beat-row {
+    text-align:center;
+}
+
+.album {
+    width:100%;
+}
+
+.beat-text {
+    padding-left:0;
+    text-align:center;
+}
+
+.beat-row h1 {
+    font-size:40px;
+    font-weight:normal;
+    line-height:80%;
+    margin:35px 0 0;
+}
+
+.beat-line {
+    border-bottom:1px solid #ececec;
+    height:1px;
+    width:100%;
+    margin:30px 0;
+}
+
+.track, .artist {
+    display:block;
+}
+
+.track {
+    margin-right:0;
+}
+
+.artist {
+    margin-top:30px;
+}
+
+.beat-cat {
+    color:#db6bc6;
+    font-weight:bold;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin:0 0 9px;
+    text-align:center;
+}
+
+.beat-content {
+    font-family: 'Neue Helvetica W01';
+    font-size:30px;
+    margin:0;
+    line-height:115%;
+    font-weight:200;
+}
+
+.spotify {
+    margin-top:15px;
+}
+
+.spotify-logo {
+    width:28px;
+    height:auto;
+}
+
+.spotify-link {
+    font-size:14px;
+    margin-left:8px;
+    letter-spacing:-0.5px;
+    font-weight:bold;
+}
+
+.beat-divider-line {
+    border-bottom:2px solid #000000;
+    height:1px;
+}
+
+.beat-divider-line-cover-div {
+    background-color:#ffffff;
+    padding:0;
+    margin:0;
+}
+
+.beat-divider-line-cover {
+    border-bottom:2px solid #ffffff;
+    height:1px;
+    position:relative;
+    bottom:2px;
+}
+
+.beat-spacer {
+    height:50px;
+    padding:0;
+}
+
+.beat-in-post {
+    background-color:#f5f5f5;
+    padding:70px 0;
+}
+
+.beat-in-post .beat-line {
+    border-bottom:1px solid #e6e6e6;
+}
+
+.beat-link {
+    background-color:#db6bc6;
+    padding:23px 0;
+    color:#ffffff;
+    text-align:center;
+    font-family: 'Avenir Next W01';
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+.beat-link p {
+    font-size:12px;
+    margin:0;
+}
+
+.beat-link a {
+    font-weight:600;
+}
+
+/* Media Query: Small */
+@media (min-width: 768px) {
+    
+    h1 {
+        font-size:43px;
+        line-height:125%;
+        margin:0;
+    }
+    
+    p {
+        font-size:21px;
+    }
+            
+    #header {
+        padding-top:23px;
+        padding-bottom:19px;
+        display:block;
+    }
+
+    #header p {
+        margin-top:3px;
+    }
+
+    #logo {
+        display:inline;
+        height:auto;
+        width:121px;
+    }
+    
+    #subtitle {
+        display:block;
+    }
+    
+    .form {
+        text-align:right;
+    }
+    
+    .form p {
+        font-size:15px;
+        margin-bottom:7px;
+    }
+    
+    input[type=email] {
+        width:208px;
+    }
+    
+    input[type=submit]{
+        font-size:8px;
+        top:1px;
+    }
+    
+    #greeting {
+        font-size:9px;
+        padding:8px 7px 8px 12px;
+        letter-spacing:5px;
+        background-color:transparent;
+        color:#000;
+    }
+    
+    #intro {
+        border-top:none;
+    }
+
+    #intro h1 {
+        font-size:63px;
+    }
+
+    #intro h1, .page-h1 {
+        letter-spacing:-2px;
+        margin:35px auto 22px;
+        line-height:110%;
+    }
+
+    .page-h1 {
+        font-size:70px;
+        max-width:900px;
+    }
+    
+    #intro-line {
+        margin:6px auto 22px;
+    }
+    
+    #teaser {
+        font-size:32px;
+        line-height:130%;
+    }
+    
+    .arrow, .arrow-cover {
+        border-width: 30px 30px 0 30px;
+    }
+
+    .arrow {
+        margin:90px auto 0;
+    }
+
+    .arrow-cover {
+        top:-31px;
+    }
+
+    #arrow-link {
+        height:30px;
+        width:60px;
+        top:-60px;
+    }
+    
+    .row {
+        padding:125px 0 115px;
+    }
+    
+    .media-logos img {
+        margin:0 40px 0 0;
+    display:inline;
+    }
+
+    .email-icon {
+    margin-right:0
+    }
+    
+    .last {
+        margin-right:0!important;
+       margin-bottom:0!important;
+    }
+
+    .nav {
+        padding:11px 0 40px;
+    }
+
+    .nav .nav-category {
+        margin-bottom:14px;
+    }
+    
+    #bottom-form {
+        display:none;
+    }
+    
+    #footer {
+        font-size:17px;
+        border-top: 1px solid #ececec;
+        padding:40px 0;
+    }
+
+    input[type=button]{
+      padding:9px 7px 8px 10px; 
+      font-size:11px;
+      margin-top:60px;
+    }
+
+    .archive-container .row input[type=button] {
+        font-size:63px;
+        padding:60px 0;
+    }
+
+    .timeline #greeting, .map #greeting {
+        font-size:10px;
+    }
+
+    .timeline .page-h1, .map .page-h1 {
+        line-height:105%;
+        font-size:70px;
+        letter-spacing:-1px;
+    }
+
+    .timeline .page-h1 {
+        margin-bottom:15px;
+    }
+
+    .timeline .timeline-intro {
+        font-size:30px;
+        line-height:136%;
+    }
+
+    .timeline-lines-hor-long {
+        width:400px;
+        margin-top:50px;
+    }
+
+    .timeline-lines-hor-short {
+        margin:0 auto 50px;
+    }
+
+    .timeline-date {
+        font-size:12px;
+        padding:5px 9px 6px 8px;
+    }
+
+    .timeline h2 {
+        font-size:63px;
+        letter-spacing:-1px;
+        margin:40px auto 24px;
+    }
+
+    .timeline p {
+        font-size:20px;
+        margin:0 auto 25px;
+    }
+
+    .map-legend-color {
+        width:45px;
+        border-top:3px solid;
+        margin-left:0;
+    }
+
+    .map p {
+        font-size:30px;
+        line-height:127%;
+        margin:23px auto 50px;
+    }
+
+    .map .map-row {
+        padding-top:125px;
+    }
+
+    .map img {
+        margin-bottom:0;
+    }
+
+    .map .map-legend {
+        padding:60px 0;
+    }
+
+    .map-legend p {
+        font-size:18px;
+        margin:13px 0 0;
+        text-align:left;
+    }
+
+    .map-credit-line {
+        width:60px;
+        display:block;
+    }
+
+    .map-credit p {
+        font-size:14px;
+        margin:25px auto 50px;
+    }
+    
+    .video-embed {
+        width:420px;
+        height:315px; 
+        margin:50px auto 0;
+    }
+
+    .beat-spacer {
+        height:75px;
+        padding:0;
+    }
+
+    .beat-divider {
+    	padding:0;
+    }
+
+    .beat-row {
+        padding:85px 0;
+    }
+
+    .beat-row {
+	text-align:left;
+    }
+
+    .beat-intro {
+	background-attachment:fixed;
+	background-position:0 -105px;
+        background-size:1440px auto;
+    }
+
+    .pink-pattern {
+        left:-500px;
+    }
+
+    .beat-logo {
+        margin:55px auto;
+        width:500px;
+        height:auto;
+        right:100px;
+    }
+
+    .beat-logo-in-post {
+        width:295px;
+        height:auto;
+        margin-top:0;
+	margin-bottom:5px;
+    }
+
+    .album {
+        width:100%;
+	max-width:300px;
+    }
+
+    .beat-text {
+        padding-left:50px;
+        text-align:left;
+    }
+
+    .beat-row h1 {
+        font-size:65px;
+	line-height:95%;
+        margin:0;
+    }
+
+    .track, .artist {
+        display:inline-block;
+    }
+
+    .beat-line {
+	margin-top:23px;
+	margin-bottom:0;
+    }
+
+    .beat-content {
+            font-size:40px;
+	    line-height:120%;
+    }
+
+    .track {
+        margin-right:70px;
+    }
+
+    .artist {
+        margin-top:0;
+    }
+
+    .beat-cat {
+        text-align:left;
+	margin:27px 0 10px;
+    }
+
+    .spotify {
+	margin-top:33px;
+    }
+
+    .beat-in-post {
+	padding:125px 0 100px;
+    }
+
+    .beat-link {
+        padding:30px 0;
+    }
+
+    .beat-link p {
+        font-size:16px;
+    }
+    
+}
+
+/* Media query: Medium */
+@media (min-width:992px){
+
+      #greeting {
+        font-size:10px;
+    }
+
+    .year {
+        display:inline;
+    }
+
+    .beat-logo {
+	right:175px;
+    }
+}
+
+/* Media Query: Large */
+@media (min-width: 1200px) {
+    .beat-logo {
+	right:250px;
+}
+
+/* Media Query: Extra Large */
+@media (min-width: 1350px) {
+    .beat-logo {
+	right:350px;
+    }
+
+    #intro h1 {
+        font-size:70px;
+    }
+}

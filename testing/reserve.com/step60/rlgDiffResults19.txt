@@ -1,0 +1,5 @@
+
+/HTML/BODY/FOOTER/DIV/DIV[2]/DIV
+
+Unmatched constraint in graph 1: 1024 -> 1300 :  + 150
+Unmatched constraint in graph 2: 1024 -> 1300 :  + 146

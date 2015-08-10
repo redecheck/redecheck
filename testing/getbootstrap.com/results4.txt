@@ -1,0 +1,37 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/HEADER/DIV/NAV/UL[2]
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 1300 =>  + 123.0
+Unmatched constraint in graph 2: Between 0 and 772 => 100.0% of parent
+Unmatched constraint in graph 2: Between 773 and 1300 =>  + 123.0
+Unmatched contains in graph 1 : Between 0 and 767   /HTML/BODY/HEADER/DIV/NAV contains /HTML/BODY/HEADER/DIV/NAV/UL[2]    Between 0 and 767   [0,216,0,8]
+Unmatched contains in graph 1 : Between 768 and 1300   /HTML/BODY/HEADER/DIV contains /HTML/BODY/HEADER/DIV/NAV/UL[2]    Between 768 and 1300   
+Unmatched contains in graph 2 : Between 0 and 772   /HTML/BODY/HEADER/DIV/NAV contains /HTML/BODY/HEADER/DIV/NAV/UL[2]    Between 0 and 772   [0,216,0,8]
+Unmatched contains in graph 2 : Between 773 and 1300   /HTML/BODY/HEADER/DIV contains /HTML/BODY/HEADER/DIV/NAV/UL[2]    Between 773 and 1300   
+Unmatched sibling in graph 1 : Between 0 and 768 => /HTML/BODY/HEADER/DIV/NAV/UL[2] -> /HTML/BODY/HEADER/DIV/NAV/UL below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/HEADER/DIV/NAV/UL[2] -> /HTML/BODY/HEADER/DIV/NAV topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 773 => /HTML/BODY/HEADER/DIV/NAV/UL[2] -> /HTML/BODY/HEADER/DIV/NAV/UL below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 773 and 1300 => /HTML/BODY/HEADER/DIV/NAV/UL[2] -> /HTML/BODY/HEADER/DIV/NAV topAlign bottomAlign
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+"PARENTS DIFFER","(/HTML/BODY/HEADER/DIV/NAV/UL[2]-/HTML/BODY/HEADER/DIV)","(/HTML/BODY/HEADER/DIV/NAV/UL[2]-/HTML/BODY/HEADER/DIV/NAV)"
+"MISSING-SIBLING-2","(/HTML/BODY/HEADER/DIV/NAV/UL[2]-/HTML/BODY/HEADER/DIV/NAV)","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV/NAV/UL[2]-/HTML/BODY/HEADER/DIV/NAV/UL)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/HEADER/DIV/DIV-/HTML/BODY/HEADER/DIV/NAV/UL[2])"
+
+1024
+
+
+1200
+

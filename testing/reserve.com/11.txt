@@ -1,0 +1,10 @@
+Changed term from 10.0 to 1.0
+h1, .h1, h2, .h2, h3, .h3 {
+	margin-top: 20.0px;
+	margin-bottom: 10.0px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+	margin-top: 20.0px;
+	margin-bottom: 1.0px;
+}

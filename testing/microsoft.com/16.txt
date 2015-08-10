@@ -1,0 +1,144 @@
+Changed media query from 42.5 to 38.5
+@media screen AND (min-width: 42.5em) {
+	.hero .text {
+		position: absolute;
+		width: 100.0%;
+		top: auto;
+		bottom: 0.0;
+		pointer-events: auto;
+	}
+
+	.hero .text-container {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 100.0%;
+		max-width: 1600.0px;
+		margin: 0.0;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.heroitem .text {
+		cursor: pointer;
+	}
+
+	.hero .box-right .text-container {
+		text-align: right;
+	}
+
+	.box {
+		pointer-events: auto;
+		text-align: center;
+		display: -moz-inline-stack;
+		display: inline-block;
+		zoom: 1.0;
+		font-size: 1.0em;
+		width: 100.0%;
+		padding: 0.0;
+		min-height: 0.0;
+		margin-left: 0.0;
+	}
+
+	.box .box-img img {
+		margin-bottom: 1.4em;
+		margin-top: 0.4em;
+		max-height: 2.1em;
+	}
+
+	.box h3.box-title {
+		line-height: 1.0em;
+		margin: 0.0 0.0 0.15em;
+	}
+
+	.box .box-description {
+		padding-bottom: 0.0;
+	}
+
+	.box li.box-description {
+		font-size: 1.0em;
+	}
+
+	.hero .text {
+		top: auto;
+		bottom: 0.0;
+	}
+
+	.box li.box-actions {
+		clear: both;
+		display: inline-block;
+		margin-bottom: 0.5em;
+	}
+}
+
+@media screen AND (min-width: 38.5em) {
+	.hero .text {
+		position: absolute;
+		width: 100.0%;
+		top: auto;
+		bottom: 0.0;
+		pointer-events: auto;
+	}
+
+	.hero .text-container {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 100.0%;
+		max-width: 1600.0px;
+		margin: 0.0;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.heroitem .text {
+		cursor: pointer;
+	}
+
+	.hero .box-right .text-container {
+		text-align: right;
+	}
+
+	.box {
+		pointer-events: auto;
+		text-align: center;
+		display: -moz-inline-stack;
+		display: inline-block;
+		zoom: 1.0;
+		font-size: 1.0em;
+		width: 100.0%;
+		padding: 0.0;
+		min-height: 0.0;
+		margin-left: 0.0;
+	}
+
+	.box .box-img img {
+		margin-bottom: 1.4em;
+		margin-top: 0.4em;
+		max-height: 2.1em;
+	}
+
+	.box h3.box-title {
+		line-height: 1.0em;
+		margin: 0.0 0.0 0.15em;
+	}
+
+	.box .box-description {
+		padding-bottom: 0.0;
+	}
+
+	.box li.box-description {
+		font-size: 1.0em;
+	}
+
+	.hero .text {
+		top: auto;
+		bottom: 0.0;
+	}
+
+	.box li.box-actions {
+		clear: both;
+		display: inline-block;
+		margin-bottom: 0.5em;
+	}
+}

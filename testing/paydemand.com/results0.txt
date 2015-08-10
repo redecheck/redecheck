@@ -1,0 +1,101 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/FOOTER/DIV/NAV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched contains in graph 1 : Between 0 and 767   /HTML/BODY/FOOTER/DIV contains /HTML/BODY/FOOTER/DIV/NAV    Between 0 and 767   
+Unmatched contains in graph 2 : Between 0 and 763   /HTML/BODY/FOOTER/DIV contains /HTML/BODY/FOOTER/DIV/NAV    Between 0 and 763   
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -40.0
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 724.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent + -40.0
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 724.0
+
+/HTML/BODY/ARTICLE/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -40.0
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 724.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent + -40.0
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 724.0
+
+/HTML/BODY/FOOTER/DIV/NAV/UL
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 1300 =>  + 569.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched constraint in graph 2: Between 764 and 1300 =>  + 569.0
+Unmatched contains in graph 1 : Between 0 and 767   /HTML/BODY/FOOTER/DIV/NAV contains /HTML/BODY/FOOTER/DIV/NAV/UL    Between 0 and 767   
+Unmatched contains in graph 1 : Between 768 and 1300   /HTML/BODY/FOOTER/DIV contains /HTML/BODY/FOOTER/DIV/NAV/UL    Between 768 and 1300   
+Unmatched contains in graph 2 : Between 0 and 763   /HTML/BODY/FOOTER/DIV/NAV contains /HTML/BODY/FOOTER/DIV/NAV/UL    Between 0 and 763   
+Unmatched contains in graph 2 : Between 764 and 1300   /HTML/BODY/FOOTER/DIV contains /HTML/BODY/FOOTER/DIV/NAV/UL    Between 764 and 1300   
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -40.0
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 724.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent + -40.0
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 724.0
+
+/HTML/BODY/FOOTER/DIV/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 1300 =>  + 117.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched constraint in graph 2: Between 764 and 1300 =>  + 117.0
+Unmatched sibling in graph 1 : Between 0 and 768 => /HTML/BODY/FOOTER/DIV/DIV -> /HTML/BODY/FOOTER/DIV/NAV below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/FOOTER/DIV/DIV -> /HTML/BODY/FOOTER/DIV/NAV/UL rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 764 => /HTML/BODY/FOOTER/DIV/DIV -> /HTML/BODY/FOOTER/DIV/NAV below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 764 and 1300 => /HTML/BODY/FOOTER/DIV/DIV -> /HTML/BODY/FOOTER/DIV/NAV/UL rightOf topAlign bottomAlign
+
+/HTML/BODY/ARTICLE/DIV/DL
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 210.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 210.0
+Unmatched sibling in graph 1 : Between 0 and 767 => /HTML/BODY/ARTICLE/DIV/DL -> /HTML/BODY/ARTICLE/DIV/DL[2] above leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/ARTICLE/DIV/DL -> /HTML/BODY/ARTICLE/DIV/DL[2] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 763 => /HTML/BODY/ARTICLE/DIV/DL -> /HTML/BODY/ARTICLE/DIV/DL[2] above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 764 and 1300 => /HTML/BODY/ARTICLE/DIV/DL -> /HTML/BODY/ARTICLE/DIV/DL[2] leftOf topAlign bottomAlign
+
+/HTML/BODY/ARTICLE/DIV/DL[3]
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 210.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 210.0
+Unmatched sibling in graph 1 : Between 0 and 767 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 767 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL[2] below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL[2] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 763 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 764 and 1300 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 763 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL[2] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 764 and 1300 => /HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL[2] rightOf topAlign bottomAlign
+
+/HTML/BODY/ARTICLE/DIV/DL[2]
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent
+Unmatched constraint in graph 1: Between 768 and 979 =>  + 303.0
+Unmatched constraint in graph 2: Between 0 and 763 => 100.0% of parent
+Unmatched constraint in graph 2: Between 764 and 979 =>  + 303.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+
