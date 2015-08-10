@@ -23,39 +23,89 @@ import java.util.Random;
 import java.util.Set;
 
 public class Redecheck {
-    public static String OUTPUT = "./output/";
+    public static String OUTPUT = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/output/";
     public static int SLEEP_TIME = 250;
     public static String url;
     static String baseUrl = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
+    public static String current;
 
+    public static int startWidth = 400;
+    public static int finalWidth = 1300;
 
-    public static void main(String[] args) {
-//        String oracle = args[0];
-//        String test = args[1];
-        System.out.println("Hello World");
-//        System.out.println(test);
+    public static void main(String[] args) throws InterruptedException, IOException {
+        current = new java.io.File( "." ).getCanonicalPath();
+        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Documents/Workspace/JARs/chromedriver");
+        String oracle = args[0];
+        String test = args[1];
+        String ss = args[2];
+        int stepSize = Integer.valueOf(ss);
+        System.out.println(oracle);
+        System.out.println(test);
+
+        String[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
+
+        runTool(oracle, test, sampleWidths);
+    }
+
+    public static void runTool(String oracle, String test, String[] widths) throws InterruptedException {
+        url = baseUrl + oracle + "/index.html";
+        capturePageModel(url, widths);
+
+        url = baseUrl + test + "/index.html";
+        capturePageModel(url, widths);
+    }
+
+    public static String[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
+        int currentWidth = startWidth;
+        ArrayList<String> widths = new ArrayList<String>();
+        widths.add(Integer.toString(startWidth));
+
+        while (currentWidth + stepSize <= finalWidth) {
+            currentWidth = currentWidth + stepSize;
+            widths.add(Integer.toString(currentWidth));
+        }
+        if (!widths.contains(Integer.toString(finalWidth))) {
+            widths.add(Integer.toString(finalWidth));
+        }
+
+        String[] widthsArray = new String[widths.size()];
+
+        int counter = 0;
+        for (String s : widths) {
+            widthsArray[counter] = s;
+            counter++;
+        }
+        return widthsArray;
     }
 
     public static void capturePageModel(String url, String[] widths) throws InterruptedException {
         WebDriver driver = new ChromeDriver();
         try {
             driver.get(url);
-            Thread.sleep(2500);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            String dropdownScript = Utils.getPkgFileContents(Redecheck.class, "dropdown.js");
+//            Thread.sleep(2500);
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//            String dropdownScript = Utils.getPkgFileContents(Redecheck.class, "dropdown.js");
 //			js.executeScript(dropdownScript);
             Thread.sleep(1000);
 
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
+
                 String outFolder;
                 int w = Integer.parseInt(widths[i]);
-                outFolder = OUTPUT + url.replaceAll("/", "") + "/" + "width" + w;
-                if (new File(outFolder + "/dom.js").exists() == false) {
+                System.out.println(w);
+                outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
+                File theDir = new File(outFolder);
+                if (!theDir.exists()) {
                     driver.manage().window().setSize(new Dimension(w, 600));
                     Thread.sleep(SLEEP_TIME);
-
-                    FileUtils.forceMkdir(new File(outFolder));
+                    boolean result = false;
+                    try{
+                        theDir.mkdir();
+                        result = true;
+                    } catch (SecurityException se) {
+                        //handle it
+                    }
                     FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, counter));
                 }
                 counter++;
@@ -68,19 +118,11 @@ public class Redecheck {
         }
     }
 
-    public static String extractDOM(String url, WebDriver driver, int c) {
+    public static String extractDOM(String url, WebDriver driver, int c) throws IOException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        String current = new java.io.File( "." ).getCanonicalPath();
+        String script = Utils.readFile(current +"/../src/main/java/twalsh/redecheck/webdiff2.js");
+        return (String) js.executeScript(script);
 
-        String script = Utils.getPkgFileContents(Redecheck.class,"webdiff2.js");
-
-//        if (c == 0) {
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                System.out.println("Failed to sleep");
-//            }
-//        }
-        String domStr = (String) js.executeScript(script);
-        return domStr;
     }
 }
