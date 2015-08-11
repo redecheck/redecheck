@@ -11,4 +11,8 @@ public class VisibilityConstraint {
         this.appear = a;
         this.disappear = d;
     }
+
+    public void setDisappear(int d) {
+        this.disappear = d;
+    }
 }

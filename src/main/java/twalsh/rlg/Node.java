@@ -18,6 +18,10 @@ public class Node {
         this.constraints = new ArrayList<WidthConstraint>();
     }
 
+    public Node(String xpath) {
+        this.xpath = xpath;
+    }
+
     public String getXpath() {
         try {
             return this.xpath;

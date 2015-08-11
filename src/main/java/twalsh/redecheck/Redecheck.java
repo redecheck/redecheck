@@ -9,8 +9,10 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 
+import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;
+import xpert.ag.AlignmentGraph;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,7 +30,6 @@ import java.util.Set;
 public class Redecheck {
     public static String OUTPUT = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/output/";
     public static int SLEEP_TIME = 250;
-    public static String url;
     static String baseUrl = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
     public static String current;
 
@@ -51,11 +52,22 @@ public class Redecheck {
     }
 
     public static void runTool(String oracle, String test, String[] widths) throws InterruptedException {
-        url = baseUrl + oracle + "/index.html";
-        capturePageModel(url, widths);
+        String oracleUrl = baseUrl + oracle + "/index.html";
+        capturePageModel(oracleUrl, widths);
 
-        url = baseUrl + test + "/index.html";
-        capturePageModel(url, widths);
+        String testUrl = baseUrl + test + "/index.html";
+        capturePageModel(testUrl, widths);
+
+        Map<String, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
+        ArrayList<AlignmentGraph> oracleAgs = new ArrayList<AlignmentGraph>();
+
+        for (String width : widths) {
+            DomNode dn = oracleDoms.get(width);
+            AlignmentGraph ag = new AlignmentGraph(dn);
+            oracleAgs.add(ag);
+        }
+
+        ResponsiveLayoutGraph rlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
     }
 
     public static String[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
@@ -96,7 +108,6 @@ public class Redecheck {
 
                 String outFolder;
                 int w = Integer.parseInt(widths[i]);
-                System.out.println(w);
                 outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
                 File theDir = new File(outFolder);
                 if (!theDir.exists()) {
@@ -128,7 +139,7 @@ public class Redecheck {
         return (String) js.executeScript(script);
     }
 
-    private static Map<String, DomNode> loadDoms(String[] widths, String url, boolean testing) {
+    private static Map<String, DomNode> loadDoms(String[] widths, String url) {
         Map<String, DomNode> doms = new HashMap<String, DomNode>();
         JsonDomParser parser = new JsonDomParser();
         for (String width : widths) {
