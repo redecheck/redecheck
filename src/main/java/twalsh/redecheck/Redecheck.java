@@ -9,6 +9,7 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;
@@ -36,9 +37,11 @@ public class Redecheck {
     public static int startWidth = 400;
     public static int finalWidth = 1300;
 
+    public static WebDriver driver;
+
     public static void main(String[] args) throws InterruptedException, IOException {
         current = new java.io.File( "." ).getCanonicalPath();
-        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Documents/Workspace/JARs/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Documents/Workspace/JARs/chromedriver");
         String oracle = args[0];
         String test = args[1];
         String ss = args[2];
@@ -46,57 +49,59 @@ public class Redecheck {
         System.out.println(oracle);
         System.out.println(test);
 
-        String[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
+        int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
 
         runTool(oracle, test, sampleWidths);
     }
 
-    public static void runTool(String oracle, String test, String[] widths) throws InterruptedException {
+    public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
         String oracleUrl = baseUrl + oracle + "/index.html";
+        driver = new PhantomJSDriver();
+        driver.get(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
-        String testUrl = baseUrl + test + "/index.html";
-        capturePageModel(testUrl, widths);
+//        String testUrl = baseUrl + test + "/index.html";
+//        capturePageModel(testUrl, widths);
 
-        Map<String, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
+        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
         ArrayList<AlignmentGraph> oracleAgs = new ArrayList<AlignmentGraph>();
 
-        for (String width : widths) {
+        for (int width : widths) {
             DomNode dn = oracleDoms.get(width);
             AlignmentGraph ag = new AlignmentGraph(dn);
             oracleAgs.add(ag);
         }
 
-        ResponsiveLayoutGraph rlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        ResponsiveLayoutGraph rlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
     }
 
-    public static String[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
+    public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
         int currentWidth = startWidth;
-        ArrayList<String> widths = new ArrayList<String>();
-        widths.add(Integer.toString(startWidth));
+        ArrayList<Integer> widths = new ArrayList<Integer>();
+        widths.add(startWidth);
 
         while (currentWidth + stepSize <= finalWidth) {
             currentWidth = currentWidth + stepSize;
-            widths.add(Integer.toString(currentWidth));
+            widths.add(currentWidth);
         }
         if (!widths.contains(Integer.toString(finalWidth))) {
-            widths.add(Integer.toString(finalWidth));
+            widths.add(finalWidth);
         }
 
-        String[] widthsArray = new String[widths.size()];
+        int[] widthsArray = new int[widths.size()];
 
         int counter = 0;
-        for (String s : widths) {
-            widthsArray[counter] = s;
+        for (Integer i : widths) {
+            widthsArray[counter] = i;
             counter++;
         }
         return widthsArray;
     }
 
-    public static void capturePageModel(String url, String[] widths) throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
+    public static void capturePageModel(String url, int[] widths) throws InterruptedException {
+//        WebDriver driver = new ChromeDriver();
         try {
-            driver.get(url);
+
 //            Thread.sleep(2500);
 //            JavascriptExecutor js = (JavascriptExecutor) driver;
 //            String dropdownScript = Utils.getPkgFileContents(Redecheck.class, "dropdown.js");
@@ -107,7 +112,8 @@ public class Redecheck {
             for (int i = 0; i < widths.length; i++) {
 
                 String outFolder;
-                int w = Integer.parseInt(widths[i]);
+//                int w = Integer.parseInt(widths[i]);
+                int w = widths[i];
                 outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
                 File theDir = new File(outFolder);
                 if (!theDir.exists()) {
@@ -124,11 +130,11 @@ public class Redecheck {
                 }
                 counter++;
             }
-            driver.quit();
+//            driver.quit();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            driver.quit();
+//            driver.quit();
         }
     }
 
@@ -139,10 +145,10 @@ public class Redecheck {
         return (String) js.executeScript(script);
     }
 
-    private static Map<String, DomNode> loadDoms(String[] widths, String url) {
-        Map<String, DomNode> doms = new HashMap<String, DomNode>();
+    public static Map<Integer, DomNode> loadDoms(int[] widths, String url) {
+        Map<Integer, DomNode> doms = new HashMap<Integer, DomNode>();
         JsonDomParser parser = new JsonDomParser();
-        for (String width : widths) {
+        for (int width : widths) {
             String file = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + width + "/dom.js";
             try {
                 String domStr = FileUtils.readFileToString(new File(file));

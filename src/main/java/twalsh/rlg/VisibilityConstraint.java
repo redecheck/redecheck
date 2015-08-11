@@ -15,4 +15,12 @@ public class VisibilityConstraint {
     public void setDisappear(int d) {
         this.disappear = d;
     }
+
+    public int getDisappear() {
+        return disappear;
+    }
+
+    public String toString() {
+        return this.appear + " -> " + this.disappear;
+    }
 }
