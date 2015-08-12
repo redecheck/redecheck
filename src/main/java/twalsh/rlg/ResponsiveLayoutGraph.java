@@ -1,10 +1,8 @@
 package twalsh.rlg;
 import org.openqa.selenium.WebDriver;
 import twalsh.redecheck.Redecheck;
-import xpert.ag.AGNode;
-import xpert.ag.AlignmentGraph;
-import xpert.ag.Contains;
-import xpert.ag.Edge;
+import xpert.ag.*;
+import xpert.ag.Sibling;
 import xpert.dom.DomNode;
 
 import java.util.ArrayList;
@@ -55,8 +53,11 @@ public class ResponsiveLayoutGraph {
         }
         System.out.println("Constructor called.");
         extractVisibilityConstraints();
-//        extractAlignmentConstraints();
-        driver.quit();
+//        printVisibilityConstraints(this.nodes);
+        System.out.println("DONE VISIBILITY CONSTRAINTS");
+        extractAlignmentConstraints();
+        System.out.println("DONE ALIGNMENT CONSTRAINTS");
+//        driver.quit();
     }
 
     private void extractVisibilityConstraints() throws InterruptedException {
@@ -89,15 +90,14 @@ public class ResponsiveLayoutGraph {
 
             // Handle any disappearing elements
             for (String prevUM : previousToMatch.keySet()) {
-                int disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag)+1], true);
-//                System.out.println("Disappear point: " + disappearPoint-1);
+                int disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], true);
                 VisibilityConstraint vc = visCons.get(prevUM);
                 vc.setDisappear(disappearPoint-1);
             }
 
             // Handle any appearing elements
             for (String currUM : tempToMatch.keySet()) {
-                int appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag)+1], true);
+                int appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], true);
                 nodes.put(currUM, new Node(currUM));
                 visCons.put(currUM, new VisibilityConstraint(appearPoint, 0));
             }
@@ -105,36 +105,38 @@ public class ResponsiveLayoutGraph {
             previousMap = (HashMap<String, AGNode>) ag.getVMap();
         }
 
-        // Update visibility constraints of everything still visible
+        // Update visibility widthConstraints of everything still visible
         AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
         for (String stilVis : last.getVMap().keySet()) {
             VisibilityConstraint vc = visCons.get(stilVis);
             if (vc.getDisappear() == 0) {
-                vc.setDisappear(widths[widths.length-1]);
+                vc.setDisappear(widths[widths.length - 1]);
             }
         }
 
-        printVisibilityConstraints(this.nodes, visCons);
+        // Attach constraints to the nodes
+        for (String x : this.nodes.keySet()) {
+            Node n = this.nodes.get(x);
+            VisibilityConstraint vc = visCons.get(x);
+            n.addVisibilityConstraint(vc);
+        }
     }
 
     private void extractAlignmentConstraints() throws InterruptedException {
         System.out.println("Extracting Alignment Constraints");
         HashMap<String, Edge> previousMap = first.getNewEdges();
-        HashMap<ParentChild, String> pcs = new HashMap<ParentChild, String>();
-        HashMap<Sibling, String> sibs = new HashMap<Sibling, String>();
         HashMap<String, AlignmentConstraint> alCons = new HashMap<String, AlignmentConstraint>();
 
         // Add initial edges to set.
         for (String s : previousMap.keySet()) {
             Edge e = previousMap.get(s);
             if (e instanceof Contains) {
-                pcs.put(new ParentChild(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath())), "");
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.PARENT_CHILD, this.widths[0], 0);
                 alCons.put(con.generateKey(), con);
             } else {
-                sibs.put(new Sibling(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath())),"");
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0);
-                alCons.put(con.generateKey(), con);}
+                alCons.put(con.generateKey(), con);
+            }
         }
 
         for (AlignmentGraph ag : restOfGraphs) {
@@ -153,10 +155,22 @@ public class ResponsiveLayoutGraph {
                     key2 += "sibling";
                 }
                 if (temp.get(key) != null || temp.get(key2) != null) {
-                    previousToMatch.remove(key);
-                    tempToMatch.remove(key);
-                    previousToMatch.remove(key2);
-                    tempToMatch.remove(key2);
+                    boolean matched = false;
+                    if (e instanceof Contains) {
+                        Contains c1 = (Contains) e;
+                        Contains c2 = (Contains) temp.get(key);
+                        matched = c1.isAlignmentTheSame(c2);
+                    } else {
+                        Sibling s1 = (Sibling) e;
+                        Sibling s2 = (Sibling) temp.get(key);
+                        matched = s1.isAlignmentTheSame(s2);
+                    }
+                    if (matched) {
+                        previousToMatch.remove(key);
+                        tempToMatch.remove(key);
+                        previousToMatch.remove(key2);
+                        tempToMatch.remove(key2);
+                    }
                 }
             }
 
@@ -167,28 +181,67 @@ public class ResponsiveLayoutGraph {
                 AlignmentConstraint ac = alCons.get(prevUM);
                 ac.setMax(disappearPoint-1);
             }
-            System.out.println();
-            System.out.println(restOfWidths[restOfGraphs.indexOf(ag)]);
-            System.out.println("Appearing: " + tempToMatch.size());
-            System.out.println("Disappearing: " + previousToMatch.size());
-            previousMap = temp;
+
+            // Handle appearing edges
+            for (String currUM : tempToMatch.keySet()) {
+                Edge e = tempToMatch.get(currUM);
+                int appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false);
+                Type t = null;
+                if (e instanceof Contains) {
+                    t = Type.PARENT_CHILD;
+                } else {
+                    t = Type.SIBLING;
+                }
+                AlignmentConstraint ac = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), t, appearPoint, 0);
+                alCons.put(ac.generateKey(), ac);
+            }
+            previousMap = ag.getNewEdges();
         }
 
-//        for (AlignmentConstraint ac : alCons) {
-//            System.out.println(ac);
-//        }
+        // Update visibility widthConstraints of everything still visible
+        AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
+        for (String stilVis : last.getNewEdges().keySet()) {
+            Edge e = last.getNewEdges().get(stilVis);
 
+            String flipped = e.getNode2().getxPath() + e.getNode1().getxPath();
+            if (e instanceof xpert.ag.Sibling) {
+                flipped += "sibling";
+            } else {
+                flipped += "contains";
+            }
+            AlignmentConstraint ac = alCons.get(stilVis);
+            AlignmentConstraint ac2 = alCons.get(flipped);
+
+            if (ac != null) {
+                if (ac.getMax() == 0) {
+                    ac.setMax(widths[widths.length - 1]);
+                    //                System.out.println(ac);
+                }
+            } else if (ac2 != null) {
+                if (ac2.getMax() == 0) {
+                    ac2.setMax(widths[widths.length-1]);
+                }
+            }
+        }
     }
 
-    public void printVisibilityConstraints(HashMap<String, Node> nodes, HashMap<String, VisibilityConstraint> visCons) {
+    public void printVisibilityConstraints(HashMap<String, Node> nodes) {
         for (String s : nodes.keySet()) {
-            VisibilityConstraint vc = visCons.get(s);
+            Node n = this.nodes.get(s);
+            VisibilityConstraint vc = n.getVisibilityConstraints().get(0);
             System.out.println (s + "    " + vc);
         }
 
     }
 
-    public int findAppearPoint(String xpath, int min, int max, boolean searchForNode) throws InterruptedException {
+    public void printAlignmentConstraints(HashMap<String, AlignmentConstraint> cons) {
+        for (String s : cons.keySet()) {
+            AlignmentConstraint ac = cons.get(s);
+            System.out.println(ac);
+        }
+    }
+
+    public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode) throws InterruptedException {
 //        System.out.println(min + "    " + max);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
@@ -206,8 +259,8 @@ public class ResponsiveLayoutGraph {
             HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.getVMap();
             HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.getVMap();
 
-            boolean found1 = n1.get(xpath) != null;
-            boolean found2 = n2.get(xpath) != null;
+            boolean found1 = n1.get(searchKey) != null;
+            boolean found2 = n2.get(searchKey) != null;
             if (found1) {
               return min;
             } else if (!found1 && found2) {
@@ -226,11 +279,11 @@ public class ResponsiveLayoutGraph {
 
             HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
 //            System.out.println(n1.entrySet().size());
-            boolean found = n1.get(xpath) != null;
+            boolean found = n1.get(searchKey) != null;
             if (found) {
-                return findAppearPoint(xpath, min, mid, searchForNode);
+                return findAppearPoint(searchKey, min, mid, searchForNode);
             } else {
-                return findAppearPoint(xpath, mid, max, searchForNode);
+                return findAppearPoint(searchKey, mid, max, searchForNode);
             }
         }
     }
@@ -290,5 +343,20 @@ public class ResponsiveLayoutGraph {
                 return findDisappearPoint(searchKey, min, mid, searchForNode);
             }
         }
+    }
+
+    public boolean areAlignmentsEqual(Edge e1, Edge e2) {
+        if (e1.getClass() != e2.getClass()) {
+            return false;
+        } else if (e1 instanceof Contains) {
+            Contains c1 = (Contains) e1;
+            Contains c2 = (Contains) e2;
+            return c1.isAlignmentTheSame(c2);
+        } else {
+            xpert.ag.Sibling s1 = (xpert.ag.Sibling) e1;
+            xpert.ag.Sibling s2 = (xpert.ag.Sibling) e2;
+            return s1.isAlignmentTheSame(s2);
+        }
+
     }
 }

@@ -40,5 +40,6 @@ public abstract class Edge {
 		}
 		return false;
 	}
+
 	
 }
