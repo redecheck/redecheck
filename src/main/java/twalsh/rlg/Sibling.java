@@ -25,4 +25,9 @@ public class Sibling {
         this.topAlign = topAlign;
         this.bottomAlign = bottomAlign;
     }
+
+    public Sibling(Node f, Node s) {
+        this.first = f;
+        this.second = s;
+    }
 }

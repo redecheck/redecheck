@@ -23,6 +23,11 @@ public class ParentChild {
         this.centerJust = cj;
     }
 
+    public ParentChild(Node p, Node c) {
+        this.parent = p;
+        this.child = c;
+    }
+
     public boolean isTopJust() {
         return topJust;
     }
