@@ -9,7 +9,7 @@ public class AlignmentConstraint {
     int min, max;
     boolean[] attributes;
 
-    public AlignmentConstraint(Node f, Node s, Type t, int min, int max) {
+    public AlignmentConstraint(Node f, Node s, Type t, int min, int max, boolean[] atts) {
         this.node1 = f;
         this.node2 = s;
         this.type = t;
@@ -20,20 +20,23 @@ public class AlignmentConstraint {
         } else {
             attributes = new boolean[8];
         }
+        this.attributes = atts;
     }
 
     public String toString() {
-        return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max;
+        return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max + " , " + this.generateLabelling();
     }
 
     public String generateKey() {
         String t = "";
         if (type == Type.PARENT_CHILD) {
             t = "contains";
+            return node2.xpath + node1.xpath + t + generateLabelling();
         } else {
             t = "sibling";
+            return node1.xpath + node2.xpath + t + generateLabelling();
         }
-        return node1.xpath + node2.xpath + t;
+
     }
 
     public String generateLabelling() {

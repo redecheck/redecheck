@@ -106,6 +106,35 @@ public class Sibling extends Edge {
 		return result;
 	}
 
+	public String generateLabelling() {
+		String result = "";
+		if (topBottom) {
+			result = result + "below";
+		}
+		if (bottomTop) {
+			result = result + "above";
+		}
+		if (rightLeft) {
+			result = result + "leftOf";
+		}
+		if (leftRight) {
+			result = result + "rightOf";
+		}
+		if (topEdgeAligned) {
+			result = result + "topAlign";
+		}
+		if (bottomEdgeAligned) {
+			result = result + "bottomAlign";
+		}
+		if (leftEdgeAligned) {
+			result = result + "leftAlign";
+		}
+		if (rightEdgeAligned) {
+			result = result + "rightAlign";
+		}
+		return result;
+	}
+
 	// Setters and Getters
 
 	public boolean isTopBottom() {
@@ -173,7 +202,11 @@ public class Sibling extends Edge {
 	}
 	
 	public boolean isAlignmentTheSame(Sibling s2) {
-		if (this.getNode1().getxPath().equals(s2.getNode1().getxPath())) {
+		if (this == null || s2 == null) {
+			System.out.println(this);
+			System.out.println(s2);
+			return false;
+		} else if (this.getNode1().getxPath().equals(s2.getNode1().getxPath())) {
 			if (this.isBelow() != s2.isBelow()) {
 				return false;
 			} else if (this.isAbove() != s2.isAbove()) {

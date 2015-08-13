@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.remote.ErrorHandler;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;
@@ -34,8 +35,8 @@ public class Redecheck {
     static String baseUrl = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
     public static String current;
 
-    public static int startWidth = 400;
-    public static int finalWidth = 1300;
+    public static int startWidth;
+    public static int finalWidth;
 
     public static WebDriver driver;
 
@@ -45,6 +46,8 @@ public class Redecheck {
         String oracle = args[0];
         String test = args[1];
         String ss = args[2];
+        startWidth = Integer.valueOf(args[3]);
+        finalWidth = Integer.valueOf(args[4]);
         int stepSize = Integer.valueOf(ss);
         System.out.println(oracle);
         System.out.println(test);
@@ -73,6 +76,7 @@ public class Redecheck {
         }
 
         ResponsiveLayoutGraph rlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
+        driver.quit();
     }
 
     public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
@@ -99,7 +103,8 @@ public class Redecheck {
     }
 
     public static void capturePageModel(String url, int[] widths) throws InterruptedException {
-//        WebDriver driver = new ChromeDriver();
+//        driver = new PhantomJSDriver();
+//        driver.get(url);
         try {
 
 //            Thread.sleep(2500);
@@ -130,10 +135,14 @@ public class Redecheck {
                 }
                 counter++;
             }
+
 //            driver.quit();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ErrorHandler.UnknownServerException e) {
+
         } finally {
+//            driver.close();
 //            driver.quit();
         }
     }

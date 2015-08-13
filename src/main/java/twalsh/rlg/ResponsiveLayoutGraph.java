@@ -1,4 +1,5 @@
 package twalsh.rlg;
+import com.google.common.collect.HashBasedTable;
 import org.openqa.selenium.WebDriver;
 import twalsh.redecheck.Redecheck;
 import xpert.ag.*;
@@ -9,14 +10,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
 
 import com.rits.cloning.Cloner;
+
+import javax.swing.*;
 
 /**
  * Created by thomaswalsh on 10/08/15.
  */
 public class ResponsiveLayoutGraph {
     HashMap<String, Node> nodes = new HashMap<String, Node>();
+    HashMap<String, AlignmentConstraint> alignments = new HashMap<String, AlignmentConstraint>();
+    HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
     ArrayList<AlignmentGraph> graphs;
     AlignmentGraph first;
     ArrayList<AlignmentGraph> restOfGraphs;
@@ -25,13 +32,14 @@ public class ResponsiveLayoutGraph {
     Map<Integer, DomNode> tempDoms;
     int[] widths;
     int[] restOfWidths;
+    static HashSet<Integer> alreadyGathered;
     public static WebDriver driver;
 
     public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms, WebDriver driver) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
-        this.driver = driver;
-        this.driver.quit();
+//        this.driver = driver;
+//        this.driver.quit();
         restOfGraphs =  new ArrayList<AlignmentGraph>();
         for (AlignmentGraph ag : graphs) {
             restOfGraphs.add(ag);
@@ -39,6 +47,7 @@ public class ResponsiveLayoutGraph {
         restOfGraphs.remove(0);
         this.url = url;
         this.doms = doms;
+        alreadyGathered = new HashSet<Integer>();
 //        widths = new double[stringWidths.length];
         restOfWidths = new int[stringWidths.length-1];
         this.widths = stringWidths;
@@ -49,14 +58,17 @@ public class ResponsiveLayoutGraph {
             if (i > 0) {
                 restOfWidths[i-1] = s;
             }
-//            alreadyGathered.add(s);
+            alreadyGathered.add(s);
         }
+        System.out.println(alreadyGathered.size());
         System.out.println("Constructor called.");
         extractVisibilityConstraints();
 //        printVisibilityConstraints(this.nodes);
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
+//        printAlignmentConstraints(this.alignmentConstraints.values());
+        writetoGraphViz("test", false);
 //        driver.quit();
     }
 
@@ -131,12 +143,18 @@ public class ResponsiveLayoutGraph {
         for (String s : previousMap.keySet()) {
             Edge e = previousMap.get(s);
             if (e instanceof Contains) {
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.PARENT_CHILD, this.widths[0], 0);
+                Contains c = (Contains) e;
+                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
+                        new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
                 alCons.put(con.generateKey(), con);
-            } else {
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0);
-                alCons.put(con.generateKey(), con);
+                alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
             }
+//            else {
+//                xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
+//                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
+//                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+//                alCons.put(con.generateKey(), con);
+//            }
         }
 
         for (AlignmentGraph ag : restOfGraphs) {
@@ -149,7 +167,8 @@ public class ResponsiveLayoutGraph {
                 key = e.getNode1().getxPath() + e.getNode2().getxPath();
                 key2 = e.getNode2().getxPath() + e.getNode1().getxPath();
                 if (e instanceof Contains) {
-                    key += "contains";
+                    Contains cTemp = (Contains) e;
+                    key += "contains" +cTemp.generateLabelling();
                 } else {
                     key += "sibling";
                     key2 += "sibling";
@@ -162,7 +181,12 @@ public class ResponsiveLayoutGraph {
                         matched = c1.isAlignmentTheSame(c2);
                     } else {
                         Sibling s1 = (Sibling) e;
-                        Sibling s2 = (Sibling) temp.get(key);
+                        Sibling s2;
+                        if (temp.get(key) != null) {
+                            s2 = (Sibling) temp.get(key);
+                        } else {
+                            s2 = (Sibling) temp.get(key2);
+                        }
                         matched = s1.isAlignmentTheSame(s2);
                     }
                     if (matched) {
@@ -175,25 +199,61 @@ public class ResponsiveLayoutGraph {
             }
 
             // Handle disappearing edges
+            System.out.println(this.restOfWidths[restOfGraphs.indexOf(ag)]);
+            System.out.println("Disappearing Edges");
             for (String prevUM : previousToMatch.keySet()) {
                 Edge e = previousToMatch.get(prevUM);
-                int disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag)+1], false);
-                AlignmentConstraint ac = alCons.get(prevUM);
-                ac.setMax(disappearPoint-1);
+                if (e instanceof Contains) {
+                    System.out.println(prevUM);
+                    Contains cTemp = (Contains) e;
+                    int disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false);
+//                    AlignmentConstraint ac = alCons.get(prevUM);
+                    Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(prevUM);
+//                    System.out.println(cons.size());
+                    for (int[] pair : cons.keySet()) {
+                        // Get the one without a max value
+                        if (pair[1] == 0) {
+                            System.out.println(pair[0]);
+                            AlignmentConstraint aCon = cons.get(pair);
+                            aCon.setMax(disappearPoint-1);
+                            pair[1] = disappearPoint-1;
+                            break;
+                        }
+                    }
+//                    if (ac != null)
+//                        ac.setMax(disappearPoint - 1);
+                }
             }
 
             // Handle appearing edges
+//
+            System.out.println("Appearing Edges");
+            System.out.println();
             for (String currUM : tempToMatch.keySet()) {
                 Edge e = tempToMatch.get(currUM);
                 int appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false);
                 Type t = null;
+                AlignmentConstraint ac = null;
                 if (e instanceof Contains) {
+                    System.out.println(currUM);
+                    Contains c = (Contains) e;
                     t = Type.PARENT_CHILD;
-                } else {
-                    t = Type.SIBLING;
+                    ac = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), t, appearPoint, 0,
+                            new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
+
                 }
-                AlignmentConstraint ac = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), t, appearPoint, 0);
-                alCons.put(ac.generateKey(), ac);
+//                else {
+//                    t = Type.SIBLING;
+//                    xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
+//                    ac = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), t, appearPoint, 0,
+//                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+//
+//                }
+//                AlignmentConstraint ac = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), t, appearPoint, 0);
+                if (ac != null) {
+                    alCons.put(ac.generateKey(), ac);
+                    alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
+                }
             }
             previousMap = ag.getNewEdges();
         }
@@ -202,27 +262,37 @@ public class ResponsiveLayoutGraph {
         AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
         for (String stilVis : last.getNewEdges().keySet()) {
             Edge e = last.getNewEdges().get(stilVis);
-
-            String flipped = e.getNode2().getxPath() + e.getNode1().getxPath();
-            if (e instanceof xpert.ag.Sibling) {
-                flipped += "sibling";
-            } else {
-                flipped += "contains";
-            }
-            AlignmentConstraint ac = alCons.get(stilVis);
-            AlignmentConstraint ac2 = alCons.get(flipped);
-
-            if (ac != null) {
-                if (ac.getMax() == 0) {
-                    ac.setMax(widths[widths.length - 1]);
-                    //                System.out.println(ac);
+            if (e instanceof Contains) {
+                String flipped = e.getNode2().getxPath() + e.getNode1().getxPath();
+                if (e instanceof xpert.ag.Sibling) {
+                    flipped += "sibling";
+                } else {
+                    flipped += "contains";
                 }
-            } else if (ac2 != null) {
-                if (ac2.getMax() == 0) {
-                    ac2.setMax(widths[widths.length-1]);
+                Contains cTemp = (Contains) e;
+                AlignmentConstraint ac = alCons.get(stilVis);
+                AlignmentConstraint ac2 = alCons.get(flipped);
+
+                if (ac != null) {
+                    Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
+//                    System.out.println(cons.size());
+                    for (int[] pair : cons.keySet()) {
+                        // Get the one without a max value
+                        if (pair[1] == 0) {
+                            AlignmentConstraint aCon = cons.get(pair);
+                            aCon.setMax(widths[widths.length-1]);
+                            pair[1] = widths[widths.length-1];
+                            break;
+                        }
+                    }
+                } else if (ac2 != null) {
+                    if (ac2.getMax() == 0) {
+                        ac2.setMax(widths[widths.length - 1]);
+                    }
                 }
             }
         }
+        this.alignments = alCons;
     }
 
     public void printVisibilityConstraints(HashMap<String, Node> nodes) {
@@ -237,16 +307,21 @@ public class ResponsiveLayoutGraph {
     public void printAlignmentConstraints(HashMap<String, AlignmentConstraint> cons) {
         for (String s : cons.keySet()) {
             AlignmentConstraint ac = cons.get(s);
-            System.out.println(ac);
+            System.out.println(s);
         }
     }
 
     public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode) throws InterruptedException {
-//        System.out.println(min + "    " + max);
+        System.out.println(min + "    " + max);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
-//            Redecheck.capturePageModel(url, extraWidths);
+            if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
+//                Redecheck.capturePageModel(url, extraWidths);
+//                System.out.println(min + " or " + max);
+                alreadyGathered.add(min);
+                alreadyGathered.add(max);
+            }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
 
             for (int w : extraWidths) {
@@ -256,11 +331,22 @@ public class ResponsiveLayoutGraph {
             }
             AlignmentGraph ag1 = extraGraphs.get(0);
             AlignmentGraph ag2 = extraGraphs.get(1);
-            HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.getVMap();
-            HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.getVMap();
 
-            boolean found1 = n1.get(searchKey) != null;
-            boolean found2 = n2.get(searchKey) != null;
+            boolean found1=false,found2 = false;
+
+            if (searchForNode) {
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.getVMap();
+                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.getVMap();
+
+                found1 = n1.get(searchKey) != null;
+                found2 = n2.get(searchKey) != null;
+            } else {
+                HashMap<String, Edge> e1 = (HashMap<String, Edge>) ag1.getNewEdges();
+                HashMap<String, Edge> e2 = (HashMap<String, Edge>) ag2.getNewEdges();
+
+                found1 = e1.get(searchKey) != null;
+                found2 = e2.get(searchKey) != null;
+            }
             if (found1) {
               return min;
             } else if (!found1 && found2) {
@@ -271,15 +357,23 @@ public class ResponsiveLayoutGraph {
         } else {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
-//            Redecheck.capturePageModel(url, extraWidths);
+            if (!alreadyGathered.contains(mid)) {
+//                System.out.println(mid);
+//                Redecheck.capturePageModel(url, extraWidths);
+                alreadyGathered.add(mid);
+            }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(mid);
 
             AlignmentGraph extraAG = new AlignmentGraph(dn);
-
-            HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
-//            System.out.println(n1.entrySet().size());
-            boolean found = n1.get(searchKey) != null;
+            boolean found = false;
+            if (searchForNode) {
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
+                found = n1.get(searchKey) != null;
+            } else {
+                HashMap<String, Edge> es = (HashMap<String, Edge>) extraAG.getNewEdges();
+                found = es.get(searchKey) != null;
+            }
             if (found) {
                 return findAppearPoint(searchKey, min, mid, searchForNode);
             } else {
@@ -289,11 +383,16 @@ public class ResponsiveLayoutGraph {
     }
 
     public int findDisappearPoint(String searchKey, int min, int max, boolean searchForNode) throws InterruptedException {
-//        System.out.println(min + "    " + max);
+        System.out.println(min + "    " + max);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
-//            Redecheck.capturePageModel(url, extraWidths);
+            if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
+//                System.out.println(min + " or " + max);
+//                Redecheck.capturePageModel(url, extraWidths);
+                alreadyGathered.add(min);
+                alreadyGathered.add(max);
+            }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
 
             for (int w : extraWidths) {
@@ -314,7 +413,7 @@ public class ResponsiveLayoutGraph {
             } else {
                 HashMap<String, Edge> e1 = (HashMap<String, Edge>) ag1.getNewEdges();
                 HashMap<String, Edge> e2 = (HashMap<String, Edge>) ag2.getNewEdges();
-
+                System.out.println("Search key is : " + searchKey);
                 found1 = e1.get(searchKey) != null;
                 found2 = e2.get(searchKey) != null;
             }
@@ -329,14 +428,25 @@ public class ResponsiveLayoutGraph {
         } else {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
-//            Redecheck.capturePageModel(url, extraWidths);
+            if (!alreadyGathered.contains(mid)) {
+//                System.out.println(mid);
+//                Redecheck.capturePageModel(url, extraWidths);
+                alreadyGathered.add(mid);
+            }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
 
             AlignmentGraph extraAG = new AlignmentGraph(dn);
+            boolean found;
 
-            HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
-            boolean found = n1.get(searchKey) != null;
+            if (searchForNode) {
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
+                found = n1.get(searchKey) != null;
+            } else {
+                System.out.println("Search key is : " + searchKey);
+                HashMap<String, Edge> es = (HashMap<String, Edge>) extraAG.getNewEdges();
+                found = es.get(searchKey) != null;
+            }
             if (found) {
                 return findDisappearPoint(searchKey, mid, max, searchForNode);
             } else {
@@ -357,6 +467,86 @@ public class ResponsiveLayoutGraph {
             xpert.ag.Sibling s2 = (xpert.ag.Sibling) e2;
             return s1.isAlignmentTheSame(s2);
         }
+
+    }
+
+    public void writetoGraphViz(String graphName, boolean siblings) {
+        PrintWriter output = null;
+        try {
+            output = new PrintWriter(graphName + ".gv");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        output.append("digraph G {");
+
+
+        for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
+            if (ac.type == Type.PARENT_CHILD) {
+                Node parent = ac.node1;
+                Node child = ac.node2;
+                output.append("\n\t");
+                output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+                output.append(" -> ");
+                output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+
+                output.append(" [ label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + "\" ];");
+
+
+                output.append("\n\t");
+                output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+
+//                output.append(" [ label = \"" + parent.getPres() + " " + parent.label + " " + parent.printConstraints() + " \" ];");
+
+                output.append("\n\t");
+                output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//                output.append(" [ label = \"" + child.getPres() + " " + child.label + " \n " + child.printConstraints() + " \" ];");
+            }
+//            else {
+//                Node node1 = ac.node1;
+//                Node node2 = ac.node2;
+//                output.append("\n\t");
+//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//                output.append(" -> ");
+//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+////
+//                output.append(" [ style=dotted, label= \"" + ac.generateLabelling() + "\" ];");
+////
+////
+////                output.append("\n\t");
+////                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+////                output.append(" [ label = \"" + node1.getPres() + " " + node1.label + " " + node1.printConstraints()  + " \" ];");
+////
+////                output.append("\n\t");
+////                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+////                output.append(" [ label = \"" + node2.getPres() + " " + node2.label + " \n " + node2.printConstraints() + " \" ];");
+//            }
+        }
+//        if (siblings) {
+//            for (RLGSibling s : this.siblings) {
+//                RLGNode node1 = s.first;
+//                RLGNode node2 = s.second;
+//                output.append("\n\t");
+//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//                output.append(" -> ");
+//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//
+//                output.append(" [ style=dotted, label= \"" + s.getLabelString() + "\" ];");
+//
+//
+//                output.append("\n\t");
+//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//                output.append(" [ label = \"" + node1.getPres() + " " + node1.label + " " + node1.printConstraints()  + " \" ];");
+//
+//                output.append("\n\t");
+//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+//                output.append(" [ label = \"" + node2.getPres() + " " + node2.label + " \n " + node2.printConstraints() + " \" ];");
+//            }
+//        }
+
+        output.append("\n}");
+        output.close();
 
     }
 }

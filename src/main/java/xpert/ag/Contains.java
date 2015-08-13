@@ -150,6 +150,23 @@ public class Contains extends Edge {
 		return result;
 	}
 
+	public String generateLabelling() {
+		String result = "";
+		if (centered)
+			result+="centered";
+		if (leftJustified)
+			result += "leftJust";
+		if (rightJustified)
+			result += "rightJust";
+		if(middle)
+			result+= "middle";
+		if (topAligned)
+			result+= "top";
+		if (bottomAligned)
+			result+= "bottom";
+		return result;
+	}
+
 	/**
 	 * Setters & Getters
 	 */

@@ -308,7 +308,7 @@ public class AlignmentGraph {
 					counter++;
 				}
 				edges.put(c, c.getAttributes());
-                newEdges.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains",c);
+                newEdges.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
 //			}
 		}
 		
