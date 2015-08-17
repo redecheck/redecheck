@@ -314,7 +314,7 @@ public class AlignmentGraph {
 		
 		for (Sibling s : siblings) {
 			edges.put(s, s.getLabelling());
-            newEdges.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling",s);
+            newEdges.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
 		}
 	}
 	

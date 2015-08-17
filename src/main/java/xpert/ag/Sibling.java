@@ -135,6 +135,35 @@ public class Sibling extends Edge {
 		return result;
 	}
 
+	public String generateFlippedLabelling() {
+		String result = "";
+		if (topBottom) {
+			result = result + "above";
+		}
+		if (bottomTop) {
+			result = result + "below";
+		}
+		if (rightLeft) {
+			result = result + "rightOf";
+		}
+		if (leftRight) {
+			result = result + "leftOf";
+		}
+		if (topEdgeAligned) {
+			result = result + "topAlign";
+		}
+		if (bottomEdgeAligned) {
+			result = result + "bottomAlign";
+		}
+		if (leftEdgeAligned) {
+			result = result + "leftAlign";
+		}
+		if (rightEdgeAligned) {
+			result = result + "rightAlign";
+		}
+		return result;
+	}
+
 	// Setters and Getters
 
 	public boolean isTopBottom() {
