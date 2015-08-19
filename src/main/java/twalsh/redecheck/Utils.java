@@ -49,5 +49,15 @@ public class Utils {
         return "";
     }
 
+    public static boolean areAllItemsSame(double[] values) {
+        double first = values[0];
+        for (int i = 1; i < values.length; i++) {
+            if (values[i] != first) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

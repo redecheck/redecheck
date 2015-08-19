@@ -1,6 +1,8 @@
 package twalsh.rlg;
 import com.google.common.collect.HashBasedTable;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.openqa.selenium.WebDriver;
+import sun.java2d.pipe.SpanShapeRenderer;
 import twalsh.redecheck.Redecheck;
 import xpert.ag.*;
 import xpert.ag.Sibling;
@@ -10,8 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeMap;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
+
+import twalsh.redecheck.Utils;
 
 /**
  * Created by thomaswalsh on 10/08/15.
@@ -129,7 +134,6 @@ public class ResponsiveLayoutGraph {
             Node n = this.nodes.get(x);
             VisibilityConstraint vc = visCons.get(x);
             n.addVisibilityConstraint(vc);
-            System.out.println(n + " " + n.visibilityConstraints.size());
         }
     }
 
@@ -312,18 +316,42 @@ public class ResponsiveLayoutGraph {
                 if (areParentsConsistent(n.parentConstraints)) {
                     String parentXpath = n.parentConstraints.get(0).node1.xpath;
                     int[] validWidths = getValidWidths(n.parentConstraints);
+                    int[] widthsTemp = new int[validWidths.length];
                     int[] parentWidths = new int[validWidths.length];
                     int[] childWidths = new int[validWidths.length];
                     doms = Redecheck.loadDoms(validWidths, url);
                     // Gather parent and child widths
                     for (int i = 0; i < validWidths.length; i++) {
-//                        System.out.println(validWidths[i]);
                         AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
+                        widthsTemp[i] = validWidths[i];
                         parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
                         childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();
                     }
 
                     // Get the equations
+                    int iteratingIndex = 0;
+                    TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
+                    while (iteratingIndex +2 <= parentWidths.length) {
+                        double[] firstTwoWidths = new double[] { parentWidths[0], parentWidths[1]};
+                        double[] firstTwoValues = new double[] { childWidths[0], childWidths[1]};
+                        double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
+
+                        for (int i = iteratingIndex+2; i < parentWidths.length; i++) {
+                            double result = (equation[0]*parentWidths[i]) + (equation[1]*childWidths[i]) + equation[2];
+                            if (Math.abs(result) > 5) {
+                                double[] bestFit = getBestFitLine(parentWidths, childWidths, i);
+//                                int breakpoint = findWidthBreakpoint(bestFit, validWidths[i-1], validWidths[i], s, parentXpath);
+                            }
+                        }
+
+                        double[] tempWidths = new double[parentWidths.length];
+                        double[] tempValues = new double[childWidths.length];
+                        double[] tempScreenWidths = new double[widthsTemp.length];
+                        System.arraycopy(parentWidths, 0, tempWidths, 0, parentWidths.length);
+                        System.arraycopy(childWidths, 0, tempValues, 0, childWidths.length);
+                        System.arraycopy(widthsTemp, 0, tempScreenWidths, 0, widthsTemp.length);
+                    }
+
                 }
             }
         }
@@ -547,6 +575,119 @@ public class ResponsiveLayoutGraph {
             widthArray[widths.indexOf(i)] = i;
         }
         return widthArray;
+    }
+
+    private double[] getEquationOfLine(double[] widths, double[] values) {
+
+        double[] coefficients = new double[3];
+        boolean allValuesTheSame = Utils.areAllItemsSame(values);
+
+        if (allValuesTheSame) {
+            coefficients[0] = 0;
+            coefficients[1] = -1;
+            coefficients[2] = values[0];
+        } else {
+            double y1 = values[0];
+            double x1 = widths[0];
+            double y2 = values[values.length-1];
+            double x2 = widths[widths.length-1];
+            double gradient = ( (y2-y1) / (x2-x1) );
+            coefficients[0] = gradient;
+            double yintercept = y1- (gradient * x1);
+            coefficients[1] = -1.0;
+            coefficients[2] = yintercept;
+        }
+        return coefficients;
+    }
+
+    private double[] getBestFitLine(int[] ps, int[] cs, int i) {
+        double[] widthsForEq = new double[i-1];
+        double[] valuesForEq = new double[i-1];
+        SimpleRegression reg = new SimpleRegression();
+        for (int i2 = 0; i2 < i-1; i2++) {
+            System.out.println(ps[i2] + " " + cs[i2]);
+            reg.addData(ps[i2], cs[i2]);
+        }
+        System.out.println(reg.getSlope());
+        double[] regressionEq;
+//        if (Utils.areAllItemsSame(valuesForEq)) {
+//            regressionEq = new double[] {0.0, -1.0, valuesForEq[0]};
+//        } else {
+//            try {
+//                reg.linear();
+//                double[] coeffs = reg.getBestEstimates();
+//                regressionEq = new double[] {coeffs[1], -1.0, coeffs[0]};
+//            } catch (IllegalArgumentException e) {
+//                regressionEq = null;
+//            }
+//        }
+        return new double[]{};
+    }
+
+    private int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) {
+        if (max-min == 1) {
+            int[] extraWidths = new int[] {min,max};
+            ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
+            if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
+//                Redecheck.capturePageModel(url, extraWidths);
+                alreadyGathered.add(min);
+                alreadyGathered.add(max);
+            }
+            tempDoms = Redecheck.loadDoms(extraWidths, url);
+
+            for (int w : extraWidths) {
+                DomNode dn = tempDoms.get(w);
+                AlignmentGraph ag = new AlignmentGraph(dn);
+                extraGraphs.add(ag);
+            }
+            AlignmentGraph ag1 = extraGraphs.get(0);
+            AlignmentGraph ag2 = extraGraphs.get(1);
+
+            int c1 = ag1.getVMap().get(child).getDomNode().getWidth();
+            int p1 = ag1.getVMap().get(parent).getDomNode().getWidth();
+            int c2 = ag2.getVMap().get(child).getDomNode().getWidth();
+            int p2 = ag2.getVMap().get(parent).getDomNode().getWidth();
+
+            boolean result1 = Math.abs(p1*eq[0] + c1*eq[1] + eq[2]) <= 5;
+            boolean result2 = Math.abs(p2*eq[0] + c2*eq[1] + eq[2]) <= 5;
+            if (result1 && result2) {
+                return max;
+            } else if (result1 && !result2) {
+                return min;
+            } else if (!result1 && !result2) {
+                return min-1;
+            } else {
+                return max+1;
+            }
+        } else {
+            int mid = (max+min)/2;
+            int[] extraWidths = new int[] {mid};
+            if (!alreadyGathered.contains(mid)) {
+//                Redecheck.capturePageModel(url, extraWidths);
+                alreadyGathered.add(mid);
+            }
+            tempDoms = Redecheck.loadDoms(extraWidths, url);
+            DomNode dn = tempDoms.get(extraWidths[0]);
+
+            AlignmentGraph extraAG = new AlignmentGraph(dn);
+
+            // Get parent and child widths
+            int c = extraAG.getVMap().get(child).getDomNode().getWidth();
+            int p = extraAG.getVMap().get(parent).getDomNode().getWidth();
+
+            // Check whether mid falls on the equation's line or not.
+            boolean result = Math.abs(p*eq[0] + c*eq[1] + eq[2]) <= 5;
+
+            // Check which way to recurse
+            if (result) {
+                // Breakpoint is higher as mid is on the line
+                findWidthBreakpoint(eq, mid, max, child, parent);
+            } else {
+                // Breakpoint is lower as mid is not on the line (already passed breakpoint)
+                findWidthBreakpoint(eq, min, mid, child, parent);
+            }
+        }
+        return 0;
     }
 
     public void writetoGraphViz(String graphName, boolean siblings) {
