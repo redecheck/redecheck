@@ -88,7 +88,9 @@ public class Redecheck {
             currentWidth = currentWidth + stepSize;
             widths.add(currentWidth);
         }
-        if (!widths.contains(Integer.toString(finalWidth))) {
+
+        if (!Integer.toString(widths.get(widths.size()-1)).equals(Integer.toString(finalWidth))) {
+            System.out.println("Adding final width");
             widths.add(finalWidth);
         }
 

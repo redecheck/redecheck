@@ -20,6 +20,7 @@ public class ResponsiveLayoutGraph {
     HashMap<String, Node> nodes = new HashMap<String, Node>();
     HashMap<String, AlignmentConstraint> alignments = new HashMap<String, AlignmentConstraint>();
     HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
+    HashBasedTable<String, int[], WidthConstraint> widthConstraints = HashBasedTable.create();
     ArrayList<AlignmentGraph> graphs;
     AlignmentGraph first;
     ArrayList<AlignmentGraph> restOfGraphs;
@@ -63,6 +64,7 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
+        extractWidthConstraints();
 //        printAlignmentConstraints(this.alignmentConstraints.values());
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -303,6 +305,30 @@ public class ResponsiveLayoutGraph {
         this.alignments = alCons;
     }
 
+    public void extractWidthConstraints() {
+        for (String s : this.nodes.keySet()) {
+            Node n = this.nodes.get(s);
+            if (n.parentConstraints.size() > 0) {
+                if (areParentsConsistent(n.parentConstraints)) {
+                    String parentXpath = n.parentConstraints.get(0).node1.xpath;
+                    int[] validWidths = getValidWidths(n.parentConstraints);
+                    int[] parentWidths = new int[validWidths.length];
+                    int[] childWidths = new int[validWidths.length];
+                    doms = Redecheck.loadDoms(validWidths, url);
+                    // Gather parent and child widths
+                    for (int i = 0; i < validWidths.length; i++) {
+//                        System.out.println(validWidths[i]);
+                        AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
+                        parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
+                        childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();
+                    }
+
+                    // Get the equations
+                }
+            }
+        }
+    }
+
     public void printVisibilityConstraints(HashMap<String, Node> nodes) {
         for (String s : nodes.keySet()) {
             Node n = this.nodes.get(s);
@@ -484,6 +510,43 @@ public class ResponsiveLayoutGraph {
             return s1.isAlignmentTheSame(s2);
         }
 
+    }
+
+    private boolean areParentsConsistent(ArrayList<AlignmentConstraint> acs) {
+        for (AlignmentConstraint a1: acs) {
+            for (AlignmentConstraint a2 : acs) {
+                if (a1 != a2) {
+                    if (a1.node1 != a2.node1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private int[] getValidWidths(ArrayList<AlignmentConstraint> acs) {
+        ArrayList<Integer> widths = new ArrayList<Integer>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (AlignmentConstraint ac : acs) {
+            if (ac.min < min) {
+                min = ac.min;
+            }
+            if (ac.max > max) {
+                max = ac.max;
+            }
+        }
+        for (int w : this.widths) {
+            if ((w >= min) && (w <= max)) {
+                widths.add(w);
+            }
+        }
+        int[] widthArray = new int[widths.size()];
+        for (Integer i : widths) {
+            widthArray[widths.indexOf(i)] = i;
+        }
+        return widthArray;
     }
 
     public void writetoGraphViz(String graphName, boolean siblings) {
