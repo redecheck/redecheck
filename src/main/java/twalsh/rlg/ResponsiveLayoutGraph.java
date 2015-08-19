@@ -13,10 +13,6 @@ import java.util.Map;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 
-import com.rits.cloning.Cloner;
-
-import javax.swing.*;
-
 /**
  * Created by thomaswalsh on 10/08/15.
  */
@@ -131,6 +127,7 @@ public class ResponsiveLayoutGraph {
             Node n = this.nodes.get(x);
             VisibilityConstraint vc = visCons.get(x);
             n.addVisibilityConstraint(vc);
+            System.out.println(n + " " + n.visibilityConstraints.size());
         }
     }
 
@@ -302,7 +299,7 @@ public class ResponsiveLayoutGraph {
                 }
             }
         }
-        printAlignmentConstraints(alignmentConstraints);
+        addParentConstraintsToNodes();
         this.alignments = alCons;
     }
 
@@ -318,6 +315,15 @@ public class ResponsiveLayoutGraph {
     public void printAlignmentConstraints(HashBasedTable<String, int[], AlignmentConstraint> cons) {
         for (AlignmentConstraint ac : cons.values()) {
             System.out.println(ac);
+        }
+    }
+
+    private void addParentConstraintsToNodes() {
+        for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
+            if (ac.type == Type.PARENT_CHILD) {
+                Node child = this.nodes.get(ac.node2.getXpath());
+                child.addParentConstraint(ac);
+            }
         }
     }
 

@@ -6,24 +6,25 @@ import java.util.ArrayList;
  */
 public class Node {
     String xpath;
-    int min, max;
     String label;
     ArrayList<WidthConstraint> widthConstraints;
     ArrayList<VisibilityConstraint> visibilityConstraints;
+    ArrayList<AlignmentConstraint> parentConstraints;
 
-    public Node(String xpath, int min, int max, String label) {
+    public Node(String xpath,  String label) {
         this.xpath = xpath;
-        this.min = min;
-        this.max = max;
         this.label = label;
         this.widthConstraints = new ArrayList<WidthConstraint>();
         this.visibilityConstraints = new ArrayList<VisibilityConstraint>();
+        this.parentConstraints = new ArrayList<AlignmentConstraint>();
     }
 
     public Node(String xpath) {
         this.xpath = xpath;
         this.widthConstraints = new ArrayList<WidthConstraint>();
         this.visibilityConstraints = new ArrayList<VisibilityConstraint>();
+        this.parentConstraints = new ArrayList<AlignmentConstraint>();
+
     }
 
     public String getXpath() {
@@ -47,7 +48,7 @@ public class Node {
 
     public String toString() {
 //		String result = "Between " + min + " and " + max;
-        String result = min + " -> " + max + " : ";
+        String result = "";
         if (this.xpath != null) {
             result += this.xpath;
         }
@@ -62,4 +63,6 @@ public class Node {
     }
 
     public void addVisibilityConstraint(VisibilityConstraint vc) { visibilityConstraints.add(vc); }
+
+    public void addParentConstraint(AlignmentConstraint ac) { parentConstraints.add(ac); }
 }
