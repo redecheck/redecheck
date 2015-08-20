@@ -53,7 +53,7 @@ public class Node {
             result += this.xpath;
         }
         for (WidthConstraint c : widthConstraints) {
-            result += "\n\t" + c + " , ";
+            result += "\n\t" + c;
         }
         return result;
     }

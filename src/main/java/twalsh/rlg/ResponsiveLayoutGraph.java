@@ -50,28 +50,22 @@ public class ResponsiveLayoutGraph {
         this.url = url;
         this.doms = doms;
         alreadyGathered = new HashSet<Integer>();
-//        widths = new double[stringWidths.length];
         restOfWidths = new int[stringWidths.length-1];
         this.widths = stringWidths;
         for (int i = 0; i < stringWidths.length; i++) {
             int s = stringWidths[i];
-//            int width = Integer.parseInt(s);
-//            this.widths[i] = s;
             if (i > 0) {
                 restOfWidths[i-1] = s;
             }
             alreadyGathered.add(s);
         }
-        System.out.println(alreadyGathered.size());
-        System.out.println("Constructor called.");
         extractVisibilityConstraints();
-//        printVisibilityConstraints(this.nodes);
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
-        printWidthConstraints(this.widthConstraints);
-        System.out.print("DONE WIDTH CONSTRAINTS");
+        System.out.println("DONE WIDTH CONSTRAINTS");
+        printNodes();
 //        printAlignmentConstraints(this.alignmentConstraints.values());
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -398,6 +392,7 @@ public class ResponsiveLayoutGraph {
                 }
             }
         }
+        addWidthConstraintsToNodes();
     }
 
     public void printVisibilityConstraints(HashMap<String, Node> nodes) {
@@ -421,11 +416,26 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    private void printNodes() {
+        for (Node n : this.nodes.values()) {
+            System.out.println(n);
+        }
+    }
+
     private void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
             if (ac.type == Type.PARENT_CHILD) {
                 Node child = this.nodes.get(ac.node2.getXpath());
                 child.addParentConstraint(ac);
+            }
+        }
+    }
+
+    private void addWidthConstraintsToNodes() {
+        for (Node n : this.nodes.values()) {
+            Map<int[], WidthConstraint> wcs = (Map<int[], WidthConstraint>) this.widthConstraints.row(n.xpath);
+            for (WidthConstraint wc : wcs.values()) {
+                n.addWidthConstraint(wc);
             }
         }
     }
@@ -549,7 +559,6 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-//                System.out.println(mid);
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
@@ -652,19 +661,21 @@ public class ResponsiveLayoutGraph {
     private double[] getBestFitLine(int[] ps, int[] cs, int i) {
         double[] valuesForEq = new double[i-1];
         SimpleRegression reg = new SimpleRegression();
+        // Add in values to the data set
         for (int i2 = 0; i2 < i-1; i2++) {
-//            System.out.println(ps[i2] + " " + cs[i2]);
             reg.addData(ps[i2], cs[i2]);
             valuesForEq[i2] = cs[i2];
         }
-//        System.out.println(reg.getSlope());
         double[] regressionEq;
+
+        // Generate the line of best fit
         if (Utils.areAllItemsSame(valuesForEq)) {
+            // Child widths consistent, so just a flat line
             regressionEq = new double[] {1.0, 0, valuesForEq[0]};
         } else {
+            // Plot the line and return the coefficients
             try {
                 regressionEq = new double[] {1.0, reg.getSlope(),reg.getIntercept()};
-//                regressionEq = new double[] {coeffs[1], -1.0, coeffs[0]};
             } catch (IllegalArgumentException e) {
                 regressionEq = null;
             }
