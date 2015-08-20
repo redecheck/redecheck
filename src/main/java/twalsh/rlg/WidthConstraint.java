@@ -16,4 +16,8 @@ public class WidthConstraint {
         this.parent = parent;
         this.adjustment = a;
     }
+
+    public String toString() {
+        return min + " --> " + max + " : " + percentage*100 + "% of " + parent.xpath + " + " + adjustment;
+    }
 }

@@ -70,6 +70,8 @@ public class ResponsiveLayoutGraph {
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
+        printWidthConstraints(this.widthConstraints);
+        System.out.print("DONE WIDTH CONSTRAINTS");
 //        printAlignmentConstraints(this.alignmentConstraints.values());
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -309,9 +311,11 @@ public class ResponsiveLayoutGraph {
         this.alignments = alCons;
     }
 
-    public void extractWidthConstraints() {
+    public void extractWidthConstraints() throws InterruptedException {
+        TreeMap<Integer,double[]> eqs = new TreeMap<Integer, double[]>();
         for (String s : this.nodes.keySet()) {
             Node n = this.nodes.get(s);
+
             if (n.parentConstraints.size() > 0) {
                 if (areParentsConsistent(n.parentConstraints)) {
                     String parentXpath = n.parentConstraints.get(0).node1.xpath;
@@ -329,27 +333,66 @@ public class ResponsiveLayoutGraph {
                     }
 
                     // Get the equations
-                    int iteratingIndex = 0;
+
+                    boolean foundBreakpoint = false;
+                    double[] bestFit=null;
                     TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
-                    while (iteratingIndex +2 <= parentWidths.length) {
+                    int previousBreakpoint = widthsTemp[0]-1;
+                    while (parentWidths.length>=2) {
+                        foundBreakpoint = false;
+                        int breakpointIndex = 0;
                         double[] firstTwoWidths = new double[] { parentWidths[0], parentWidths[1]};
                         double[] firstTwoValues = new double[] { childWidths[0], childWidths[1]};
                         double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
-
-                        for (int i = iteratingIndex+2; i < parentWidths.length; i++) {
-                            double result = (equation[0]*parentWidths[i]) + (equation[1]*childWidths[i]) + equation[2];
+//                        System.out.println(equation[0] + " = " + equation[1] + " of parent + " + equation[2]);
+                        for (int i = 2; i < parentWidths.length; i++) {
+                            double result = (equation[0]*childWidths[i]) - ((equation[1]*parentWidths[i]) + (equation[2]));
                             if (Math.abs(result) > 5) {
-                                double[] bestFit = getBestFitLine(parentWidths, childWidths, i);
-//                                int breakpoint = findWidthBreakpoint(bestFit, validWidths[i-1], validWidths[i], s, parentXpath);
+
+                                if (!foundBreakpoint) {
+                                    breakpointIndex = i;
+                                    foundBreakpoint = true;
+                                    break;
+                                }
+
                             }
                         }
 
-                        double[] tempWidths = new double[parentWidths.length];
-                        double[] tempValues = new double[childWidths.length];
-                        double[] tempScreenWidths = new double[widthsTemp.length];
+                        // All points lie on line, so manually set breakpoint index to last value
+                        if (!foundBreakpoint) {
+                            breakpointIndex = parentWidths.length;
+                        }
+
+                        // Generate best fit equation
+                        bestFit = getBestFitLine(parentWidths, childWidths, breakpointIndex);
+//                        System.out.println(bestFit[0] + " = " + bestFit[1] + " of parent + " + bestFit[2]);
+
+                        int breakpoint = 0;
+                        if (foundBreakpoint) {
+                            breakpoint = findWidthBreakpoint(bestFit, widthsTemp[breakpointIndex - 1], widthsTemp[breakpointIndex], s, parentXpath);
+                        } else {
+                            breakpoint = widthsTemp[breakpointIndex-1];
+                        }
+                        WidthConstraint wc = new WidthConstraint(previousBreakpoint+1, breakpoint, bestFit[1], this.nodes.get(parentXpath), bestFit[2]);
+                        this.widthConstraints.put(s, new int[] {previousBreakpoint+1, breakpoint}, wc);
+                        previousBreakpoint = breakpoint;
+
+                        // Make a copy of all the width arrays before copying
+                        int[] tempWidths = new int[parentWidths.length];
+                        int[] tempValues = new int[childWidths.length];
+                        int[] tempScreenWidths = new int[widthsTemp.length];
                         System.arraycopy(parentWidths, 0, tempWidths, 0, parentWidths.length);
                         System.arraycopy(childWidths, 0, tempValues, 0, childWidths.length);
                         System.arraycopy(widthsTemp, 0, tempScreenWidths, 0, widthsTemp.length);
+
+                        // Redefine the arrays we're using to extract equations
+                        parentWidths = new int[tempWidths.length-breakpointIndex];
+                        childWidths = new int[tempValues.length-breakpointIndex];
+                        widthsTemp = new int[tempScreenWidths.length-breakpointIndex];
+                        // Copy across reduced arrays
+                        System.arraycopy(tempWidths, breakpointIndex, parentWidths, 0, parentWidths.length);
+                        System.arraycopy(tempValues, breakpointIndex, childWidths, 0, childWidths.length);
+                        System.arraycopy(tempScreenWidths, breakpointIndex, widthsTemp, 0, widthsTemp.length);
                     }
 
                 }
@@ -372,6 +415,12 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    public void printWidthConstraints(HashBasedTable<String, int[], WidthConstraint> cons) {
+        for (WidthConstraint wc : cons.values()) {
+            System.out.println(wc);
+        }
+    }
+
     private void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
             if (ac.type == Type.PARENT_CHILD) {
@@ -387,7 +436,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
 //                System.out.println(min + " or " + max);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
@@ -431,7 +480,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
 //                System.out.println(mid);
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -461,7 +510,7 @@ public class ResponsiveLayoutGraph {
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
 //                System.out.println(min + " or " + max);
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -501,7 +550,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
 //                System.out.println(mid);
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -583,8 +632,8 @@ public class ResponsiveLayoutGraph {
         boolean allValuesTheSame = Utils.areAllItemsSame(values);
 
         if (allValuesTheSame) {
-            coefficients[0] = 0;
-            coefficients[1] = -1;
+            coefficients[0] = 1;
+            coefficients[1] = 0;
             coefficients[2] = values[0];
         } else {
             double y1 = values[0];
@@ -592,44 +641,43 @@ public class ResponsiveLayoutGraph {
             double y2 = values[values.length-1];
             double x2 = widths[widths.length-1];
             double gradient = ( (y2-y1) / (x2-x1) );
-            coefficients[0] = gradient;
+            coefficients[0] = 1.0;
             double yintercept = y1- (gradient * x1);
-            coefficients[1] = -1.0;
+            coefficients[1] = gradient;
             coefficients[2] = yintercept;
         }
         return coefficients;
     }
 
     private double[] getBestFitLine(int[] ps, int[] cs, int i) {
-        double[] widthsForEq = new double[i-1];
         double[] valuesForEq = new double[i-1];
         SimpleRegression reg = new SimpleRegression();
         for (int i2 = 0; i2 < i-1; i2++) {
-            System.out.println(ps[i2] + " " + cs[i2]);
+//            System.out.println(ps[i2] + " " + cs[i2]);
             reg.addData(ps[i2], cs[i2]);
+            valuesForEq[i2] = cs[i2];
         }
-        System.out.println(reg.getSlope());
+//        System.out.println(reg.getSlope());
         double[] regressionEq;
-//        if (Utils.areAllItemsSame(valuesForEq)) {
-//            regressionEq = new double[] {0.0, -1.0, valuesForEq[0]};
-//        } else {
-//            try {
-//                reg.linear();
-//                double[] coeffs = reg.getBestEstimates();
+        if (Utils.areAllItemsSame(valuesForEq)) {
+            regressionEq = new double[] {1.0, 0, valuesForEq[0]};
+        } else {
+            try {
+                regressionEq = new double[] {1.0, reg.getSlope(),reg.getIntercept()};
 //                regressionEq = new double[] {coeffs[1], -1.0, coeffs[0]};
-//            } catch (IllegalArgumentException e) {
-//                regressionEq = null;
-//            }
-//        }
-        return new double[]{};
+            } catch (IllegalArgumentException e) {
+                regressionEq = null;
+            }
+        }
+        return regressionEq;
     }
 
-    private int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) {
+    private int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) throws InterruptedException {
         if (max-min == 1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -647,9 +695,8 @@ public class ResponsiveLayoutGraph {
             int p1 = ag1.getVMap().get(parent).getDomNode().getWidth();
             int c2 = ag2.getVMap().get(child).getDomNode().getWidth();
             int p2 = ag2.getVMap().get(parent).getDomNode().getWidth();
-
-            boolean result1 = Math.abs(p1*eq[0] + c1*eq[1] + eq[2]) <= 5;
-            boolean result2 = Math.abs(p2*eq[0] + c2*eq[1] + eq[2]) <= 5;
+            boolean result1 = Math.abs((eq[0]*c1) - ((eq[1]*p1) + (eq[2]))) <=5;
+            boolean result2 = Math.abs((eq[0]*c2) - ((eq[1]*p2) + (eq[2]))) <=5;
             if (result1 && result2) {
                 return max;
             } else if (result1 && !result2) {
@@ -659,16 +706,15 @@ public class ResponsiveLayoutGraph {
             } else {
                 return max+1;
             }
-        } else {
+        } else if (max > min) {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-//                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
-
             AlignmentGraph extraAG = new AlignmentGraph(dn);
 
             // Get parent and child widths
@@ -676,18 +722,18 @@ public class ResponsiveLayoutGraph {
             int p = extraAG.getVMap().get(parent).getDomNode().getWidth();
 
             // Check whether mid falls on the equation's line or not.
-            boolean result = Math.abs(p*eq[0] + c*eq[1] + eq[2]) <= 5;
+            boolean result = Math.abs((eq[0]*c) - ((eq[1]*p) + (eq[2]))) <=5;
 
             // Check which way to recurse
             if (result) {
                 // Breakpoint is higher as mid is on the line
-                findWidthBreakpoint(eq, mid, max, child, parent);
-            } else {
+                return findWidthBreakpoint(eq, mid, max, child, parent);
+            } else if (!result){
                 // Breakpoint is lower as mid is not on the line (already passed breakpoint)
-                findWidthBreakpoint(eq, min, mid, child, parent);
+                return findWidthBreakpoint(eq, min, mid, child, parent);
             }
         }
-        return 0;
+        return (min+max)/2;
     }
 
     public void writetoGraphViz(String graphName, boolean siblings) {

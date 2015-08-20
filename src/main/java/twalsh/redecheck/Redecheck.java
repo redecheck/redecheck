@@ -1,5 +1,6 @@
 package twalsh.redecheck;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,6 +11,8 @@ import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.ErrorHandler;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
@@ -42,7 +45,8 @@ public class Redecheck {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         current = new java.io.File( "." ).getCanonicalPath();
-//        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Documents/Workspace/JARs/chromedriver");
+        System.setProperty("phantomjs.binary.path", "/Users/thomaswalsh/Downloads/phantomjs");
+//        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Downloads/chromedriver");
         String oracle = args[0];
         String test = args[1];
         String ss = args[2];
@@ -59,7 +63,9 @@ public class Redecheck {
 
     public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
         String oracleUrl = baseUrl + oracle + "/index.html";
+
         driver = new PhantomJSDriver();
+//        driver = new ChromeDriver();
         driver.get(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
@@ -113,7 +119,7 @@ public class Redecheck {
 //            JavascriptExecutor js = (JavascriptExecutor) driver;
 //            String dropdownScript = Utils.getPkgFileContents(Redecheck.class, "dropdown.js");
 //			js.executeScript(dropdownScript);
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
 
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
