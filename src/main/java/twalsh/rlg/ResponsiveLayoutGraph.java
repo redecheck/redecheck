@@ -65,8 +65,8 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-        printNodes();
-//        printAlignmentConstraints(this.alignmentConstraints.values());
+//        printNodes();
+        printAlignmentConstraints(this.alignmentConstraints);
         writetoGraphViz("test", false);
 //        driver.quit();
     }
@@ -203,14 +203,17 @@ public class ResponsiveLayoutGraph {
             for (String prevUM : previousToMatch.keySet()) {
                 Edge e = previousToMatch.get(prevUM);
                 int disappearPoint = 0;
+                String flip="";
                 if (e instanceof Contains) {
                     disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, "");
                 } else {
                     xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
-                    String flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
+                    flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
                     disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, flip);
                 }
-                    Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(prevUM);
+                Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(prevUM);
+                Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flip);
+                if (cons.size() > 0) {
                     for (int[] pair : cons.keySet()) {
                         // Get the one without a max value
                         if (pair[1] == 0) {
@@ -220,7 +223,17 @@ public class ResponsiveLayoutGraph {
                             pair[1] = disappearPoint-1;
                         }
                     }
-//                }
+                } else if (cons2.size() > 0) {
+                    for (int[] pair : cons2.keySet()) {
+                        // Get the one without a max value
+                        if (pair[1] == 0) {
+//                            System.out.println(pair[0]);
+                            AlignmentConstraint aCon = cons2.get(pair);
+                            aCon.setMax(disappearPoint - 1);
+                            pair[1] = disappearPoint-1;
+                        }
+                    }
+                }
             }
 
             // Handle appearing edges
@@ -230,7 +243,6 @@ public class ResponsiveLayoutGraph {
                 Type t = null;
                 AlignmentConstraint ac = null;
                 if (e instanceof Contains) {
-//                    System.out.println(currUM);
                     Contains c = (Contains) e;
                     appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, "");
                     t = Type.PARENT_CHILD;
@@ -238,7 +250,6 @@ public class ResponsiveLayoutGraph {
                             new boolean[]{c.isCentered(), c.isLeftJustified(), c.isRightJustified(), c.isMiddle(), c.isTopAligned(), c.isBottomAligned()});
                 }
                 else {
-//                    System.out.println(currUM);
                     t = Type.SIBLING;
                     xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
                     String flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
@@ -254,8 +265,6 @@ public class ResponsiveLayoutGraph {
             }
             previousMap = ag.getNewEdges();
         }
-
-
 
         // Update  alignment constraints of everything still visible
         AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
@@ -276,10 +285,13 @@ public class ResponsiveLayoutGraph {
                     }
                 }
             } else {
-                String flipped = e.getNode2().getxPath() + e.getNode1().getxPath()+"sibling";
-
+                xpert.ag.Sibling s = (xpert.ag.Sibling) e;
+                String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+s.generateFlippedLabelling();
+                System.out.println(stilVis);
+                System.out.println(flipped);
                 Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
                 Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flipped);
+
                 if (cons.size() != 0) {
                     for (int[] pair : cons.keySet()) {
                         // Get the one without a max value
@@ -298,6 +310,8 @@ public class ResponsiveLayoutGraph {
                             pair[1] = widths[widths.length - 1];
                         }
                     }
+                } else {
+                    System.out.println("Didn't seem to match " + stilVis);
                 }
             }
         }
@@ -405,8 +419,12 @@ public class ResponsiveLayoutGraph {
     }
 
     public void printAlignmentConstraints(HashBasedTable<String, int[], AlignmentConstraint> cons) {
-        for (AlignmentConstraint ac : cons.values()) {
-            System.out.println(ac);
+        for (String s : cons.rowKeySet()) {
+            Map<int[],AlignmentConstraint> map = cons.row(s);
+            System.out.println("\n" + s);
+            for (AlignmentConstraint ac : map.values()) {
+                System.out.println("\t" + ac);
+            }
         }
     }
 
