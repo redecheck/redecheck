@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class RLGComparator {
     ResponsiveLayoutGraph rlg1,rlg2;
-    HashMap<Node, Node> matchedNodes;
+    public HashMap<Node, Node> matchedNodes;
     Cloner cloner;
 
     public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
@@ -23,7 +23,7 @@ public class RLGComparator {
         matchNodes();
     }
 
-    public ArrayList<String> comparePair() {
+    public ArrayList<String> compareMatchedNodes() {
         ArrayList<String> issues = new ArrayList<String>();
 
         for (Node n : matchedNodes.keySet()) {
@@ -66,5 +66,9 @@ public class RLGComparator {
         if ((a.appear != b.appear) || (a.disappear != b.disappear)) {
             i.add("Unmatched Visibility Constraint : (" + a.appear +" , "+a.disappear + ") compared to (" + b.appear +" , " + b.disappear + ")");
         }
+    }
+
+    public void compareAlignmentConstraints(Node n, Node m, ArrayList<String> i) {
+//        ArrayList<AlignmentConstraint> ac1
     }
 }

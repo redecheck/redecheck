@@ -14,7 +14,9 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.ErrorHandler;
+import twalsh.rlg.RLGComparator;
 import twalsh.rlg.ResponsiveLayoutGraph;
+import twalsh.rlg.Node;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;
 import xpert.ag.AlignmentGraph;
@@ -44,8 +46,16 @@ public class Redecheck {
     public static WebDriver driver;
 
     public static void main(String[] args) throws InterruptedException, IOException {
+        System.out.println("(  ____ )(  ____ \\(  __  \\ (  ____ \\(  ____ \\|\\     /|(  ____ \\(  ____ \\| \\    /\\\n"+
+                "| (    )|| (    \\/| (  \\  )| (    \\/| (    \\/| )   ( || (    \\/| (    \\/|  \\  / /\n" +
+                "| (____)|| (__    | |   ) || (__    | |      | (___) || (__    | |      |  (_/ / \n" +
+                "|     __)|  __)   | |   | ||  __)   | |      |  ___  ||  __)   | |      |   _ (  \n" +
+                "| (\\ (   | (      | |   ) || (      | |      | (   ) || (      | |      |  ( \\ \\ \n" +
+                "| ) \\ \\__| (____/\\| (__/  )| (____/\\| (____/\\| )   ( || (____/\\| (____/\\|  /  \\ \n" +
+                "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
+
         current = new java.io.File( "." ).getCanonicalPath();
-        System.setProperty("phantomjs.binary.path", "/Users/thomaswalsh/Downloads/phantomjs");
+//        System.setProperty("phantomjs.binary.path", "/Users/thomaswalsh/Downloads/phantomjs-2.0.0-macosx/bin/phantomjs");
 //        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Downloads/chromedriver");
         String oracle = args[0];
         String test = args[1];
@@ -65,13 +75,11 @@ public class Redecheck {
         String oracleUrl = baseUrl + oracle + "/index.html";
 
         driver = new PhantomJSDriver();
-//        driver = new ChromeDriver();
         driver.get(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
-//        String testUrl = baseUrl + test + "/index.html";
-//        capturePageModel(testUrl, widths);
 
+        // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
         ArrayList<AlignmentGraph> oracleAgs = new ArrayList<AlignmentGraph>();
 
@@ -80,9 +88,26 @@ public class Redecheck {
             AlignmentGraph ag = new AlignmentGraph(dn);
             oracleAgs.add(ag);
         }
+        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
 
-        ResponsiveLayoutGraph rlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
+        // Construct test version RLG
+        String testUrl = baseUrl + oracle + "/1.html";
+        capturePageModel(testUrl, widths);
+        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
+
+        for (int width : widths) {
+            DomNode dn = testDoms.get(width);
+            AlignmentGraph ag = new AlignmentGraph(dn);
+            testAgs.add(ag);
+        }
+        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, driver);
         driver.quit();
+
+        // Perform the diff
+        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+        comp.matchNodes();
+        comp.compareMatchedNodes();
     }
 
     public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
@@ -111,21 +136,11 @@ public class Redecheck {
     }
 
     public static void capturePageModel(String url, int[] widths) throws InterruptedException {
-//        driver = new PhantomJSDriver();
-//        driver.get(url);
         try {
-
-//            Thread.sleep(2500);
-//            JavascriptExecutor js = (JavascriptExecutor) driver;
-//            String dropdownScript = Utils.getPkgFileContents(Redecheck.class, "dropdown.js");
-//			js.executeScript(dropdownScript);
-//            Thread.sleep(1000);
-
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
 
                 String outFolder;
-//                int w = Integer.parseInt(widths[i]);
                 int w = widths[i];
                 outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
                 File theDir = new File(outFolder);
@@ -143,15 +158,11 @@ public class Redecheck {
                 }
                 counter++;
             }
-
-//            driver.quit();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ErrorHandler.UnknownServerException e) {
 
         } finally {
-//            driver.close();
-//            driver.quit();
         }
     }
 
