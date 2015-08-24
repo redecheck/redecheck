@@ -47,7 +47,6 @@ public class Node {
     public ArrayList<VisibilityConstraint> getVisibilityConstraints() { return visibilityConstraints; }
 
     public String toString() {
-//		String result = "Between " + min + " and " + max;
         String result = "";
         if (this.xpath != null) {
             result += this.xpath;

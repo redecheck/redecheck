@@ -8,11 +8,7 @@ import xpert.ag.*;
 import xpert.ag.Sibling;
 import xpert.dom.DomNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 
@@ -65,7 +61,7 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-        printNodes();
+//        printNodes();
 //        printAlignmentConstraints(this.alignmentConstraints);
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -325,6 +321,7 @@ public class ResponsiveLayoutGraph {
             Node n = this.nodes.get(s);
 
             if (n.parentConstraints.size() > 0) {
+                ArrayList<int[]> widths = getWidthsForConstraints(n.parentConstraints);
                 if (areParentsConsistent(n.parentConstraints)) {
                     String parentXpath = n.parentConstraints.get(0).node1.xpath;
                     int[] validWidths = getValidWidths(n.parentConstraints);
@@ -413,7 +410,7 @@ public class ResponsiveLayoutGraph {
         for (String s : nodes.keySet()) {
             Node n = this.nodes.get(s);
             VisibilityConstraint vc = n.getVisibilityConstraints().get(0);
-            System.out.println (s + "    " + vc);
+            System.out.println(s + "    " + vc);
         }
 
     }
@@ -459,13 +456,11 @@ public class ResponsiveLayoutGraph {
     }
 
     public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
-//        System.out.println(min + "    " + max);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
                 Redecheck.capturePageModel(url, extraWidths);
-//                System.out.println(min + " or " + max);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -507,7 +502,6 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-//                System.out.println(mid);
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
@@ -625,6 +619,19 @@ public class ResponsiveLayoutGraph {
             }
         }
         return true;
+    }
+
+    private ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
+        ArrayList<int[]> widthSets = new ArrayList<int[]>();
+        TreeMap<Integer, AlignmentConstraint> ordered = new TreeMap<Integer, AlignmentConstraint>();
+        for (AlignmentConstraint c : acs) {
+            ordered.put(c.min,c);
+        }
+        for (AlignmentConstraint ac : ordered.values()) {
+            System.out.println(ac);
+        }
+
+        return widthSets;
     }
 
     private int[] getValidWidths(ArrayList<AlignmentConstraint> acs) {
