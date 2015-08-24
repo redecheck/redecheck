@@ -18,10 +18,12 @@ public class RLGComparator {
     ResponsiveLayoutGraph rlg1,rlg2;
     public HashMap<Node, Node> matchedNodes;
     Cloner cloner;
+    public ArrayList<String> issues;
 
     public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
         rlg1 = r1;
         rlg2 = r2;
+        issues = new ArrayList<String>();
     }
 
     public void compare() {
@@ -31,8 +33,6 @@ public class RLGComparator {
     }
 
     public ArrayList<String> compareMatchedNodes() {
-        ArrayList<String> issues = new ArrayList<String>();
-
         for (Node n : matchedNodes.keySet()) {
             Node m = matchedNodes.get(n);
             compareVisibilityConstraints(n,m,issues);
@@ -43,6 +43,7 @@ public class RLGComparator {
     }
 
     public void matchNodes() {
+
         HashMap<String, Node> nodes1 = cloner.deepClone(rlg1.nodes);
         HashMap<String, Node> nodes2 = cloner.deepClone(rlg2.nodes);
 

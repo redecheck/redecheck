@@ -106,8 +106,9 @@ public class Redecheck {
 
         // Perform the diff
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-        comp.matchNodes();
+        comp.compare();
         comp.compareMatchedNodes();
+        comp.writeRLGDiffToFile(oracle, "/rlgDiffResults", baseUrl, comp.issues);
     }
 
     public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {

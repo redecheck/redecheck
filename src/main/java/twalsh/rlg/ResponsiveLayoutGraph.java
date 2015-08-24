@@ -66,8 +66,8 @@ public class ResponsiveLayoutGraph {
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
 //        printNodes();
-        printAlignmentConstraints(this.alignmentConstraints);
-        writetoGraphViz("test", false);
+//        printAlignmentConstraints(this.alignmentConstraints);
+//        writetoGraphViz("test", false);
 //        driver.quit();
     }
 
@@ -287,8 +287,8 @@ public class ResponsiveLayoutGraph {
             } else {
                 xpert.ag.Sibling s = (xpert.ag.Sibling) e;
                 String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+s.generateFlippedLabelling();
-                System.out.println(stilVis);
-                System.out.println(flipped);
+//                System.out.println(stilVis);
+//                System.out.println(flipped);
                 Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
                 Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flipped);
 
@@ -311,7 +311,7 @@ public class ResponsiveLayoutGraph {
                         }
                     }
                 } else {
-                    System.out.println("Didn't seem to match " + stilVis);
+//                    System.out.println("Didn't seem to match " + stilVis);
                 }
             }
         }
