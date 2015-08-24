@@ -1,5 +1,7 @@
 package twalsh.rlg;
 import com.rits.cloning.Cloner;
+import xpert.ag.*;
+import xpert.ag.Sibling;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +71,101 @@ public class RLGComparator {
     }
 
     public void compareAlignmentConstraints(Node n, Node m, ArrayList<String> i) {
-//        ArrayList<AlignmentConstraint> ac1
+        ArrayList<AlignmentConstraint> ac1 = new ArrayList<AlignmentConstraint>(), ac2 = new ArrayList<AlignmentConstraint>();
+
+        // Get all the alignment constraints for the matched nodes from the two graphs
+        for (AlignmentConstraint a : rlg1.alignments.values()) {
+//            if (a.type == Type.SIBLING) {
+                if (a.node1.xpath.equals(n.getXpath())) {
+                    ac1.add(a);
+                }
+//            }
+        }
+
+        for (AlignmentConstraint b : rlg2.alignments.values()) {
+//            if (b.type == Type.SIBLING) {
+                if (b.node1.xpath.equals(m.getXpath())) {
+                    ac2.add(b);
+                }
+//            }
+        }
+
+        HashMap<AlignmentConstraint, AlignmentConstraint> matched = new HashMap<AlignmentConstraint, AlignmentConstraint>();
+        ArrayList<AlignmentConstraint> unmatched1 = new ArrayList<AlignmentConstraint>(), unmatched2 = new ArrayList<AlignmentConstraint>();
+        while (ac1.size() > 0) {
+            AlignmentConstraint ac = ac1.remove(0);
+            AlignmentConstraint match = null;
+            for (AlignmentConstraint temp : ac2) {
+                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) && (temp.min == ac.min) && (temp.max == ac.max) ) {
+                    match = temp;
+                    break;
+                }
+            }
+            if (match != null) {
+                matched.put(ac, match);
+                ac2.remove(match);
+            } else {
+                unmatched1.add(ac);
+            }
+        }
+
+        for (AlignmentConstraint acUM : ac2) {
+            unmatched2.add(acUM);
+        }
+
+        // Add any unmatched edges to issues list
+        for (AlignmentConstraint a : unmatched1) {
+            i.add("Unmatched alignment constraint from oracle: " + a);
+        }
+        for (AlignmentConstraint a : unmatched2) {
+            i.add("Unmatched alignment constraint from test: " + a);
+        }
+
+        // Check alignments are correct
+        for (AlignmentConstraint ac : matched.keySet()) {
+            AlignmentConstraint match = matched.get(ac);
+            if (match != null) {
+                if (ac.type == Type.PARENT_CHILD) {
+                    if (ac.attributes[0] != match.attributes[0])
+                        i.add("Error with centre justification : " + ac);
+                    if (ac.attributes[1] != match.attributes[1])
+                        i.add("Error with left justification : " + ac);
+                    if (ac.attributes[2] != match.attributes[2])
+                        i.add("Error with right justification : " + ac);
+                    if(ac.attributes[3] != match.attributes[3])
+                        i.add("Error with middle justification : " + ac);
+                    if (ac.attributes[4] != match.attributes[4])
+                        i.add("Error with top justification : " + ac);
+                    if (ac.attributes[5] != match.attributes[5])
+                        i.add("Error with bottom justification : " + ac);
+                } else {
+                    if (ac.attributes[0] != match.attributes[0]) {
+                        i.add("Error with below alignment : " + ac);
+                    }
+                    if (ac.attributes[1] != match.attributes[1]) {
+                        i.add("Error with above alignment : " + ac);
+                    }
+                    if (ac.attributes[2] != match.attributes[2]) {
+                        i.add("Error with left-of alignment : " + ac);
+                    }
+                    if (ac.attributes[3] != match.attributes[3]) {
+                        i.add("Error with right-of alignment : " + ac);
+                    }
+                    if (ac.attributes[4] != match.attributes[4]) {
+                        i.add("Error with top-edge alignment : " + ac);
+                    }
+                    if (ac.attributes[5] != match.attributes[5]) {
+                        i.add("Error with bottom-edge alignment : " + ac);
+                    }
+                    if (ac.attributes[6] != match.attributes[6]) {
+                        i.add("Error with left-edge alignment : " + ac);
+                    }
+                    if (ac.attributes[7] != match.attributes[7]) {
+                        i.add("Error with right-edge alignment : " + ac);
+                    }
+                }
+            }
+        }
+
     }
 }
