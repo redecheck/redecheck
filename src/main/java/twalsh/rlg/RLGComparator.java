@@ -35,7 +35,7 @@ public class RLGComparator {
     public ArrayList<String> compareMatchedNodes() {
         for (Node n : matchedNodes.keySet()) {
             Node m = matchedNodes.get(n);
-            compareVisibilityConstraints(n,m,issues);
+            compareVisibilityConstraints(n, m, issues);
             compareAlignmentConstraints(n, m, issues);
             compareWidthConstraints(n, m, issues);
         }
@@ -119,8 +119,8 @@ public class RLGComparator {
         for (AlignmentConstraint a : unmatched1) {
             i.add("Unmatched alignment constraint from oracle: " + a);
         }
-        for (AlignmentConstraint a : unmatched2) {
-            i.add("Unmatched alignment constraint from test: " + a);
+        for (AlignmentConstraint b : unmatched2) {
+            i.add("Unmatched alignment constraint from test: " + b);
         }
 
         // Check alignments are correct
@@ -210,13 +210,12 @@ public class RLGComparator {
         for (WidthConstraint c : unmatch1) {
             i.add("Unmatched constraint in graph 1: " + c);
         }
-        for (WidthConstraint c : unmatch2) {
-            i.add("Unmatched constraint in graph 2: " + c);
+        for (WidthConstraint d : unmatch2) {
+            i.add("Unmatched constraint in graph 2: " + d);
         }
     }
 
     public static void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
-        // TODO Auto-generated method stub
         PrintWriter output = null;
         try {
             String outFolder = baseUrl.replace("file://","") + folder;

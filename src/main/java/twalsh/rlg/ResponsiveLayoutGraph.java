@@ -65,9 +65,9 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-//        printNodes();
+        printNodes();
 //        printAlignmentConstraints(this.alignmentConstraints);
-//        writetoGraphViz("test", false);
+        writetoGraphViz("test", false);
 //        driver.quit();
     }
 
@@ -532,12 +532,10 @@ public class ResponsiveLayoutGraph {
     }
 
     public int findDisappearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
-//        System.out.println(searchKey);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-//                System.out.println(min + " or " + max);
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);

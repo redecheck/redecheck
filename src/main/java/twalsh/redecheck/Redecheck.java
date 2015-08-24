@@ -63,8 +63,6 @@ public class Redecheck {
         startWidth = Integer.valueOf(args[3]);
         finalWidth = Integer.valueOf(args[4]);
         int stepSize = Integer.valueOf(ss);
-        System.out.println(oracle);
-        System.out.println(test);
 
         int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
 
@@ -76,6 +74,7 @@ public class Redecheck {
 
         driver = new PhantomJSDriver();
         driver.get(oracleUrl);
+        System.out.println(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
 
@@ -91,7 +90,9 @@ public class Redecheck {
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
 
         // Construct test version RLG
-        String testUrl = baseUrl + oracle + "/1.html";
+        String testUrl = baseUrl + oracle + "/0.html";
+        System.out.println(testUrl);
+        driver.get(testUrl);
         capturePageModel(testUrl, widths);
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
         ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
