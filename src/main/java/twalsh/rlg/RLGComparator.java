@@ -3,8 +3,13 @@ import com.rits.cloning.Cloner;
 import xpert.ag.*;
 import xpert.ag.Sibling;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import java.io.PrintWriter;
+import org.apache.commons.io.FileUtils;
+import java.io.File;
 
 /**
  * Created by thomaswalsh on 20/08/15.
@@ -31,8 +36,8 @@ public class RLGComparator {
         for (Node n : matchedNodes.keySet()) {
             Node m = matchedNodes.get(n);
             compareVisibilityConstraints(n,m,issues);
-//            compareAlignmentConstraints(n, m, issues);
-//            compareWidthConstraints(n,m,issues);
+            compareAlignmentConstraints(n, m, issues);
+            compareWidthConstraints(n, m, issues);
         }
         return issues;
     }
@@ -75,19 +80,15 @@ public class RLGComparator {
 
         // Get all the alignment constraints for the matched nodes from the two graphs
         for (AlignmentConstraint a : rlg1.alignments.values()) {
-//            if (a.type == Type.SIBLING) {
-                if (a.node1.xpath.equals(n.getXpath())) {
-                    ac1.add(a);
-                }
-//            }
+            if (a.node1.xpath.equals(n.getXpath())) {
+                ac1.add(a);
+            }
         }
 
         for (AlignmentConstraint b : rlg2.alignments.values()) {
-//            if (b.type == Type.SIBLING) {
-                if (b.node1.xpath.equals(m.getXpath())) {
-                    ac2.add(b);
-                }
-//            }
+            if (b.node1.xpath.equals(m.getXpath())) {
+                ac2.add(b);
+            }
         }
 
         HashMap<AlignmentConstraint, AlignmentConstraint> matched = new HashMap<AlignmentConstraint, AlignmentConstraint>();
@@ -167,5 +168,65 @@ public class RLGComparator {
             }
         }
 
+    }
+
+    public void compareWidthConstraints(Node n, Node m, ArrayList<String> i) {
+        ArrayList<WidthConstraint> wc1 = new ArrayList<WidthConstraint>(), wc2 = new ArrayList<WidthConstraint>();
+
+        for (WidthConstraint w : n.getWidthConstraints()) {
+            wc1.add(w);
+        }
+        for (WidthConstraint w : m.getWidthConstraints()) {
+            wc2.add(w);
+        }
+
+        HashMap<WidthConstraint, WidthConstraint> matchedConstraints = new HashMap<WidthConstraint, WidthConstraint>();
+        ArrayList<WidthConstraint> unmatch1 = new ArrayList<WidthConstraint>();
+        ArrayList<WidthConstraint> unmatch2 = new ArrayList<WidthConstraint>();
+
+        while (wc1.size() > 0) {
+            WidthConstraint wc = wc1.remove(0);
+            WidthConstraint match = null;
+            for (WidthConstraint temp : wc2) {
+                if ( (wc.percentage == temp.percentage) && (wc.adjustment == temp.adjustment) && (wc.min == temp.min) && (wc.max == temp.max)) {
+                    match = temp;
+                    break;
+                }
+            }
+
+            // Update the sets
+            if (match != null) {
+                matchedConstraints.put(wc, match);
+                wc2.remove(match);
+            } else {
+                unmatch1.add(wc);
+            }
+        }
+        for (WidthConstraint c : wc2) {
+            unmatch2.add(c);
+        }
+
+        for (WidthConstraint c : unmatch1) {
+            i.add("Unmatched constraint in graph 1: " + c);
+        }
+        for (WidthConstraint c : unmatch2) {
+            i.add("Unmatched constraint in graph 2: " + c);
+        }
+    }
+
+    public static void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
+        // TODO Auto-generated method stub
+        PrintWriter output = null;
+        try {
+            String outFolder = baseUrl.replace("file://","") + folder;
+            FileUtils.forceMkdir(new File(outFolder));
+            output = new PrintWriter(outFolder + fileName + ".txt");
+        } catch (Exception e) {
+            System.out.println("Failed to write the results to file.");
+        }
+        for (String s : rlgIssues) {
+            output.append(s +"\n");
+        }
+        output.close();
     }
 }
