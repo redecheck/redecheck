@@ -1,5 +1,6 @@
 package twalsh.rlg;
 import com.google.common.collect.HashBasedTable;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.openqa.selenium.WebDriver;
 import sun.java2d.pipe.SpanShapeRenderer;
@@ -317,93 +318,99 @@ public class ResponsiveLayoutGraph {
 
     public void extractWidthConstraints() throws InterruptedException {
         System.out.println("Extracting Width Constraints.");
-        TreeMap<Integer,double[]> eqs = new TreeMap<Integer, double[]>();
-        for (String s : this.nodes.keySet()) {
-            Node n = this.nodes.get(s);
+        Node n = null;
+//
+            for (String s : this.nodes.keySet()) {
+                try {
+                    n = this.nodes.get(s);
 
-            if (n.parentConstraints.size() > 0) {
-                ArrayList<int[]> widths = getWidthsForConstraints(n.parentConstraints);
-//                if (areParentsConsistent(n.parentConstraints)) {
-                for (int y = 0; y < widths.size(); y++) {
-                    String parentXpath = n.parentConstraints.get(y).node1.xpath;
-                    int[] validWidths = widths.get(y);
-                    int[] widthsTemp = new int[validWidths.length];
-                    int[] parentWidths = new int[validWidths.length];
-                    int[] childWidths = new int[validWidths.length];
-                    doms = Redecheck.loadDoms(validWidths, url);
-                    // Gather parent and child widths
-                    for (int i = 0; i < validWidths.length; i++) {
-                        AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
-                        widthsTemp[i] = validWidths[i];
-                        parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
-                        childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();
-                    }
+                    if (n.parentConstraints.size() > 0) {
+                        ArrayList<int[]> widths = getWidthsForConstraints(n.getParentConstraints());
 
-                    // Get the equations
+                        for (int y = 0; y < widths.size(); y++) {
+                            String parentXpath = n.getParentConstraints().get(y).node1.xpath;
 
-                    boolean foundBreakpoint = false;
-                    double[] bestFit=null;
-                    TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
-                    int previousBreakpoint = widthsTemp[0]-1;
-                    while (parentWidths.length>=2) {
-                        foundBreakpoint = false;
-                        int breakpointIndex = 0;
-                        double[] firstTwoWidths = new double[] { parentWidths[0], parentWidths[1]};
-                        double[] firstTwoValues = new double[] { childWidths[0], childWidths[1]};
-                        double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
-//                        System.out.println(equation[0] + " = " + equation[1] + " of parent + " + equation[2]);
-                        for (int i = 2; i < parentWidths.length; i++) {
-                            double result = (equation[0]*childWidths[i]) - ((equation[1]*parentWidths[i]) + (equation[2]));
-                            if (Math.abs(result) > 5) {
+                            int[] validWidths = widths.get(y);
+                            int[] widthsTemp = new int[validWidths.length];
+                            int[] parentWidths = new int[validWidths.length];
+                            int[] childWidths = new int[validWidths.length];
+                            doms = Redecheck.loadDoms(validWidths, url);
+                            // Gather parent and child widths
+                            for (int i = 0; i < validWidths.length; i++) {
+                                AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
+                                widthsTemp[i] = validWidths[i];
+                                parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
+                                childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();
+                            }
 
-                                if (!foundBreakpoint) {
-                                    breakpointIndex = i;
-                                    foundBreakpoint = true;
-                                    break;
+                            // Get the equations
+
+                            boolean foundBreakpoint = false;
+                            double[] bestFit = null;
+                            TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
+                            int previousBreakpoint = widthsTemp[0] - 1;
+                            while (parentWidths.length >= 2) {
+                                foundBreakpoint = false;
+                                int breakpointIndex = 0;
+                                double[] firstTwoWidths = new double[]{parentWidths[0], parentWidths[1]};
+                                double[] firstTwoValues = new double[]{childWidths[0], childWidths[1]};
+                                double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
+                                //                        System.out.println(equation[0] + " = " + equation[1] + " of parent + " + equation[2]);
+                                for (int i = 2; i < parentWidths.length; i++) {
+                                    double result = (equation[0] * childWidths[i]) - ((equation[1] * parentWidths[i]) + (equation[2]));
+                                    if (Math.abs(result) > 5) {
+
+                                        if (!foundBreakpoint) {
+                                            breakpointIndex = i;
+                                            foundBreakpoint = true;
+                                            break;
+                                        }
+
+                                    }
                                 }
 
+                                // All points lie on line, so manually set breakpoint index to last value
+                                if (!foundBreakpoint) {
+                                    breakpointIndex = parentWidths.length;
+                                }
+
+                                // Generate best fit equation
+                                bestFit = getBestFitLine(parentWidths, childWidths, breakpointIndex);
+                                //                        System.out.println(bestFit[0] + " = " + bestFit[1] + " of parent + " + bestFit[2]);
+
+                                int breakpoint = 0;
+                                if (foundBreakpoint) {
+                                    breakpoint = findWidthBreakpoint(bestFit, widthsTemp[breakpointIndex - 1], widthsTemp[breakpointIndex], s, parentXpath);
+                                } else {
+                                    breakpoint = widthsTemp[breakpointIndex - 1];
+                                }
+                                WidthConstraint wc = new WidthConstraint(previousBreakpoint + 1, breakpoint, bestFit[1], this.nodes.get(parentXpath), bestFit[2]);
+                                this.widthConstraints.put(s, new int[]{previousBreakpoint + 1, breakpoint}, wc);
+                                previousBreakpoint = breakpoint;
+
+                                // Make a copy of all the width arrays before copying
+                                int[] tempWidths = new int[parentWidths.length];
+                                int[] tempValues = new int[childWidths.length];
+                                int[] tempScreenWidths = new int[widthsTemp.length];
+                                System.arraycopy(parentWidths, 0, tempWidths, 0, parentWidths.length);
+                                System.arraycopy(childWidths, 0, tempValues, 0, childWidths.length);
+                                System.arraycopy(widthsTemp, 0, tempScreenWidths, 0, widthsTemp.length);
+
+                                // Redefine the arrays we're using to extract equations
+                                parentWidths = new int[tempWidths.length - breakpointIndex];
+                                childWidths = new int[tempValues.length - breakpointIndex];
+                                widthsTemp = new int[tempScreenWidths.length - breakpointIndex];
+                                // Copy across reduced arrays
+                                System.arraycopy(tempWidths, breakpointIndex, parentWidths, 0, parentWidths.length);
+                                System.arraycopy(tempValues, breakpointIndex, childWidths, 0, childWidths.length);
+                                System.arraycopy(tempScreenWidths, breakpointIndex, widthsTemp, 0, widthsTemp.length);
                             }
                         }
-
-                        // All points lie on line, so manually set breakpoint index to last value
-                        if (!foundBreakpoint) {
-                            breakpointIndex = parentWidths.length;
-                        }
-
-                        // Generate best fit equation
-                        bestFit = getBestFitLine(parentWidths, childWidths, breakpointIndex);
-//                        System.out.println(bestFit[0] + " = " + bestFit[1] + " of parent + " + bestFit[2]);
-
-                        int breakpoint = 0;
-                        if (foundBreakpoint) {
-                            breakpoint = findWidthBreakpoint(bestFit, widthsTemp[breakpointIndex - 1], widthsTemp[breakpointIndex], s, parentXpath);
-                        } else {
-                            breakpoint = widthsTemp[breakpointIndex-1];
-                        }
-                        WidthConstraint wc = new WidthConstraint(previousBreakpoint+1, breakpoint, bestFit[1], this.nodes.get(parentXpath), bestFit[2]);
-                        this.widthConstraints.put(s, new int[] {previousBreakpoint+1, breakpoint}, wc);
-                        previousBreakpoint = breakpoint;
-
-                        // Make a copy of all the width arrays before copying
-                        int[] tempWidths = new int[parentWidths.length];
-                        int[] tempValues = new int[childWidths.length];
-                        int[] tempScreenWidths = new int[widthsTemp.length];
-                        System.arraycopy(parentWidths, 0, tempWidths, 0, parentWidths.length);
-                        System.arraycopy(childWidths, 0, tempValues, 0, childWidths.length);
-                        System.arraycopy(widthsTemp, 0, tempScreenWidths, 0, widthsTemp.length);
-
-                        // Redefine the arrays we're using to extract equations
-                        parentWidths = new int[tempWidths.length-breakpointIndex];
-                        childWidths = new int[tempValues.length-breakpointIndex];
-                        widthsTemp = new int[tempScreenWidths.length-breakpointIndex];
-                        // Copy across reduced arrays
-                        System.arraycopy(tempWidths, breakpointIndex, parentWidths, 0, parentWidths.length);
-                        System.arraycopy(tempValues, breakpointIndex, childWidths, 0, childWidths.length);
-                        System.arraycopy(tempScreenWidths, breakpointIndex, widthsTemp, 0, widthsTemp.length);
                     }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
-        }
         addWidthConstraintsToNodes();
     }
 
@@ -594,34 +601,6 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public boolean areAlignmentsEqual(Edge e1, Edge e2) {
-        if (e1.getClass() != e2.getClass()) {
-            return false;
-        } else if (e1 instanceof Contains) {
-            Contains c1 = (Contains) e1;
-            Contains c2 = (Contains) e2;
-            return c1.isAlignmentTheSame(c2);
-        } else {
-            xpert.ag.Sibling s1 = (xpert.ag.Sibling) e1;
-            xpert.ag.Sibling s2 = (xpert.ag.Sibling) e2;
-            return s1.isAlignmentTheSame(s2);
-        }
-
-    }
-
-//    private boolean areParentsConsistent(ArrayList<AlignmentConstraint> acs) {
-//        for (AlignmentConstraint a1: acs) {
-//            for (AlignmentConstraint a2 : acs) {
-//                if (a1 != a2) {
-//                    if (a1.node1 != a2.node1) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
     private ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
         ArrayList<int[]> widthSets = new ArrayList<int[]>();
         TreeMap<Integer, AlignmentConstraint> ordered = new TreeMap<Integer, AlignmentConstraint>();
@@ -639,9 +618,9 @@ public class ResponsiveLayoutGraph {
                 previousParent = c.node1.getXpath();
             }
         }
-        ArrayList<Integer> tempWidths = new ArrayList<Integer>();
 
         for (AlignmentConstraint ac : parentBreakpoints.values()) {
+            ArrayList<Integer> tempWidths = new ArrayList<Integer>();
             for (int w : this.widths) {
                 if ((w >= ac.min) && (w <= ac.max)) {
                     tempWidths.add(w);
@@ -655,30 +634,6 @@ public class ResponsiveLayoutGraph {
         }
 
         return widthSets;
-    }
-
-    private int[] getValidWidths(ArrayList<AlignmentConstraint> acs) {
-        ArrayList<Integer> widths = new ArrayList<Integer>();
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        for (AlignmentConstraint ac : acs) {
-            if (ac.min < min) {
-                min = ac.min;
-            }
-            if (ac.max > max) {
-                max = ac.max;
-            }
-        }
-        for (int w : this.widths) {
-            if ((w >= min) && (w <= max)) {
-                widths.add(w);
-            }
-        }
-        int[] widthArray = new int[widths.size()];
-        for (Integer i : widths) {
-            widthArray[widths.indexOf(i)] = i;
-        }
-        return widthArray;
     }
 
     private double[] getEquationOfLine(double[] widths, double[] values) {

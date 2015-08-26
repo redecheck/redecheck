@@ -25,11 +25,11 @@ public class WidthError extends Error {
         result += n.getXpath();
 
         // Print out the unmatching constraints
-        result += "\n Oracle: ";
+        result += "\n Oracle: \n";
         for (WidthConstraint wc : unmatched1) {
             result += "\t" + wc + "\n";
         }
-        result += "\n Test: ";
+        result += "Test: \n";
         for (WidthConstraint wc : unmatched2) {
             result += "\t" + wc + "\n";
         }

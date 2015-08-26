@@ -1,6 +1,8 @@
 package twalsh.rlg;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 /**
  * Created by thomaswalsh on 10/08/15.
  */
@@ -45,6 +47,19 @@ public class Node {
     }
 
     public ArrayList<VisibilityConstraint> getVisibilityConstraints() { return visibilityConstraints; }
+
+    public ArrayList<AlignmentConstraint> getParentConstraints() {
+        ArrayList<AlignmentConstraint> result = new ArrayList<AlignmentConstraint>();
+        TreeMap<Integer, AlignmentConstraint> ordered = new TreeMap<Integer, AlignmentConstraint>();
+        for (AlignmentConstraint c : parentConstraints) {
+            ordered.put(c.min,c);
+        }
+
+        for (AlignmentConstraint ac : ordered.values()) {
+            result.add(ac);
+        }
+        return result;
+    }
 
     public String toString() {
         String result = "";

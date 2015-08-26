@@ -165,8 +165,7 @@ public class Redecheck {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ErrorHandler.UnknownServerException e) {
-
-        } finally {
+            e.printStackTrace();
         }
     }
 
