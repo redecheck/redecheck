@@ -88,4 +88,6 @@ public class AlignmentConstraint {
     public void setMax(int m) {
         this.max = m;
     }
+
+    public int getMin() { return min; }
 }

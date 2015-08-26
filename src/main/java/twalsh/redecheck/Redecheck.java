@@ -106,10 +106,12 @@ public class Redecheck {
         driver.quit();
 
         // Perform the diff
+        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
         comp.compare();
         comp.compareMatchedNodes();
         comp.writeRLGDiffToFile(oracle, "/rlgDiffResults", baseUrl, comp.issues);
+        System.out.println("TESTING COMPLETE.");
     }
 
     public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {

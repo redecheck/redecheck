@@ -61,7 +61,7 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-        printNodes();
+//        printNodes();
 //        printAlignmentConstraints(this.alignmentConstraints);
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -609,18 +609,18 @@ public class ResponsiveLayoutGraph {
 
     }
 
-    private boolean areParentsConsistent(ArrayList<AlignmentConstraint> acs) {
-        for (AlignmentConstraint a1: acs) {
-            for (AlignmentConstraint a2 : acs) {
-                if (a1 != a2) {
-                    if (a1.node1 != a2.node1) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
+//    private boolean areParentsConsistent(ArrayList<AlignmentConstraint> acs) {
+//        for (AlignmentConstraint a1: acs) {
+//            for (AlignmentConstraint a2 : acs) {
+//                if (a1 != a2) {
+//                    if (a1.node1 != a2.node1) {
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
     private ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
         ArrayList<int[]> widthSets = new ArrayList<int[]>();

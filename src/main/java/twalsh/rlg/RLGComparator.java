@@ -1,8 +1,12 @@
 package twalsh.rlg;
 import com.rits.cloning.Cloner;
+import twalsh.reporting.*;
+import twalsh.reporting.Error;
 import xpert.ag.*;
 import xpert.ag.Sibling;
 
+import java.awt.Desktop;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,11 +23,13 @@ public class RLGComparator {
     public HashMap<Node, Node> matchedNodes;
     Cloner cloner;
     public ArrayList<String> issues;
+    public static ArrayList<Error> errors;
 
     public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
         rlg1 = r1;
         rlg2 = r2;
         issues = new ArrayList<String>();
+        errors = new ArrayList<Error>();
     }
 
     public void compare() {
@@ -59,7 +65,6 @@ public class RLGComparator {
                 }
             }
         }
-//		System.out.println("Number of matches nodes : " + matchedNodes.size());
         for (Node left1 : nodes1.values()) {
             System.out.println(left1.xpath + " wasn't matched in Graph 2");
         }
@@ -72,6 +77,8 @@ public class RLGComparator {
         VisibilityConstraint a = n.getVisibilityConstraints().get(0);
         VisibilityConstraint b = m.getVisibilityConstraints().get(0);
         if ((a.appear != b.appear) || (a.disappear != b.disappear)) {
+            VisibilityError ve = new VisibilityError(n, m);
+            errors.add(ve);
             i.add("Unmatched Visibility Constraint : (" + a.appear +" , "+a.disappear + ") compared to (" + b.appear +" , " + b.disappear + ")");
         }
     }
@@ -113,6 +120,11 @@ public class RLGComparator {
 
         for (AlignmentConstraint acUM : ac2) {
             unmatched2.add(acUM);
+        }
+
+        if ( (unmatched1.size() > 0) || (unmatched2.size() > 0) ) {
+            AlignmentError ae = new AlignmentError(unmatched1, unmatched2);
+            errors.add(ae);
         }
 
         // Add any unmatched edges to issues list
@@ -207,6 +219,11 @@ public class RLGComparator {
             unmatch2.add(c);
         }
 
+        if ( (unmatch1.size() > 0) || (unmatch2.size() > 0) ) {
+            WidthError we = new WidthError(n, unmatch1, unmatch2);
+            errors.add(we);
+        }
+
         for (WidthConstraint c : unmatch1) {
             i.add("Unmatched constraint in graph 1: " + c);
         }
@@ -217,16 +234,41 @@ public class RLGComparator {
 
     public static void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
         PrintWriter output = null;
+        String outFolder = "";
         try {
-            String outFolder = baseUrl.replace("file://","") + folder;
+            outFolder = baseUrl.replace("file://","") + folder;
             FileUtils.forceMkdir(new File(outFolder));
             output = new PrintWriter(outFolder + fileName + ".txt");
-        } catch (Exception e) {
+
+            // Print out visibility errors
+            output.append("====== Visibility Errors ====== \n\n");
+            for (Error e : errors) {
+                if (e instanceof VisibilityError) {
+                    output.append(e.toString());
+                }
+            }
+
+            // Print out alignment errors
+            output.append("====== Alignment Errors ====== \n\n");
+            for (Error e : errors) {
+                if (e instanceof AlignmentError) {
+                    output.append(e.toString());
+                }
+            }
+
+            // Print out width errors
+            output.append("====== Width Errors ====== \n\n");
+            for (Error e : errors) {
+                if (e instanceof WidthError) {
+                    output.append(e.toString());
+                }
+            }
+
+            output.close();
+            Desktop d = Desktop.getDesktop();
+            d.open(new File(outFolder + fileName + ".txt"));
+        } catch (IOException e) {
             System.out.println("Failed to write the results to file.");
         }
-        for (String s : rlgIssues) {
-            output.append(s +"\n");
-        }
-        output.close();
     }
 }
