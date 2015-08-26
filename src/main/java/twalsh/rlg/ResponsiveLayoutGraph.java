@@ -61,7 +61,7 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-//        printNodes();
+        printNodes();
 //        printAlignmentConstraints(this.alignmentConstraints);
         writetoGraphViz("test", false);
 //        driver.quit();
@@ -316,15 +316,17 @@ public class ResponsiveLayoutGraph {
     }
 
     public void extractWidthConstraints() throws InterruptedException {
+        System.out.println("Extracting Width Constraints.");
         TreeMap<Integer,double[]> eqs = new TreeMap<Integer, double[]>();
         for (String s : this.nodes.keySet()) {
             Node n = this.nodes.get(s);
 
             if (n.parentConstraints.size() > 0) {
                 ArrayList<int[]> widths = getWidthsForConstraints(n.parentConstraints);
-                if (areParentsConsistent(n.parentConstraints)) {
-                    String parentXpath = n.parentConstraints.get(0).node1.xpath;
-                    int[] validWidths = getValidWidths(n.parentConstraints);
+//                if (areParentsConsistent(n.parentConstraints)) {
+                for (int y = 0; y < widths.size(); y++) {
+                    String parentXpath = n.parentConstraints.get(y).node1.xpath;
+                    int[] validWidths = widths.get(y);
                     int[] widthsTemp = new int[validWidths.length];
                     int[] parentWidths = new int[validWidths.length];
                     int[] childWidths = new int[validWidths.length];
@@ -399,7 +401,6 @@ public class ResponsiveLayoutGraph {
                         System.arraycopy(tempValues, breakpointIndex, childWidths, 0, childWidths.length);
                         System.arraycopy(tempScreenWidths, breakpointIndex, widthsTemp, 0, widthsTemp.length);
                     }
-
                 }
             }
         }
@@ -627,8 +628,30 @@ public class ResponsiveLayoutGraph {
         for (AlignmentConstraint c : acs) {
             ordered.put(c.min,c);
         }
-        for (AlignmentConstraint ac : ordered.values()) {
-            System.out.println(ac);
+        int numParents = 0;
+        String previousParent = null;
+        HashMap<Integer, AlignmentConstraint> parentBreakpoints = new HashMap<Integer, AlignmentConstraint>();
+        // Get all the different parents
+        for (AlignmentConstraint c : ordered.values()) {
+            numParents += 1;
+            if (!c.node1.xpath.equals(previousParent)) {
+                parentBreakpoints.put(c.min, c);
+                previousParent = c.node1.getXpath();
+            }
+        }
+        ArrayList<Integer> tempWidths = new ArrayList<Integer>();
+
+        for (AlignmentConstraint ac : parentBreakpoints.values()) {
+            for (int w : this.widths) {
+                if ((w >= ac.min) && (w <= ac.max)) {
+                    tempWidths.add(w);
+                }
+            }
+            int[] widthArray = new int[tempWidths.size()];
+            for (Integer i : tempWidths) {
+                widthArray[tempWidths.indexOf(i)] = i;
+            }
+            widthSets.add(widthArray);
         }
 
         return widthSets;
