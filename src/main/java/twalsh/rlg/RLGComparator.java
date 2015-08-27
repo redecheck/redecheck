@@ -232,7 +232,7 @@ public class RLGComparator {
         }
     }
 
-    public static void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
+    public void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
         PrintWriter output = null;
         String outFolder = "";
         try {
