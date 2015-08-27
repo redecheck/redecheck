@@ -36,7 +36,6 @@ import java.util.Set;
 
 public class Redecheck {
     public static String OUTPUT = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/output/";
-    public static int SLEEP_TIME = 250;
     static String baseUrl = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
     public static String current;
 
@@ -55,8 +54,7 @@ public class Redecheck {
                 "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
 
         current = new java.io.File( "." ).getCanonicalPath();
-//        System.setProperty("phantomjs.binary.path", "/Users/thomaswalsh/Downloads/phantomjs-2.0.0-macosx/bin/phantomjs");
-//        System.setProperty("webdriver.chrome.driver", "/Users/thomaswalsh/Downloads/chromedriver");
+        System.setProperty("phantomjs.binary.path", current + "/phantomjs");
         String oracle = args[0];
         String test = args[1];
         String ss = args[2];
@@ -71,9 +69,9 @@ public class Redecheck {
 
     public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
         String oracleUrl = baseUrl + oracle + "/index.html";
-
         driver = new PhantomJSDriver();
-        driver.get(oracleUrl);
+        long startTime = System.nanoTime();
+        startPhantomJS(oracleUrl);
         System.out.println(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
@@ -87,31 +85,36 @@ public class Redecheck {
             AlignmentGraph ag = new AlignmentGraph(dn);
             oracleAgs.add(ag);
         }
-        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, driver);
+        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        long endTime = System.nanoTime();
+        long duration = (endTime-startTime) / 1000000000;
+        System.out.println("TIME TAKEN : " + duration + " SECONDS");
+//        driver.close();
 
         // Construct test version RLG
-        String testUrl = baseUrl + oracle + "/0.html";
-        System.out.println(testUrl);
-        driver.get(testUrl);
-        capturePageModel(testUrl, widths);
-        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
+//        String testUrl = baseUrl + oracle + "/1.html";
+//        startPhantomJS(testUrl);
+//        capturePageModel(testUrl, widths);
+//
+//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+//        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
+//
+//        for (int width : widths) {
+//            DomNode dn = testDoms.get(width);
+//            AlignmentGraph ag = new AlignmentGraph(dn);
+//            testAgs.add(ag);
+//        }
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+//        driver.close();
+//        // Perform the diff
+//        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
+//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+//        comp.compare();
+//        comp.compareMatchedNodes();
+//        comp.writeRLGDiffToFile(oracle, "/rlgDiffResults", baseUrl, comp.issues);
+//        System.out.println("TESTING COMPLETE.");
 
-        for (int width : widths) {
-            DomNode dn = testDoms.get(width);
-            AlignmentGraph ag = new AlignmentGraph(dn);
-            testAgs.add(ag);
-        }
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, driver);
         driver.quit();
-
-        // Perform the diff
-        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-        comp.compare();
-        comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(oracle, "/rlgDiffResults", baseUrl, comp.issues);
-        System.out.println("TESTING COMPLETE.");
     }
 
     public static int[] buildWidthArray(int startWidth, int finalWidth, int stepSize) {
@@ -149,22 +152,21 @@ public class Redecheck {
                 outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
                 File theDir = new File(outFolder);
                 if (!theDir.exists()) {
-                    driver.manage().window().setSize(new Dimension(w, 600));
-                    Thread.sleep(SLEEP_TIME);
+
                     boolean result = false;
-                    try{
+                    try {
                         theDir.mkdir();
                         result = true;
                     } catch (SecurityException se) {
                         //handle it
                     }
-                    FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, counter));
                 }
+                driver.manage().window().setSize(new Dimension(w, 600));
+                FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, counter));
+//                }
                 counter++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ErrorHandler.UnknownServerException e) {
             e.printStackTrace();
         }
     }
@@ -189,5 +191,14 @@ public class Redecheck {
             }
         }
         return doms;
+    }
+
+    public static void startPhantomJS(String urlToGet) {
+//        driver = new PhantomJSDriver();
+        driver.get(urlToGet);
+    }
+
+    public static void closePhantomJS() {
+        driver.close();
     }
 }

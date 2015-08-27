@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.43.1</version>
+            <version>2.47.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -117,9 +117,9 @@
             <version>18.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.detro</groupId>
+            <groupId>com.codeborne</groupId>
             <artifactId>phantomjsdriver</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
         </dependency>
     </dependencies>
 

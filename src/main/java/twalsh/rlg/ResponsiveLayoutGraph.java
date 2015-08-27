@@ -32,13 +32,10 @@ public class ResponsiveLayoutGraph {
     int[] widths;
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
-    public static WebDriver driver;
 
-    public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms, WebDriver driver) throws InterruptedException {
+    public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
-//        this.driver = driver;
-//        this.driver.quit();
         restOfGraphs =  new ArrayList<AlignmentGraph>();
         for (AlignmentGraph ag : graphs) {
             restOfGraphs.add(ag);
@@ -62,10 +59,6 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
-//        printNodes();
-//        printAlignmentConstraints(this.alignmentConstraints);
-        writetoGraphViz("test", false);
-//        driver.quit();
     }
 
     private void extractVisibilityConstraints() throws InterruptedException {
