@@ -25,7 +25,7 @@ import java.util.Map;
 public class Redecheck {
 
 
-    public static String OUTPUT = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/output/";
+//    public static String output;
     static String baseUrl = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
     public static String current;
 
@@ -59,9 +59,8 @@ public class Redecheck {
     }
 
     public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
-        String oracleUrl = baseUrl + oracle + "/index.html";
+        String oracleUrl = current + "/../testing/" + oracle + ".html";
         driver = new PhantomJSDriver();
-        long startTime = System.nanoTime();
         startPhantomJS(oracleUrl);
         System.out.println(oracleUrl);
         capturePageModel(oracleUrl, widths);
@@ -77,12 +76,9 @@ public class Redecheck {
             oracleAgs.add(ag);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-        long endTime = System.nanoTime();
-        long duration = (endTime-startTime) / 1000000000;
-        System.out.println("TIME TAKEN : " + duration + " SECONDS");
 
         // Construct test version RLG
-        String testUrl = baseUrl + oracle + "/1.html";
+        String testUrl = current + "/../testing/" + test + ".html";
         driver.get(testUrl);
         capturePageModel(testUrl, widths);
 
@@ -101,7 +97,7 @@ public class Redecheck {
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
         comp.compare();
         comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(oracle, "/results-from-redecheck", baseUrl, comp.issues);
+        comp.writeRLGDiffToFile(oracle, "/" + oracle.replace("/","") + "-" + test.replace("/",""), baseUrl, comp.issues);
         System.out.println("TESTING COMPLETE.");
 
         driver.quit();
