@@ -13,6 +13,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="selenium-server-standalone-2.43.1" level="project" />
     <orderEntry type="library" name="antlr-3.5.2-runtime" level="project" />
+    <orderEntry type="library" name="Maven: org.webbitserver:webbit:0.4.14" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty:3.5.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.beust:jcommander:1.48" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.5.2" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-java:2.47.1" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:2.47.1" level="project" />

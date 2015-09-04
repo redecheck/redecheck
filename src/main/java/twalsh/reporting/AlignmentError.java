@@ -2,6 +2,7 @@ package twalsh.reporting;
 
 import twalsh.rlg.AlignmentConstraint;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by thomaswalsh on 26/08/15.
@@ -15,22 +16,32 @@ public class AlignmentError extends Error {
     }
 
     public String toString() {
-        String result = "";
-        // Get the nodes to print out
-        if (unmatched1.size() > 0) {
-            result += unmatched1.get(0).node1.getXpath() + " -> " + unmatched1.get(0).node2.getXpath();
-        } else {
-            result += unmatched2.get(0).node1.getXpath() + " -> " + unmatched2.get(0).node2.getXpath();
-        }
 
-        // Print out the unmatching constraints
-        result += "\n Oracle: \n";
+        Collections.sort(unmatched1);
+        Collections.sort(unmatched2);
+        String previousKey = "";
+        String result = "";
+
         for (AlignmentConstraint ac : unmatched1) {
-            result += "\t" + ac.getMin() + " -> " + ac.getMax() + "     " + ac.generateLabelling() + "\n";
-        }
-        result += "\n Test: \n";
-        for (AlignmentConstraint ac : unmatched2) {
-            result += "\t" + ac.getMin() + " -> " + ac.getMax() + "     " + ac.generateLabelling() + "\n";
+
+            // Check if this is a different edge
+            if (!ac.generateKeyWithoutLabels().equals(previousKey)) {
+                result += ac.node1.getXpath() + " -> " + ac.node2.getXpath();
+                previousKey = ac.generateKeyWithoutLabels();
+
+                // Print out the unmatching constraints
+                result += "\n Oracle: \n";
+                for (AlignmentConstraint um1 : unmatched1) {
+                    if (um1.generateKeyWithoutLabels().equals(previousKey))
+                        result += "\t" + um1.getMin() + " -> " + um1.getMax() + "     " + um1.generateLabelling() + "\n";
+                }
+                result += "\n Test: \n";
+                for (AlignmentConstraint um2 : unmatched2) {
+                    if (um2.generateKeyWithoutLabels().equals(previousKey))
+                        result += "\t" + um2.getMin() + " -> " + um2.getMax() + "     " + um2.generateLabelling() + "\n";
+                }
+            }
+
         }
         return result;
     }

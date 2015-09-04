@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by thomaswalsh on 27/08/15.
  */
-public class JCommanderExample {
+public class CommandLineParser {
     @Parameter
     private List<String> parameters = new ArrayList<>();
 

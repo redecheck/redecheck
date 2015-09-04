@@ -9,6 +9,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import java.io.PrintWriter;
@@ -79,7 +80,6 @@ public class RLGComparator {
         if ((a.appear != b.appear) || (a.disappear != b.disappear)) {
             VisibilityError ve = new VisibilityError(n, m);
             errors.add(ve);
-            i.add("Unmatched Visibility Constraint : (" + a.appear +" , "+a.disappear + ") compared to (" + b.appear +" , " + b.disappear + ")");
         }
     }
 
@@ -105,9 +105,8 @@ public class RLGComparator {
             AlignmentConstraint ac = ac1.remove(0);
             AlignmentConstraint match = null;
             for (AlignmentConstraint temp : ac2) {
-                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) && (temp.min == ac.min) && (temp.max == ac.max) ) {
+                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) && (temp.min == ac.min) && (temp.max == ac.max) && (Arrays.equals(ac.attributes, temp.attributes))) {
                     match = temp;
-                    break;
                 }
             }
             if (match != null) {
@@ -119,6 +118,7 @@ public class RLGComparator {
         }
 
         for (AlignmentConstraint acUM : ac2) {
+//            System.out.println(acUM);
             unmatched2.add(acUM);
         }
 
@@ -127,59 +127,51 @@ public class RLGComparator {
             errors.add(ae);
         }
 
-        // Add any unmatched edges to issues list
-        for (AlignmentConstraint a : unmatched1) {
-            i.add("Unmatched alignment constraint from oracle: " + a);
-        }
-        for (AlignmentConstraint b : unmatched2) {
-            i.add("Unmatched alignment constraint from test: " + b);
-        }
-
         // Check alignments are correct
-        for (AlignmentConstraint ac : matched.keySet()) {
-            AlignmentConstraint match = matched.get(ac);
-            if (match != null) {
-                if (ac.type == Type.PARENT_CHILD) {
-                    if (ac.attributes[0] != match.attributes[0])
-                        i.add("Error with centre justification : " + ac);
-                    if (ac.attributes[1] != match.attributes[1])
-                        i.add("Error with left justification : " + ac);
-                    if (ac.attributes[2] != match.attributes[2])
-                        i.add("Error with right justification : " + ac);
-                    if(ac.attributes[3] != match.attributes[3])
-                        i.add("Error with middle justification : " + ac);
-                    if (ac.attributes[4] != match.attributes[4])
-                        i.add("Error with top justification : " + ac);
-                    if (ac.attributes[5] != match.attributes[5])
-                        i.add("Error with bottom justification : " + ac);
-                } else {
-                    if (ac.attributes[0] != match.attributes[0]) {
-                        i.add("Error with below alignment : " + ac);
-                    }
-                    if (ac.attributes[1] != match.attributes[1]) {
-                        i.add("Error with above alignment : " + ac);
-                    }
-                    if (ac.attributes[2] != match.attributes[2]) {
-                        i.add("Error with left-of alignment : " + ac);
-                    }
-                    if (ac.attributes[3] != match.attributes[3]) {
-                        i.add("Error with right-of alignment : " + ac);
-                    }
-                    if (ac.attributes[4] != match.attributes[4]) {
-                        i.add("Error with top-edge alignment : " + ac);
-                    }
-                    if (ac.attributes[5] != match.attributes[5]) {
-                        i.add("Error with bottom-edge alignment : " + ac);
-                    }
-                    if (ac.attributes[6] != match.attributes[6]) {
-                        i.add("Error with left-edge alignment : " + ac);
-                    }
-                    if (ac.attributes[7] != match.attributes[7]) {
-                        i.add("Error with right-edge alignment : " + ac);
-                    }
-                }
-            }
-        }
+//        for (AlignmentConstraint ac : matched.keySet()) {
+//            AlignmentConstraint match = matched.get(ac);
+//            if (match != null) {
+//                if (ac.type == Type.PARENT_CHILD) {
+//                    if (ac.attributes[0] != match.attributes[0])
+//                        i.add("Error with centre justification : " + ac);
+//                    if (ac.attributes[1] != match.attributes[1])
+//                        i.add("Error with left justification : " + ac);
+//                    if (ac.attributes[2] != match.attributes[2])
+//                        i.add("Error with right justification : " + ac);
+//                    if(ac.attributes[3] != match.attributes[3])
+//                        i.add("Error with middle justification : " + ac);
+//                    if (ac.attributes[4] != match.attributes[4])
+//                        i.add("Error with top justification : " + ac);
+//                    if (ac.attributes[5] != match.attributes[5])
+//                        i.add("Error with bottom justification : " + ac);
+//                } else {
+//                    if (ac.attributes[0] != match.attributes[0]) {
+//                        i.add("Error with below alignment : " + ac);
+//                    }
+//                    if (ac.attributes[1] != match.attributes[1]) {
+//                        i.add("Error with above alignment : " + ac);
+//                    }
+//                    if (ac.attributes[2] != match.attributes[2]) {
+//                        i.add("Error with left-of alignment : " + ac);
+//                    }
+//                    if (ac.attributes[3] != match.attributes[3]) {
+//                        i.add("Error with right-of alignment : " + ac);
+//                    }
+//                    if (ac.attributes[4] != match.attributes[4]) {
+//                        i.add("Error with top-edge alignment : " + ac);
+//                    }
+//                    if (ac.attributes[5] != match.attributes[5]) {
+//                        i.add("Error with bottom-edge alignment : " + ac);
+//                    }
+//                    if (ac.attributes[6] != match.attributes[6]) {
+//                        i.add("Error with left-edge alignment : " + ac);
+//                    }
+//                    if (ac.attributes[7] != match.attributes[7]) {
+//                        i.add("Error with right-edge alignment : " + ac);
+//                    }
+//                }
+//            }
+//        }
 
     }
 
@@ -222,13 +214,6 @@ public class RLGComparator {
         if ( (unmatch1.size() > 0) || (unmatch2.size() > 0) ) {
             WidthError we = new WidthError(n, unmatch1, unmatch2);
             errors.add(we);
-        }
-
-        for (WidthConstraint c : unmatch1) {
-            i.add("Unmatched constraint in graph 1: " + c);
-        }
-        for (WidthConstraint d : unmatch2) {
-            i.add("Unmatched constraint in graph 2: " + d);
         }
     }
 

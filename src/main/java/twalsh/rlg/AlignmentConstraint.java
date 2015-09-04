@@ -3,7 +3,7 @@ package twalsh.rlg;
 /**
  * Created by thomaswalsh on 12/08/15.
  */
-public class AlignmentConstraint {
+public class AlignmentConstraint implements Comparable<AlignmentConstraint> {
     public Node node1, node2;
     public Type type;
     int min, max;
@@ -25,6 +25,17 @@ public class AlignmentConstraint {
 
     public String toString() {
         return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max + " , " + this.generateLabelling();
+    }
+
+    public String generateKeyWithoutLabels() {
+        String t = "";
+        if (type == Type.PARENT_CHILD) {
+            t = "contains";
+            return node2.xpath + node1.xpath + t;
+        } else {
+            t = "sibling";
+            return node1.xpath + node2.xpath + t;
+        }
     }
 
     public String generateKey() {
@@ -90,4 +101,10 @@ public class AlignmentConstraint {
     }
 
     public int getMin() { return min; }
+
+    public int compareTo(AlignmentConstraint ac2) {
+        String key1 = this.generateKeyWithoutLabels();
+        String key2 = ac2.generateKeyWithoutLabels();
+        return key1.compareTo(key2);
+    }
 }

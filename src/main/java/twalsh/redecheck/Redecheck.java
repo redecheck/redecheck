@@ -11,13 +11,13 @@ import java.io.IOException;
 
 import com.beust.jcommander.JCommander;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
 import twalsh.rlg.RLGComparator;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;
 import xpert.ag.AlignmentGraph;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class Redecheck {
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
 //
-        JCommanderExample jce = new JCommanderExample();
+        CommandLineParser jce = new CommandLineParser();
         new JCommander(jce, args);
         String oracle = jce.oracle;
         String test = jce.test;
@@ -60,7 +60,11 @@ public class Redecheck {
 
     public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
         String oracleUrl = current + "/../testing/" + oracle + ".html";
-        driver = new PhantomJSDriver();
+        DesiredCapabilities dCaps = new DesiredCapabilities();
+        dCaps.setJavascriptEnabled(true);
+        dCaps.setCapability("takesScreenshot", false);
+        driver = new PhantomJSDriver(dCaps);
+        System.out.println(driver.toString());
         startPhantomJS(oracleUrl);
         System.out.println(oracleUrl);
         capturePageModel(oracleUrl, widths);
@@ -92,6 +96,8 @@ public class Redecheck {
         }
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         driver.close();
+
+        testRlg.writetoGraphViz("testingsomecrap", true);
         // Perform the diff
         System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);

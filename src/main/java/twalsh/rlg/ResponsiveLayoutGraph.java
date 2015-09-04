@@ -277,8 +277,6 @@ public class ResponsiveLayoutGraph {
             } else {
                 xpert.ag.Sibling s = (xpert.ag.Sibling) e;
                 String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+s.generateFlippedLabelling();
-//                System.out.println(stilVis);
-//                System.out.println(flipped);
                 Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
                 Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flipped);
 
@@ -301,7 +299,6 @@ public class ResponsiveLayoutGraph {
                         }
                     }
                 } else {
-//                    System.out.println("Didn't seem to match " + stilVis);
                 }
             }
         }
@@ -311,8 +308,8 @@ public class ResponsiveLayoutGraph {
 
     public void extractWidthConstraints() throws InterruptedException {
         System.out.println("Extracting Width Constraints.");
-        Node n = null;
-//
+        Node n;
+
             for (String s : this.nodes.keySet()) {
                 try {
                     n = this.nodes.get(s);
