@@ -63,11 +63,29 @@ public class Node {
 
     public String toString() {
         String result = "";
+        for (VisibilityConstraint vc : visibilityConstraints) {
+            result += "\n\t" + vc;
+        }
         if (this.xpath != null) {
             result += this.xpath;
         }
         for (WidthConstraint c : widthConstraints) {
             result += "\n\t" + c;
+        }
+        return result;
+    }
+
+    public String generateGraphVizLabel() {
+        String result = "";
+        for (VisibilityConstraint vc : visibilityConstraints) {
+            result += "\n\t" + vc;
+        }
+        result += "\n";
+        if (this.xpath != null) {
+            result += this.xpath;
+        }
+        for (WidthConstraint c : widthConstraints) {
+            result += "\n" + c.min + " -> " + c.max + " : " + c.percentage + "% of parent + " + c.adjustment;
         }
         return result;
     }

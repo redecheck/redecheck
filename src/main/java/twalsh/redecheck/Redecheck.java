@@ -97,7 +97,7 @@ public class Redecheck {
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         driver.close();
 
-        testRlg.writetoGraphViz("testingsomecrap", true);
+        testRlg.writetoGraphViz("testingsomecrap", false);
         // Perform the diff
         System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);

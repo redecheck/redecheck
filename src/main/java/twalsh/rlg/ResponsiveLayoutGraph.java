@@ -764,11 +764,13 @@ public class ResponsiveLayoutGraph {
 
                 output.append("\n\t");
                 output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+                output.append(" [ label = \"" + parent.generateGraphVizLabel() + " \" ];");
 
 //                output.append(" [ label = \"" + parent.getPres() + " " + parent.label + " " + parent.printConstraints() + " \" ];");
 
                 output.append("\n\t");
                 output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+                output.append(" [ label = \"" + child.generateGraphVizLabel() + " \" ];");
 //                output.append(" [ label = \"" + child.getPres() + " " + child.label + " \n " + child.printConstraints() + " \" ];");
             }
             else {
@@ -782,13 +784,13 @@ public class ResponsiveLayoutGraph {
                 output.append(" [ style=dotted, label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + " \" ];");
 //
 //
-//                output.append("\n\t");
-//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//                output.append(" [ label = \"" + node1.getPres() + " " + node1.label + " " + node1.printConstraints()  + " \" ];");
-//
-//                output.append("\n\t");
-//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//                output.append(" [ label = \"" + node2.getPres() + " " + node2.label + " \n " + node2.printConstraints() + " \" ];");
+                output.append("\n\t");
+                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+                output.append(" [ label = \"" + node1.generateGraphVizLabel() + " \" ];");
+
+                output.append("\n\t");
+                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
+                output.append(" [ label = \"" + node2.generateGraphVizLabel() + " \" ];");
             }
         }
 //        if (siblings) {
