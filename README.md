@@ -20,9 +20,9 @@ end			|	The viewport width at which to finish sampling
 
 An example showing the command line input is presented below:
 
-'''
+```
 java -jar redecheck-jar-with-dependencies.jar --oracle live.mysite.com/home --test dev.mysite.com/home --step 40 --start 400 --end 1400
-'''
+```
 
 In the example above, the current live version of the webpage under test (*live.mysite.com/home*) is being used as the oracle to compare against the test version (*dev.mysite.com/home*).
 
