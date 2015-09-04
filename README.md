@@ -9,6 +9,7 @@ Running ReDeCheck
 -----------
 
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its execution. These arguments are defined and described below:
+
 -------	 	|	---------------
 Argument 	|	Description
 -------		|	---------------
