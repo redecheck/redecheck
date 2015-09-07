@@ -13,13 +13,24 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 ### Installing
 
-If using the IntelliJ IDE for Java:
+As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/).
 
-1. Select 'File' -> 'Open'
-2. Navigate to the root directory of your copy of ReDeCheck
-3. Select the 'pom.xml' file and click 'Finish'
-4. Open the Maven Projects toolbar  using 'View' -> 'Tool Windows' -> 'Maven Projects'
-5. Select the ReDeCheck project and click 'package'
+If using Eclipse:
+
+1. Select 'File' -> 'Import'.
+2. From the project options, select 'Maven' -> 'Existing Maven Projects'.
+3. Select the root directory of your downloaded copy of ReDeCheck.
+4. Click 'Finish' to complete the import.
+5. To generate the jar file, select 'Run' -> 'Run As' -> 'maven install'.
+6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
+
+If using IntelliJ:
+
+1. Select 'File' -> 'Open'.
+2. Navigate to the root directory of your copy of ReDeCheck.
+3. Select the 'pom.xml' file and click 'Finish'.
+4. Open the Maven Projects toolbar  using 'View' -> 'Tool Windows' -> 'Maven Projects'.
+5. Select the ReDeCheck project and click 'package'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
 
