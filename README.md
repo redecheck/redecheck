@@ -1,12 +1,19 @@
-Welcome to ReDeCheck!
-===================
+#Welcome to ReDeCheck!
 
 ReDeCheck is an automated tool designed to aid developers with the process of testing the layouts of responsive web sites. With the huge range of devices available nowadays, performing adequate quality assurance on a sufficient range of devices is extremely difficult, if not impossible.
 
+##Downloading and Installing
 
+1. Clone the ReDeCheck project repository using either a VCS client or the following command
+```
+git clone https://github.com/redecheck/redecheck-tool.git
+```
+2. If you wish to use the .jar file included with the download, please skip to "Running ReDeCheck"
+3. Otherwise, follow the instructions in the next section.
 
-Running ReDeCheck
------------
+### Installing
+
+## Running ReDeCheck
 
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its execution. These arguments are defined and described below:
 
