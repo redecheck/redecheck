@@ -14,6 +14,7 @@ git clone https://github.com/redecheck/redecheck-tool.git
 ### Installing
 
 If using the IntelliJ IDE for Java:
+
 1. Select 'File' -> 'Open'
 2. Navigate to the root directory of your copy of ReDeCheck
 3. Select the 'pom.xml' file and click 'Finish'
