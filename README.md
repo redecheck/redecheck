@@ -13,6 +13,15 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 ### Installing
 
+If using the IntelliJ IDE for Java:
+1. Select 'File' -> 'Open'
+2. Navigate to the root directory of your copy of ReDeCheck
+3. Select the 'pom.xml' file and click 'Finish'
+4. Open the Maven Projects toolbar  using 'View' -> 'Tool Windows' -> 'Maven Projects'
+5. Select the ReDeCheck project and click 'package'
+6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
+
+
 ## Running ReDeCheck
 
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its execution. These arguments are defined and described below:
