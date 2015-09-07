@@ -15,7 +15,7 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/).
 
-If using Eclipse:
+#### If using Eclipse:
 
 1. Select 'File' -> 'Import'.
 2. From the project options, select 'Maven' -> 'Existing Maven Projects'.
@@ -24,7 +24,7 @@ If using Eclipse:
 5. To generate the jar file, select 'Run' -> 'Run As' -> 'maven install'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
-If using IntelliJ:
+#### If using IntelliJ:
 
 1. Select 'File' -> 'Open'.
 2. Navigate to the root directory of your copy of ReDeCheck.
@@ -36,9 +36,16 @@ If using IntelliJ:
 
 ## Running ReDeCheck
 
+Once you have ReDeCheck correctly packaged and ready to run, there are two main requirements for effective use of the tool:
+
+1. Understanding the configuration parameters and how they affect the way the tool works
+2. Understanding the reports produced by the tool to effectively analyse the differences between the two versions of the webpage under test.
+
+### Configuration Parameters
+
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its execution. These arguments are defined and described below:
 
-Argument 	|	Description
+Argument     |	Description
 -------		|	---------------
 oracle		|	URL of the oracle version of the webpage
 test 		|	URL of the test version of the webpage
@@ -54,4 +61,10 @@ java -jar redecheck-jar-with-dependencies.jar --oracle live.mysite.com/home --te
 
 In the example above, the current live version of the webpage under test (*live.mysite.com/home*) is being used as the oracle to compare against the test version (*dev.mysite.com/home*).
 
-The remaining three parameters are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px. Different combinations of values for these parameters can be used to conduct different types of testing. For instance, the values above would produce in a regular strength testing across a wide range of devices, from smartphones to tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on smartphones, the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of device resolutions. 
+The remaining three parameters are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px. 
+
+Different combinations of values for these parameters can be used to conduct different types of testing. For instance, the values above would produce in a regular strength testing across a wide range of devices, from smartphones to tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on smartphones, the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of device resolutions.
+
+### Interpreting and Understanding the Reports
+
+After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. 
