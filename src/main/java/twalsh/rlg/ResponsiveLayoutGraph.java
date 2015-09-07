@@ -17,8 +17,10 @@ import twalsh.redecheck.Utils;
 
 /**
  * Created by thomaswalsh on 10/08/15.
+ * Last modified on 07/09/15.
  */
 public class ResponsiveLayoutGraph {
+    // Initialising various variables needed throughout the model construction process
     HashMap<String, Node> nodes = new HashMap<String, Node>();
     HashMap<String, AlignmentConstraint> alignments = new HashMap<String, AlignmentConstraint>();
     HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
@@ -33,6 +35,14 @@ public class ResponsiveLayoutGraph {
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
 
+    /**
+     * Constructor to create the initial Responsive Layout Graph, which is then developed step by step.
+     * @param ags               set of alignment graphs for each width sampled
+     * @param stringWidths      set of ordered widths at which the page was sampled
+     * @param url               the URL of the webpage under test
+     * @param doms              the DOMs of the webpage at various viewport widths
+     * @throws InterruptedException
+     */
     public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
@@ -61,6 +71,11 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE WIDTH CONSTRAINTS");
     }
 
+    /**
+     * Extracts all the visibility constraints for each node on the webpage by inspecting which elements are visible at
+     * which resolutions.
+     * @throws InterruptedException
+     */
     private void extractVisibilityConstraints() throws InterruptedException {
         System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
@@ -123,6 +138,10 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Extracts the alignment constraints for all the nodes on the webpage.
+     * @throws InterruptedException
+     */
     private void extractAlignmentConstraints() throws InterruptedException {
         System.out.println("Extracting Alignment Constraints");
         HashMap<String, Edge> previousMap = first.getNewEdges();
@@ -207,7 +226,6 @@ public class ResponsiveLayoutGraph {
                     for (int[] pair : cons.keySet()) {
                         // Get the one without a max value
                         if (pair[1] == 0) {
-//                            System.out.println(pair[0]);
                             AlignmentConstraint aCon = cons.get(pair);
                             aCon.setMax(disappearPoint - 1);
                             pair[1] = disappearPoint-1;
@@ -217,7 +235,6 @@ public class ResponsiveLayoutGraph {
                     for (int[] pair : cons2.keySet()) {
                         // Get the one without a max value
                         if (pair[1] == 0) {
-//                            System.out.println(pair[0]);
                             AlignmentConstraint aCon = cons2.get(pair);
                             aCon.setMax(disappearPoint - 1);
                             pair[1] = disappearPoint-1;
@@ -306,6 +323,10 @@ public class ResponsiveLayoutGraph {
         this.alignments = alCons;
     }
 
+    /**
+     * Extracts the width constraints for all the nodes visible on the webpage across the range of resolutions sampled
+     * @throws InterruptedException
+     */
     public void extractWidthConstraints() throws InterruptedException {
         System.out.println("Extracting Width Constraints.");
         Node n;
@@ -345,7 +366,6 @@ public class ResponsiveLayoutGraph {
                                 double[] firstTwoWidths = new double[]{parentWidths[0], parentWidths[1]};
                                 double[] firstTwoValues = new double[]{childWidths[0], childWidths[1]};
                                 double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
-                                //                        System.out.println(equation[0] + " = " + equation[1] + " of parent + " + equation[2]);
                                 for (int i = 2; i < parentWidths.length; i++) {
                                     double result = (equation[0] * childWidths[i]) - ((equation[1] * parentWidths[i]) + (equation[2]));
                                     if (Math.abs(result) > 5) {
@@ -366,7 +386,6 @@ public class ResponsiveLayoutGraph {
 
                                 // Generate best fit equation
                                 bestFit = getBestFitLine(parentWidths, childWidths, breakpointIndex);
-                                //                        System.out.println(bestFit[0] + " = " + bestFit[1] + " of parent + " + bestFit[2]);
 
                                 int breakpoint = 0;
                                 if (foundBreakpoint) {
@@ -404,8 +423,11 @@ public class ResponsiveLayoutGraph {
         addWidthConstraintsToNodes();
     }
 
-    public void printVisibilityConstraints(HashMap<String, Node> nodes) {
-        for (String s : nodes.keySet()) {
+    /**
+     * Prints the width constraints to the terminal for debugging purposes
+     */
+    public void printVisibilityConstraints() {
+        for (String s : this.nodes.keySet()) {
             Node n = this.nodes.get(s);
             VisibilityConstraint vc = n.getVisibilityConstraints().get(0);
             System.out.println(s + "    " + vc);
@@ -413,6 +435,10 @@ public class ResponsiveLayoutGraph {
 
     }
 
+    /**
+     * Prints the alignment constraints to the terminal for debugging purposes
+     * @param cons      the table of alignment constraints
+     */
     public void printAlignmentConstraints(HashBasedTable<String, int[], AlignmentConstraint> cons) {
         for (String s : cons.rowKeySet()) {
             Map<int[],AlignmentConstraint> map = cons.row(s);
@@ -423,18 +449,29 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Prints the width constraints to the terminal for debugging purposes
+     * @param cons      the table of width constraints
+     */
     public void printWidthConstraints(HashBasedTable<String, int[], WidthConstraint> cons) {
         for (WidthConstraint wc : cons.values()) {
             System.out.println(wc);
         }
     }
 
+    /**
+     * Prints the nodes to the terminal for debugging purposes
+     */
     private void printNodes() {
         for (Node n : this.nodes.values()) {
             System.out.println(n);
         }
     }
 
+    /**
+     * Goes through the full set of alignment constraints and adds the parent-child constraints to the node representing
+     * the child element, for use in the width constraint extraction
+     */
     private void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
             if (ac.type == Type.PARENT_CHILD) {
@@ -444,15 +481,28 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Goes through the full set of extracted width constraints and adds them to the relevant nodes in the graph
+     */
     private void addWidthConstraintsToNodes() {
         for (Node n : this.nodes.values()) {
-            Map<int[], WidthConstraint> wcs = (Map<int[], WidthConstraint>) this.widthConstraints.row(n.xpath);
+            Map<int[], WidthConstraint> wcs = this.widthConstraints.row(n.xpath);
             for (WidthConstraint wc : wcs.values()) {
                 n.addWidthConstraint(wc);
             }
         }
     }
 
+    /**
+     * Returns the viewport width at which a particular node or edge comes into view
+     * @param searchKey         the search key to look for. Can be a node's XPath or a custom edge key
+     * @param min               the lower bound of the search
+     * @param max               the upper bound of the search
+     * @param searchForNode     whether the search is for a node or an edge, as the code is different for each
+     * @param flippedKey        an alternate key for searching for sibling edges
+     * @return                  the viewport width at which the object represented by the key comes into view
+     * @throws InterruptedException
+     */
     public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
@@ -523,6 +573,16 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Returns the viewport width at which a particular node or edge disappears from view
+     * @param searchKey         the search key to look for. Can be a node's XPath or a custom edge key
+     * @param min               the lower bound of the search
+     * @param max               the upper bound of the search
+     * @param searchForNode     whether the search is for a node or an edge, as the code is different for each
+     * @param flippedKey        an alternate key for searching for sibling edges
+     * @return                  the viewport width at which the object represented by the key disappears from view
+     * @throws InterruptedException
+     */
     public int findDisappearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
@@ -591,6 +651,12 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Takes a set of parent-child alignment constraints for a particular element and return a sequence of sets of
+     * widths for which each alignment constraint holds
+     * @param acs       the set of alignment constraints for the element
+     * @return          a set of arrays representing the sets of widths
+     */
     private ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
         ArrayList<int[]> widthSets = new ArrayList<int[]>();
         TreeMap<Integer, AlignmentConstraint> ordered = new TreeMap<Integer, AlignmentConstraint>();
@@ -626,6 +692,12 @@ public class ResponsiveLayoutGraph {
         return widthSets;
     }
 
+    /**
+     * Takes a set of parent-child width pairs and uses the first two of them to construct an initial equation
+     * @param widths    the set of parent widths
+     * @param values    the set of child widths
+     * @return          the coefficients of the initial equation
+     */
     private double[] getEquationOfLine(double[] widths, double[] values) {
 
         double[] coefficients = new double[3];
@@ -649,6 +721,13 @@ public class ResponsiveLayoutGraph {
         return coefficients;
     }
 
+    /**
+     * Takes a sequence of parent-child width pairs and fits a line of best fit onto the values
+     * @param ps    the set of parent widths
+     * @param cs    the set of child widths
+     * @param i     the index at which to stop extracting values
+     * @return      the coefficients of the best fit line
+     */
     private double[] getBestFitLine(int[] ps, int[] cs, int i) {
         double[] valuesForEq = new double[i-1];
         SimpleRegression reg = new SimpleRegression();
@@ -674,6 +753,19 @@ public class ResponsiveLayoutGraph {
         return regressionEq;
     }
 
+    /**
+     * Returns the viewport width at which the width equation for a particular elements ceases to become true.
+     * This is done through the use of a binary search between two viewport widths, extracted during the main model
+     * construction process.
+     * @param eq        the width equation for the element
+     * @param min       the lower bound for the binary search
+     * @param max       the upper bound for the binary search
+     * @param child     the element to which the width equation applies
+     * @param parent    the parent of the element between the upper and lower bounds. Used to determine whether the element's
+     *                  width matches the equation
+     * @return          the viewport width at which the equation ceases to hold for the element
+     * @throws InterruptedException
+     */
     private int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) throws InterruptedException {
         if (max-min == 1) {
             int[] extraWidths = new int[] {min,max};
@@ -738,7 +830,12 @@ public class ResponsiveLayoutGraph {
         return (min+max)/2;
     }
 
-    public void writetoGraphViz(String graphName, boolean siblings) {
+    /**
+     * Takes the RLG and presents it in a visual format so it can be further examined if required.
+     * Visibility, alignment and width constraints are added to the graph so all aspects can be inspected.
+     * @param graphName the file name of the GraphViz file you wish to create
+     */
+    public void writetoGraphViz(String graphName) {
         PrintWriter output = null;
         try {
             output = new PrintWriter(graphName + ".gv");
@@ -746,9 +843,7 @@ public class ResponsiveLayoutGraph {
             e.printStackTrace();
         }
 
-
         output.append("digraph G {");
-
 
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
             if (ac.type == Type.PARENT_CHILD) {
@@ -761,17 +856,13 @@ public class ResponsiveLayoutGraph {
 
                 output.append(" [ label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + "\" ];");
 
-
                 output.append("\n\t");
                 output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
                 output.append(" [ label = \"" + parent.generateGraphVizLabel() + " \" ];");
 
-//                output.append(" [ label = \"" + parent.getPres() + " " + parent.label + " " + parent.printConstraints() + " \" ];");
-
                 output.append("\n\t");
                 output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
                 output.append(" [ label = \"" + child.generateGraphVizLabel() + " \" ];");
-//                output.append(" [ label = \"" + child.getPres() + " " + child.label + " \n " + child.printConstraints() + " \" ];");
             }
             else {
                 Node node1 = ac.node1;
@@ -780,10 +871,7 @@ public class ResponsiveLayoutGraph {
                 output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
                 output.append(" -> ");
                 output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//
                 output.append(" [ style=dotted, label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + " \" ];");
-//
-//
                 output.append("\n\t");
                 output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
                 output.append(" [ label = \"" + node1.generateGraphVizLabel() + " \" ];");
@@ -793,27 +881,6 @@ public class ResponsiveLayoutGraph {
                 output.append(" [ label = \"" + node2.generateGraphVizLabel() + " \" ];");
             }
         }
-//        if (siblings) {
-//            for (RLGSibling s : this.siblings) {
-//                RLGNode node1 = s.first;
-//                RLGNode node2 = s.second;
-//                output.append("\n\t");
-//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//                output.append(" -> ");
-//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//
-//                output.append(" [ style=dotted, label= \"" + s.getLabelString() + "\" ];");
-//
-//
-//                output.append("\n\t");
-//                output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//                output.append(" [ label = \"" + node1.getPres() + " " + node1.label + " " + node1.printConstraints()  + " \" ];");
-//
-//                output.append("\n\t");
-//                output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-//                output.append(" [ label = \"" + node2.getPres() + " " + node2.label + " \n " + node2.printConstraints() + " \" ];");
-//            }
-//        }
 
         output.append("\n}");
         output.close();
