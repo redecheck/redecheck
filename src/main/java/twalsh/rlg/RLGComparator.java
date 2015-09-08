@@ -20,12 +20,18 @@ import java.io.File;
  * Created by thomaswalsh on 20/08/15.
  */
 public class RLGComparator {
+    // Instance variables
     ResponsiveLayoutGraph rlg1,rlg2;
     public HashMap<Node, Node> matchedNodes;
     Cloner cloner;
     public ArrayList<String> issues;
     public static ArrayList<Error> errors;
 
+    /**
+     * Constructor for the RLGComparator object
+     * @param r1    the oracle RLG
+     * @param r2    the test RLG
+     */
     public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
         rlg1 = r1;
         rlg2 = r2;
@@ -33,22 +39,33 @@ public class RLGComparator {
         errors = new ArrayList<Error>();
     }
 
+    /**
+     * Executes the overall comparison process
+     */
     public void compare() {
         matchedNodes = new HashMap<Node, Node>();
         cloner = new Cloner();
         matchNodes();
     }
 
+    /**
+     * Takes a set of matched nodes from the two RLG models and compares all the different constraints on them, producing
+     * a list of model differences.
+     * @return      the list of model differences between the two versions of the page
+     */
     public ArrayList<String> compareMatchedNodes() {
         for (Node n : matchedNodes.keySet()) {
             Node m = matchedNodes.get(n);
-            compareVisibilityConstraints(n, m, issues);
-            compareAlignmentConstraints(n, m, issues);
-            compareWidthConstraints(n, m, issues);
+            compareVisibilityConstraints(n, m);
+            compareAlignmentConstraints(n, m);
+            compareWidthConstraints(n, m);
         }
         return issues;
     }
 
+    /**
+     * Matches the nodes from the oracle version to those in the test version, so their constraints can then be compared.
+     */
     public void matchNodes() {
 
         HashMap<String, Node> nodes1 = cloner.deepClone(rlg1.nodes);
@@ -74,7 +91,12 @@ public class RLGComparator {
         }
     }
 
-    public void compareVisibilityConstraints(Node n, Node m, ArrayList<String> i) {
+    /**
+     * Compares the visibility constraints of a pair of matched nodes
+     * @param n     the first node being compared
+     * @param m     the second node being compared
+     */
+    public void compareVisibilityConstraints(Node n, Node m) {
         VisibilityConstraint a = n.getVisibilityConstraints().get(0);
         VisibilityConstraint b = m.getVisibilityConstraints().get(0);
         if ((a.appear != b.appear) || (a.disappear != b.disappear)) {
@@ -83,7 +105,12 @@ public class RLGComparator {
         }
     }
 
-    public void compareAlignmentConstraints(Node n, Node m, ArrayList<String> i) {
+    /**
+     * Compares the alignment constraints of a pair of matched nodes
+     * @param n     the first node being compared
+     * @param m     the second node being compared
+     */
+    public void compareAlignmentConstraints(Node n, Node m) {
         ArrayList<AlignmentConstraint> ac1 = new ArrayList<AlignmentConstraint>(), ac2 = new ArrayList<AlignmentConstraint>();
 
         // Get all the alignment constraints for the matched nodes from the two graphs
@@ -175,7 +202,12 @@ public class RLGComparator {
 
     }
 
-    public void compareWidthConstraints(Node n, Node m, ArrayList<String> i) {
+    /**
+     * Compares the width constraints for a pair of matched nodes
+     * @param n     the first node being compared
+     * @param m     the second node being compared
+     */
+    public void compareWidthConstraints(Node n, Node m) {
         ArrayList<WidthConstraint> wc1 = new ArrayList<WidthConstraint>(), wc2 = new ArrayList<WidthConstraint>();
 
         for (WidthConstraint w : n.getWidthConstraints()) {
