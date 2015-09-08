@@ -835,7 +835,7 @@ public class ResponsiveLayoutGraph {
      * Visibility, alignment and width constraints are added to the graph so all aspects can be inspected.
      * @param graphName the file name of the GraphViz file you wish to create
      */
-    public void writetoGraphViz(String graphName) {
+    public void writeToGraphViz(String graphName) {
         PrintWriter output = null;
         try {
             output = new PrintWriter(graphName + ".gv");

@@ -217,7 +217,14 @@ public class RLGComparator {
         }
     }
 
-    public void writeRLGDiffToFile(String folder, String fileName, String baseUrl, ArrayList<String> rlgIssues) {
+    /**
+     * Writes the model differences between the oracle and test versions into a text file, and then opens the file in
+     * the default program of the user's system.
+     * @param folder        the folder name in which the file is saved
+     * @param fileName      the name of the results file
+     * @param baseUrl       the url of the website under test
+     */
+    public void writeRLGDiffToFile(String folder, String fileName, String baseUrl) {
         PrintWriter output = null;
         String outFolder = "";
         try {
