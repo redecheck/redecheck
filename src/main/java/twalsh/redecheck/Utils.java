@@ -29,6 +29,12 @@ public class Utils {
         return writer.toString();
     }
 
+    /**
+     * Utility function which reads the contents of a file into a String variable
+     * @param fileName      the file name to read
+     * @return              a string containing the files contents.
+     * @throws IOException
+     */
     public static String readFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
@@ -49,6 +55,11 @@ public class Utils {
         return "";
     }
 
+    /**
+     * Check whether all values in an array are equal
+     * @param values        the array of values to check
+     * @return              whether the values are all equal
+     */
     public static boolean areAllItemsSame(double[] values) {
         double first = values[0];
         for (int i = 1; i < values.length; i++) {

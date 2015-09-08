@@ -171,6 +171,10 @@ public class Contains extends Edge {
 	 * Setters & Getters
 	 */
 
+	/**
+	 * Returns the parent of the edge
+	 * @return		the parent node
+	 */
 	public AGNode getParent() {
 		return parent;
 	}
