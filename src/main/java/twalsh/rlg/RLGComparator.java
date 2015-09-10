@@ -256,11 +256,11 @@ public class RLGComparator {
      * @param fileName      the name of the results file
      * @param baseUrl       the url of the website under test
      */
-    public void writeRLGDiffToFile(String folder, String fileName, String baseUrl) {
+    public void writeRLGDiffToFile(String folder, String fileName) {
         PrintWriter output = null;
         String outFolder = "";
         try {
-            outFolder = baseUrl.replace("file://","") + folder;
+            outFolder = folder + "/reports/";
             FileUtils.forceMkdir(new File(outFolder));
             output = new PrintWriter(outFolder + fileName + ".txt");
 

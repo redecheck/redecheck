@@ -86,7 +86,7 @@ public class Redecheck {
             oracleAgs.add(ag);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-        oracleRlg.writeToGraphViz(oracle+"/rlg");
+//        oracleRlg.writeToGraphViz(oracle+"/rlg");
 
         // Access test webpage and sample
         String testUrl = current + "/../testing/" + test + ".html";
@@ -104,14 +104,14 @@ public class Redecheck {
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         driver.close();
 
-        testRlg.writeToGraphViz(test+"/rlg");
+//        testRlg.writeToGraphViz(test+"/rlg");
 
         // Perform the model comparison
         System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
         comp.compare();
         comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(oracle, "/" + oracle.replace("/","") + "-" + test.replace("/",""), baseUrl);
+        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
         System.out.println("TESTING COMPLETE.");
 
         driver.quit();
