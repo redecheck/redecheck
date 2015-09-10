@@ -67,4 +67,8 @@ Different combinations of values for these parameters can be used to conduct dif
 
 ### Interpreting and Understanding the Reports
 
-After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. 
+After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, which should make it as easy as possible to locate and fix any detected problems.
+
+The report is split into three sections, corresponding to the three main layout features of responsive web design: visibility, alignment and width.
+
+![Test Image](/readme-images/test.png)
