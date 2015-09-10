@@ -49,7 +49,7 @@ Argument     |	Description
 -------		|	---------------
 oracle		|	URL of the oracle version of the webpage
 test 		|	URL of the test version of the webpage
-step		|	The step size to use during the sampling process. For example, a step size of 40 would result in 				 the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
+step		|	The step size to use during the sampling process. For example, a step size of 40 would result in the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
 start		|	The viewport width at which to start sampling
 end			|	The viewport width at which to finish sampling
 
@@ -69,6 +69,19 @@ Different combinations of values for these parameters can be used to conduct dif
 
 After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, which should make it as easy as possible to locate and fix any detected problems.
 
-The report is split into three sections, corresponding to the three main layout features of responsive web design: visibility, alignment and width.
+The report is split into three sections, corresponding to the three main layout features of responsive web design: visibility, alignment and width. Here we'll present an example of each category of error, with a guide on how to understand them:
 
-![Test Image](/readme-images/test.png)
+#### Visibility Errors
+
+```
+HTML/BODY/NAV/BUTTON
+
+Oracle:
+	400 -> 767
+Test:
+	400 -> 775
+```
+
+In this example, the report shows that the `button` element contained within the `nav` element is visible at a different range of viewport widths in the test version compared to the oracle. This could potentially have further impacts, such as changing the intended alignment of other nearby elements, so it is important to check.
+
+<!-- ![Test Image](/readme-images/test.png) -->
