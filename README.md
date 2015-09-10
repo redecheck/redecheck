@@ -84,4 +84,18 @@ Test:
 
 In this example, the report shows that the `button` element contained within the `nav` element is visible at a different range of viewport widths in the test version compared to the oracle. This could potentially have further impacts, such as changing the intended alignment of other nearby elements, so it is important to check.
 
+#### Alignment Errors
+
+```
+/HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
+ Oracle: 
+	400 -> 1300     rightOf,topAlign,bottomAlign
+
+ Test: 
+	400 -> 440     	below
+	441 -> 1300     rightOf,topAlign,bottomAlign
+```
+
+The example shows that in the oracle version of the webpage the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
+
 <!-- ![Test Image](/readme-images/test.png) -->
