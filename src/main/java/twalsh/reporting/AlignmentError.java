@@ -6,17 +6,27 @@ import java.util.Collections;
 
 /**
  * Created by thomaswalsh on 26/08/15.
+ * Last modified on 10/09/15
  */
 public class AlignmentError extends Error {
+    // Instance variables
     ArrayList<AlignmentConstraint> unmatched1, unmatched2;
 
+    /**
+     * Constructs an alignment error for a particular node
+     * @param um1       the set of alignments unmatched from the oracle RLG
+     * @param um2       the set of alignments unmatched from the test/dev RLG
+     */
     public AlignmentError(ArrayList<AlignmentConstraint> um1, ArrayList<AlignmentConstraint> um2) {
         this.unmatched1 = um1;
         this.unmatched2 = um2;
     }
 
+    /**
+     * Creates a string to print out the differences in alignment so they are easy to read and understand
+     * @return      the formatted result string
+     */
     public String toString() {
-
         Collections.sort(unmatched1);
         Collections.sort(unmatched2);
         String previousKey = "";
