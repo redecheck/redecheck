@@ -2,10 +2,6 @@
 
 ReDeCheck is an automated tool designed to aid developers with the process of testing the layouts of responsive web sites. With the huge range of devices available nowadays, performing adequate quality assurance on a sufficient range of devices is extremely difficult, if not impossible.
 
-##Maven
-
-The project has been implemented using Maven, a build automation tool for Java projects. If you wish to build the tool from scratch, you will first need to install on your workstation. If you already have Maven installed, please skip to the next section. Otherwise, follow the installation guidelines here https://maven.apache.org/install.html.
-
 ##Downloading and Installing
 
 1. Clone the ReDeCheck project repository using either a VCS client or the following command
@@ -17,7 +13,7 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 ### Installing
 
-As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/). However, if you would prefer to build the project using the command line, instructions to do so are also provided.
+As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/).
 
 #### If using Eclipse:
 
@@ -37,13 +33,6 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 5. Select the ReDeCheck project and click 'package'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
-#### If using command line:
-
-1. Navigate to the root directory containing your copy of ReDeCheck. (Use the cd command as shown below)
-2. Type the following command to build the tool: `mvn package`
-3. Maven will build the project from scratch, downloading all the required dependencies for the project automatically.
-4. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
-
 
 ## Running ReDeCheck
 
@@ -60,7 +49,7 @@ Argument     |	Description
 -------		|	---------------
 oracle		|	URL of the oracle version of the webpage
 test 		|	URL of the test version of the webpage
-step		|	The step size to use during the sampling process. For example, a step size of 40 would result in 				 the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
+step		|	The step size to use during the sampling process. For example, a step size of 40 would result in the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
 start		|	The viewport width at which to start sampling
 end			|	The viewport width at which to finish sampling
 
@@ -78,7 +67,35 @@ Different combinations of values for these parameters can be used to conduct dif
 
 ### Interpreting and Understanding the Reports
 
-After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. 
+After the tool has finishing comparing the two versions of the website, a report is produced and should open automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, which should make it as easy as possible to locate and fix any detected problems.
 
-## Troubleshooting
+The report is split into three sections, corresponding to the three main layout features of responsive web design: visibility, alignment and width. Here we'll present an example of each category of error, with a guide on how to understand them:
 
+#### Visibility Errors
+
+```
+HTML/BODY/NAV/BUTTON
+
+Oracle:
+	400 -> 767
+Test:
+	400 -> 775
+```
+
+In this example, the report shows that the `button` element contained within the `nav` element is visible at a different range of viewport widths in the test version compared to the oracle. This could potentially have further impacts, such as changing the intended alignment of other nearby elements, so it is important to check.
+
+#### Alignment Errors
+
+```
+/HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
+ Oracle: 
+	400 -> 1300     rightOf,topAlign,bottomAlign
+
+ Test: 
+	400 -> 440     	below
+	441 -> 1300     rightOf,topAlign,bottomAlign
+```
+
+The example shows that in the oracle version of the webpage the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
+
+<!-- ![Test Image](/readme-images/test.png) -->
