@@ -12,18 +12,21 @@ public class CommandLineParser {
     @Parameter
     private List<String> parameters = new ArrayList<>();
 
-    @Parameter(names = {"-oracle"}, description = "URL of oracle webpage")
+    @Parameter(names = {"--oracle"}, description = "URL of oracle webpage")
     public String oracle;
 
-    @Parameter(names = {"-test"}, description = "URL of test webpage")
+    @Parameter(names = {"--test"}, description = "URL of test webpage")
     public String test;
 
-    @Parameter(names = "-step", description = "Step size")
+    @Parameter(names = "--step", description = "Step size")
     public int ss;
 
-    @Parameter(names = "-start", description = "Start width for sampling")
+    @Parameter(names = "--start", description = "Start width for sampling")
     public int startWidth;
 
-    @Parameter(names = "-end", description = "End width for sampling")
+    @Parameter(names = "--end", description = "End width for sampling")
     public int endWidth;
+
+    @Parameter(names = "--preamble", description = "Preamble for the two URL parameters")
+    public String preamble;
 }

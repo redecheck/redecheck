@@ -25,6 +25,7 @@ import java.util.Map;
 public class Redecheck {
     // Instance variables
     public static String current;
+    public static String preamble;
     public static int startWidth;
     public static int finalWidth;
     public static WebDriver driver;
@@ -50,12 +51,13 @@ public class Redecheck {
         new JCommander(jce, args);
         String oracle = jce.oracle;
         String test = jce.test;
+        preamble = jce.preamble;
         startWidth = jce.startWidth;
         finalWidth = jce.endWidth;
         int stepSize = jce.ss;
         int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
 
-        runTool(oracle, test, sampleWidths);
+        runTool(oracle, test, preamble, sampleWidths);
     }
 
     /**
@@ -65,7 +67,7 @@ public class Redecheck {
      * @param widths        the set of sampling widths to use.
      * @throws InterruptedException
      */
-    public static void runTool(String oracle, String test, int[] widths) throws InterruptedException {
+    public static void runTool(String oracle, String test, String preamble, int[] widths) throws InterruptedException {
         // Set up the PhantomJS driver to gather the DOMs
         DesiredCapabilities dCaps = new DesiredCapabilities();
         dCaps.setJavascriptEnabled(true);
@@ -73,7 +75,7 @@ public class Redecheck {
         driver = new PhantomJSDriver(dCaps);
 
         // Access oracle webpage and sample
-        String oracleUrl = current + "/../testing/" + oracle + ".html";
+        String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
         capturePageModel(oracleUrl, widths);
 
@@ -88,7 +90,7 @@ public class Redecheck {
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
 
         // Access test webpage and sample
-        String testUrl = current + "/../testing/" + test + ".html";
+        String testUrl = preamble + test + ".html";
         driver.get(testUrl);
         capturePageModel(testUrl, widths);
 
