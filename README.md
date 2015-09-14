@@ -5,9 +5,9 @@ ReDeCheck is an automated tool designed to aid developers with the process of te
 ##Downloading and Installing
 
 1. Clone the ReDeCheck project repository using either a VCS client or the following command
-```
+`
 git clone https://github.com/redecheck/redecheck-tool.git
-```
+`
 2. If you wish to use the .jar file included with the download, please skip to "Running ReDeCheck"
 3. Otherwise, follow the instructions in the next section.
 
@@ -98,4 +98,18 @@ In this example, the report shows that the `button` element contained within the
 
 The example shows that in the oracle version of the webpage the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
 
-<!-- ![Test Image](/readme-images/test.png) -->
+#### Width Errors
+```
+/HTML/BODY/DIV[2]/DIV/DIV[6]
+ Oracle: 
+	400 --> 767 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
+	768 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
+ Test: 
+	400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
+	776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
+```
+The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact behaviour each element exhibits and whether they are different in the two versions of the webpage.
+
+## Troubleshooting
+
+If you have any problems with either the installation or execution of ReDeCheck, please feel free to create an issues on the repository using the link above, and we'll do all we can to resolve your issue. Alternatively, if you'd like to get in touch with us directly, you can email us at redechecktool@gmail.com.
