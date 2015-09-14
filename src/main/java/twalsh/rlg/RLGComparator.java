@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import java.io.PrintWriter;
@@ -26,6 +27,9 @@ public class RLGComparator {
     Cloner cloner;
     public ArrayList<String> issues;
     public static ArrayList<Error> errors;
+    public static ArrayList<VisibilityError> vcErrors;
+    public static ArrayList<AlignmentError> acErrors;
+    public static ArrayList<WidthError> wcErrors;
 
     /**
      * Constructor for the RLGComparator object
@@ -35,8 +39,11 @@ public class RLGComparator {
     public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
         rlg1 = r1;
         rlg2 = r2;
-        issues = new ArrayList<String>();
+        vcErrors = new ArrayList<>();
+        wcErrors = new ArrayList<>();
+        acErrors = new ArrayList<>();
         errors = new ArrayList<Error>();
+
     }
 
     /**
@@ -132,74 +139,32 @@ public class RLGComparator {
             AlignmentConstraint ac = ac1.remove(0);
             AlignmentConstraint match = null;
             for (AlignmentConstraint temp : ac2) {
-                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) && (temp.min == ac.min) && (temp.max == ac.max) && (Arrays.equals(ac.attributes, temp.attributes))) {
-                    match = temp;
+                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) ) {
+                    if ((temp.min == ac.min) && (temp.max == ac.max) && (Arrays.equals(ac.attributes, temp.attributes))) {
+                        match = temp;
+                    } else if ((temp.min == ac.min) && (temp.max == ac.max) && (!Arrays.equals(ac.attributes, temp.attributes))){
+                        AlignmentError ae = new AlignmentError(ac, temp, "diffAttributes");
+                        acErrors.add(ae);
+                        match = temp;
+                    } else if ( (Arrays.equals(ac.attributes, temp.attributes)) && ((temp.min != ac.min) || (temp.max != ac.max)) ) {
+                        AlignmentError ae = new AlignmentError(ac, temp, "diffBounds");
+                        acErrors.add(ae);
+                        match = temp;
+                    }
                 }
             }
             if (match != null) {
                 matched.put(ac, match);
                 ac2.remove(match);
             } else {
-                unmatched1.add(ac);
+                AlignmentError ae = new AlignmentError(ac, null, "unmatched-oracle");
+                acErrors.add(ae);
             }
         }
-
         for (AlignmentConstraint acUM : ac2) {
-//            System.out.println(acUM);
-            unmatched2.add(acUM);
+            AlignmentError ae = new AlignmentError(null, acUM, "unmatched-test");
+            acErrors.add(ae);
         }
-
-        if ( (unmatched1.size() > 0) || (unmatched2.size() > 0) ) {
-            AlignmentError ae = new AlignmentError(unmatched1, unmatched2);
-            errors.add(ae);
-        }
-
-        // Check alignments are correct
-//        for (AlignmentConstraint ac : matched.keySet()) {
-//            AlignmentConstraint match = matched.get(ac);
-//            if (match != null) {
-//                if (ac.type == Type.PARENT_CHILD) {
-//                    if (ac.attributes[0] != match.attributes[0])
-//                        i.add("Error with centre justification : " + ac);
-//                    if (ac.attributes[1] != match.attributes[1])
-//                        i.add("Error with left justification : " + ac);
-//                    if (ac.attributes[2] != match.attributes[2])
-//                        i.add("Error with right justification : " + ac);
-//                    if(ac.attributes[3] != match.attributes[3])
-//                        i.add("Error with middle justification : " + ac);
-//                    if (ac.attributes[4] != match.attributes[4])
-//                        i.add("Error with top justification : " + ac);
-//                    if (ac.attributes[5] != match.attributes[5])
-//                        i.add("Error with bottom justification : " + ac);
-//                } else {
-//                    if (ac.attributes[0] != match.attributes[0]) {
-//                        i.add("Error with below alignment : " + ac);
-//                    }
-//                    if (ac.attributes[1] != match.attributes[1]) {
-//                        i.add("Error with above alignment : " + ac);
-//                    }
-//                    if (ac.attributes[2] != match.attributes[2]) {
-//                        i.add("Error with left-of alignment : " + ac);
-//                    }
-//                    if (ac.attributes[3] != match.attributes[3]) {
-//                        i.add("Error with right-of alignment : " + ac);
-//                    }
-//                    if (ac.attributes[4] != match.attributes[4]) {
-//                        i.add("Error with top-edge alignment : " + ac);
-//                    }
-//                    if (ac.attributes[5] != match.attributes[5]) {
-//                        i.add("Error with bottom-edge alignment : " + ac);
-//                    }
-//                    if (ac.attributes[6] != match.attributes[6]) {
-//                        i.add("Error with left-edge alignment : " + ac);
-//                    }
-//                    if (ac.attributes[7] != match.attributes[7]) {
-//                        i.add("Error with right-edge alignment : " + ac);
-//                    }
-//                }
-//            }
-//        }
-
     }
 
     /**
@@ -254,7 +219,6 @@ public class RLGComparator {
      * the default program of the user's system.
      * @param folder        the folder name in which the file is saved
      * @param fileName      the name of the results file
-     * @param baseUrl       the url of the website under test
      */
     public void writeRLGDiffToFile(String folder, String fileName) {
         PrintWriter output = null;
@@ -274,10 +238,15 @@ public class RLGComparator {
 
             // Print out alignment errors
             output.append("====== Alignment Errors ====== \n\n");
-            for (Error e : errors) {
-                if (e instanceof AlignmentError) {
-                    output.append(e.toString());
+            Collections.sort(acErrors);
+            String previousKey = "";
+            for (AlignmentError e : acErrors) {
+                // Check if this is a different edge
+                if (!e.getOracle().generateKeyWithoutLabels().equals(previousKey)) {
+                    output.append("\n" + e.getOracle().node1.getXpath() + " -> " + e.getOracle().node2.getXpath()+"\n");
+                    previousKey = e.getOracle().generateKeyWithoutLabels();
                 }
+                output.append("\n" + e.toString());
             }
 
             // Print out width errors
