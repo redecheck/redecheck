@@ -2,6 +2,10 @@
 
 ReDeCheck is an automated tool designed to aid developers with the process of testing the layouts of responsive web sites. With the huge range of devices available nowadays, performing adequate quality assurance on a sufficient range of devices is extremely difficult, if not impossible.
 
+##Maven
+
+The project has been implemented using Maven, a build automation tool for Java projects. If you wish to build the tool from scratch, you will first need to install on your workstation. If you already have Maven installed, please skip to the next section. Otherwise, follow the installation guidelines here https://maven.apache.org/install.html.
+
 ##Downloading and Installing
 
 1. Clone the ReDeCheck project repository using either a VCS client or the following command
@@ -13,7 +17,7 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 ### Installing
 
-As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/).
+As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/). However, if you would prefer to build the project using the command line, instructions to do so are also provided.
 
 #### If using Eclipse:
 
@@ -33,6 +37,12 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 5. Select the ReDeCheck project and click 'package'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
+#### If using command line:
+
+1. Navigate to the root directory containing your copy of ReDeCheck. (Use the cd command as shown below)
+2. Type the following command to build the tool: `mvn package`
+3. Maven will build the project from scratch, downloading all the required dependencies for the project automatically.
+4. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
 ## Running ReDeCheck
 
