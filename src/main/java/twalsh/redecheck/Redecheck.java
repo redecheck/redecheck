@@ -12,7 +12,6 @@ import java.io.IOException;
 import com.beust.jcommander.JCommander;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
-import twalsh.rlg.RLGComparator;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import xpert.dom.JsonDomParser;
 import xpert.dom.DomNode;

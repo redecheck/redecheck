@@ -27,6 +27,23 @@ public class ResponsiveLayoutGraph {
     HashBasedTable<String, int[], WidthConstraint> widthConstraints = HashBasedTable.create();
     ArrayList<AlignmentGraph> graphs;
     AlignmentGraph first;
+
+    public HashMap<String, Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(HashMap<String, Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public HashMap<String, AlignmentConstraint> getAlignments() {
+        return alignments;
+    }
+
+    public void setAlignments(HashMap<String, AlignmentConstraint> alignments) {
+        this.alignments = alignments;
+    }
+
     ArrayList<AlignmentGraph> restOfGraphs;
     String url;
     Map<Integer, DomNode> doms;

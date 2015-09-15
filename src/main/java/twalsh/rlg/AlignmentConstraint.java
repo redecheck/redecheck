@@ -42,6 +42,42 @@ public class AlignmentConstraint implements Comparable<AlignmentConstraint> {
         return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max + " , " + this.generateLabelling();
     }
 
+    public Node getNode1() {
+        return node1;
+    }
+
+    public void setNode1(Node node1) {
+        this.node1 = node1;
+    }
+
+    public Node getNode2() {
+        return node2;
+    }
+
+    public void setNode2(Node node2) {
+        this.node2 = node2;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public boolean[] getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(boolean[] attributes) {
+        this.attributes = attributes;
+    }
+
     /**
      * Utility function to generate a basic key to represent the constraint
      * @return      the basic key
@@ -55,6 +91,7 @@ public class AlignmentConstraint implements Comparable<AlignmentConstraint> {
             t = "sibling";
             return node1.xpath + node2.xpath + t;
         }
+
     }
 
     /**

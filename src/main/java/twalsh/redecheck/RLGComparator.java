@@ -1,7 +1,8 @@
-package twalsh.rlg;
+package twalsh.redecheck;
 import com.rits.cloning.Cloner;
 import twalsh.reporting.*;
 import twalsh.reporting.Error;
+import twalsh.rlg.*;
 import xpert.ag.*;
 import xpert.ag.Sibling;
 
@@ -75,14 +76,14 @@ public class RLGComparator {
      */
     public void matchNodes() {
 
-        HashMap<String, Node> nodes1 = cloner.deepClone(rlg1.nodes);
-        HashMap<String, Node> nodes2 = cloner.deepClone(rlg2.nodes);
+        HashMap<String, Node> nodes1 = cloner.deepClone(rlg1.getNodes());
+        HashMap<String, Node> nodes2 = cloner.deepClone(rlg2.getNodes());
 
         // Match the nodes and their min/max values
-        for (Node n1 : rlg1.nodes.values()) {
-            String xpath1 = n1.xpath;
-            for (Node n2 : rlg2.nodes.values()) {
-                String xpath2 = n2.xpath;
+        for (Node n1 : rlg1.getNodes().values()) {
+            String xpath1 = n1.getXpath();
+            for (Node n2 : rlg2.getNodes().values()) {
+                String xpath2 = n2.getXpath();
                 if (xpath1.equals(xpath2)) {
                     matchedNodes.put(n1, n2);
                     nodes1.remove(xpath1);
@@ -91,10 +92,10 @@ public class RLGComparator {
             }
         }
         for (Node left1 : nodes1.values()) {
-            System.out.println(left1.xpath + " wasn't matched in Graph 2");
+            System.out.println(left1.getXpath() + " wasn't matched in Graph 2");
         }
         for (Node left2 : nodes2.values()) {
-            System.out.println(left2.xpath + " wasn't matched in Graph 1");
+            System.out.println(left2.getXpath() + " wasn't matched in Graph 1");
         }
     }
 
@@ -121,14 +122,14 @@ public class RLGComparator {
         ArrayList<AlignmentConstraint> ac1 = new ArrayList<AlignmentConstraint>(), ac2 = new ArrayList<AlignmentConstraint>();
 
         // Get all the alignment constraints for the matched nodes from the two graphs
-        for (AlignmentConstraint a : rlg1.alignments.values()) {
-            if (a.node1.xpath.equals(n.getXpath())) {
+        for (AlignmentConstraint a : rlg1.getAlignments().values()) {
+            if (a.node1.getXpath().equals(n.getXpath())) {
                 ac1.add(a);
             }
         }
 
-        for (AlignmentConstraint b : rlg2.alignments.values()) {
-            if (b.node1.xpath.equals(m.getXpath())) {
+        for (AlignmentConstraint b : rlg2.getAlignments().values()) {
+            if (b.node1.getXpath().equals(m.getXpath())) {
                 ac2.add(b);
             }
         }
@@ -139,14 +140,14 @@ public class RLGComparator {
             AlignmentConstraint ac = ac1.remove(0);
             AlignmentConstraint match = null;
             for (AlignmentConstraint temp : ac2) {
-                if ( (temp.node1.xpath.equals(ac.node1.xpath)) && (temp.node2.xpath.equals(ac.node2.xpath)) ) {
-                    if ((temp.min == ac.min) && (temp.max == ac.max) && (Arrays.equals(ac.attributes, temp.attributes))) {
+                if ( (temp.node1.getXpath().equals(ac.node1.getXpath())) && (temp.node2.getXpath().equals(ac.node2.getXpath())) ) {
+                    if ((temp.getMin() == ac.getMin()) && (temp.getMax() == ac.getMax()) && (Arrays.equals(ac.getAttributes(), temp.getAttributes()))) {
                         match = temp;
-                    } else if ((temp.min == ac.min) && (temp.max == ac.max) && (!Arrays.equals(ac.attributes, temp.attributes))){
+                    } else if ((temp.getMin()== ac.getMin()) && (temp.getMax() == ac.getMax()) && (!Arrays.equals(ac.getAttributes(), temp.getAttributes()))){
                         AlignmentError ae = new AlignmentError(ac, temp, "diffAttributes");
                         acErrors.add(ae);
                         match = temp;
-                    } else if ( (Arrays.equals(ac.attributes, temp.attributes)) && ((temp.min != ac.min) || (temp.max != ac.max)) ) {
+                    } else if ( (Arrays.equals(ac.getAttributes(), temp.getAttributes())) && ((temp.getMin() != ac.getMin()) || (temp.getMax() != ac.getMax())) ) {
                         AlignmentError ae = new AlignmentError(ac, temp, "diffBounds");
                         acErrors.add(ae);
                         match = temp;
@@ -190,7 +191,7 @@ public class RLGComparator {
             WidthConstraint wc = wc1.remove(0);
             WidthConstraint match = null;
             for (WidthConstraint temp : wc2) {
-                if ( (wc.percentage == temp.percentage) && (wc.adjustment == temp.adjustment) && (wc.min == temp.min) && (wc.max == temp.max)) {
+                if ( (wc.getPercentage() == temp.getPercentage()) && (wc.getAdjustment() == temp.getAdjustment()) && (wc.getMin() == temp.getMin()) && (wc.getMax() == temp.getMax())) {
                     match = temp;
                     break;
                 }

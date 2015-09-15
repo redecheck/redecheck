@@ -6,7 +6,49 @@ package twalsh.rlg;
  */
 public class WidthConstraint {
     // Instance variables
-    int min, max;
+    int min;
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public double getAdjustment() {
+        return adjustment;
+    }
+
+    public void setAdjustment(double adjustment) {
+        this.adjustment = adjustment;
+    }
+
+    int max;
     double percentage;
     Node parent;
     double adjustment;
