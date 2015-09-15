@@ -7,6 +7,10 @@ package twalsh.rlg;
 public class WidthConstraint {
     // Instance variables
     int min;
+    int max;
+    double percentage;
+    Node parent;
+    double adjustment;
 
     public int getMin() {
         return min;
@@ -48,11 +52,6 @@ public class WidthConstraint {
         this.adjustment = adjustment;
     }
 
-    int max;
-    double percentage;
-    Node parent;
-    double adjustment;
-
     /**
      * Constructor for the WidthConstraint object
      * @param min       the lower bound viewport width at which the constraint holds
@@ -75,5 +74,9 @@ public class WidthConstraint {
      */
     public String toString() {
         return min + " --> " + max + " : " + percentage*100 + "% of " + parent.xpath + " + " + adjustment;
+    }
+
+    public String generateEquationString() {
+        return percentage*100 + "% of " + parent.xpath + " + " + adjustment;
     }
 }

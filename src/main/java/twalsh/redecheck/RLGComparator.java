@@ -193,7 +193,14 @@ public class RLGComparator {
             for (WidthConstraint temp : wc2) {
                 if ( (wc.getPercentage() == temp.getPercentage()) && (wc.getAdjustment() == temp.getAdjustment()) && (wc.getMin() == temp.getMin()) && (wc.getMax() == temp.getMax())) {
                     match = temp;
-                    break;
+                } else if ( ((wc.getMin()==temp.getMin()) && (wc.getMax()==temp.getMax())) && ( (wc.getPercentage()!=temp.getPercentage()) || (wc.getAdjustment()!=temp.getAdjustment()) ) ) {
+                    WidthError we = new WidthError(wc, temp, "diffCoefficients");
+                    wcErrors.add(we);
+                    match = temp;
+                } else if ( ((wc.getMin()!=temp.getMin()) || (wc.getMax()!=temp.getMax())) && ( (wc.getPercentage()==temp.getPercentage()) && (wc.getAdjustment()==temp.getAdjustment()) ) ) {
+                    WidthError we = new WidthError(wc, temp, "diffBounds");
+                    wcErrors.add(we);
+                    match = temp;
                 }
             }
 
@@ -202,17 +209,15 @@ public class RLGComparator {
                 matchedConstraints.put(wc, match);
                 wc2.remove(match);
             } else {
-                unmatch1.add(wc);
+                WidthError we = new WidthError(wc, null, "unmatched-oracle");
+                wcErrors.add(we);
             }
         }
         for (WidthConstraint c : wc2) {
-            unmatch2.add(c);
+            WidthError we = new WidthError(null, c, "unmatched-test");
+            wcErrors.add(we);
         }
 
-        if ( (unmatch1.size() > 0) || (unmatch2.size() > 0) ) {
-            WidthError we = new WidthError(n, unmatch1, unmatch2);
-            errors.add(we);
-        }
     }
 
     /**
