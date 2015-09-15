@@ -243,9 +243,13 @@ public class RLGComparator {
             String previousKey = "";
             for (AlignmentError e : acErrors) {
                 // Check if this is a different edge
-                if (!e.getOracle().generateKeyWithoutLabels().equals(previousKey)) {
-                    output.append("\n" + e.getOracle().node1.getXpath() + " -> " + e.getOracle().node2.getXpath()+"\n");
-                    previousKey = e.getOracle().generateKeyWithoutLabels();
+                if (!e.generateKey().equals(previousKey)) {
+                    if (e.getOracle() != null) {
+                        output.append("\n" + e.getOracle().node1.getXpath() + " -> " + e.getOracle().node2.getXpath() + "\n");
+                    } else {
+                        output.append("\n" + e.getTest().node1.getXpath() + " -> " + e.getTest().node2.getXpath() + "\n");
+                    }
+                    previousKey = e.generateKey();
                 }
                 output.append("\n" + e.toString());
             }
