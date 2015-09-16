@@ -52,6 +52,14 @@ public class ResponsiveLayoutGraph {
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
 
+    public static HashSet<Integer> getAlreadyGathered() {
+        return alreadyGathered;
+    }
+
+    public static void setAlreadyGathered(HashSet<Integer> alreadyGathered) {
+        ResponsiveLayoutGraph.alreadyGathered = alreadyGathered;
+    }
+
     /**
      * Constructor to create the initial Responsive Layout Graph, which is then developed step by step.
      * @param ags               set of alignment graphs for each width sampled

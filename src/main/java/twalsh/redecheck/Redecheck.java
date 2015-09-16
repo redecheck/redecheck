@@ -87,6 +87,8 @@ public class Redecheck {
             oracleAgs.add(ag);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
+        oracleRlg.writeToGraphViz("oracle");
 
         // Access test webpage and sample
         String testUrl = preamble + test + ".html";
@@ -102,6 +104,8 @@ public class Redecheck {
             testAgs.add(ag);
         }
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
+        testRlg.writeToGraphViz("test");
         driver.close();
 
         // Perform the model comparison
