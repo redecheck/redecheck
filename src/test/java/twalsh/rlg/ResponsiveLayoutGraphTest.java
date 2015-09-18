@@ -27,7 +27,7 @@ public class ResponsiveLayoutGraphTest {
     private AGNode node;
 
     @Before
-    public void method() {
+    public void setup() {
         rlg = new ResponsiveLayoutGraph();
         MockitoAnnotations.initMocks(this);
         cloner = new Cloner();
@@ -68,10 +68,50 @@ public class ResponsiveLayoutGraphTest {
     }
 
     @Test
-    public void getEquationNotAllSame() {
+    public void getEquationGradientOne() {
         double[] set1 = new double[] {500,520};
         double[] set2 = new double[] {100,120};
         assertEquals(Arrays.equals(rlg.getEquationOfLine(set1,set2), new double[] {1,1,-400}), true);
+    }
+
+    @Test
+    public void getEquationGradientNotOne() {
+        double[] set1 = new double[] {500,520};
+        double[] set2 = new double[] {240,250};
+        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1,set2), new double[] {1,0.5,-10}), true);
+    }
+
+    @Test
+    public void bestFitAllSameUseAll() {
+        int[] set1 = new int[] {500,520,540,560};
+        int[] set2 = new int[] {100,100,100,100};
+        assertEquals(Arrays.equals(rlg.getBestFitLine(set1, set2, 4), new double[]{1, 0, set2[0]}), true);
+    }
+
+    @Test
+    public void bestFitAllSameWithSplit() {
+        int[] set1 = new int[] {500,520,540,800};
+        int[] set2 = new int[] {100,100,100,400};
+        assertEquals(Arrays.equals(rlg.getBestFitLine(set1, set2, 3), new double[]{1, 0, set2[0]}), true);
+    }
+
+    @Test
+    public void bestFitGradientOneUseAll() {
+        int[] set1 = new int[] {500,520,540,560};
+        int[] set2 = new int[] {480,500,520,540};
+        assertTrue(Arrays.equals(rlg.getBestFitLine(set1, set2, 4), new double[]{1, 1, -20}));
+    }
+
+    @Test
+    public void bestFitGradientOneWithSplit() {
+        int[] set1 = new int[] {500,520,540,700};
+        int[] set2 = new int[] {480,500,520,350};
+        assertTrue(Arrays.equals(rlg.getBestFitLine(set1, set2, 3), new double[]{1, 1, -20}));
+    }
+
+    @Test
+    public void matchValuesAllMatch() {
+
     }
 
     @Test

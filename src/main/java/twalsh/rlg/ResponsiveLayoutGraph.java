@@ -94,6 +94,7 @@ public class ResponsiveLayoutGraph {
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
+        printNodes();
         System.out.println("DONE WIDTH CONSTRAINTS");
     }
 
@@ -436,11 +437,18 @@ public class ResponsiveLayoutGraph {
             for (String s : this.nodes.keySet()) {
                 try {
                     n = this.nodes.get(s);
+                    System.out.println(s);
 
                     if (n.parentConstraints.size() > 0) {
                         ArrayList<int[]> widths = getWidthsForConstraints(n.getParentConstraints());
-
+                        System.out.println(widths.size());
                         for (int y = 0; y < widths.size(); y++) {
+                            if (s.equals("/HTML/BODY/DIV/DIV[5]/P")) {
+                                for (int a = 0; a < widths.get(y).length; a++) {
+                                    System.out.println(widths.get(y)[a]);
+                                }
+
+                            }
                             String parentXpath = n.getParentConstraints().get(y).node1.xpath;
 
                             int[] validWidths = widths.get(y);
@@ -453,18 +461,16 @@ public class ResponsiveLayoutGraph {
 
 
                             // Get the equations
-
-                            boolean foundBreakpoint = false;
-                            double[] bestFit = null;
-                            TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
+                            double[] bestFit;
+//                            TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
                             int previousBreakpoint = widthsTemp[0] - 1;
                             while (parentWidths.length >= 2) {
-                                foundBreakpoint = false;
-                                int breakpointIndex = 0;
+//                                foundBreakpoint = false;
+                                int breakpointIndex;
                                 double[] firstTwoWidths = new double[]{parentWidths[0], parentWidths[1]};
                                 double[] firstTwoValues = new double[]{childWidths[0], childWidths[1]};
                                 double[] equation = getEquationOfLine(firstTwoWidths, firstTwoValues);
-                                breakpointIndex = matchValuesToEquation(equation, parentWidths, childWidths, foundBreakpoint);
+                                breakpointIndex = matchValuesToEquation(equation, parentWidths, childWidths);
 
                                 // Generate best fit equation
                                 bestFit = getBestFitLine(parentWidths, childWidths, breakpointIndex);
@@ -473,14 +479,13 @@ public class ResponsiveLayoutGraph {
                                 if (breakpointIndex != parentWidths.length) {
                                     breakpoint = findWidthBreakpoint(bestFit, widthsTemp[breakpointIndex - 1], widthsTemp[breakpointIndex], s, parentXpath);
                                 } else {
-                                    breakpoint = widthsTemp[breakpointIndex - 1];
+                                    breakpoint = widthsTemp[widthsTemp.length - 1];
                                 }
+                                System.out.println(breakpoint);
                                 WidthConstraint wc = new WidthConstraint(previousBreakpoint + 1, breakpoint, bestFit[1], this.nodes.get(parentXpath), bestFit[2]);
                                 this.widthConstraints.put(s, new int[]{previousBreakpoint + 1, breakpoint}, wc);
                                 previousBreakpoint = breakpoint;
 
-//                                updateArrayValues(parentWidths, childWidths, widthsTemp, breakpointIndex);
-//                                System.out.println("Now " + parentWidths.length);
                                 int[] tempWidths = new int[parentWidths.length];
                                 int[] tempValues = new int[childWidths.length];
                                 int[] tempScreenWidths = new int[widthsTemp.length];
@@ -527,15 +532,12 @@ public class ResponsiveLayoutGraph {
 //        System.out.println("length is now " + parentWidths.length);
 //    }
 
-    private int matchValuesToEquation(double[] equation, int[] parentWidths, int[] childWidths, boolean foundBreakpoint) {
+    private int matchValuesToEquation(double[] equation, int[] parentWidths, int[] childWidths) {
         for (int i = 2; i < parentWidths.length; i++) {
             double result = (equation[0] * childWidths[i]) - ((equation[1] * parentWidths[i]) + (equation[2]));
+//            System.out.println(result);
             if (Math.abs(result) > 5) {
-
-                if (!foundBreakpoint) {
-                    return i;
-                }
-
+                return i;
             }
         }
         return parentWidths.length;
@@ -596,6 +598,9 @@ public class ResponsiveLayoutGraph {
     private void printNodes() {
         for (Node n : this.nodes.values()) {
             System.out.println(n);
+//            for (WidthConstraint wc : n.getWidthConstraints()) {
+//                System.out.println(wc);
+//            }
         }
     }
 
@@ -799,32 +804,44 @@ public class ResponsiveLayoutGraph {
         for (AlignmentConstraint c : acs) {
             ordered.put(c.min,c);
         }
-        int numParents = 0;
+//        int numParents = 0;
         String previousParent = null;
         HashMap<Integer, AlignmentConstraint> parentBreakpoints = new HashMap<Integer, AlignmentConstraint>();
+        HashMap<String, int[]> parentRanges = new HashMap<>();
+        if(acs.get(0).getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[5]/P") ) {
+            System.out.println(acs.size());
+        }
+
 
         // Get all the different parents
         for (AlignmentConstraint c : ordered.values()) {
-            numParents += 1;
             if (!c.node1.xpath.equals(previousParent)) {
                 parentBreakpoints.put(c.min, c);
                 previousParent = c.node1.getXpath();
+
+                parentRanges.put(c.node1.getXpath(), new int[] {c.min, c.getMax()});
+                previousParent = c.node1.getXpath();
+            } else {
+                // Update max value
+                int[] range = parentRanges.get(c.getNode1().getXpath());
+                range[1] = c.getMax();
             }
         }
 
-        for (AlignmentConstraint ac : parentBreakpoints.values()) {
-            ArrayList<Integer> tempWidths = new ArrayList<Integer>();
+        for (int[] range : parentRanges.values()) {
+            ArrayList<Integer> temp = new ArrayList<>();
             for (int w : this.widths) {
-                if ((w >= ac.min) && (w <= ac.max)) {
-                    tempWidths.add(w);
+                if ((w >= range[0]) && (w <= range[1])) {
+                    temp.add(w);
                 }
             }
-            int[] widthArray = new int[tempWidths.size()];
-            for (Integer i : tempWidths) {
-                widthArray[tempWidths.indexOf(i)] = i;
+            int[] widthArray = new int[temp.size()];
+            for (Integer i : temp) {
+                widthArray[temp.indexOf(i)] = i;
             }
             widthSets.add(widthArray);
         }
+
 
         return widthSets;
     }
@@ -865,7 +882,7 @@ public class ResponsiveLayoutGraph {
      * @param i     the index at which to stop extracting values
      * @return      the coefficients of the best fit line
      */
-    private double[] getBestFitLine(int[] ps, int[] cs, int i) {
+    public double[] getBestFitLine(int[] ps, int[] cs, int i) {
         double[] valuesForEq = new double[i-1];
         SimpleRegression reg = new SimpleRegression();
         // Add in values to the data set

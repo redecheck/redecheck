@@ -91,30 +91,30 @@ public class Redecheck {
         oracleRlg.writeToGraphViz("oracle");
 
         // Access test webpage and sample
-        String testUrl = preamble + test + ".html";
-        driver.get(testUrl);
-        capturePageModel(testUrl, widths);
-
-        // Construct test RLG
-        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
-        for (int width : widths) {
-            DomNode dn = testDoms.get(width);
-            AlignmentGraph ag = new AlignmentGraph(dn);
-            testAgs.add(ag);
-        }
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
-        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
-        testRlg.writeToGraphViz("test");
-        driver.close();
-
-        // Perform the model comparison
-        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-        comp.compare();
-        comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
-        System.out.println("TESTING COMPLETE.");
+//        String testUrl = preamble + test + ".html";
+//        driver.get(testUrl);
+//        capturePageModel(testUrl, widths);
+//
+//        // Construct test RLG
+//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+//        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
+//        for (int width : widths) {
+//            DomNode dn = testDoms.get(width);
+//            AlignmentGraph ag = new AlignmentGraph(dn);
+//            testAgs.add(ag);
+//        }
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+//        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
+//        testRlg.writeToGraphViz("test");
+//        driver.close();
+//
+//        // Perform the model comparison
+//        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
+//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+//        comp.compare();
+//        comp.compareMatchedNodes();
+//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+//        System.out.println("TESTING COMPLETE.");
 
         driver.quit();
     }
