@@ -48,7 +48,7 @@ public class ResponsiveLayoutGraphTest {
         boolean b2 = false;
         int min = 500;
         int max = 501;
-        assertEquals(rlg.decideBreakpoint(min,max,b1,b2), max);
+        assertEquals(rlg.decideBreakpoint(min, max, b1, b2), max);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ResponsiveLayoutGraphTest {
         boolean b2 = true;
         int min = 500;
         int max = 501;
-        assertEquals(rlg.decideBreakpoint(min,max,b1,b2), min);
+        assertEquals(rlg.decideBreakpoint(min, max, b1, b2), min);
     }
 
     @Test
@@ -71,14 +71,14 @@ public class ResponsiveLayoutGraphTest {
     public void getEquationGradientOne() {
         double[] set1 = new double[] {500,520};
         double[] set2 = new double[] {100,120};
-        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1,set2), new double[] {1,1,-400}), true);
+        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1, set2), new double[]{1, 1, -400}), true);
     }
 
     @Test
     public void getEquationGradientNotOne() {
         double[] set1 = new double[] {500,520};
         double[] set2 = new double[] {240,250};
-        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1,set2), new double[] {1,0.5,-10}), true);
+        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1, set2), new double[] {1,0.5,-10}), true);
     }
 
     @Test
@@ -110,8 +110,27 @@ public class ResponsiveLayoutGraphTest {
     }
 
     @Test
-    public void matchValuesAllMatch() {
+     public void matchValuesAllMatch() {
+        int[] set1 = new int[] {460,480,500,520,540,560};
+        int[] set2 = new int[] {440,460,480,500,520,540};
+        double[] equation = new double[]{1, 1, -20};
+        assertEquals(rlg.matchValuesToEquation(equation, set1, set2), 6);
+    }
 
+    @Test
+    public void matchValuesBreaksOnFirst() {
+        int[] set1 = new int[] {460,480,500,520,540,560};
+        int[] set2 = new int[] {440,460,420,500,520,540};
+        double[] equation = new double[]{1, 1, -20};
+        assertEquals(rlg.matchValuesToEquation(equation, set1, set2), 2);
+    }
+
+    @Test
+    public void matchValuesBreaksInMiddle() {
+        int[] set1 = new int[] {460,480,500,520,540,560};
+        int[] set2 = new int[] {440,460,480,500,560,540};
+        double[] equation = new double[]{1, 1, -20};
+        assertEquals(rlg.matchValuesToEquation(equation, set1, set2), 4);
     }
 
     @Test
@@ -167,5 +186,10 @@ public class ResponsiveLayoutGraphTest {
 
         rlg.checkForNodeMatch(prev, temp, prevToMatch, tempToMatch);
         assertEquals(prevToMatch.entrySet().size(), 1);
+    }
+
+    @Test
+    public void setUpAlignmentCons() {
+
     }
 }

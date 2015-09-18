@@ -506,31 +506,9 @@ public class ResponsiveLayoutGraph {
         addWidthConstraintsToNodes();
     }
 
-//    private void updateArrayValues(int[] parentWidths, int[] childWidths, int[] widthsTemp, int breakpointIndex) {
-//        // Make a copy of all the width arrays before copying
-//        System.out.println("length was "+ parentWidths.length);
-//        int[] tempWidths = new int[parentWidths.length];
-//        int[] tempValues = new int[childWidths.length];
-//        int[] tempScreenWidths = new int[widthsTemp.length];
-//        System.arraycopy(parentWidths, 0, tempWidths, 0, parentWidths.length);
-//        System.arraycopy(childWidths, 0, tempValues, 0, childWidths.length);
-//        System.arraycopy(widthsTemp, 0, tempScreenWidths, 0, widthsTemp.length);
-//
-//        // Redefine the arrays we're using to extract equations
-//        parentWidths = new int[tempWidths.length - breakpointIndex];
-//        childWidths = new int[tempValues.length - breakpointIndex];
-//        widthsTemp = new int[tempScreenWidths.length - breakpointIndex];
-//        // Copy across reduced arrays
-//        System.arraycopy(tempWidths, breakpointIndex, parentWidths, 0, parentWidths.length);
-//        System.arraycopy(tempValues, breakpointIndex, childWidths, 0, childWidths.length);
-//        System.arraycopy(tempScreenWidths, breakpointIndex, widthsTemp, 0, widthsTemp.length);
-//        System.out.println("length is now " + parentWidths.length);
-//    }
-
-    private int matchValuesToEquation(double[] equation, int[] parentWidths, int[] childWidths) {
+    public int matchValuesToEquation(double[] equation, int[] parentWidths, int[] childWidths) {
         for (int i = 2; i < parentWidths.length; i++) {
             double result = (equation[0] * childWidths[i]) - ((equation[1] * parentWidths[i]) + (equation[2]));
-//            System.out.println(result);
             if (Math.abs(result) > 5) {
                 return i;
             }
