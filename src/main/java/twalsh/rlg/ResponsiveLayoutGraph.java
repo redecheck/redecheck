@@ -443,12 +443,6 @@ public class ResponsiveLayoutGraph {
                         ArrayList<int[]> widths = getWidthsForConstraints(n.getParentConstraints());
                         System.out.println(widths.size());
                         for (int y = 0; y < widths.size(); y++) {
-                            if (s.equals("/HTML/BODY/DIV/DIV[5]/P")) {
-                                for (int a = 0; a < widths.get(y).length; a++) {
-                                    System.out.println(widths.get(y)[a]);
-                                }
-
-                            }
                             String parentXpath = n.getParentConstraints().get(y).node1.xpath;
 
                             int[] validWidths = widths.get(y);
@@ -463,7 +457,8 @@ public class ResponsiveLayoutGraph {
                             // Get the equations
                             double[] bestFit;
 //                            TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
-                            int previousBreakpoint = widthsTemp[0] - 1;
+//                            int previousBreakpoint = widthsTemp[0] - 1;
+                            int previousBreakpoint = n.getParentConstraints().get(y).getMin()-1;
                             while (parentWidths.length >= 2) {
 //                                foundBreakpoint = false;
                                 int breakpointIndex;
@@ -808,9 +803,6 @@ public class ResponsiveLayoutGraph {
         String previousParent = null;
         HashMap<Integer, AlignmentConstraint> parentBreakpoints = new HashMap<Integer, AlignmentConstraint>();
         HashMap<String, int[]> parentRanges = new HashMap<>();
-        if(acs.get(0).getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[5]/P") ) {
-            System.out.println(acs.size());
-        }
 
 
         // Get all the different parents
