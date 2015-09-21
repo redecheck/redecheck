@@ -32,12 +32,7 @@ public class Node {
      * @return      the XPath of the node
      */
     public String getXpath() {
-        try {
-            return this.xpath;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return "tester";
-        }
+        return this.xpath;
     }
 
     /**

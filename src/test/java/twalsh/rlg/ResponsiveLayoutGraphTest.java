@@ -13,6 +13,7 @@ import xpert.dom.DomNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -29,8 +30,65 @@ public class ResponsiveLayoutGraphTest {
     @Before
     public void setup() {
         rlg = new ResponsiveLayoutGraph();
+//                mock(ResponsiveLayoutGraph.class);
+//        when(rlg.getAlreadyGathered()).thenReturn(new HashSet<Integer>());
+//        when(rlg.getNodes()).thenReturn(new HashMap<String, Node>());
         MockitoAnnotations.initMocks(this);
         cloner = new Cloner();
+    }
+
+    @Test
+    public void testGetNodes() {
+        assertEquals(rlg.getNodes(), new HashMap<String, Node>());
+        Node n = new Node("Test");
+        rlg.getNodes().put(n.getXpath(), n);
+        assertEquals(rlg.getNodes().size(), 1);
+    }
+
+    @Test
+    public void testSetNodes() {
+        Node n = new Node("Test");
+        HashMap<String, Node> newNodes = new HashMap<>();
+        newNodes.put(n.getXpath(), n);
+        rlg.setNodes(newNodes);
+        assertEquals(rlg.getNodes(), newNodes);
+    }
+
+    @Test
+    public void testGetAlignments() {
+        assertEquals(rlg.getAlignments(), new HashMap<String, AlignmentConstraint>());
+        Node n1 = new Node("Test");
+        Node n2 = new Node("Another");
+        AlignmentConstraint ac  = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 300, 800, new boolean[] {true, false, false, false, true, false});
+        rlg.getAlignments().put(ac.generateKey(), ac);
+        assertEquals(rlg.getAlignments().size(), 1);
+    }
+
+    @Test
+    public void testSetAlignments() {
+        assertEquals(rlg.getAlignments(), new HashMap<String, AlignmentConstraint>());
+        Node n1 = new Node("Test");
+        Node n2 = new Node("Another");
+        AlignmentConstraint ac  = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 300, 800, new boolean[] {true, false, false, false, true, false});
+        HashMap<String,AlignmentConstraint> newAlCons = new HashMap<>();
+        newAlCons.put(ac.generateKey(), ac);
+        rlg.setAlignments(newAlCons);
+        assertEquals(rlg.getAlignments(), newAlCons);
+    }
+
+    @Test
+    public void testGetAlreadyGathered() {
+        rlg.getAlreadyGathered().add(500);
+        assertEquals(rlg.getAlreadyGathered().size(),1);
+    }
+
+    @Test
+    public void testSetAlreadyGathered() {
+        HashSet<Integer> newSet = new HashSet<>();
+        newSet.add(300);
+        newSet.add(500);
+        rlg.setAlreadyGathered(newSet);
+        assertEquals(rlg.getAlreadyGathered(), newSet);
     }
 
     @Test

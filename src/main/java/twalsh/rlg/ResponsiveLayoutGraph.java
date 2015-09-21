@@ -59,6 +59,7 @@ public class ResponsiveLayoutGraph {
 
     public ResponsiveLayoutGraph() {
         widths = new int[]{400};
+        alreadyGathered = new HashSet<Integer>();
         // For testing purposes only
     }
     /**

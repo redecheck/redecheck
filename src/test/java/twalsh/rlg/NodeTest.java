@@ -1,5 +1,6 @@
 package twalsh.rlg;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Before;
@@ -23,32 +24,6 @@ public class NodeTest {
     public void setup() {
         n = new Node("testXPath");
         MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-    public void testGetXpath() throws Exception {
-
-        assertEquals(n.getXpath(), "testXPath");
-    }
-
-    @Test
-    public void testGetWidthConstraints() throws Exception {
-
-    }
-
-    @Test
-    public void testGetVisibilityConstraints() throws Exception {
-
-    }
-
-    @Test
-    public void testGetParentConstraints() throws Exception {
-
-    }
-
-    @Test
-    public void testGenerateGraphVizLabel() throws Exception {
-
     }
 
     @Test

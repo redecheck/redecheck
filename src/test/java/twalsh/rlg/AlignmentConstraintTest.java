@@ -22,6 +22,7 @@ public class AlignmentConstraintTest {
         acPC = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 300, 800, new boolean[] {true, false, false, false, true, false});
         acSib = new AlignmentConstraint(n1, n2, Type.SIBLING, 400,1000, new boolean[] {true, false, false, false, false, false, true, true});
     }
+
     @Test
     public void testToStringContains() throws Exception {
         String expected = "first , second , PARENT_CHILD , 300 , 800 , centeredtop";
@@ -107,13 +108,32 @@ public class AlignmentConstraintTest {
     }
 
     @Test
-    public void testGenerateKey() throws Exception {
+    public void testGenerateKeyContains() throws Exception {
         assertEquals(acPC.generateKey(), "secondfirstcontainscenteredtop");
+    }
+
+    @Test
+    public void testGenerateKeySibling() throws Exception {
+        assertEquals(acSib.generateKey(), "firstsecondsiblingbelowleftAlignrightAlign");
     }
 
     @Test
     public void testGenerateLabellingParentChild() throws Exception {
         assertEquals(acPC.generateLabelling(), "centeredtop");
+    }
+
+    @Test
+    public void generateLabellingPCRestOfAttributes() throws Exception {
+        boolean[] newAtts = new boolean[] {false, true, true, true, false, true};
+        acPC.setAttributes(newAtts);
+        assertEquals(acPC.generateLabelling(), "leftJustrightJustmiddlebottom");
+    }
+
+    @Test
+    public void generateLabellingSibRestOfAttributes() throws Exception {
+        boolean[] newAtts = new boolean[] {false, true, true, true, true, true, false, false};
+        acSib.setAttributes(newAtts);
+        assertEquals(acSib.generateLabelling(), "aboveleftOfrightOftopAlignbottomAlign");
     }
 
     @Test
