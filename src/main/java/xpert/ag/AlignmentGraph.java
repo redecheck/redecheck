@@ -26,7 +26,6 @@ public class AlignmentGraph {
 	List<Sibling> siblings;
 	HashMap<String, String> nodes;
 	HashMap<Edge, String> edges;
-    HashMap<String, Edge> newEdges;
 	String outputFileName;
 	
 
@@ -48,7 +47,6 @@ public class AlignmentGraph {
 		siblings = new ArrayList<>();
 		nodes = new HashMap<String, String>();
 		edges = new HashMap<Edge, String>();
-        newEdges = new HashMap<String, Edge>();
 		init(root);
 	}
 	
@@ -139,7 +137,7 @@ public class AlignmentGraph {
 //			}
 		}
 
-		traverseGraph();
+//		traverseGraph();
 	}
 
 	private boolean ancestorOf(AGNode node, AGNode n) {
@@ -259,8 +257,7 @@ public class AlignmentGraph {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		traverseGraph();
+
 		
 		output.append("digraph G {");
 		
@@ -294,28 +291,7 @@ public class AlignmentGraph {
 		
 	}
 	
-	public void traverseGraph() {
-		int counter = 0;
-		for (Contains c : getContains()) {
-//			if ((!c.parent.domNode.getTagName().equals("A")) && (!c.child.domNode.getTagName().equals("A"))) {
-				if (!nodes.containsKey(c.parent.toString())) {
-					nodes.put(c.parent.toString(), "element-" + counter);
-					counter++;
-				}
-				if (!nodes.containsKey(c.child.toString())) {
-					nodes.put(c.child.toString(), "element-" + counter);
-					counter++;
-				}
-				edges.put(c, c.getAttributes());
-                newEdges.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
-//			}
-		}
-		
-		for (Sibling s : siblings) {
-			edges.put(s, s.getLabelling());
-            newEdges.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
-		}
-	}
+
 	
 
 
@@ -325,7 +301,7 @@ public class AlignmentGraph {
 
 	public HashMap<Edge, String> getEdges() { return edges; }
 
-    public HashMap<String, Edge> getNewEdges() { return newEdges; }
+//    public HashMap<String, Edge> getNewEdges() { return newEdges; }
 
 	public List<Contains> getContains() {
 		return contains;

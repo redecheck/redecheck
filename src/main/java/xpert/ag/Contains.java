@@ -38,11 +38,7 @@ public class Contains extends Edge {
 		int ph = parent.y2 - parent.y1;
 		int ch = child.y2 - child.y1;
 		int dH = ch / 3;
-		
-//		if (child.domNode.getxPath().equals("/HTML/BODY/DIV[2]")) {
-//			System.out.println(child.y1 + " against " + parent.y1 + "  with delta " + dH);
-//			System.out.println(equals(child.y1, parent.y1,dH));
-//		}
+
 		// Ignore small children
 		if (cw < 15 && pw < 15) {
 			return;

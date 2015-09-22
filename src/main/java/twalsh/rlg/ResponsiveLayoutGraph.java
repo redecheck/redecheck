@@ -58,7 +58,7 @@ public class ResponsiveLayoutGraph {
     }
 
     public ResponsiveLayoutGraph() {
-        widths = new int[]{400,500,600};
+//        widths = new int[]{400,500,600};
         alreadyGathered = new HashSet<Integer>();
         last = null;
 //        restOfGraphs = new ArrayList<AlignmentGraph>();
@@ -211,7 +211,7 @@ public class ResponsiveLayoutGraph {
      */
     private void extractAlignmentConstraints() throws InterruptedException {
         System.out.println("Extracting Alignment Constraints");
-        HashMap<String, Edge> previousMap = first.getNewEdges();
+        HashMap<String, Edge> previousMap = generateEdgeMapFromAG(first);
         HashMap<String, AlignmentConstraint> alCons = new HashMap<String, AlignmentConstraint>();
 
         // Add initial edges to set.
@@ -219,7 +219,7 @@ public class ResponsiveLayoutGraph {
 
         for (AlignmentGraph ag : restOfGraphs) {
             HashMap<String, Edge> previousToMatch = (HashMap<String, Edge>) previousMap.clone();
-            HashMap<String, Edge> temp = ag.getNewEdges();
+            HashMap<String, Edge> temp = generateEdgeMapFromAG(ag);
             HashMap<String, Edge> tempToMatch = (HashMap<String, Edge>) temp.clone();
 
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
@@ -230,7 +230,7 @@ public class ResponsiveLayoutGraph {
             // Handle appearing edges
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
 
-            previousMap = ag.getNewEdges();
+            previousMap = generateEdgeMapFromAG(ag);
         }
 
         // Update  alignment constraints of everything still visible
@@ -242,8 +242,8 @@ public class ResponsiveLayoutGraph {
 
     private void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons) {
         AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
-        for (String stilVis : last.getNewEdges().keySet()) {
-            Edge e = last.getNewEdges().get(stilVis);
+        for (String stilVis : generateEdgeMapFromAG(last).keySet()) {
+            Edge e = generateEdgeMapFromAG(last).get(stilVis);
             if (e instanceof Contains) {
                 Contains cTemp = (Contains) e;
                 AlignmentConstraint ac = alCons.get(stilVis);
@@ -409,13 +409,14 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void setUpAlignmentConstraints(HashMap<String, Edge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
+    public void setUpAlignmentConstraints(HashMap<String, Edge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
         for (String s : previousMap.keySet()) {
             Edge e = previousMap.get(s);
             if (e instanceof Contains) {
                 Contains c = (Contains) e;
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
                         new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
+                System.out.println(con);
                 alCons.put(con.generateKey(), con);
                 alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
             }
@@ -645,8 +646,8 @@ public class ResponsiveLayoutGraph {
 
                 // Searching for parent-child edge
             } else {
-                HashMap<String, Edge> e1 = (HashMap<String, Edge>) ag1.getNewEdges();
-                HashMap<String, Edge> e2 = (HashMap<String, Edge>) ag2.getNewEdges();
+                HashMap<String, Edge> e1 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag1);
+                HashMap<String, Edge> e2 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag2);
 
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
@@ -674,7 +675,7 @@ public class ResponsiveLayoutGraph {
                 HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
                 found = n1.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> es = (HashMap<String, Edge>) extraAG.getNewEdges();
+                HashMap<String, Edge> es = (HashMap<String, Edge>) generateEdgeMapFromAG(extraAG);
                 found = (es.get(searchKey) != null) || (es.get(flippedKey) != null);
             }
             if (found) {
@@ -722,8 +723,8 @@ public class ResponsiveLayoutGraph {
                 found1 = n1.get(searchKey) != null;
                 found2 = n2.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> e1 = (HashMap<String, Edge>) ag1.getNewEdges();
-                HashMap<String, Edge> e2 = (HashMap<String, Edge>) ag2.getNewEdges();
+                HashMap<String, Edge> e1 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag1);
+                HashMap<String, Edge> e2 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag2);
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
@@ -747,7 +748,7 @@ public class ResponsiveLayoutGraph {
                 HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
                 found = n1.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> es = (HashMap<String, Edge>) extraAG.getNewEdges();
+                HashMap<String, Edge> es = (HashMap<String, Edge>) generateEdgeMapFromAG(extraAG);
                 found = (es.get(searchKey) != null) || (es.get(flippedKey) != null);
             }
             if (found) {
@@ -1012,5 +1013,19 @@ public class ResponsiveLayoutGraph {
         output.append("\n}");
         output.close();
 
+    }
+
+    public HashMap<String, Edge> generateEdgeMapFromAG(AlignmentGraph ag) {
+        HashMap<String, Edge> edgeMap = new HashMap<>();
+
+        int counter = 0;
+        for (Contains c : ag.getContains()) {
+            edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
+        }
+
+        for (Sibling s : ag.getSiblings()) {
+            edgeMap.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
+        }
+        return edgeMap;
     }
 }

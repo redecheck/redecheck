@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import xpert.ag.AGNode;
 import xpert.ag.AlignmentGraph;
+import xpert.ag.Contains;
+import xpert.ag.Edge;
 import xpert.dom.DomNode;
 
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class ResponsiveLayoutGraphTest {
     public void setup() {
         rlg = spy(new ResponsiveLayoutGraph());
         rlg.restOfGraphs = spy(new ArrayList<AlignmentGraph>());
+        rlg.widths = new int[] {400,500,600,700};
 
         MockitoAnnotations.initMocks(this);
         cloner = new Cloner();
@@ -282,7 +285,7 @@ public class ResponsiveLayoutGraphTest {
 
         when(ag.getVMap()).thenReturn(lastMap);
         rlg.updateRemainingNodes(map, ag);
-        assertEquals(map.get(n.getXpath()).getDisappear(), 600);
+        assertEquals(map.get(n.getXpath()).getDisappear(), 700);
     }
 
     @Test
@@ -346,5 +349,30 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void setUpAlignmentCons() {
         HashMap<String, AlignmentConstraint> alCons = new HashMap<>();
+//        HashMap<String, Node> nodes = new HashMap<>();
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {25,25,75,75});
+        when(dn2.getxPath()).thenReturn("second");
+        AGNode agn2 = new AGNode(dn2);
+
+        Node n1 = new Node(dn1.getxPath());
+        Node n2 = new Node(dn2.getxPath());
+        rlg.nodes.put(n1.getXpath(), n1);
+        rlg.nodes.put(n2.getXpath(), n2);
+
+        Contains c = new Contains(agn1, agn2);
+//        when(c.getAttributes()).thenReturn(new boolean[] {true, false, false, false, false});
+        System.out.print(c);
+        HashMap<String, Edge> edgeMap = new HashMap<>();
+        edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(), c);
+
+        rlg.setUpAlignmentConstraints(edgeMap, alCons);
+        assertEquals(alCons.size(), 1);
+        assertEquals(alCons.get(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling()).generateKey(), c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling());
+
     }
 }
