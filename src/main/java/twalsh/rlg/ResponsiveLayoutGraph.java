@@ -23,7 +23,7 @@ public class ResponsiveLayoutGraph {
     HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
     HashBasedTable<String, int[], WidthConstraint> widthConstraints = HashBasedTable.create();
     ArrayList<AlignmentGraph> graphs;
-    AlignmentGraph first;
+    AlignmentGraph first, last;
 
     public HashMap<String, Node> getNodes() {
         return nodes;
@@ -58,8 +58,10 @@ public class ResponsiveLayoutGraph {
     }
 
     public ResponsiveLayoutGraph() {
-        widths = new int[]{400};
+        widths = new int[]{400,500,600};
         alreadyGathered = new HashSet<Integer>();
+        last = null;
+//        restOfGraphs = new ArrayList<AlignmentGraph>();
         // For testing purposes only
     }
     /**
@@ -73,6 +75,7 @@ public class ResponsiveLayoutGraph {
     public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
+        this.last = ags.get(ags.size()-1);
         restOfGraphs =  new ArrayList<AlignmentGraph>();
         for (AlignmentGraph ag : graphs) {
             restOfGraphs.add(ag);
@@ -131,14 +134,14 @@ public class ResponsiveLayoutGraph {
         }
 
         // Update visibility widthConstraints of everything still visible
-        updateRemainingNodes(visCons);
+        updateRemainingNodes(visCons, last);
 
         // Attach constraints to the nodes
 
         attachVisConsToNodes(visCons);
     }
 
-    private void attachVisConsToNodes(HashMap<String, VisibilityConstraint> visCons) {
+    public void attachVisConsToNodes(HashMap<String, VisibilityConstraint> visCons) {
         for (String x : this.nodes.keySet()) {
             Node n = this.nodes.get(x);
             VisibilityConstraint vc = visCons.get(x);
@@ -146,8 +149,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons) {
-        AlignmentGraph last = restOfGraphs.get(restOfGraphs.size() - 1);
+    public void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons, AlignmentGraph last) {
         for (String stilVis : last.getVMap().keySet()) {
             VisibilityConstraint vc = visCons.get(stilVis);
             if (vc.getDisappear() == 0) {
@@ -156,7 +158,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void updateAppearingNode(HashMap<String, AGNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
+    public void updateAppearingNode(HashMap<String, AGNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
         for (String currUM : tempToMatch.keySet()) {
             int appearPoint = 0;
             try {
@@ -169,7 +171,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void updateDisappearingNode(HashMap<String, AGNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
+    public void updateDisappearingNode(HashMap<String, AGNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
         for (String prevUM : previousToMatch.keySet()) {
             int disappearPoint = 0;
             try {

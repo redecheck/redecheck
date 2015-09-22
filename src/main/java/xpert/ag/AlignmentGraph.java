@@ -97,7 +97,6 @@ public class AlignmentGraph {
 				vertices.add(new AGNode(node));
 				vMap.put(node.getxPath(), new AGNode(node));
 			}
-			
 		}
 		
 		// Sort the vertices based on Area and DOM hierarchy

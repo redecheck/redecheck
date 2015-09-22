@@ -41,4 +41,8 @@ public class VisibilityConstraint {
     public String toString() {
         return this.appear + " -> " + this.disappear;
     }
+
+    public int getAppear() {
+        return appear;
+    }
 }

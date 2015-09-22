@@ -4,10 +4,10 @@ import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 import xpert.ag.AGNode;
+import xpert.ag.AlignmentGraph;
 import xpert.dom.DomNode;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by thomaswalsh on 17/09/15.
@@ -26,15 +26,22 @@ public class ResponsiveLayoutGraphTest {
     Cloner cloner;
     @Mock
     private AGNode node;
+    Node n1,n2,n3;
+    AlignmentConstraint acPC, acSib;
 
     @Before
     public void setup() {
-        rlg = new ResponsiveLayoutGraph();
-//                mock(ResponsiveLayoutGraph.class);
-//        when(rlg.getAlreadyGathered()).thenReturn(new HashSet<Integer>());
-//        when(rlg.getNodes()).thenReturn(new HashMap<String, Node>());
+        rlg = spy(new ResponsiveLayoutGraph());
+        rlg.restOfGraphs = spy(new ArrayList<AlignmentGraph>());
+
         MockitoAnnotations.initMocks(this);
         cloner = new Cloner();
+
+        n1 = new Node("first");
+        n2 = new Node("second");
+        n3 = new Node("third");
+        acPC = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 300, 800, new boolean[] {true, false, false, false, true, false});
+        acSib = new AlignmentConstraint(n1, n2, Type.SIBLING, 400,1000, new boolean[] {true, false, false, false, false, false, true, true});
     }
 
     @Test
@@ -247,7 +254,97 @@ public class ResponsiveLayoutGraphTest {
     }
 
     @Test
-    public void setUpAlignmentCons() {
+    public void testAttachVisConsToNodes() {
+        Node n = new Node("test");
+        rlg.getNodes().put(n.getXpath(), n);
+        VisibilityConstraint vc = new VisibilityConstraint(400,800);
+        HashMap<String, VisibilityConstraint> map = new HashMap<>();
+        map.put(n.getXpath(), vc);
+        rlg.attachVisConsToNodes(map);
+        assertEquals(rlg.getNodes().get(n.getXpath()).getVisibilityConstraints().size(), 1);
+    }
 
+    @Test
+    public void testUpdateRemainingNodes() throws Exception {
+        DomNode dn = mock(DomNode.class);
+        when(dn.getCoords()).thenReturn(new int[4]);
+        when(dn.getxPath()).thenReturn("first");
+        when(dn.getTagName()).thenReturn("BODY");
+        AlignmentGraph ag = spy(new AlignmentGraph(dn));
+        AGNode agn = new AGNode(dn);
+
+        Node n = new Node(dn.getxPath());
+        HashMap<String, VisibilityConstraint> map = new HashMap<>();
+        VisibilityConstraint vc = new VisibilityConstraint(400, 0);
+        map.put(n.getXpath(), vc);
+        HashMap<String, AGNode> lastMap = new HashMap<>();
+        lastMap.put("first", agn);
+
+        when(ag.getVMap()).thenReturn(lastMap);
+        rlg.updateRemainingNodes(map, ag);
+        assertEquals(map.get(n.getXpath()).getDisappear(), 600);
+    }
+
+    @Test
+    public void testUpdateAppearingNode() throws Exception {
+        DomNode dn = mock(DomNode.class);
+        when(dn.getCoords()).thenReturn(new int[4]);
+        when(dn.getxPath()).thenReturn("newOne");
+        when(dn.getTagName()).thenReturn("BODY");
+        AlignmentGraph ag = spy(new AlignmentGraph(dn));
+        AGNode agn = new AGNode(dn);
+        HashMap<String, AGNode> tempToMatch = new HashMap<>();
+        tempToMatch.put(agn.getDomNode().getxPath(), agn);
+
+        // Set up VC map
+        Node n1 = new Node("first");
+        Node n2 = new Node("second");
+        Node n3 = new Node("third");
+        HashMap<String, VisibilityConstraint> map = new HashMap<>();
+        VisibilityConstraint vc = new VisibilityConstraint(400, 0);
+        map.put(n1.getXpath(), vc);
+        map.put(n2.getXpath(), vc);
+        map.put(n3.getXpath(), vc);
+        doReturn(520).when(rlg).findAppearPoint(anyString(), anyInt(), anyInt(), anyBoolean(), anyString());
+        doReturn(0).when(rlg.restOfGraphs).indexOf(any(AlignmentGraph.class));
+        rlg.updateAppearingNode(tempToMatch, map, ag);
+        assertEquals(map.entrySet().size(), 4);
+        assertEquals(map.get(dn.getxPath()).getAppear(), 520);
+        assertEquals(map.get(dn.getxPath()).getDisappear(), 0);
+    }
+
+    @Test
+    public void testUpdateDisappearingNode() throws Exception {
+        // Set up VC map
+        Node n1 = new Node("first");
+        Node n2 = new Node("second");
+        Node n3 = new Node("third");
+        HashMap<String, VisibilityConstraint> map = new HashMap<>();
+        VisibilityConstraint vc = new VisibilityConstraint(400, 0);
+        map.put(n1.getXpath(), vc);
+        map.put(n2.getXpath(), vc);
+        map.put(n3.getXpath(), vc);
+
+        DomNode dn = mock(DomNode.class);
+        when(dn.getCoords()).thenReturn(new int[4]);
+        when(dn.getxPath()).thenReturn("first");
+        when(dn.getTagName()).thenReturn("BODY");
+        AlignmentGraph ag = spy(new AlignmentGraph(dn));
+        AGNode agn = new AGNode(dn);
+        HashMap<String, AGNode> prevToMatch = new HashMap<>();
+        prevToMatch.put(agn.getDomNode().getxPath(), agn);
+
+        doReturn(850).when(rlg).findDisappearPoint(anyString(), anyInt(), anyInt(), anyBoolean(), anyString());
+        doReturn(0).when(rlg.restOfGraphs).indexOf(any(AlignmentGraph.class));
+        rlg.updateDisappearingNode(prevToMatch, map, ag);
+
+        // Check upper bound is 1 less than value returned by search
+        assertEquals(map.get("first").getDisappear(), 849);
+    }
+
+
+    @Test
+    public void setUpAlignmentCons() {
+        HashMap<String, AlignmentConstraint> alCons = new HashMap<>();
     }
 }
