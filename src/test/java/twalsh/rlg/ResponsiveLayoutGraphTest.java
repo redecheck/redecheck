@@ -349,7 +349,6 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void setUpAlignmentCons() {
         HashMap<String, AlignmentConstraint> alCons = new HashMap<>();
-//        HashMap<String, Node> nodes = new HashMap<>();
         DomNode dn1 = mock(DomNode.class);
         when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
         when(dn1.getxPath()).thenReturn("first");
@@ -365,7 +364,6 @@ public class ResponsiveLayoutGraphTest {
         rlg.nodes.put(n2.getXpath(), n2);
 
         Contains c = new Contains(agn1, agn2);
-//        when(c.getAttributes()).thenReturn(new boolean[] {true, false, false, false, false});
         System.out.print(c);
         HashMap<String, Edge> edgeMap = new HashMap<>();
         edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(), c);
@@ -373,6 +371,12 @@ public class ResponsiveLayoutGraphTest {
         rlg.setUpAlignmentConstraints(edgeMap, alCons);
         assertEquals(alCons.size(), 1);
         assertEquals(alCons.get(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling()).generateKey(), c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling());
+    }
+
+    @Test
+    public void testUpdateAppearingEdge() {
 
     }
+
+
 }

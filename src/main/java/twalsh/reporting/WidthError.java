@@ -61,41 +61,33 @@ public class WidthError extends Error implements Comparable<WidthError> {
         return key1.compareTo(key2);
     }
 
-//    // Instance variables
-//    Node n;
-//    ArrayList<WidthConstraint> unmatched1, unmatched2;
-//
-//    /**
-//     * Constucts a width error for a particular node
-//     * @param node          the node for which there are unmatched constraints
-//     * @param um1           the set of unmatched constraints from the oracle RLG
-//     * @param um2           the set of unmatched constraints from the test RLG
-//     */
-//    public WidthError(Node node, ArrayList<WidthConstraint> um1, ArrayList<WidthConstraint> um2) {
-//        this.n = node;
-//        this.unmatched1 = um1;
-//        this.unmatched2 = um2;
-//    }
-//
-//    /**
-//     * Generates a formatted string to the width constraint errors can be printed out nicely
-//     * @return          the formatted output string
-//     */
-//    public String toString() {
-//        String result= "";
-//        // Get the nodes to print out
-//        result += n.getXpath();
-//
-//        // Print out the unmatching constraints
-//        result += "\n Oracle: \n";
-//        for (WidthConstraint wc : unmatched1) {
-//            result += "\t" + wc + "\n";
-//        }
-//        result += "Test: \n";
-//        for (WidthConstraint wc : unmatched2) {
-//            result += "\t" + wc + "\n";
-//        }
-//        return result;
-//    }
+    @Override
+    public ArrayList<int[]> calculateRangeOfViewportWidths() {
+        ArrayList<int[]> errorRanges = new ArrayList<>();
+        switch (desc) {
+            case "unmatched-oracle":
+                errorRanges.add(new int[]{oracle.getMin(), oracle.getMax()});
+                break;
+            case "unmatched-test":
+                errorRanges.add(new int[]{test.getMin(), test.getMax()});
+                break;
+            case "diffAttributes":
+                errorRanges.add(new int[]{oracle.getMin(), oracle.getMax()});
+                break;
+            case "diffBounds":
+                // Check the bounds to work out which ranges are erroneous
+                if ((oracle.getMin() != test.getMin()) && (oracle.getMax() == test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMin(), test.getMin()), Math.max(oracle.getMin(), test.getMin()) - 1});
+                } else if ((oracle.getMin() == test.getMin()) && (oracle.getMax() != test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMax(), test.getMax()) + 1, Math.max(oracle.getMax(), test.getMax())});
+                } else if ((oracle.getMin() != test.getMin()) && (oracle.getMax() != test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMin(), test.getMin()), Math.max(oracle.getMin(), test.getMin()) - 1});
+                    errorRanges.add(new int[]{Math.min(oracle.getMax(), test.getMax()) + 1, Math.max(oracle.getMax(), test.getMax())});
+                }
+                break;
+        }
+        return errorRanges;
+    }
+
 
 }

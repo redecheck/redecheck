@@ -58,4 +58,32 @@ public class AlignmentError extends Error implements Comparable<AlignmentError> 
         }
         return result;
     }
+
+    @Override
+    public ArrayList<int[]> calculateRangeOfViewportWidths() {
+        ArrayList<int[]> errorRanges = new ArrayList<>();
+        switch (desc) {
+            case "unmatched-oracle":
+                errorRanges.add(new int[]{oracle.getMin(), oracle.getMax()});
+                break;
+            case "unmatched-test":
+                errorRanges.add(new int[]{test.getMin(), test.getMax()});
+                break;
+            case "diffAttributes":
+                errorRanges.add(new int[]{oracle.getMin(), oracle.getMax()});
+                break;
+            case "diffBounds":
+                // Check the bounds to work out which ranges are erroneous
+                if ((oracle.getMin() != test.getMin()) && (oracle.getMax() == test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMin(), test.getMin()), Math.max(oracle.getMin(), test.getMin()) - 1});
+                } else if ((oracle.getMin() == test.getMin()) && (oracle.getMax() != test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMax(), test.getMax()) + 1, Math.max(oracle.getMax(), test.getMax())});
+                } else if ((oracle.getMin() != test.getMin()) && (oracle.getMax() != test.getMax())) {
+                    errorRanges.add(new int[]{Math.min(oracle.getMin(), test.getMin()), Math.max(oracle.getMin(), test.getMin()) - 1});
+                    errorRanges.add(new int[]{Math.min(oracle.getMax(), test.getMax()) + 1, Math.max(oracle.getMax(), test.getMax())});
+                }
+                break;
+        }
+        return errorRanges;
+    }
 }
