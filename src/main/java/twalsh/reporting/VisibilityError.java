@@ -42,7 +42,7 @@ public class VisibilityError extends Error {
     }
 
     @Override
-    ArrayList<int[]> calculateRangeOfViewportWidths() {
+    public ArrayList<int[]> calculateRangeOfViewportWidths() {
         ArrayList<int[]> errorRanges = new ArrayList<>();
         VisibilityConstraint vco = oracle.getVisibilityConstraints().get(0);
         VisibilityConstraint vct = test.getVisibilityConstraints().get(0);

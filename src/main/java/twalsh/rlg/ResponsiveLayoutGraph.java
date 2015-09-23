@@ -98,7 +98,6 @@ public class ResponsiveLayoutGraph {
         extractAlignmentConstraints();
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
-        printNodes();
         System.out.println("DONE WIDTH CONSTRAINTS");
     }
 
@@ -416,7 +415,6 @@ public class ResponsiveLayoutGraph {
                 Contains c = (Contains) e;
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
                         new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
-                System.out.println(con);
                 alCons.put(con.generateKey(), con);
                 alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
             }
@@ -441,11 +439,9 @@ public class ResponsiveLayoutGraph {
             for (String s : this.nodes.keySet()) {
                 try {
                     n = this.nodes.get(s);
-                    System.out.println(s);
 
                     if (n.parentConstraints.size() > 0) {
                         ArrayList<int[]> widths = getWidthsForConstraints(n.getParentConstraints());
-                        System.out.println(widths.size());
                         for (int y = 0; y < widths.size(); y++) {
                             String parentXpath = n.getParentConstraints().get(y).node1.xpath;
 
@@ -480,7 +476,6 @@ public class ResponsiveLayoutGraph {
                                 } else {
                                     breakpoint = widthsTemp[widthsTemp.length - 1];
                                 }
-                                System.out.println(breakpoint);
                                 WidthConstraint wc = new WidthConstraint(previousBreakpoint + 1, breakpoint, bestFit[1], this.nodes.get(parentXpath), bestFit[2]);
                                 this.widthConstraints.put(s, new int[]{previousBreakpoint + 1, breakpoint}, wc);
                                 previousBreakpoint = breakpoint;

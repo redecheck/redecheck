@@ -31,6 +31,7 @@ public class RLGComparator {
     public static ArrayList<VisibilityError> vcErrors;
     public static ArrayList<AlignmentError> acErrors;
     public static ArrayList<WidthError> wcErrors;
+    int[] defaultWidths;
 
     /**
      * Constructor for the RLGComparator object
@@ -44,7 +45,7 @@ public class RLGComparator {
         wcErrors = new ArrayList<>();
         acErrors = new ArrayList<>();
         errors = new ArrayList<Error>();
-
+        defaultWidths = new int[] {400, 640, 768, 1024};
     }
 
     /**
@@ -247,6 +248,7 @@ public class RLGComparator {
             Collections.sort(acErrors);
             String previousKey = "";
             for (AlignmentError e : acErrors) {
+                System.out.println(isErrorUnseen(e, defaultWidths));
                 // Check if this is a different edge
                 if (!e.generateKey().equals(previousKey)) {
                     if (e.getOracle() != null) {
@@ -273,5 +275,26 @@ public class RLGComparator {
         } catch (IOException e) {
             System.out.println("Failed to write the results to file.");
         }
+    }
+
+    public boolean isErrorUnseen(Error e, int[] widths) {
+        ArrayList<int[]> errorRanges;
+        if (e instanceof VisibilityError)
+            errorRanges = ((VisibilityError) e).calculateRangeOfViewportWidths();
+        else if (e instanceof AlignmentError) {
+            errorRanges = ((AlignmentError) e).calculateRangeOfViewportWidths();
+        } else {
+            errorRanges = ((WidthError) e).calculateRangeOfViewportWidths();
+        }
+
+        for (int i = 0; i < widths.length; i++) {
+            int w = widths[i];
+            for (int[] range : errorRanges) {
+                if ((range[0] <= w) && (range[1] >= w)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
