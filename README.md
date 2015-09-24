@@ -15,6 +15,11 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/).
 
+#### Dependencies
+
+ReDeCheck requires the use of existing code from the X-PERT project, developing by Choudhary et al and currently available at https://github.com/gatech/xpert. After cloning the repository, navigate to the `src` directory and copy the `xpert` folder to the `src/java` directory of your ReDeCheck download, as shown below. This will allow the ReDeCheck project to correctly access all the various files it needs to operate.
+![File System](/readme-images/file-system.png)
+
 #### If using Eclipse:
 
 1. Select 'File' -> 'Import'.
