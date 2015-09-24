@@ -6,10 +6,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
-import xpert.ag.AGNode;
-import xpert.ag.AlignmentGraph;
-import xpert.ag.Contains;
-import xpert.ag.Edge;
+import xpert.ag.*;
 import xpert.dom.DomNode;
 
 import java.util.ArrayList;
@@ -354,7 +351,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getxPath()).thenReturn("first");
         AGNode agn1 = new AGNode(dn1);
         DomNode dn2 = mock(DomNode.class);
-        when(dn2.getCoords()).thenReturn(new int[] {25,25,75,75});
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
         when(dn2.getxPath()).thenReturn("second");
         AGNode agn2 = new AGNode(dn2);
 
@@ -364,19 +361,145 @@ public class ResponsiveLayoutGraphTest {
         rlg.nodes.put(n2.getXpath(), n2);
 
         Contains c = new Contains(agn1, agn2);
-        System.out.print(c);
         HashMap<String, Edge> edgeMap = new HashMap<>();
-        edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(), c);
+        edgeMap.put(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling(), c);
+
+        Sibling sibling = new Sibling(agn2, agn1);
+        edgeMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
 
         rlg.setUpAlignmentConstraints(edgeMap, alCons);
-        assertEquals(alCons.size(), 1);
-        assertEquals(alCons.get(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling()).generateKey(), c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling());
+        assertEquals(alCons.size(), 2);
+        assertEquals(alCons.get(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling()).generateKey(), c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling());
+        assertEquals(alCons.get(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling()).generateKey(), sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling());
+    }
+
+    @Test
+    public void testCheckForEdgeMatchTrue() {
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("second");
+        AGNode agn2 = new AGNode(dn2);
+
+        Contains c = new Contains(agn1, agn2);
+        Sibling sibling = new Sibling(agn2, agn1);
+
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling(), c);
+        previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+
+        HashMap<String, Edge> temp = new HashMap<>();
+        temp.put(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling(), c);
+        temp.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+
+
+        HashMap<String, Edge> previousToMatch = cloner.deepClone(previousMap);
+        HashMap<String, Edge> tempToMatch = cloner.deepClone(temp);
+
+        rlg.checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+
+        // Check matched edges have been removed from maps
+        assertEquals(previousToMatch.size(), 0);
+        assertEquals(tempToMatch.size(), 0);
+    }
+
+    @Test
+    public void testCheckForEdgeMatchFlippedSibling() {
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("second");
+        AGNode agn2 = new AGNode(dn2);
+
+        Sibling sibling = new Sibling(agn2, agn1);
+        Sibling flipped = new Sibling(agn1, agn2);
+
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+
+        HashMap<String, Edge> temp = new HashMap<>();
+        temp.put(flipped.getNode1().getxPath() + flipped.getNode2().getxPath() + "sibling" + flipped.generateLabelling(), flipped);
+
+
+        HashMap<String, Edge> previousToMatch = cloner.deepClone(previousMap);
+        HashMap<String, Edge> tempToMatch = cloner.deepClone(temp);
+
+        rlg.checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+
+        // Check matched edges have been removed from maps
+        assertEquals(previousToMatch.size(), 0);
+        assertEquals(tempToMatch.size(), 0);
+    }
+
+    @Test
+    public void testCheckForEdgeMatchFalse() {
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("second");
+        AGNode agn2 = new AGNode(dn2);
+
+        Contains c = new Contains(agn1, agn2);
+        Sibling sibling = new Sibling(agn2, agn1);
+
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling(), c);
+
+        HashMap<String, Edge> temp = new HashMap<>();
+        temp.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+
+
+        HashMap<String, Edge> previousToMatch = cloner.deepClone(previousMap);
+        HashMap<String, Edge> tempToMatch = cloner.deepClone(temp);
+
+        rlg.checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+
+        // Check matched edges have been removed from maps
+        assertEquals(previousToMatch.size(), 1);
+        assertEquals(tempToMatch.size(), 1);
     }
 
     @Test
     public void testUpdateAppearingEdge() {
 
+
+//        rlg.updateAppearingEdges(tempToMatch, alConsTable, alCons, ag);
     }
 
+    @Test
+    public void testAddParentConstraintsToNodes() {
+        Node n = new Node("test");
+        Node p = new Node("parent");
+        rlg.nodes.put(n.getXpath(), n);
+        rlg.nodes.put(p.getXpath(), p);
+        AlignmentConstraint ac = new AlignmentConstraint(p, n, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
+        rlg.alignmentConstraints.put(ac.generateKey(), new int[]{400,0}, ac);
+        rlg.addParentConstraintsToNodes();
+        assertEquals(n.getParentConstraints().size(), 1);
+        assertEquals(n.getParentConstraints().get(0), ac);
+    }
 
+    @Test
+    public void testAddWidthConstraintsToNodes() {
+        Node n = new Node("test");
+        Node p = new Node("parent");
+        rlg.nodes.put(n.getXpath(), n);
+        rlg.nodes.put(p.getXpath(), p);
+
+        WidthConstraint wc = new WidthConstraint(400,1000, 1, p, -10);
+        rlg.widthConstraints.put(n.getXpath(), new int[] {400,0}, wc);
+        rlg.addWidthConstraintsToNodes();
+        assertEquals(n.getWidthConstraints().size(), 1);
+        assertEquals(n.getWidthConstraints().get(0), wc);
+
+    }
 }

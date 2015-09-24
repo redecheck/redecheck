@@ -285,7 +285,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void updateAppearingEdges(HashMap<String, Edge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraph ag) {
+    public void updateAppearingEdges(HashMap<String, Edge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraph ag) {
         for (String currUM : tempToMatch.keySet()) {
             Edge e = tempToMatch.get(currUM);
             int appearPoint = 0;
@@ -322,7 +322,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    private void updateDisappearingEdge(HashMap<String, Edge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraph ag) {
+    public void updateDisappearingEdge(HashMap<String, Edge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraph ag) {
         for (String prevUM : previousToMatch.keySet()) {
             Edge e = previousToMatch.get(prevUM);
             int disappearPoint = 0;
@@ -367,7 +367,7 @@ public class ResponsiveLayoutGraph {
 
     }
 
-    private void checkForEdgeMatch(HashMap<String, Edge> previousMap, HashMap<String, Edge> previousToMatch, HashMap<String, Edge> temp, HashMap<String, Edge> tempToMatch) {
+    public void checkForEdgeMatch(HashMap<String, Edge> previousMap, HashMap<String, Edge> previousToMatch, HashMap<String, Edge> temp, HashMap<String, Edge> tempToMatch) {
         String key = "", key2 = "";
         for (String s : previousMap.keySet()) {
             Edge e = previousMap.get(s);
@@ -579,7 +579,7 @@ public class ResponsiveLayoutGraph {
      * Goes through the full set of alignment constraints and adds the parent-child constraints to the node representing
      * the child element, for use in the width constraint extraction
      */
-    private void addParentConstraintsToNodes() {
+    public void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
             if (ac.type == Type.PARENT_CHILD) {
                 Node child = this.nodes.get(ac.node2.getXpath());
@@ -591,7 +591,7 @@ public class ResponsiveLayoutGraph {
     /**
      * Goes through the full set of extracted width constraints and adds them to the relevant nodes in the graph
      */
-    private void addWidthConstraintsToNodes() {
+    public void addWidthConstraintsToNodes() {
         for (Node n : this.nodes.values()) {
             Map<int[], WidthConstraint> wcs = this.widthConstraints.row(n.xpath);
             for (WidthConstraint wc : wcs.values()) {
