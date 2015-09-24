@@ -5,13 +5,14 @@ import twalsh.rlg.Node;
 import twalsh.rlg.WidthConstraint;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by thomaswalsh on 26/08/15.
  */
 public class WidthError extends Error implements Comparable<WidthError> {
     WidthConstraint oracle, test;
-    String desc;
+    String desc, xpath;
 
     public WidthConstraint getOracle() {
         return oracle;
@@ -29,10 +30,11 @@ public class WidthError extends Error implements Comparable<WidthError> {
         this.test = test;
     }
 
-    public WidthError(WidthConstraint we1, WidthConstraint we2, String d) {
+    public WidthError(WidthConstraint we1, WidthConstraint we2, String d, String xp) {
         this.oracle = we1;
         this.test = we2;
         this.desc = d;
+        this.xpath = xp;
     }
 
     public String toString() {
@@ -55,9 +57,9 @@ public class WidthError extends Error implements Comparable<WidthError> {
     }
 
     public int compareTo(WidthError we2) {
-        Integer key1, key2;
-        key1 = this.getOracle().getMin();
-        key2 = we2.getOracle().getMin();
+        String key1, key2;
+        key1 = this.xpath;
+        key2 = we2.xpath;
         return key1.compareTo(key2);
     }
 
@@ -71,7 +73,7 @@ public class WidthError extends Error implements Comparable<WidthError> {
             case "unmatched-test":
                 errorRanges.add(new int[]{test.getMin(), test.getMax()});
                 break;
-            case "diffAttributes":
+            case "diffCoefficients":
                 errorRanges.add(new int[]{oracle.getMin(), oracle.getMax()});
                 break;
             case "diffBounds":
@@ -90,4 +92,7 @@ public class WidthError extends Error implements Comparable<WidthError> {
     }
 
 
+    public String getXPath() {
+        return xpath;
+    }
 }

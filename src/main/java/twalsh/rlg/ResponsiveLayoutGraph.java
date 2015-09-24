@@ -136,7 +136,6 @@ public class ResponsiveLayoutGraph {
         updateRemainingNodes(visCons, last);
 
         // Attach constraints to the nodes
-
         attachVisConsToNodes(visCons);
     }
 

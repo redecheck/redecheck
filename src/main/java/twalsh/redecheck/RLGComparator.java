@@ -195,11 +195,11 @@ public class RLGComparator {
                 if ( (wc.getPercentage() == temp.getPercentage()) && (wc.getAdjustment() == temp.getAdjustment()) && (wc.getMin() == temp.getMin()) && (wc.getMax() == temp.getMax())) {
                     match = temp;
                 } else if ( ((wc.getMin()==temp.getMin()) && (wc.getMax()==temp.getMax())) && ( (wc.getPercentage()!=temp.getPercentage()) || (wc.getAdjustment()!=temp.getAdjustment()) ) ) {
-                    WidthError we = new WidthError(wc, temp, "diffCoefficients");
+                    WidthError we = new WidthError(wc, temp, "diffCoefficients", n.getXpath());
                     wcErrors.add(we);
                     match = temp;
                 } else if ( ((wc.getMin()!=temp.getMin()) || (wc.getMax()!=temp.getMax())) && ( (wc.getPercentage()==temp.getPercentage()) && (wc.getAdjustment()==temp.getAdjustment()) ) ) {
-                    WidthError we = new WidthError(wc, temp, "diffBounds");
+                    WidthError we = new WidthError(wc, temp, "diffBounds",n.getXpath());
                     wcErrors.add(we);
                     match = temp;
                 }
@@ -210,12 +210,12 @@ public class RLGComparator {
                 matchedConstraints.put(wc, match);
                 wc2.remove(match);
             } else {
-                WidthError we = new WidthError(wc, null, "unmatched-oracle");
+                WidthError we = new WidthError(wc, null, "unmatched-oracle",n.getXpath());
                 wcErrors.add(we);
             }
         }
         for (WidthConstraint c : wc2) {
-            WidthError we = new WidthError(null, c, "unmatched-test");
+            WidthError we = new WidthError(null, c, "unmatched-test",n.getXpath());
             wcErrors.add(we);
         }
 
@@ -237,8 +237,8 @@ public class RLGComparator {
 
             // Print out visibility errors
             output.append("====== Visibility Errors ====== \n\n");
-            for (Error e : errors) {
-                if (e instanceof VisibilityError) {
+            for (VisibilityError e : vcErrors) {
+                if (isErrorUnseen(e, defaultWidths)) {
                     output.append(e.toString());
                 }
             }
@@ -248,24 +248,35 @@ public class RLGComparator {
             Collections.sort(acErrors);
             String previousKey = "";
             for (AlignmentError e : acErrors) {
-                System.out.println(isErrorUnseen(e, defaultWidths));
-                // Check if this is a different edge
-                if (!e.generateKey().equals(previousKey)) {
-                    if (e.getOracle() != null) {
-                        output.append("\n" + e.getOracle().node1.getXpath() + " -> " + e.getOracle().node2.getXpath() + "\n");
-                    } else {
-                        output.append("\n" + e.getTest().node1.getXpath() + " -> " + e.getTest().node2.getXpath() + "\n");
+                if(isErrorUnseen(e, defaultWidths)) {
+                    // Check if this is a different edge
+                    if (!e.generateKey().equals(previousKey)) {
+                        if (e.getOracle() != null) {
+                            output.append("\n" + e.getOracle().node1.getXpath() + " -> " + e.getOracle().node2.getXpath() + "\n");
+                        } else {
+                            output.append("\n" + e.getTest().node1.getXpath() + " -> " + e.getTest().node2.getXpath() + "\n");
+                        }
+                        previousKey = e.generateKey();
                     }
-                    previousKey = e.generateKey();
+                    output.append("\n" + e.toString());
                 }
-                output.append("\n" + e.toString());
             }
 
             // Print out width errors
             output.append("====== Width Errors ====== \n\n");
-            for (Error e : errors) {
-                if (e instanceof WidthError) {
-                    output.append(e.toString());
+            Collections.sort(wcErrors);
+            String previousXP = "";
+            for (WidthError e : wcErrors) {
+                if (!e.getXPath().equals(previousXP)) {
+
+                    if (isErrorUnseen(e, defaultWidths)) {
+                        if (!e.getXPath().equals(previousXP)) {
+                            output.append(e.getXPath() + "\n");
+                        }
+                        output.append(e.toString());
+                    }
+
+                    previousXP = e.getXPath();
                 }
             }
 
