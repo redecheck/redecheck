@@ -502,4 +502,82 @@ public class ResponsiveLayoutGraphTest {
         assertEquals(n.getWidthConstraints().get(0), wc);
 
     }
+
+    @Test
+    public void testGenerateEdgeMap() {
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("second");
+        AGNode agn2 = new AGNode(dn2);
+
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        Contains c = new Contains(agn1, agn2);
+        Sibling s = new Sibling(agn2, agn1);
+        ArrayList<Contains> cs = new ArrayList<Contains>();
+        ArrayList<Sibling> ss = new ArrayList<Sibling>();
+        cs.add(c);
+        ss.add(s);
+
+        when (ag.getContains()).thenReturn(cs);
+        when (ag.getSiblings()).thenReturn(ss);
+
+        HashMap<String, Edge> map = rlg.generateEdgeMapFromAG(ag);
+        assertEquals(map.size(), 2);
+        assertEquals(map.get(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling()), c);
+    }
+
+    @Test
+    public void testGetWidthsForConstraintsOneParent() {
+        Node n = new Node("test");
+        Node p = new Node("parent");
+        AlignmentConstraint ac = new AlignmentConstraint(n, p, Type.PARENT_CHILD, 400, 1000, new boolean[] {false, false, false, false, false});
+        ArrayList<AlignmentConstraint> acs = new ArrayList<>();
+        acs.add(ac);
+        ArrayList<int[]> ranges = rlg.getWidthsForConstraints(acs);
+        assertEquals(ranges.size(), 1);
+        int[] array = ranges.get(0);
+        assertEquals(true, Arrays.equals(array, new int[] {400, 500, 600, 700}));
+    }
+
+    @Test
+    public void testGetWidthsForConstraintsTwoParents() {
+        Node n = new Node("test");
+        Node p = new Node("parent");
+        Node p2 = new Node("another");
+        AlignmentConstraint ac = new AlignmentConstraint(p, n, Type.PARENT_CHILD, 400, 550, new boolean[] {false, false, false, false, false});
+        AlignmentConstraint ac2 = new AlignmentConstraint(p2, n, Type.PARENT_CHILD, 551, 620, new boolean[] {false, false, false, false, false, false});
+        ArrayList<AlignmentConstraint> acs = new ArrayList<>();
+        acs.add(ac);
+        acs.add(ac2);
+        ArrayList<int[]> ranges = rlg.getWidthsForConstraints(acs);
+        assertEquals(ranges.size(), 2);
+        int[] array = ranges.get(0);
+        assertEquals(true, Arrays.equals(array, new int[] {400, 500}));
+        int[] array2 = ranges.get(1);
+        assertEquals(true, Arrays.equals(array2, new int[] {600}));
+    }
+
+    @Test
+    public void testPopulateWidthArrays() {
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("first");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = new AGNode(dn1);
+
+        int[] validWidths = new int[4];
+        int[] widthsTemp = new int[4];
+        int[] parentWidths = new int[4];
+        int[] childWidths = new int[4];
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        when(new AlignmentGraph(rlg.doms.get(anyInt()))).thenReturn(ag);
+
+        rlg.populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, "node", "parent");
+    }
 }

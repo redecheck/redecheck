@@ -3,9 +3,7 @@ import com.google.common.collect.HashBasedTable;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import twalsh.redecheck.Redecheck;
 import xpert.ag.*;
-import xpert.ag.Sibling;
-import xpert.dom.DomNode;
-
+import xpert.dom.*;
 import java.util.*;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
@@ -58,7 +56,6 @@ public class ResponsiveLayoutGraph {
     }
 
     public ResponsiveLayoutGraph() {
-//        widths = new int[]{400,500,600};
         alreadyGathered = new HashSet<Integer>();
         last = null;
 //        restOfGraphs = new ArrayList<AlignmentGraph>();
@@ -257,7 +254,7 @@ public class ResponsiveLayoutGraph {
                     }
                 }
             } else {
-                xpert.ag.Sibling s = (xpert.ag.Sibling) e;
+                Sibling s = (Sibling) e;
                 String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+s.generateFlippedLabelling();
                 Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
                 Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flipped);
@@ -304,7 +301,7 @@ public class ResponsiveLayoutGraph {
             }
             else {
                 t = Type.SIBLING;
-                xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
+                Sibling s2 = (Sibling) e;
                 String flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
                 try {
                     appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, flip);
@@ -334,7 +331,7 @@ public class ResponsiveLayoutGraph {
                     e1.printStackTrace();
                 }
             } else {
-                xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
+                Sibling s2 = (Sibling) e;
                 flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
                 try {
                     disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, flip);
@@ -377,7 +374,7 @@ public class ResponsiveLayoutGraph {
                 Contains cTemp = (Contains) e;
                 key += "contains" +cTemp.generateLabelling();
             } else {
-                xpert.ag.Sibling sTemp = (xpert.ag.Sibling) e;
+                Sibling sTemp = (Sibling) e;
                 key += "sibling" + sTemp.generateLabelling();
                 key2 += "sibling" + sTemp.generateFlippedLabelling();
             }
@@ -418,7 +415,7 @@ public class ResponsiveLayoutGraph {
                 alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
             }
             else {
-                xpert.ag.Sibling s2 = (xpert.ag.Sibling) e;
+                Sibling s2 = (Sibling) e;
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
                         new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
                 alCons.put(con.generateKey(), con);
@@ -514,7 +511,7 @@ public class ResponsiveLayoutGraph {
         return parentWidths.length;
     }
 
-    private void populateWidthArrays(int[] validWidths, int[] widthsTemp, int[] parentWidths, int[] childWidths, String s, String parentXpath) {
+    public void populateWidthArrays(int[] validWidths, int[] widthsTemp, int[] parentWidths, int[] childWidths, String s, String parentXpath) {
         for (int i = 0; i < validWidths.length; i++) {
             try {
                 AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
@@ -769,7 +766,7 @@ public class ResponsiveLayoutGraph {
      * @param acs       the set of alignment constraints for the element
      * @return          a set of arrays representing the sets of widths
      */
-    private ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
+    public ArrayList<int[]> getWidthsForConstraints(ArrayList<AlignmentConstraint> acs) {
         ArrayList<int[]> widthSets = new ArrayList<int[]>();
         TreeMap<Integer, AlignmentConstraint> ordered = new TreeMap<Integer, AlignmentConstraint>();
         for (AlignmentConstraint c : acs) {
