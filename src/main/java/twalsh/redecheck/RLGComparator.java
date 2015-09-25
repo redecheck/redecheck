@@ -76,7 +76,6 @@ public class RLGComparator {
      * Matches the nodes from the oracle version to those in the test version, so their constraints can then be compared.
      */
     public void matchNodes() {
-
         HashMap<String, Node> nodes1 = cloner.deepClone(rlg1.getNodes());
         HashMap<String, Node> nodes2 = cloner.deepClone(rlg2.getNodes());
 
@@ -110,7 +109,7 @@ public class RLGComparator {
         VisibilityConstraint b = m.getVisibilityConstraints().get(0);
         if ((a.appear != b.appear) || (a.disappear != b.disappear)) {
             VisibilityError ve = new VisibilityError(n, m);
-            errors.add(ve);
+            vcErrors.add(ve);
         }
     }
 

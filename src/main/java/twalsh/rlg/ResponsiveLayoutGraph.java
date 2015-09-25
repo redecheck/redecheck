@@ -21,7 +21,7 @@ public class ResponsiveLayoutGraph {
     HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
     HashBasedTable<String, int[], WidthConstraint> widthConstraints = HashBasedTable.create();
     ArrayList<AlignmentGraph> graphs;
-    AlignmentGraph first, last;
+    AlignmentGraph first, last, ag;
 
     public HashMap<String, Node> getNodes() {
         return nodes;
@@ -514,7 +514,8 @@ public class ResponsiveLayoutGraph {
     public void populateWidthArrays(int[] validWidths, int[] widthsTemp, int[] parentWidths, int[] childWidths, String s, String parentXpath) {
         for (int i = 0; i < validWidths.length; i++) {
             try {
-                AlignmentGraph ag = new AlignmentGraph(doms.get(validWidths[i]));
+                ag = new AlignmentGraph(doms.get(validWidths[i]));
+                System.out.print(ag.toString());
                 widthsTemp[i] = validWidths[i];
                 parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
                 childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();

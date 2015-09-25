@@ -40,6 +40,10 @@ public class AlignmentGraph {
 	public static final String[] tagsContainer = { "DD", "DIV", "DT", "P",
 			"TD", "TR" };
 
+	public static AlignmentGraph getInstance(DomNode root){
+		return new AlignmentGraph(root);
+	}
+
 	public AlignmentGraph(DomNode root) {
 		vertices = new ArrayList<>();
 		vMap = new HashMap<>();

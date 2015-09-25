@@ -3,16 +3,14 @@ package twalsh.rlg;
 import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
 import xpert.ag.*;
 import xpert.dom.DomNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -563,20 +561,40 @@ public class ResponsiveLayoutGraphTest {
     }
 
     @Test
-    public void testPopulateWidthArrays() {
+    public void testPopulateWidthArrays() throws Exception {
         DomNode dn1 = mock(DomNode.class);
         when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
-        when(dn1.getxPath()).thenReturn("first");
+        when(dn1.getxPath()).thenReturn("node");
         when(dn1.getTagName()).thenReturn("BODY");
-        AGNode agn1 = new AGNode(dn1);
+        AGNode agn1 = spy(new AGNode(dn1));
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
 
-        int[] validWidths = new int[4];
+        int[] validWidths = rlg.widths;
         int[] widthsTemp = new int[4];
         int[] parentWidths = new int[4];
         int[] childWidths = new int[4];
         AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        rlg.doms = spy(new HashMap<Integer, DomNode>());
 
-        when(new AlignmentGraph(rlg.doms.get(anyInt()))).thenReturn(ag);
+        when(rlg.doms.get(anyInt())).thenReturn(dn1);
+        Random r = new Random();
+
+//        final AlignmentGraph alignGraph = mock(AlignmentGraph.class);
+//        whenNew(AlignmentGraph.class).withAnyArguments().thenReturn(alignGraph);
+
+
+
+
+//        doReturn(ag).when(AlignmentGraph.getInstance(dn1));
+////        when(any(DomNode.class).getWidth()).thenReturn(100);
+////        when((AlignmentGraph) anyObject()).getVMap().thenReturn(vmap);
+        rlg.ag = ag;
+        when(rlg.ag.getVMap()).thenReturn(vmap);
+        doReturn(agn1).when(vmap).get("parent");
+        doReturn(dn1).when(agn1).getDomNode();
+        doReturn(r.nextInt()).when(dn1).getWidth();
+////                get(anyString())).thenReturn(agn1);
 
         rlg.populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, "node", "parent");
     }

@@ -86,4 +86,8 @@ public class AlignmentError extends Error implements Comparable<AlignmentError> 
         }
         return errorRanges;
     }
+
+    public String getDesc() {
+        return desc;
+    }
 }

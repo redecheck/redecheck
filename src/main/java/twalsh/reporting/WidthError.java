@@ -95,4 +95,8 @@ public class WidthError extends Error implements Comparable<WidthError> {
     public String getXPath() {
         return xpath;
     }
+
+    public String getDesc() {
+        return desc;
+    }
 }

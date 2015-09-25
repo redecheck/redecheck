@@ -68,6 +68,9 @@
         </plugins>
     </build>
 
+    <properties>
+        <powermock.version>1.6.2</powermock.version>
+    </properties>
 
     <dependencies>
         <dependency>
