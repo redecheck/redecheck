@@ -568,6 +568,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getTagName()).thenReturn("BODY");
         AGNode agn1 = spy(new AGNode(dn1));
         HashMap<String, AGNode> vmap = spy(new HashMap<>());
+//                spy(new HashMap<>());
         vmap.put(agn1.getDomNode().getxPath(), agn1);
 
         int[] validWidths = rlg.widths;
@@ -580,22 +581,22 @@ public class ResponsiveLayoutGraphTest {
         when(rlg.doms.get(anyInt())).thenReturn(dn1);
         Random r = new Random();
 
-//        final AlignmentGraph alignGraph = mock(AlignmentGraph.class);
+//        final AlignmentGraph alignGraph = spy(AlignmentGraph.class);
 //        whenNew(AlignmentGraph.class).withAnyArguments().thenReturn(alignGraph);
 
 
 
 
-//        doReturn(ag).when(AlignmentGraph.getInstance(dn1));
-////        when(any(DomNode.class).getWidth()).thenReturn(100);
-////        when((AlignmentGraph) anyObject()).getVMap().thenReturn(vmap);
-        rlg.ag = ag;
-        when(rlg.ag.getVMap()).thenReturn(vmap);
-        doReturn(agn1).when(vmap).get("parent");
-        doReturn(dn1).when(agn1).getDomNode();
-        doReturn(r.nextInt()).when(dn1).getWidth();
-////                get(anyString())).thenReturn(agn1);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(vmap).when(ag).getVMap();
+        when(vmap.get("parent")).thenReturn(agn1);
+        when(vmap.get("node")).thenReturn(agn1);
+        when(agn1.getDomNode()).thenReturn(dn1);
+        when(dn1.getWidth()).thenReturn(r.nextInt());
 
         rlg.populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, "node", "parent");
+
+        System.out.println(parentWidths[0]);
+        System.out.println(childWidths[0]);
     }
 }

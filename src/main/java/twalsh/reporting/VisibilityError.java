@@ -32,11 +32,11 @@ public class VisibilityError extends Error {
         result += oracle.getXpath();
         result += "\n Oracle: ";
         for (VisibilityConstraint vc : oracle.getVisibilityConstraints()) {
-            result += vc + "   ";
+            result += vc;
         }
         result += "\n Test: ";
         for (VisibilityConstraint vc : test.getVisibilityConstraints()) {
-            result += vc + "   ";
+            result += vc;
         }
         return result;
     }

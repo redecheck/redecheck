@@ -514,33 +514,36 @@ public class ResponsiveLayoutGraph {
     public void populateWidthArrays(int[] validWidths, int[] widthsTemp, int[] parentWidths, int[] childWidths, String s, String parentXpath) {
         for (int i = 0; i < validWidths.length; i++) {
             try {
-                ag = new AlignmentGraph(doms.get(validWidths[i]));
-                System.out.print(ag.toString());
+                DomNode dn = doms.get(validWidths[i]);
+//                ag = new AlignmentGraph(dn);
+                ag = getAlignmentGraph(dn);
+//                System.out.println(ag);
                 widthsTemp[i] = validWidths[i];
-                parentWidths[i] = ag.getVMap().get(parentXpath).getDomNode().getWidth();
-                childWidths[i] = ag.getVMap().get(s).getDomNode().getWidth();
+                HashMap<String, AGNode> vmap = (HashMap<String, AGNode>) ag.getVMap();
+//                System.out.println("VMap size: " +vmap.size());
+                AGNode agp = vmap.get(parentXpath);
+//                System.out.println(agp);
+                DomNode p = agp.getDomNode();
+//                System.out.println(p);
+                DomNode c = vmap.get(s).getDomNode();
+//                System.out.println(c);
+                parentWidths[i] = p.getWidth();
+                childWidths[i] = c.getWidth();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /**
-     * Prints the width constraints to the terminal for debugging purposes
-     */
-    public void printVisibilityConstraints() {
-        for (String s : this.nodes.keySet()) {
-            Node n = this.nodes.get(s);
-            VisibilityConstraint vc = n.getVisibilityConstraints().get(0);
-            System.out.println(s + "    " + vc);
-        }
-
+    public AlignmentGraph getAlignmentGraph(DomNode dn) {
+        return new AlignmentGraph(dn);
     }
 
+/*
     /**
      * Prints the alignment constraints to the terminal for debugging purposes
      * @param cons      the table of alignment constraints
-     */
+     *//*
     public void printAlignmentConstraints(HashBasedTable<String, int[], AlignmentConstraint> cons) {
         for (String s : cons.rowKeySet()) {
             Map<int[],AlignmentConstraint> map = cons.row(s);
@@ -550,29 +553,31 @@ public class ResponsiveLayoutGraph {
             }
         }
     }
+*/
 
     /**
      * Prints the width constraints to the terminal for debugging purposes
      * @param cons      the table of width constraints
-     */
+     *//*
     public void printWidthConstraints(HashBasedTable<String, int[], WidthConstraint> cons) {
         for (WidthConstraint wc : cons.values()) {
             System.out.println(wc);
         }
     }
-
+*/
+    /*
     /**
      * Prints the nodes to the terminal for debugging purposes
-     */
+     *//*
     private void printNodes() {
         for (Node n : this.nodes.values()) {
             System.out.println(n);
-//            for (WidthConstraint wc : n.getWidthConstraints()) {
-//                System.out.println(wc);
-//            }
+            for (WidthConstraint wc : n.getWidthConstraints()) {
+                System.out.println(wc);
+            }
         }
     }
-
+*/
     /**
      * Goes through the full set of alignment constraints and adds the parent-child constraints to the node representing
      * the child element, for use in the width constraint extraction
