@@ -5,25 +5,32 @@ import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import twalsh.redecheck.Redecheck;
 import xpert.ag.*;
 import xpert.dom.DomNode;
 
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.*;
+//import static org.mockito.Mockito.*;
 
 /**
  * Created by thomaswalsh on 17/09/15.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest( Redecheck.class )
 public class ResponsiveLayoutGraphTest {
     ResponsiveLayoutGraph rlg;
     Cloner cloner;
-    @Mock
-    private AGNode node;
     Node n1,n2,n3;
     AlignmentConstraint acPC, acSib;
 
@@ -744,5 +751,101 @@ public class ResponsiveLayoutGraphTest {
         assertEquals(400, widthsTemp[0]);
         assertEquals(100, parentWidths[0]);
         assertEquals(50, childWidths[0]);
+    }
+
+    @Test
+    public void testFindAppearPointRecursiveBranch1NodeMatch() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("parent");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = spy(new AGNode(dn1));
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        doReturn(dn1).when(mockDoms).get(anyInt());
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(dn1).when(vmap).get("node");
+
+        rlg.findAppearPoint("node", 400, 500, true, "dontneed");
+        verify(rlg, times(1)).findAppearPoint("node", 400, 450, true, "dontneed");
+    }
+
+    @Test
+    public void testFindAppearPointRecursiveBranch1NodeNoMatch() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("parent");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = spy(new AGNode(dn1));
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        doReturn(dn1).when(mockDoms).get(anyInt());
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(null).when(vmap).get("node");
+
+        rlg.findAppearPoint("node", 400, 500, true, "dontneed");
+        verify(rlg, times(1)).findAppearPoint("node", 450, 500, true, "dontneed");
+    }
+
+    @Test
+    public void testFindAppearPointRecursiveBranch2ReturnMin() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("parent");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        AGNode agn2 = spy(new AGNode(dn1));
+
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        HashMap<String, AGNode> vmap2 = spy(new HashMap<>());
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spu(new AlignmentGraph(dn2));
+
+        doReturn(dn1).when(mockDoms).get(420);
+        doReturn(dn2).when(mockDoms).get(421);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn2);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+        doReturn(dn1).when(vmap).get("node");
+
+        int expected = rlg.findAppearPoint("node", 420, 421, true, "dontneed");
+        assertEquals(420, expected);
     }
 }

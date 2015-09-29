@@ -71,7 +71,7 @@ public class Redecheck {
         DesiredCapabilities dCaps = new DesiredCapabilities();
         dCaps.setJavascriptEnabled(true);
         dCaps.setCapability("takesScreenshot", false);
-        driver = new PhantomJSDriver(dCaps);
+        driver = getNewDriver();
 
         // Access oracle webpage and sample
         String oracleUrl = preamble + oracle + ".html";
@@ -176,6 +176,7 @@ public class Redecheck {
                         //handle it
                     }
                 }
+                System.out.println(w);
                 driver.manage().window().setSize(new Dimension(w, 600));
                 FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver));
                 counter++;
@@ -218,5 +219,9 @@ public class Redecheck {
             }
         }
         return doms;
+    }
+
+    public static PhantomJSDriver getNewDriver() {
+        return new PhantomJSDriver();
     }
 }

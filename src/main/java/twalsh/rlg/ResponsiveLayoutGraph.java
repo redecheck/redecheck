@@ -666,7 +666,7 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(mid);
 
-            AlignmentGraph extraAG = new AlignmentGraph(dn);
+            AlignmentGraph extraAG = getAlignmentGraph(dn);
             boolean found = false;
             if (searchForNode) {
                 HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
