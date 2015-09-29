@@ -229,14 +229,14 @@ public class ResponsiveLayoutGraph {
         }
 
         // Update  alignment constraints of everything still visible
-        updateRemainingEdges(alCons);
+        AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
+        updateRemainingEdges(alCons, last);
 
         addParentConstraintsToNodes();
         this.alignments = alCons;
     }
 
-    private void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons) {
-        AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
+    public void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons, AlignmentGraph last) {
         for (String stilVis : generateEdgeMapFromAG(last).keySet()) {
             Edge e = generateEdgeMapFromAG(last).get(stilVis);
             if (e instanceof Contains) {
@@ -543,7 +543,7 @@ public class ResponsiveLayoutGraph {
     /**
      * Prints the alignment constraints to the terminal for debugging purposes
      * @param cons      the table of alignment constraints
-     *//*
+     */
     public void printAlignmentConstraints(HashBasedTable<String, int[], AlignmentConstraint> cons) {
         for (String s : cons.rowKeySet()) {
             Map<int[],AlignmentConstraint> map = cons.row(s);
@@ -553,7 +553,7 @@ public class ResponsiveLayoutGraph {
             }
         }
     }
-*/
+
 
     /**
      * Prints the width constraints to the terminal for debugging purposes

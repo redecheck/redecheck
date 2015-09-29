@@ -1,5 +1,6 @@
 package twalsh.rlg;
 
+import com.google.common.collect.HashBasedTable;
 import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
@@ -467,10 +468,155 @@ public class ResponsiveLayoutGraphTest {
     }
 
     @Test
-    public void testUpdateAppearingEdge() {
+    public void testUpdateRemainingEdges() {
+        // Set up final alignment graph
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("one");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("two");
+        AGNode agn2 = new AGNode(dn2);
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn3.getxPath()).thenReturn("three");
+        AGNode agn3 = new AGNode(dn3);
+        Contains c = new Contains(agn1, agn2);
+        Contains c2 = new Contains(agn1, agn3);
+        Sibling sibling = new Sibling(agn2, agn3);
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(c.getNode1().getxPath() + c.getNode2().getxPath() + "contains" + c.generateLabelling(), c);
+        previousMap.put(c2.getNode1().getxPath() + c2.getNode2().getxPath() + "contains" + c2.generateLabelling(), c2);
+        previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        Node n1 = new Node("one");
+        Node n2 = new Node("two");
+        Node n3 = new Node("three");
+        AlignmentConstraint ac1 = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac2 = new AlignmentConstraint(n1, n3, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac3 = new AlignmentConstraint(n2, n3, Type.SIBLING, 400, 0, new boolean[]{false, false, false, false, true, true, true, true});
+
+        HashMap<String, AlignmentConstraint> cons = new HashMap<>();
+        cons.put(ac1.generateKey(), ac1);
+        cons.put(ac2.generateKey(), ac2);
+        cons.put(ac3.generateKey(), ac3);
+
+//        HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
+        rlg.alignmentConstraints.put(ac1.generateKey(), new int[]{rlg.widths[0],0}, ac1);
+        rlg.alignmentConstraints.put(ac2.generateKey(), new int[]{rlg.widths[0],0}, ac2);
+        rlg.alignmentConstraints.put(ac3.generateKey(), new int[]{rlg.widths[0],0}, ac3);
+
+        doReturn(previousMap).when(rlg).generateEdgeMapFromAG(ag);
+
+        rlg.updateRemainingEdges(cons, ag);
+        assertEquals(700, cons.get(ac1.generateKey()).getMax());
+        assertEquals(700, cons.get(ac2.generateKey()).getMax());
+        assertEquals(700, cons.get(ac3.generateKey()).getMax());
+    }
+
+    @Test
+    public void testUpdateAppearingEdges() throws InterruptedException {
+        // Set up final alignment graph
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("one");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("two");
+        AGNode agn2 = new AGNode(dn2);
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn3.getxPath()).thenReturn("three");
+        AGNode agn3 = new AGNode(dn3);
+        Contains c = new Contains(agn1, agn2);
+        Contains c2 = new Contains(agn1, agn3);
+        Sibling sibling = new Sibling(agn2, agn3);
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(c2.getNode1().getxPath() + c2.getNode2().getxPath() + "contains" + c2.generateLabelling(), c2);
+        previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        // Set up RLG Nodes
+        Node n1 = new Node("one");
+        Node n2 = new Node("two");
+        Node n3 = new Node("three");
+        rlg.nodes.put(n1.getXpath(), n1);
+        rlg.nodes.put(n2.getXpath(), n2);
+        rlg.nodes.put(n3.getXpath(), n3);
+        AlignmentConstraint ac1 = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac2 = new AlignmentConstraint(n1, n3, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac3 = new AlignmentConstraint(n2, n3, Type.SIBLING, 400, 0, new boolean[]{false, false, false, false, true, true, true, true});
+
+        HashMap<String, AlignmentConstraint> cons = new HashMap<>();
+        cons.put(ac1.generateKey(), ac1);
+//        cons.put(ac2.generateKey(), ac2);
+
+        rlg.alignmentConstraints.put(ac1.generateKey(), new int[]{rlg.widths[0],0}, ac1);
+//        rlg.alignmentConstraints.put(ac2.generateKey(), new int[]{rlg.widths[0],0}, ac2);
+
+        doReturn(520).when(rlg).findAppearPoint(anyString(), anyInt(), anyInt(), anyBoolean(), anyString());
+        doReturn(0).when(rlg.restOfGraphs).indexOf(any(AlignmentGraph.class));
+
+        rlg.updateAppearingEdges(previousMap, rlg.alignmentConstraints, cons, ag);
+        assertEquals(rlg.alignmentConstraints.size(), 3);
+        assertEquals(520, cons.get(ac3.generateKey()).getMin());
+    }
+
+    @Test
+    public void testDisappearingNodes() throws InterruptedException {
+        // Set up final alignment graph
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("one");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = new AGNode(dn1);
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn2.getxPath()).thenReturn("two");
+        AGNode agn2 = new AGNode(dn2);
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[]{25, 25, 75, 75});
+        when(dn3.getxPath()).thenReturn("three");
+        AGNode agn3 = new AGNode(dn3);
+        Contains c = new Contains(agn1, agn2);
+        Contains c2 = new Contains(agn1, agn3);
+        Sibling sibling = new Sibling(agn2, agn3);
+        HashMap<String, Edge> previousMap = new HashMap<>();
+        previousMap.put(c2.getNode1().getxPath() + c2.getNode2().getxPath() + "contains" + c2.generateLabelling(), c2);
+        previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + sibling.generateLabelling(), sibling);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+
+        Node n1 = new Node("one");
+        Node n2 = new Node("two");
+        Node n3 = new Node("three");
+        AlignmentConstraint ac1 = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac2 = new AlignmentConstraint(n1, n3, Type.PARENT_CHILD, 400, 0, new boolean[]{true, false, false, true, false, false});
+        AlignmentConstraint ac3 = new AlignmentConstraint(n2, n3, Type.SIBLING, 400, 0, new boolean[]{false, false, false, false, true, true, true, true});
+
+        HashMap<String, AlignmentConstraint> cons = new HashMap<>();
+        cons.put(ac1.generateKey(), ac1);
+        cons.put(ac2.generateKey(), ac2);
+        cons.put(ac3.generateKey(), ac3);
+
+        rlg.alignmentConstraints.put(ac1.generateKey(), new int[]{rlg.widths[0],0}, ac1);
+        rlg.alignmentConstraints.put(ac2.generateKey(), new int[]{rlg.widths[0],0}, ac2);
+        rlg.alignmentConstraints.put(ac3.generateKey(), new int[]{rlg.widths[0], 0}, ac3);
+
+        doReturn(previousMap).when(rlg).generateEdgeMapFromAG(ag);
+        doReturn(645).when(rlg).findDisappearPoint(anyString(), anyInt(), anyInt(), anyBoolean(), anyString());
+        doReturn(0).when(rlg.restOfGraphs).indexOf(any(AlignmentGraph.class));
+
+        rlg.updateDisappearingEdge(previousMap, rlg.alignmentConstraints, ag);
+        assertEquals(0, cons.get(ac1.generateKey()).getMax());
+        assertEquals(644, cons.get(ac2.generateKey()).getMax());
+        assertEquals(644, cons.get(ac3.generateKey()).getMax());
 
 
-//        rlg.updateAppearingEdges(tempToMatch, alConsTable, alCons, ag);
     }
 
     @Test
@@ -564,11 +710,15 @@ public class ResponsiveLayoutGraphTest {
     public void testPopulateWidthArrays() throws Exception {
         DomNode dn1 = mock(DomNode.class);
         when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
-        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getxPath()).thenReturn("parent");
         when(dn1.getTagName()).thenReturn("BODY");
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {25,10,75,90});
+        when(dn2.getxPath()).thenReturn("node");
         AGNode agn1 = spy(new AGNode(dn1));
+        AGNode agn2 = spy(new AGNode(dn2));
         HashMap<String, AGNode> vmap = spy(new HashMap<>());
-//                spy(new HashMap<>());
         vmap.put(agn1.getDomNode().getxPath(), agn1);
 
         int[] validWidths = rlg.widths;
@@ -579,24 +729,20 @@ public class ResponsiveLayoutGraphTest {
         rlg.doms = spy(new HashMap<Integer, DomNode>());
 
         when(rlg.doms.get(anyInt())).thenReturn(dn1);
-        Random r = new Random();
-
-//        final AlignmentGraph alignGraph = spy(AlignmentGraph.class);
-//        whenNew(AlignmentGraph.class).withAnyArguments().thenReturn(alignGraph);
-
-
-
 
         doReturn(ag).when(rlg).getAlignmentGraph(dn1);
         doReturn(vmap).when(ag).getVMap();
         when(vmap.get("parent")).thenReturn(agn1);
-        when(vmap.get("node")).thenReturn(agn1);
+        when(vmap.get("node")).thenReturn(agn2);
         when(agn1.getDomNode()).thenReturn(dn1);
-        when(dn1.getWidth()).thenReturn(r.nextInt());
+        when(agn2.getDomNode()).thenReturn(dn2);
+        when(dn1.getWidth()).thenReturn(100);
+        when(dn2.getWidth()).thenReturn(50);
 
         rlg.populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, "node", "parent");
 
-        System.out.println(parentWidths[0]);
-        System.out.println(childWidths[0]);
+        assertEquals(400, widthsTemp[0]);
+        assertEquals(100, parentWidths[0]);
+        assertEquals(50, childWidths[0]);
     }
 }
