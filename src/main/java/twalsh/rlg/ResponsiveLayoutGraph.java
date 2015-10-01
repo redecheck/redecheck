@@ -649,6 +649,7 @@ public class ResponsiveLayoutGraph {
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
+
             if (found1) {
               return min;
             } else if (!found1 && found2) {

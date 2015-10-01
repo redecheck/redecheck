@@ -18,6 +18,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.*;
@@ -149,7 +150,7 @@ public class ResponsiveLayoutGraphTest {
     public void getEquationGradientNotOne() {
         double[] set1 = new double[] {500,520};
         double[] set2 = new double[] {240,250};
-        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1, set2), new double[] {1,0.5,-10}), true);
+        assertEquals(Arrays.equals(rlg.getEquationOfLine(set1, set2), new double[]{1, 0.5, -10}), true);
     }
 
     @Test
@@ -821,7 +822,7 @@ public class ResponsiveLayoutGraphTest {
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
         when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
-        when(dn1.getxPath()).thenReturn("parent");
+        when(dn1.getxPath()).thenReturn("node");
         when(dn1.getTagName()).thenReturn("BODY");
         AGNode agn1 = spy(new AGNode(dn1));
 
@@ -835,7 +836,7 @@ public class ResponsiveLayoutGraphTest {
         HashMap<String, AGNode> vmap2 = spy(new HashMap<>());
         vmap.put(agn1.getDomNode().getxPath(), agn1);
         AlignmentGraph ag = spy(new AlignmentGraph(dn1));
-        AlignmentGraph ag2 = spu(new AlignmentGraph(dn2));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn2));
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
@@ -843,9 +844,88 @@ public class ResponsiveLayoutGraphTest {
         doReturn(ag2).when(rlg).getAlignmentGraph(dn2);
         doReturn(vmap).when(ag).getVMap();
         doReturn(vmap2).when(ag2).getVMap();
-        doReturn(dn1).when(vmap).get("node");
 
         int expected = rlg.findAppearPoint("node", 420, 421, true, "dontneed");
         assertEquals(420, expected);
+    }
+
+    @Test
+    public void testFindAppearPointRecursiveBranch2ReturnMax() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        AGNode agn2 = spy(new AGNode(dn1));
+
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        HashMap<String, AGNode> vmap2 = spy(new HashMap<>());
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        vmap2.put(agn1.getDomNode().getxPath(), agn1);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn2));
+
+        doReturn(dn1).when(mockDoms).get(420);
+        doReturn(dn2).when(mockDoms).get(421);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn2);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+        doReturn(null).when(vmap).get("node");
+
+        int expected = rlg.findAppearPoint("parent", 420, 421, true, "dontneed");
+        assertEquals(421, expected);
+    }
+
+    @Test
+    public void testFindAppearPointRecursiveBranch2ReturnMaxPlusOne() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getTagName()).thenReturn("BODY");
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        AGNode agn2 = spy(new AGNode(dn1));
+
+        HashMap<String, AGNode> vmap = spy(new HashMap<>());
+        HashMap<String, AGNode> vmap2 = spy(new HashMap<>());
+//        vmap2.put(agn1.getDomNode().getxPath(), agn1);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn2));
+
+        doReturn(dn1).when(mockDoms).get(420);
+        doReturn(dn2).when(mockDoms).get(421);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn2);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+
+        int expected = rlg.findAppearPoint("nomatch", 420, 421, true, "dontneed");
+        assertEquals(422, expected);
     }
 }
