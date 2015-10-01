@@ -626,7 +626,7 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraph ag = new AlignmentGraph(dn);
+                AlignmentGraph ag = getAlignmentGraph(dn);
                 extraGraphs.add(ag);
             }
             AlignmentGraph ag1 = extraGraphs.get(0);
@@ -707,7 +707,7 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraph ag = new AlignmentGraph(dn);
+                AlignmentGraph ag =  getAlignmentGraph(dn);
                 extraGraphs.add(ag);
             }
             AlignmentGraph ag1 = extraGraphs.get(0);
@@ -726,8 +726,9 @@ public class ResponsiveLayoutGraph {
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
-
-            return decideBreakpoint(min,max, found1, found2);
+            System.out.println(found1);
+            System.out.println(found2);
+            return decideBreakpoint(min, max, found1, found2);
 
         } else {
             int mid = (max+min)/2;
@@ -739,7 +740,7 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
 
-            AlignmentGraph extraAG = new AlignmentGraph(dn);
+            AlignmentGraph extraAG = getAlignmentGraph(dn);
             boolean found;
 
             if (searchForNode) {
