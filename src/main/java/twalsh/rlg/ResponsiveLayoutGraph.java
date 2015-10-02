@@ -2,8 +2,8 @@ package twalsh.rlg;
 import com.google.common.collect.HashBasedTable;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import twalsh.redecheck.Redecheck;
-import xpert.ag.*;
-import xpert.dom.*;
+import edu.gatech.xpert.dom.*;
+import edu.gatech.xpert.dom.layout.*;
 import java.util.*;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
@@ -20,26 +20,13 @@ public class ResponsiveLayoutGraph {
     HashMap<String, AlignmentConstraint> alignments = new HashMap<String, AlignmentConstraint>();
     HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints = HashBasedTable.create();
     HashBasedTable<String, int[], WidthConstraint> widthConstraints = HashBasedTable.create();
-    ArrayList<AlignmentGraph> graphs;
-    AlignmentGraph first, last, ag;
+    ArrayList<AlignmentGraphFactory> graphs;
+    AlignmentGraphFactory first, last;
+    AlignmentGraph ag;
 
-    public HashMap<String, Node> getNodes() {
-        return nodes;
-    }
 
-    public void setNodes(HashMap<String, Node> nodes) {
-        this.nodes = nodes;
-    }
 
-    public HashMap<String, AlignmentConstraint> getAlignments() {
-        return alignments;
-    }
-
-    public void setAlignments(HashMap<String, AlignmentConstraint> alignments) {
-        this.alignments = alignments;
-    }
-
-    ArrayList<AlignmentGraph> restOfGraphs;
+    ArrayList<AlignmentGraphFactory> restOfGraphs;
     String url;
     Map<Integer, DomNode> doms;
     Map<Integer, DomNode> tempDoms;
@@ -47,13 +34,6 @@ public class ResponsiveLayoutGraph {
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
 
-    public static HashSet<Integer> getAlreadyGathered() {
-        return alreadyGathered;
-    }
-
-    public static void setAlreadyGathered(HashSet<Integer> alreadyGathered) {
-        ResponsiveLayoutGraph.alreadyGathered = alreadyGathered;
-    }
 
     public ResponsiveLayoutGraph() {
         alreadyGathered = new HashSet<Integer>();
@@ -69,13 +49,13 @@ public class ResponsiveLayoutGraph {
      * @param doms              the DOMs of the webpage at various viewport widths
      * @throws InterruptedException
      */
-    public ResponsiveLayoutGraph(ArrayList<AlignmentGraph> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
+    public ResponsiveLayoutGraph(ArrayList<AlignmentGraphFactory> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
         this.last = ags.get(ags.size()-1);
-        restOfGraphs =  new ArrayList<AlignmentGraph>();
-        for (AlignmentGraph ag : graphs) {
-            restOfGraphs.add(ag);
+        restOfGraphs =  new ArrayList<AlignmentGraphFactory>();
+        for (AlignmentGraphFactory agf : graphs) {
+            restOfGraphs.add(agf);
         }
         restOfGraphs.remove(0);
         this.url = url;
@@ -98,6 +78,35 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE WIDTH CONSTRAINTS");
     }
 
+
+
+
+    public static HashSet<Integer> getAlreadyGathered() {
+        return alreadyGathered;
+    }
+
+    public static void setAlreadyGathered(HashSet<Integer> alreadyGathered) {
+        ResponsiveLayoutGraph.alreadyGathered = alreadyGathered;
+    }
+
+    public HashMap<String, Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(HashMap<String, Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public HashMap<String, AlignmentConstraint> getAlignments() {
+        return alignments;
+    }
+
+    public void setAlignments(HashMap<String, AlignmentConstraint> alignments) {
+        this.alignments = alignments;
+    }
+
+
+
     /**
      * Extracts all the visibility constraints for each node on the webpage by inspecting which elements are visible at
      * which resolutions.
@@ -106,27 +115,27 @@ public class ResponsiveLayoutGraph {
     private void extractVisibilityConstraints() throws InterruptedException {
         System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
-        ArrayList<AGNode> agnodes = (ArrayList<AGNode>) first.getVertices();
-        HashMap<String, AGNode> previousMap = (HashMap<String, AGNode>) first.getVMap();
+        ArrayList<AGNode> agnodes = (ArrayList<AGNode>) first.nodeMap.values();
+        HashMap<String, AGNode> previousMap = (HashMap<String, AGNode>) first.nodeMap;
 
         setUpVisibilityConstraints(agnodes, visCons);
 
-        for (AlignmentGraph ag : restOfGraphs) {
+        for (AlignmentGraphFactory agf : restOfGraphs) {
             HashMap<String, AGNode> previousToMatch = (HashMap<String, AGNode>) previousMap.clone();
-            HashMap<String, AGNode> temp = (HashMap<String, AGNode>) ag.getVMap();
+            HashMap<String, AGNode> temp = (HashMap<String, AGNode>) agf.nodeMap;
             HashMap<String, AGNode> tempToMatch = (HashMap<String, AGNode>) temp.clone();
 
 
             checkForNodeMatch(previousMap, temp, previousToMatch, tempToMatch);
 
             // Handle any disappearing elements
-            updateDisappearingNode(previousToMatch, visCons, ag);
+            updateDisappearingNode(previousToMatch, visCons, agf);
 
             // Handle any appearing elements
-            updateAppearingNode(tempToMatch, visCons, ag);
+            updateAppearingNode(tempToMatch, visCons, agf);
 
             // Update the previousMap variable to keep track of last set of nodes
-            previousMap = (HashMap<String, AGNode>) ag.getVMap();
+            previousMap = (HashMap<String, AGNode>) agf.nodeMap;
         }
 
         // Update visibility widthConstraints of everything still visible
@@ -144,8 +153,8 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons, AlignmentGraph last) {
-        for (String stilVis : last.getVMap().keySet()) {
+    public void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory last) {
+        for (String stilVis : last.nodeMap.keySet()) {
             VisibilityConstraint vc = visCons.get(stilVis);
             if (vc.getDisappear() == 0) {
                 vc.setDisappear(widths[widths.length - 1]);
@@ -153,11 +162,11 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateAppearingNode(HashMap<String, AGNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
+    public void updateAppearingNode(HashMap<String, AGNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
         for (String currUM : tempToMatch.keySet()) {
             int appearPoint = 0;
             try {
-                appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], true, "");
+                appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -166,11 +175,11 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateDisappearingNode(HashMap<String, AGNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraph ag) {
+    public void updateDisappearingNode(HashMap<String, AGNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
         for (String prevUM : previousToMatch.keySet()) {
             int disappearPoint = 0;
             try {
-                disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], true, "");
+                disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -206,16 +215,16 @@ public class ResponsiveLayoutGraph {
      */
     private void extractAlignmentConstraints() throws InterruptedException {
         System.out.println("Extracting Alignment Constraints");
-        HashMap<String, Edge> previousMap = generateEdgeMapFromAG(first);
+        HashMap<String, AGEdge> previousMap = first.edgeMap;
         HashMap<String, AlignmentConstraint> alCons = new HashMap<String, AlignmentConstraint>();
 
         // Add initial edges to set.
         setUpAlignmentConstraints(previousMap, alCons);
 
-        for (AlignmentGraph ag : restOfGraphs) {
-            HashMap<String, Edge> previousToMatch = (HashMap<String, Edge>) previousMap.clone();
-            HashMap<String, Edge> temp = generateEdgeMapFromAG(ag);
-            HashMap<String, Edge> tempToMatch = (HashMap<String, Edge>) temp.clone();
+        for (AlignmentGraphFactory ag : restOfGraphs) {
+            HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
+            HashMap<String, AGEdge> temp = ag.edgeMap;
+            HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
@@ -225,20 +234,20 @@ public class ResponsiveLayoutGraph {
             // Handle appearing edges
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
 
-            previousMap = generateEdgeMapFromAG(ag);
+            previousMap = ag.edgeMap;
         }
 
         // Update  alignment constraints of everything still visible
-        AlignmentGraph last = restOfGraphs.get(restOfGraphs.size()-1);
+        AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);
         updateRemainingEdges(alCons, last);
 
         addParentConstraintsToNodes();
         this.alignments = alCons;
     }
 
-    public void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons, AlignmentGraph last) {
-        for (String stilVis : generateEdgeMapFromAG(last).keySet()) {
-            Edge e = generateEdgeMapFromAG(last).get(stilVis);
+    public void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory last) {
+        for (String stilVis : last.edgeMap.keySet()) {
+            AGEdge e = last.edgeMap.get(stilVis);
             if (e instanceof Contains) {
                 Contains cTemp = (Contains) e;
                 AlignmentConstraint ac = alCons.get(stilVis);
@@ -282,9 +291,9 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateAppearingEdges(HashMap<String, Edge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraph ag) {
+    public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraph ag) {
         for (String currUM : tempToMatch.keySet()) {
-            Edge e = tempToMatch.get(currUM);
+            AGEdge e = tempToMatch.get(currUM);
             int appearPoint = 0;
             Type t = null;
             AlignmentConstraint ac = null;
@@ -319,9 +328,9 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateDisappearingEdge(HashMap<String, Edge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraph ag) {
+    public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraph ag) {
         for (String prevUM : previousToMatch.keySet()) {
-            Edge e = previousToMatch.get(prevUM);
+            AGEdge e = previousToMatch.get(prevUM);
             int disappearPoint = 0;
             String flip="";
             if (e instanceof Contains) {
@@ -364,18 +373,18 @@ public class ResponsiveLayoutGraph {
 
     }
 
-    public void checkForEdgeMatch(HashMap<String, Edge> previousMap, HashMap<String, Edge> previousToMatch, HashMap<String, Edge> temp, HashMap<String, Edge> tempToMatch) {
+    public void checkForEdgeMatch(HashMap<String, AGEdge> previousMap, HashMap<String, AGEdge> previousToMatch, HashMap<String, AGEdge> temp, HashMap<String, AGEdge> tempToMatch) {
         String key = "", key2 = "";
         for (String s : previousMap.keySet()) {
-            Edge e = previousMap.get(s);
+            AGEdge e = previousMap.get(s);
             key = e.getNode1().getxPath() + e.getNode2().getxPath();
             key2 = e.getNode2().getxPath() + e.getNode1().getxPath();
             if (e instanceof Contains) {
                 Contains cTemp = (Contains) e;
-                key += "contains" +cTemp.generateLabelling();
+                key += "contains" +AlignmentGraphFactory.generateEdgeLabelling(cTemp);
             } else {
                 Sibling sTemp = (Sibling) e;
-                key += "sibling" + sTemp.generateLabelling();
+                key += "sibling" + AlignmentGraphFactory.generateEdgeLabelling(sTemp);
                 key2 += "sibling" + sTemp.generateFlippedLabelling();
             }
             if (temp.get(key) != null || temp.get(key2) != null) {
@@ -383,7 +392,7 @@ public class ResponsiveLayoutGraph {
                 if (e instanceof Contains) {
                     Contains c1 = (Contains) e;
                     Contains c2 = (Contains) temp.get(key);
-                    matched = c1.isAlignmentTheSame(c2);
+                    matched = isAlignmentTheSame(c1, c2);
                 } else {
                     Sibling s1 = (Sibling) e;
                     Sibling s2;
@@ -392,7 +401,7 @@ public class ResponsiveLayoutGraph {
                     } else {
                         s2 = (Sibling) temp.get(key2);
                     }
-                    matched = s1.isAlignmentTheSame(s2);
+                    matched = isAlignmentTheSame(s1, s2);
                 }
                 if (matched) {
                     previousToMatch.remove(key);
@@ -404,9 +413,9 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void setUpAlignmentConstraints(HashMap<String, Edge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
+    public void setUpAlignmentConstraints(HashMap<String, AGEdge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
         for (String s : previousMap.keySet()) {
-            Edge e = previousMap.get(s);
+            AGEdge e = previousMap.get(s);
             if (e instanceof Contains) {
                 Contains c = (Contains) e;
                 AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
@@ -516,19 +525,21 @@ public class ResponsiveLayoutGraph {
             try {
                 DomNode dn = doms.get(validWidths[i]);
 //                ag = new AlignmentGraph(dn);
-                ag = getAlignmentGraph(dn);
+                AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+                ag = agf.getAg();
 //                System.out.println(ag);
                 widthsTemp[i] = validWidths[i];
-                HashMap<String, AGNode> vmap = (HashMap<String, AGNode>) ag.getVMap();
+                HashMap<String, AGNode> vmap = (HashMap<String, AGNode>) agf.nodeMap;
+                HashMap<String, DomNode> dnMap = agf.domNodeMap;
 //                System.out.println("VMap size: " +vmap.size());
                 AGNode agp = vmap.get(parentXpath);
 //                System.out.println(agp);
-                DomNode p = agp.getDomNode();
+                DomNode p = dnMap.get(parentXpath);
 //                System.out.println(p);
-                DomNode c = vmap.get(s).getDomNode();
+                DomNode c = dnMap.get(s);
 //                System.out.println(c);
-                parentWidths[i] = p.getWidth();
-                childWidths[i] = c.getWidth();
+                parentWidths[i] = p.getCoords()[2] - p.getCoords()[0];
+                childWidths[i] = c.getCoords()[2] -p.getCoords()[0];
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -616,7 +627,7 @@ public class ResponsiveLayoutGraph {
     public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
-            ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
+            ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
@@ -626,25 +637,25 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraph ag = getAlignmentGraph(dn);
-                extraGraphs.add(ag);
+                AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+                extraGraphs.add(agf);
             }
-            AlignmentGraph ag1 = extraGraphs.get(0);
-            AlignmentGraph ag2 = extraGraphs.get(1);
+            AlignmentGraphFactory ag1 = extraGraphs.get(0);
+            AlignmentGraphFactory ag2 = extraGraphs.get(1);
 
             boolean found1=false,found2 = false;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.getVMap();
-                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.getVMap();
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.nodeMap;
+                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.nodeMap;
 
                 found1 = n1.get(searchKey) != null;
                 found2 = n2.get(searchKey) != null;
 
                 // Searching for parent-child edge
             } else {
-                HashMap<String, Edge> e1 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag1);
-                HashMap<String, Edge> e2 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag2);
+                HashMap<String, AGEdge> e1 = ag1.edgeMap;
+                HashMap<String, AGEdge> e2 = ag2.edgeMap;
 
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
@@ -667,13 +678,13 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(mid);
 
-            AlignmentGraph extraAG = getAlignmentGraph(dn);
+            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
             boolean found = false;
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.nodeMap;
                 found = n1.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> es = (HashMap<String, Edge>) generateEdgeMapFromAG(extraAG);
+                HashMap<String, AGEdge> es = extraAG.edgeMap;
                 found = (es.get(searchKey) != null) || (es.get(flippedKey) != null);
             }
             if (found) {
@@ -697,7 +708,7 @@ public class ResponsiveLayoutGraph {
     public int findDisappearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
-            ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
+            ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
@@ -707,27 +718,25 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraph ag =  getAlignmentGraph(dn);
+                AlignmentGraphFactory ag =  new AlignmentGraphFactory(dn);
                 extraGraphs.add(ag);
             }
-            AlignmentGraph ag1 = extraGraphs.get(0);
-            AlignmentGraph ag2 = extraGraphs.get(1);
+            AlignmentGraphFactory ag1 = extraGraphs.get(0);
+            AlignmentGraphFactory ag2 = extraGraphs.get(1);
             boolean found1=false,found2 = false;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.getVMap();
-                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.getVMap();
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.nodeMap;
+                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.nodeMap;
 
                 found1 = n1.get(searchKey) != null;
                 found2 = n2.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> e1 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag1);
-                HashMap<String, Edge> e2 = (HashMap<String, Edge>) generateEdgeMapFromAG(ag2);
+                HashMap<String, AGEdge> e1 = ag1.edgeMap;
+                HashMap<String, AGEdge> e2 = ag2.edgeMap;
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
-            System.out.println(found1);
-            System.out.println(found2);
             return decideBreakpoint(min, max, found1, found2);
 
         } else {
@@ -740,14 +749,14 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
 
-            AlignmentGraph extraAG = getAlignmentGraph(dn);
+            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
             boolean found;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.getVMap();
+                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.nodeMap;
                 found = n1.get(searchKey) != null;
             } else {
-                HashMap<String, Edge> es = (HashMap<String, Edge>) generateEdgeMapFromAG(extraAG);
+                HashMap<String, AGEdge> es = extraAG.edgeMap;
                 found = (es.get(searchKey) != null) || (es.get(flippedKey) != null);
             }
             if (found) {
@@ -893,10 +902,10 @@ public class ResponsiveLayoutGraph {
      * @return          the viewport width at which the equation ceases to hold for the element
      * @throws InterruptedException
      */
-    private int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) throws InterruptedException {
+    public int findWidthBreakpoint(double[] eq, int min, int max, String child, String parent) throws InterruptedException {
         if (max-min == 1) {
             int[] extraWidths = new int[] {min,max};
-            ArrayList<AlignmentGraph> extraGraphs = new ArrayList<AlignmentGraph>();
+            ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
                 Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
@@ -906,18 +915,29 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraph ag = new AlignmentGraph(dn);
+                AlignmentGraphFactory ag = new AlignmentGraphFactory(dn);
                 extraGraphs.add(ag);
             }
-            AlignmentGraph ag1 = extraGraphs.get(0);
-            AlignmentGraph ag2 = extraGraphs.get(1);
+            AlignmentGraphFactory ag1 = extraGraphs.get(0);
+            AlignmentGraphFactory ag2 = extraGraphs.get(1);
 
-            int c1 = ag1.getVMap().get(child).getDomNode().getWidth();
-            int p1 = ag1.getVMap().get(parent).getDomNode().getWidth();
-            int c2 = ag2.getVMap().get(child).getDomNode().getWidth();
-            int p2 = ag2.getVMap().get(parent).getDomNode().getWidth();
-            boolean result1 = Math.abs((eq[0]*c1) - ((eq[1]*p1) + (eq[2]))) <=5;
-            boolean result2 = Math.abs((eq[0]*c2) - ((eq[1]*p2) + (eq[2]))) <=5;
+            Map<String, DomNode> map1 = ag1.domNodeMap;
+            Map<String, DomNode> map2 = ag2.domNodeMap;
+            DomNode c1 = map1.get(child);
+            DomNode p1 = map1.get(parent);
+            DomNode c2 = map2.get(child);
+            DomNode p2 = map2.get(parent);
+//            DomNode dnc1 = c1.getDomNode();
+//            DomNode dnp1 = p1.getDomNode();
+//            DomNode dnc2 = c2.getDomNode();
+//            DomNode dnp2 = p2.getDomNode();
+
+            int c1w = c1.getCoords()[2]-c1.getCoords()[0];
+            int p1w = p1.getCoords()[2]-p1.getCoords()[0];
+            int c2w = c2.getCoords()[2]-c2.getCoords()[0];
+            int p2w = p2.getCoords()[2]-p2.getCoords()[0];
+            boolean result1 = Math.abs((eq[0]*c1w) - ((eq[1]*p1w) + (eq[2]))) <=5;
+            boolean result2 = Math.abs((eq[0]*c2w) - ((eq[1]*p2w) + (eq[2]))) <=5;
             if (result1 && result2) {
                 return max;
             } else if (result1 && !result2) {
@@ -936,11 +956,16 @@ public class ResponsiveLayoutGraph {
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
-            AlignmentGraph extraAG = new AlignmentGraph(dn);
+            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
 
+            Map<String, DomNode> map1 = extraAG.domNodeMap;
+            DomNode c1 = map1.get(child);
+            DomNode p1 = map1.get(parent);
+//            DomNode dnc = c1.getDomNode();
+//            DomNode dnp = p1.getDomNode();
             // Get parent and child widths
-            int c = extraAG.getVMap().get(child).getDomNode().getWidth();
-            int p = extraAG.getVMap().get(parent).getDomNode().getWidth();
+            int c = c1.getCoords()[2]-c1.getCoords()[0];
+            int p = p1.getCoords()[2]-p1.getCoords()[0];
 
             // Check whether mid falls on the equation's line or not.
             boolean result = Math.abs((eq[0]*c) - ((eq[1]*p) + (eq[2]))) <=5;
@@ -1014,17 +1039,17 @@ public class ResponsiveLayoutGraph {
 
     }
 
-    public HashMap<String, Edge> generateEdgeMapFromAG(AlignmentGraph ag) {
-        HashMap<String, Edge> edgeMap = new HashMap<>();
-
-        int counter = 0;
-        for (Contains c : ag.getContains()) {
-            edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
-        }
-
-        for (Sibling s : ag.getSiblings()) {
-            edgeMap.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
-        }
-        return edgeMap;
-    }
+//    public HashMap<String, Edge> generateEdgeMapFromAG(AlignmentGraph ag) {
+//        HashMap<String, Edge> edgeMap = new HashMap<>();
+//
+//        int counter = 0;
+//        for (Contains c : ag.getContains()) {
+//            edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
+//        }
+//
+//        for (Sibling s : ag.getSiblings()) {
+//            edgeMap.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
+//        }
+//        return edgeMap;
+//    }
 }
