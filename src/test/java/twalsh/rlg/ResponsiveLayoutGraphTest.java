@@ -1104,4 +1104,317 @@ public class ResponsiveLayoutGraphTest {
         int expected = rlg.findDisappearPoint("node", 420, 421, true, "dontneed");
         assertEquals(422, expected);
     }
+
+    @Test
+    public void testWidthBreakpointRecursiveTrue() {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        doReturn("BODY").when(dn1).getTagName();
+        doReturn(80).when(dn1).getWidth();
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        doReturn("BODY").when(dn2).getTagName();
+        doReturn(100).when(dn2).getWidth();
+        AGNode agn2 = spy(new AGNode(dn2));
+
+        double[] eq = new double[]{1.0,1.0,-20};
+
+        HashMap<String, AGNode> vmap = new HashMap<>();
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        doReturn(dn1).when(mockDoms).get(anyInt());
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(vmap).when(ag).getVMap();
+
+        try {
+            rlg.findWidthBreakpoint(eq,700, 800, "node", "parent");
+            verify(rlg, times(1)).findWidthBreakpoint(eq, 750, 800, "node", "parent");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testWidthBreakpointRecursiveFalse() {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        doReturn("BODY").when(dn1).getTagName();
+        doReturn(50).when(dn1).getWidth();
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        doReturn("BODY").when(dn2).getTagName();
+        doReturn(100).when(dn2).getWidth();
+        AGNode agn2 = spy(new AGNode(dn2));
+
+        double[] eq = new double[]{1.0,1.0,-20};
+
+        HashMap<String, AGNode> vmap = new HashMap<>();
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        doReturn(dn1).when(mockDoms).get(anyInt());
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(vmap).when(ag).getVMap();
+
+        try {
+            rlg.findWidthBreakpoint(eq,700, 800, "node", "parent");
+            verify(rlg, times(1)).findWidthBreakpoint(eq, 700, 750, "node", "parent");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testFindWidthBreakpointRecursiveBranch2ReturnMin() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getTagName()).thenReturn("BODY");
+        doReturn(80).when(dn1).getWidth();
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn2).getWidth();
+        AGNode agn2 = spy(new AGNode(dn2));
+
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn3.getxPath()).thenReturn("node");
+        when(dn3.getTagName()).thenReturn("BODY");
+        doReturn(50).when(dn3).getWidth();
+        AGNode agn3 = spy(new AGNode(dn3));
+
+        DomNode dn4 = mock(DomNode.class);
+        when(dn4.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn4.getxPath()).thenReturn("parent");
+        when(dn4.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn4).getWidth();
+        AGNode agn4 = spy(new AGNode(dn4));
+
+        double[] eq = new double[]{1.0,1.0,-20};
+
+        HashMap<String, AGNode> vmap = new HashMap<>();
+        HashMap<String, AGNode> vmap2 = new HashMap<>();
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        vmap2.put(agn3.getDomNode().getxPath(), agn3);
+        vmap2.put(agn4.getDomNode().getxPath(), agn4);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn3));
+
+        doReturn(dn1).when(mockDoms).get(767);
+        doReturn(dn3).when(mockDoms).get(768);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn3);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+
+        int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
+        assertEquals(767, expected);
+    }
+
+    @Test
+    public void testFindWidthBreakpointRecursiveBranch2ReturnMax() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getTagName()).thenReturn("BODY");
+        doReturn(80).when(dn1).getWidth();
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn2).getWidth();
+        AGNode agn2 = spy(new AGNode(dn2));
+
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn3.getxPath()).thenReturn("node");
+        when(dn3.getTagName()).thenReturn("BODY");
+        doReturn(80).when(dn3).getWidth();
+        AGNode agn3 = spy(new AGNode(dn3));
+
+        DomNode dn4 = mock(DomNode.class);
+        when(dn4.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn4.getxPath()).thenReturn("parent");
+        when(dn4.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn4).getWidth();
+        AGNode agn4 = spy(new AGNode(dn4));
+
+        double[] eq = new double[]{1.0,1.0,-20};
+
+        HashMap<String, AGNode> vmap = new HashMap<>();
+        HashMap<String, AGNode> vmap2 = new HashMap<>();
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        vmap2.put(agn3.getDomNode().getxPath(), agn3);
+        vmap2.put(agn4.getDomNode().getxPath(), agn4);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn3));
+
+        doReturn(dn1).when(mockDoms).get(767);
+        doReturn(dn3).when(mockDoms).get(768);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn3);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+
+        int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
+        assertEquals(768, expected);
+    }
+
+    @Test
+    public void testFindWidthBreakpointRecursiveBranch2ReturnMinMinusOne() throws InterruptedException {
+        PowerMockito.mockStatic(Redecheck.class);
+        rlg.url = "randomsite";
+        rlg.alreadyGathered = spy(new HashSet<Integer>());
+        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+
+        // Mock Dom and AG
+        DomNode dn1 = mock(DomNode.class);
+        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn1.getxPath()).thenReturn("node");
+        when(dn1.getTagName()).thenReturn("BODY");
+        doReturn(50).when(dn1).getWidth();
+        AGNode agn1 = spy(new AGNode(dn1));
+
+        DomNode dn2 = mock(DomNode.class);
+        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn2.getxPath()).thenReturn("parent");
+        when(dn2.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn2).getWidth();
+        AGNode agn2 = spy(new AGNode(dn2));
+
+        DomNode dn3 = mock(DomNode.class);
+        when(dn3.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn3.getxPath()).thenReturn("node");
+        when(dn3.getTagName()).thenReturn("BODY");
+        doReturn(50).when(dn3).getWidth();
+        AGNode agn3 = spy(new AGNode(dn3));
+
+        DomNode dn4 = mock(DomNode.class);
+        when(dn4.getCoords()).thenReturn(new int[] {0,0,100,100});
+        when(dn4.getxPath()).thenReturn("parent");
+        when(dn4.getTagName()).thenReturn("BODY");
+        doReturn(100).when(dn4).getWidth();
+        AGNode agn4 = spy(new AGNode(dn4));
+
+        double[] eq = new double[]{1.0,1.0,-20};
+
+        HashMap<String, AGNode> vmap = new HashMap<>();
+        HashMap<String, AGNode> vmap2 = new HashMap<>();
+        vmap.put(agn1.getDomNode().getxPath(), agn1);
+        vmap.put(agn2.getDomNode().getxPath(), agn2);
+        vmap2.put(agn3.getDomNode().getxPath(), agn3);
+        vmap2.put(agn4.getDomNode().getxPath(), agn4);
+        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+        AlignmentGraph ag2 = spy(new AlignmentGraph(dn3));
+
+        doReturn(dn1).when(mockDoms).get(767);
+        doReturn(dn3).when(mockDoms).get(768);
+        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+        doReturn(ag2).when(rlg).getAlignmentGraph(dn3);
+        doReturn(vmap).when(ag).getVMap();
+        doReturn(vmap2).when(ag2).getVMap();
+
+        int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
+        assertEquals(766, expected);
+    }
+
+//    @Test
+//    public void testWidthBreakpointReturnMid() {
+//        PowerMockito.mockStatic(Redecheck.class);
+//        rlg.url = "randomsite";
+//        rlg.alreadyGathered = spy(new HashSet<Integer>());
+//        doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
+//        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+//        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+//
+//        // Mock Dom and AG
+//        // Mock Dom and AG
+//        DomNode dn1 = mock(DomNode.class);
+//        when(dn1.getCoords()).thenReturn(new int[] {0,0,100,100});
+//        when(dn1.getxPath()).thenReturn("node");
+//        doReturn("BODY").when(dn1).getTagName();
+//        doReturn(50).when(dn1).getWidth();
+//        AGNode agn1 = spy(new AGNode(dn1));
+//
+//        DomNode dn2 = mock(DomNode.class);
+//        when(dn2.getCoords()).thenReturn(new int[] {0,0,100,100});
+//        when(dn2.getxPath()).thenReturn("parent");
+//        doReturn("BODY").when(dn2).getTagName();
+//        doReturn(100).when(dn2).getWidth();
+//        AGNode agn2 = spy(new AGNode(dn2));
+//
+//        double[] eq = new double[]{1.0,1.0,-20};
+//
+//        HashMap<String, AGNode> vmap = new HashMap<>();
+//        vmap.put(agn1.getDomNode().getxPath(), agn1);
+////        vmap.put(agn2.getDomNode().getxPath(), agn2);
+//        AlignmentGraph ag = spy(new AlignmentGraph(dn1));
+//        doReturn(dn1).when(mockDoms).get(anyInt());
+//        doReturn(ag).when(rlg).getAlignmentGraph(dn1);
+//        doReturn(vmap).when(ag).getVMap();
+//
+//        try {
+//            int result = rlg.findWidthBreakpoint(eq,700, 800, "node", "parent");
+////            verify(rlg, times(1)).findWidthBreakpoint(eq, 700, 750, "node", "parent");
+//            assertEquals(750, result);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
 }

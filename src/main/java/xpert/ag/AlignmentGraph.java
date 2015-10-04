@@ -86,11 +86,14 @@ public class AlignmentGraph {
 			}
 			worklist.addAll(n.getChildren());
 		}
-		
-		
+
 		// We assume the BODY tag contains EVERYTHING, so set its coords to 0,0 to bottom right corner
-		tempBody.getCoords()[1] = 0;
-		tempBody.getCoords()[3] = maxY;
+        try {
+            tempBody.getCoords()[1] = 0;
+            tempBody.getCoords()[3] = maxY;
+        } catch (Exception e) {
+
+        }
 		
 		
 		// Populate Nodes

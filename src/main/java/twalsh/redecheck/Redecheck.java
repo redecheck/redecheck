@@ -1,5 +1,6 @@
 package twalsh.redecheck;
 
+import edu.gatech.xpert.dom.layout.AlignmentGraphFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Dimension;
@@ -13,9 +14,9 @@ import com.beust.jcommander.JCommander;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import twalsh.rlg.ResponsiveLayoutGraph;
-import xpert.dom.JsonDomParser;
-import xpert.dom.DomNode;
-import xpert.ag.AlignmentGraph;
+import edu.gatech.xpert.dom.JsonDomParser;
+import edu.gatech.xpert.dom.DomNode;
+import edu.gatech.xpert.dom.layout.AlignmentGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,11 +81,12 @@ public class Redecheck {
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
-        ArrayList<AlignmentGraph> oracleAgs = new ArrayList<AlignmentGraph>();
+        ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
         for (int width : widths) {
             DomNode dn = oracleDoms.get(width);
-            AlignmentGraph ag = new AlignmentGraph(dn);
-            oracleAgs.add(ag);
+            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+//            AlignmentGraph ag = new AlignmentGraph(dn);
+            oracleAgs.add(agf);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
@@ -97,11 +99,11 @@ public class Redecheck {
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-        ArrayList<AlignmentGraph> testAgs = new ArrayList<AlignmentGraph>();
+        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
         for (int width : widths) {
             DomNode dn = testDoms.get(width);
-            AlignmentGraph ag = new AlignmentGraph(dn);
-            testAgs.add(ag);
+            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+            testAgs.add(agf);
         }
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
