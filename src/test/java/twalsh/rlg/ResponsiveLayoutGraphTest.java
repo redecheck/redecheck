@@ -873,6 +873,7 @@ public class ResponsiveLayoutGraphTest {
 
         HashMap<String, AGNode> vmap = new HashMap<>();
         HashMap<String, AGNode> vmap2 = new HashMap<>();
+//        vmap.put(agn2.getDomNode().getxPath(), agn2);
         vmap2.put(agn1.getDomNode().getxPath(), agn1);
         AlignmentGraph ag = spy(new AlignmentGraph(dn1));
         AlignmentGraph ag2 = spy(new AlignmentGraph(dn2));
@@ -883,6 +884,7 @@ public class ResponsiveLayoutGraphTest {
         doReturn(ag2).when(rlg).getAlignmentGraph(dn2);
         doReturn(vmap).when(ag).getVMap();
         doReturn(vmap2).when(ag2).getVMap();
+//        doReturn(null).when(vmap).get("node");
 
         int expected = rlg.findAppearPoint("node", 420, 421, true, "dontneed");
         assertEquals(421, expected);
