@@ -115,15 +115,15 @@ public class ResponsiveLayoutGraph {
     private void extractVisibilityConstraints() throws InterruptedException {
         System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
-        ArrayList<AGNode> agnodes = (ArrayList<AGNode>) first.nodeMap.values();
-        HashMap<String, AGNode> previousMap = (HashMap<String, AGNode>) first.nodeMap;
+        ArrayList<DomNode> agnodes = (ArrayList<DomNode>) first.domNodeMap.values();
+        HashMap<String, DomNode> previousMap = (HashMap<String, DomNode>) first.domNodeMap;
 
         setUpVisibilityConstraints(agnodes, visCons);
 
         for (AlignmentGraphFactory agf : restOfGraphs) {
-            HashMap<String, AGNode> previousToMatch = (HashMap<String, AGNode>) previousMap.clone();
-            HashMap<String, AGNode> temp = (HashMap<String, AGNode>) agf.nodeMap;
-            HashMap<String, AGNode> tempToMatch = (HashMap<String, AGNode>) temp.clone();
+            HashMap<String, DomNode> previousToMatch = (HashMap<String, DomNode>) previousMap.clone();
+            HashMap<String, DomNode> temp = (HashMap<String, DomNode>) agf.domNodeMap;
+            HashMap<String, DomNode> tempToMatch = (HashMap<String, DomNode>) temp.clone();
 
 
             checkForNodeMatch(previousMap, temp, previousToMatch, tempToMatch);
@@ -135,7 +135,7 @@ public class ResponsiveLayoutGraph {
             updateAppearingNode(tempToMatch, visCons, agf);
 
             // Update the previousMap variable to keep track of last set of nodes
-            previousMap = (HashMap<String, AGNode>) agf.nodeMap;
+            previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
         }
 
         // Update visibility widthConstraints of everything still visible
@@ -162,7 +162,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateAppearingNode(HashMap<String, AGNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
+    public void updateAppearingNode(HashMap<String, DomNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
         for (String currUM : tempToMatch.keySet()) {
             int appearPoint = 0;
             try {
@@ -175,7 +175,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateDisappearingNode(HashMap<String, AGNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
+    public void updateDisappearingNode(HashMap<String, DomNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
         for (String prevUM : previousToMatch.keySet()) {
             int disappearPoint = 0;
             try {
@@ -188,7 +188,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void checkForNodeMatch(HashMap<String, AGNode> previousMap, HashMap<String, AGNode> temp, HashMap<String, AGNode> previousToMatch, HashMap<String, AGNode> tempToMatch) {
+    public void checkForNodeMatch(HashMap<String, DomNode> previousMap, HashMap<String, DomNode> temp, HashMap<String, DomNode> previousToMatch, HashMap<String, DomNode> tempToMatch) {
         for (String s : previousMap.keySet()) {
             if (temp.get(s) != null) {
                 // Found a node match
@@ -198,14 +198,14 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void setUpVisibilityConstraints(ArrayList<AGNode> agnodes, HashMap<String, VisibilityConstraint> cons) {
-        for (AGNode node : agnodes) {
+    public void setUpVisibilityConstraints(ArrayList<DomNode> agnodes, HashMap<String, VisibilityConstraint> cons) {
+        for (DomNode node : agnodes) {
             // Add each node to overall set
-            String xpath = node.getDomNode().getxPath();
+            String xpath = node.getxPath();
             nodes.put(xpath, new Node(xpath));
 
             // Create visibility constraint for each one
-            cons.put(xpath, new VisibilityConstraint((int) widths[0], 0));
+            cons.put(xpath, new VisibilityConstraint(widths[0], 0));
         }
     }
 
