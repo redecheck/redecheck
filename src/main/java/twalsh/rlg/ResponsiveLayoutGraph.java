@@ -1,5 +1,6 @@
 package twalsh.rlg;
 import com.google.common.collect.HashBasedTable;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import twalsh.redecheck.Redecheck;
 import edu.gatech.xpert.dom.*;
@@ -136,8 +137,10 @@ public class ResponsiveLayoutGraph {
 
             // Update the previousMap variable to keep track of last set of nodes
             previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
+            double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
+            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " |");
         }
-
+        System.out.print("\n");
         // Update visibility widthConstraints of everything still visible
         updateRemainingNodes(visCons, last);
 
@@ -235,12 +238,16 @@ public class ResponsiveLayoutGraph {
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
 
             previousMap = ag.edgeMap;
+
+            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " |");
         }
 
         // Update  alignment constraints of everything still visible
         AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);
         updateRemainingEdges(alCons, last);
 
+        System.out.println();
         addParentConstraintsToNodes();
         this.alignments = alCons;
     }
@@ -440,8 +447,9 @@ public class ResponsiveLayoutGraph {
     public void extractWidthConstraints() throws InterruptedException {
         System.out.println("Extracting Width Constraints.");
         Node n;
-
+            int i = 0;
             for (String s : this.nodes.keySet()) {
+                i++;
                 try {
                     n = this.nodes.get(s);
 
@@ -506,7 +514,10 @@ public class ResponsiveLayoutGraph {
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
+                double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
+                System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " |");
             }
+        System.out.println("");
         addWidthConstraintsToNodes();
     }
 

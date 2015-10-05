@@ -74,6 +74,8 @@ public class Redecheck {
         dCaps.setCapability("takesScreenshot", false);
         driver = getNewDriver(dCaps);
 
+
+        long startTime = System.nanoTime();
         // Access oracle webpage and sample
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
@@ -89,6 +91,9 @@ public class Redecheck {
             oracleAgs.add(agf);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
         oracleRlg.writeToGraphViz("oracle");
 
@@ -139,7 +144,6 @@ public class Redecheck {
         }
 
         if (!Integer.toString(widths.get(widths.size()-1)).equals(Integer.toString(finalWidth))) {
-            System.out.println("Adding final width");
             widths.add(finalWidth);
         }
 
@@ -178,7 +182,6 @@ public class Redecheck {
                         //handle it
                     }
                 }
-                System.out.println(w);
                 driver.manage().window().setSize(new Dimension(w, 600));
                 FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver));
                 counter++;
