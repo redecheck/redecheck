@@ -528,13 +528,10 @@ public class ResponsiveLayoutGraph {
                 ag = agf.getAg();
                 widthsTemp[i] = validWidths[i];
                 HashMap<String, DomNode> dnMap = agf.getDomNodeMap();
-                System.out.println(dnMap);
                 DomNode p = dnMap.get(parentXpath);
-                System.out.println(p + " is parent");
                 DomNode c = dnMap.get(s);
-                System.out.println(c + " is child");
                 parentWidths[i] = p.getCoords()[2] - p.getCoords()[0];
-                childWidths[i] = c.getCoords()[2] -p.getCoords()[0];
+                childWidths[i] = c.getCoords()[2] - c.getCoords()[0];
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -636,7 +633,7 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+                AlignmentGraphFactory agf = getAlignmentGraphFactory(dn);
                 extraGraphs.add(agf);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
@@ -645,16 +642,16 @@ public class ResponsiveLayoutGraph {
             boolean found1=false,found2 = false;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.nodeMap;
-                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.nodeMap;
+                HashMap<String, DomNode> n1 = ag1.getDomNodeMap();
+                HashMap<String, DomNode> n2 = ag2.getDomNodeMap();
 
                 found1 = n1.get(searchKey) != null;
                 found2 = n2.get(searchKey) != null;
 
                 // Searching for parent-child edge
             } else {
-                HashMap<String, AGEdge> e1 = ag1.edgeMap;
-                HashMap<String, AGEdge> e2 = ag2.edgeMap;
+                HashMap<String, AGEdge> e1 = ag1.getEdgeMap();
+                HashMap<String, AGEdge> e2 = ag2.getEdgeMap();
 
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
@@ -677,13 +674,13 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(mid);
 
-            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
             boolean found = false;
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.nodeMap;
+                HashMap<String, DomNode> n1 = extraAG.getDomNodeMap();
                 found = n1.get(searchKey) != null;
             } else {
-                HashMap<String, AGEdge> es = extraAG.edgeMap;
+                HashMap<String, AGEdge> es = extraAG.getEdgeMap();
                 found = (es.get(searchKey) != null) || (es.get(flippedKey) != null);
             }
             if (found) {
@@ -717,7 +714,7 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory ag =  new AlignmentGraphFactory(dn);
+                AlignmentGraphFactory ag =  getAlignmentGraphFactory(dn);
                 extraGraphs.add(ag);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
@@ -725,8 +722,8 @@ public class ResponsiveLayoutGraph {
             boolean found1=false,found2 = false;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) ag1.nodeMap;
-                HashMap<String, AGNode> n2 = (HashMap<String, AGNode>) ag2.nodeMap;
+                HashMap<String, DomNode> n1 = ag1.getDomNodeMap();
+                HashMap<String, DomNode> n2 = ag2.getDomNodeMap();
 
                 found1 = n1.get(searchKey) != null;
                 found2 = n2.get(searchKey) != null;
@@ -914,29 +911,27 @@ public class ResponsiveLayoutGraph {
 
             for (int w : extraWidths) {
                 DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory ag = new AlignmentGraphFactory(dn);
+                AlignmentGraphFactory ag = getAlignmentGraphFactory(dn);
                 extraGraphs.add(ag);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
             AlignmentGraphFactory ag2 = extraGraphs.get(1);
 
-            Map<String, DomNode> map1 = ag1.domNodeMap;
-            Map<String, DomNode> map2 = ag2.domNodeMap;
+            Map<String, DomNode> map1 = ag1.getDomNodeMap();
+            Map<String, DomNode> map2 = ag2.getDomNodeMap();
+
             DomNode c1 = map1.get(child);
             DomNode p1 = map1.get(parent);
             DomNode c2 = map2.get(child);
             DomNode p2 = map2.get(parent);
-//            DomNode dnc1 = c1.getDomNode();
-//            DomNode dnp1 = p1.getDomNode();
-//            DomNode dnc2 = c2.getDomNode();
-//            DomNode dnp2 = p2.getDomNode();
 
-            int c1w = c1.getCoords()[2]-c1.getCoords()[0];
-            int p1w = p1.getCoords()[2]-p1.getCoords()[0];
-            int c2w = c2.getCoords()[2]-c2.getCoords()[0];
-            int p2w = p2.getCoords()[2]-p2.getCoords()[0];
+            int c1w = getWidthOfDomNode(c1);
+            int p1w = getWidthOfDomNode(p1);
+            int c2w = getWidthOfDomNode(c2);
+            int p2w = getWidthOfDomNode(p2);
             boolean result1 = Math.abs((eq[0]*c1w) - ((eq[1]*p1w) + (eq[2]))) <=5;
             boolean result2 = Math.abs((eq[0]*c2w) - ((eq[1]*p2w) + (eq[2]))) <=5;
+
             if (result1 && result2) {
                 return max;
             } else if (result1 && !result2) {
@@ -955,19 +950,19 @@ public class ResponsiveLayoutGraph {
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
-            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
 
-            Map<String, DomNode> map1 = extraAG.domNodeMap;
+            Map<String, DomNode> map1 = extraAG.getDomNodeMap();
+
             DomNode c1 = map1.get(child);
             DomNode p1 = map1.get(parent);
 
             // Get parent and child widths
-            int c = c1.getCoords()[2]-c1.getCoords()[0];
-            int p = p1.getCoords()[2]-p1.getCoords()[0];
+            int c = getWidthOfDomNode(c1);
+            int p = getWidthOfDomNode(p1);
 
             // Check whether mid falls on the equation's line or not.
             boolean result = Math.abs((eq[0]*c) - ((eq[1]*p) + (eq[2]))) <=5;
-            System.out.println(result);
 
             // Check which way to recurse
             if (result) {
@@ -979,6 +974,10 @@ public class ResponsiveLayoutGraph {
             }
         }
         return (min+max)/2;
+    }
+
+    public int getWidthOfDomNode(DomNode dn) {
+        return dn.getCoords()[2]-dn.getCoords()[0];
     }
 
     /**

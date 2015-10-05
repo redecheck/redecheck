@@ -237,7 +237,7 @@ public class AlignmentGraphFactory {
         return edgeMap;
     }
 
-    public HashMap<String,DomNode> getDomNodeMap() {
+    public HashMap<String, DomNode> getDomNodeMap() {
         return domNodeMap;
     }
 }
