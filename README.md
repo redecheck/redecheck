@@ -21,8 +21,11 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 
 #### Dependencies
 
-ReDeCheck requires the use of existing code from the X-PERT project, developing by Choudhary et al and currently available at https://github.com/gatech/xpert. After cloning the repository, navigate to the `src` directory and copy the `xpert` folder to the `src/java` directory of your ReDeCheck download, as shown below. This will allow the ReDeCheck project to correctly access all the various files it needs to operate.
+ReDeCheck requires the use of existing code from the X-PERT project, developing by Choudhary et al and currently available at https://github.com/gatech/xpert. After cloning the repository, navigate to the `src` directory and copy the `edu` folder to the `src/java` directory of your ReDeCheck download, as shown below. 
 ![File System](/readme-images/file-system.png)
+
+After placing the `edu` folder in the correct location, you will also need to move the *AlignmentGraphFactory.java* file into the `edu/gatech/xpert/dom/layout` directory, as this will allow ReDeCheck to access the information it requires from the X-PERT source code. The final folder structure for this step is shown below After completing both these steps, ReDeCheck should be ready for installation.
+![File System](/readme-images/agf-location.png)
 
 #### If using Eclipse:
 
