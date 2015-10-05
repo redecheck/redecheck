@@ -115,10 +115,10 @@ public class ResponsiveLayoutGraph {
     private void extractVisibilityConstraints() throws InterruptedException {
         System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
-        ArrayList<DomNode> agnodes = (ArrayList<DomNode>) first.domNodeMap.values();
+        HashMap<String, DomNode> domNodes =  first.domNodeMap;
         HashMap<String, DomNode> previousMap = (HashMap<String, DomNode>) first.domNodeMap;
 
-        setUpVisibilityConstraints(agnodes, visCons);
+        setUpVisibilityConstraints(domNodes, visCons);
 
         for (AlignmentGraphFactory agf : restOfGraphs) {
             HashMap<String, DomNode> previousToMatch = (HashMap<String, DomNode>) previousMap.clone();
@@ -154,7 +154,7 @@ public class ResponsiveLayoutGraph {
     }
 
     public void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory last) {
-        for (String stilVis : last.nodeMap.keySet()) {
+        for (String stilVis : last.getNodeMap().keySet()) {
             VisibilityConstraint vc = visCons.get(stilVis);
             if (vc.getDisappear() == 0) {
                 vc.setDisappear(widths[widths.length - 1]);
@@ -198,8 +198,8 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void setUpVisibilityConstraints(ArrayList<DomNode> agnodes, HashMap<String, VisibilityConstraint> cons) {
-        for (DomNode node : agnodes) {
+    public void setUpVisibilityConstraints(HashMap<String, DomNode> domnodes, HashMap<String, VisibilityConstraint> cons) {
+        for (DomNode node : domnodes.values()) {
             // Add each node to overall set
             String xpath = node.getxPath();
             nodes.put(xpath, new Node(xpath));
@@ -246,8 +246,8 @@ public class ResponsiveLayoutGraph {
     }
 
     public void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory last) {
-        for (String stilVis : last.edgeMap.keySet()) {
-            AGEdge e = last.edgeMap.get(stilVis);
+        for (String stilVis : last.getEdgeMap().keySet()) {
+            AGEdge e = last.getEdgeMap().get(stilVis);
             if (e instanceof Contains) {
                 Contains cTemp = (Contains) e;
                 AlignmentConstraint ac = alCons.get(stilVis);
@@ -524,26 +524,25 @@ public class ResponsiveLayoutGraph {
         for (int i = 0; i < validWidths.length; i++) {
             try {
                 DomNode dn = doms.get(validWidths[i]);
-//                ag = new AlignmentGraph(dn);
-                AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+                AlignmentGraphFactory agf = getAlignmentGraphFactory(dn);
                 ag = agf.getAg();
-//                System.out.println(ag);
                 widthsTemp[i] = validWidths[i];
-                HashMap<String, AGNode> vmap = (HashMap<String, AGNode>) agf.nodeMap;
-                HashMap<String, DomNode> dnMap = agf.domNodeMap;
-//                System.out.println("VMap size: " +vmap.size());
-                AGNode agp = vmap.get(parentXpath);
-//                System.out.println(agp);
+                HashMap<String, DomNode> dnMap = agf.getDomNodeMap();
+                System.out.println(dnMap);
                 DomNode p = dnMap.get(parentXpath);
-//                System.out.println(p);
+                System.out.println(p + " is parent");
                 DomNode c = dnMap.get(s);
-//                System.out.println(c);
+                System.out.println(c + " is child");
                 parentWidths[i] = p.getCoords()[2] - p.getCoords()[0];
                 childWidths[i] = c.getCoords()[2] -p.getCoords()[0];
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public AlignmentGraphFactory getAlignmentGraphFactory(DomNode dn) {
+        return new AlignmentGraphFactory(dn);
     }
 
     public AlignmentGraph getAlignmentGraph(DomNode dn) {
@@ -961,20 +960,20 @@ public class ResponsiveLayoutGraph {
             Map<String, DomNode> map1 = extraAG.domNodeMap;
             DomNode c1 = map1.get(child);
             DomNode p1 = map1.get(parent);
-//            DomNode dnc = c1.getDomNode();
-//            DomNode dnp = p1.getDomNode();
+
             // Get parent and child widths
             int c = c1.getCoords()[2]-c1.getCoords()[0];
             int p = p1.getCoords()[2]-p1.getCoords()[0];
 
             // Check whether mid falls on the equation's line or not.
             boolean result = Math.abs((eq[0]*c) - ((eq[1]*p) + (eq[2]))) <=5;
+            System.out.println(result);
 
             // Check which way to recurse
             if (result) {
                 // Breakpoint is higher as mid is on the line
                 return findWidthBreakpoint(eq, mid, max, child, parent);
-            } else if (!result){
+            } else {
                 // Breakpoint is lower as mid is not on the line (already passed breakpoint)
                 return findWidthBreakpoint(eq, min, mid, child, parent);
             }

@@ -65,10 +65,15 @@ public class AlignmentGraphFactory {
                     bodyNode = n;
                 }
             }
-            int yVal = n.getCoords()[3];
-            if (yVal > maxY) {
-                maxY = yVal;
+            try {
+                int yVal = n.getCoords()[3];
+                if (yVal > maxY) {
+                    maxY = yVal;
+                }
+            } catch (NullPointerException e) {
+
             }
+            toCheck.addAll(n.getChildren());
         }
 
         try {
@@ -222,5 +227,17 @@ public class AlignmentGraphFactory {
 
     public AlignmentGraph getAg() {
         return this.ag;
+    }
+
+    public Map<String, AGNode> getNodeMap() {
+        return nodeMap;
+    }
+
+    public HashMap<String,AGEdge> getEdgeMap() {
+        return edgeMap;
+    }
+
+    public HashMap<String,DomNode> getDomNodeMap() {
+        return domNodeMap;
     }
 }
