@@ -171,7 +171,7 @@ public class ResponsiveLayoutGraph {
             try {
                 appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             nodes.put(currUM, new Node(currUM));
             visCons.put(currUM, new VisibilityConstraint(appearPoint, 0));
@@ -184,7 +184,7 @@ public class ResponsiveLayoutGraph {
             try {
                 disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             VisibilityConstraint vc = visCons.get(prevUM);
             vc.setDisappear(disappearPoint - 1);
@@ -469,11 +469,8 @@ public class ResponsiveLayoutGraph {
 
                             // Get the equations
                             double[] bestFit;
-//                            TreeMap<Integer, double[]> equations = new TreeMap<Integer, double[]>();
-//                            int previousBreakpoint = widthsTemp[0] - 1;
                             int previousBreakpoint = n.getParentConstraints().get(y).getMin()-1;
                             while (parentWidths.length >= 2) {
-//                                foundBreakpoint = false;
                                 int breakpointIndex;
                                 double[] firstTwoWidths = new double[]{parentWidths[0], parentWidths[1]};
                                 double[] firstTwoValues = new double[]{childWidths[0], childWidths[1]};
@@ -512,7 +509,7 @@ public class ResponsiveLayoutGraph {
                         }
                     }
                 } catch (NullPointerException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
                 double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
                 System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " |");
@@ -544,7 +541,7 @@ public class ResponsiveLayoutGraph {
                 parentWidths[i] = p.getCoords()[2] - p.getCoords()[0];
                 childWidths[i] = c.getCoords()[2] - c.getCoords()[0];
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }
@@ -1001,7 +998,7 @@ public class ResponsiveLayoutGraph {
         try {
             output = new PrintWriter(graphName + ".gv");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         output.append("digraph G {");
