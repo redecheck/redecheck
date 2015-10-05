@@ -11,8 +11,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import twalsh.redecheck.Redecheck;
-import xpert.ag.*;
-import xpert.dom.DomNode;
+import edu.gatech.xpert.dom.DomNode;
+import edu.gatech.xpert.dom.layout.*;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ public class ResponsiveLayoutGraphTest {
     @Before
     public void setup() {
         rlg = spy(new ResponsiveLayoutGraph());
-        rlg.restOfGraphs = spy(new ArrayList<AlignmentGraph>());
+        rlg.restOfGraphs = spy(new ArrayList<AlignmentGraphFactory>());
         rlg.widths = new int[] {400,500,600,700};
 
         MockitoAnnotations.initMocks(this);
@@ -210,8 +210,8 @@ public class ResponsiveLayoutGraphTest {
         DomNode dn = mock(DomNode.class);
         when(dn.getCoords()).thenReturn(new int[4]);
         AGNode agn = new AGNode(dn);
-        ArrayList<AGNode> nodes = new ArrayList<>();
-        nodes.add(agn);
+        ArrayList<DomNode> nodes = new ArrayList<>();
+        nodes.add(dn);
         HashMap<String, VisibilityConstraint> visCons = new HashMap<String, VisibilityConstraint>();
 
         rlg.setUpVisibilityConstraints(nodes, visCons);

@@ -264,7 +264,7 @@ public class ResponsiveLayoutGraph {
                 }
             } else {
                 Sibling s = (Sibling) e;
-                String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+s.generateFlippedLabelling();
+                String flipped = s.getNode2().getxPath() + s.getNode1().getxPath()+"sibling"+AlignmentGraphFactory.generateFlippedLabelling(s);
                 Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(stilVis);
                 Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flipped);
 
@@ -291,7 +291,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraph ag) {
+    public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
         for (String currUM : tempToMatch.keySet()) {
             AGEdge e = tempToMatch.get(currUM);
             int appearPoint = 0;
@@ -311,7 +311,7 @@ public class ResponsiveLayoutGraph {
             else {
                 t = Type.SIBLING;
                 Sibling s2 = (Sibling) e;
-                String flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
+                String flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" + AlignmentGraphFactory.generateFlippedLabelling(s2);
                 try {
                     appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, flip);
                 } catch (InterruptedException e1) {
@@ -328,7 +328,7 @@ public class ResponsiveLayoutGraph {
         }
     }
 
-    public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraph ag) {
+    public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraphFactory ag) {
         for (String prevUM : previousToMatch.keySet()) {
             AGEdge e = previousToMatch.get(prevUM);
             int disappearPoint = 0;
@@ -341,7 +341,7 @@ public class ResponsiveLayoutGraph {
                 }
             } else {
                 Sibling s2 = (Sibling) e;
-                flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +s2.generateFlippedLabelling();
+                flip = s2.getNode2().getxPath()+s2.getNode1().getxPath()+"sibling" +AlignmentGraphFactory.generateFlippedLabelling(s2);
                 try {
                     disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(ag)], widths[restOfGraphs.indexOf(ag) + 1], false, flip);
                 } catch (InterruptedException e1) {
@@ -385,14 +385,14 @@ public class ResponsiveLayoutGraph {
             } else {
                 Sibling sTemp = (Sibling) e;
                 key += "sibling" + AlignmentGraphFactory.generateEdgeLabelling(sTemp);
-                key2 += "sibling" + sTemp.generateFlippedLabelling();
+                key2 += "sibling" + AlignmentGraphFactory.generateFlippedLabelling(sTemp);
             }
             if (temp.get(key) != null || temp.get(key2) != null) {
                 boolean matched = false;
                 if (e instanceof Contains) {
                     Contains c1 = (Contains) e;
                     Contains c2 = (Contains) temp.get(key);
-                    matched = isAlignmentTheSame(c1, c2);
+                    matched = AlignmentGraphFactory.isAlignmentTheSame(c1, c2);
                 } else {
                     Sibling s1 = (Sibling) e;
                     Sibling s2;
@@ -401,7 +401,7 @@ public class ResponsiveLayoutGraph {
                     } else {
                         s2 = (Sibling) temp.get(key2);
                     }
-                    matched = isAlignmentTheSame(s1, s2);
+                    matched = AlignmentGraphFactory.isAlignmentTheSame(s1, s2);
                 }
                 if (matched) {
                     previousToMatch.remove(key);

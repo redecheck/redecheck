@@ -125,6 +125,101 @@ public class AlignmentGraphFactory {
         return result;
     }
 
+    public static String generateFlippedLabelling(Sibling s) {
+        String result = "";
+            if (s.isTopBottom()) {
+                result = result + "above";
+            }
+            if (s.isBottomTop()) {
+                result = result + "below";
+            }
+            if (s.isRightLeft()) {
+                result = result + "rightOf";
+            }
+            if (s.isLeftRight()) {
+                result = result + "leftOf";
+            }
+            if (s.isTopEdgeAligned()) {
+                result = result + "topAlign";
+            }
+            if (s.isBottomEdgeAligned()) {
+                result = result + "bottomAlign";
+            }
+            if (s.isLeftEdgeAligned()) {
+                result = result + "leftAlign";
+            }
+            if (s.isRightEdgeAligned()) {
+                result = result + "rightAlign";
+            }
+        return result;
+    }
+
+    public static boolean isAlignmentTheSame(AGEdge a, AGEdge b) {
+        if (a instanceof Contains) {
+            Contains c1 = (Contains) a;
+            Contains c2 = (Contains) b;
+            if (c1.isTopAligned() != c2.isTopAligned()) {
+                return false;
+            } else if (c1.isBottomAligned() != c2.isBottomAligned()) {
+                return false;
+            } else if (c1.isMiddle() != c2.isMiddle()) {
+                return false;
+            } else if (c1.isRightJustified() != c2.isRightJustified()) {
+                return false;
+            } else if (c1.isLeftJustified() != c2.isLeftJustified()) {
+                return false;
+            } else if (c1.isCentered() != c2.isCentered()) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            Sibling s1 = (Sibling) a;
+            Sibling s2 = (Sibling) b;
+            if (a.getNode1().getxPath().equals(b.getNode1().getxPath())) {
+                if (s1.isBottomTop() != s2.isBottomTop()) {
+                    return false;
+                } else if (s1.isTopBottom() != s2.isTopBottom()) {
+                    return false;
+                } else if (s1.isLeftRight() != s2.isLeftRight()) {
+                    return false;
+                } else if (s1.isRightLeft() != s2.isRightLeft()) {
+                    return false;
+                } else if (s1.isLeftEdgeAligned() != s2.isLeftEdgeAligned()) {
+                    return false;
+                } else if (s1.isRightEdgeAligned() != s2.isRightEdgeAligned()) {
+                    return false;
+                } else if (s1.isTopEdgeAligned() != s2.isTopEdgeAligned()) {
+                    return false;
+                } else if (s1.isBottomEdgeAligned() != s2.isBottomEdgeAligned()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                if (s1.isBottomTop() != s2.isTopBottom()) {
+                    return false;
+                } else if (s1.isTopBottom() != s2.isBottomTop()) {
+                    return false;
+                } else if (s1.isLeftRight() != s2.isRightLeft()) {
+                    return false;
+                } else if (s1.isRightLeft() != s2.isLeftRight()) {
+                    return false;
+                } else if (s1.isLeftEdgeAligned() != s2.isLeftEdgeAligned()) {
+                    return false;
+                } else if (s1.isRightEdgeAligned() != s2.isRightEdgeAligned()) {
+                    return false;
+                } else if (s1.isTopEdgeAligned() != s2.isTopEdgeAligned()) {
+                    return false;
+                } else if (s1.isBottomEdgeAligned() != s2.isBottomEdgeAligned()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+
     public AlignmentGraph getAg() {
         return this.ag;
     }
