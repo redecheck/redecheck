@@ -3,8 +3,7 @@ import com.rits.cloning.Cloner;
 import twalsh.reporting.*;
 import twalsh.reporting.Error;
 import twalsh.rlg.*;
-import xpert.ag.*;
-import xpert.ag.Sibling;
+import edu.gatech.xpert.dom.*;
 
 import java.awt.Desktop;
 import java.io.IOException;
