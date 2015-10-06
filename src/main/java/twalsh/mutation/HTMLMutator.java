@@ -36,7 +36,9 @@ public class HTMLMutator {
     private String htmlContent;
     Pattern bsGridPattern = Pattern.compile("col-[a-z]*-[0-9]*");
     Pattern fGridPattern = Pattern.compile("([a-z]*-)*[0-9]");
+    Matcher m, m2;
     ArrayList<Element> candidates;
+    Random r;
 
     public HTMLMutator(String baseUrl, String shortH, int numMutants) {
         this.baseURL = baseUrl;
@@ -50,6 +52,7 @@ public class HTMLMutator {
         random = new Random();
         this.numMutants = numMutants;
         cloner = new Cloner();
+        r = new Random();
         parseHTML(baseUrl);
     }
 
@@ -108,8 +111,8 @@ public class HTMLMutator {
 
 
     private boolean isGridSizingClass(String htmlClass) {
-        Matcher m = bsGridPattern.matcher(htmlClass);
-        Matcher m2 = fGridPattern.matcher(htmlClass);
+        m = bsGridPattern.matcher(htmlClass);
+        m2 = fGridPattern.matcher(htmlClass);
         return m.matches() | m2.matches();
     }
 
@@ -135,6 +138,23 @@ public class HTMLMutator {
         String classSelection = options.get(0);
         System.out.println("Chosen string is " + classSelection);
 
+        m = bsGridPattern.matcher(classSelection);
+        m2 = fGridPattern.matcher(classSelection);
+
+        // Check if its a bootstrap one
+        if (m.matches()) {
+            String[] splits = classSelection.split("-");
+            String range = splits[1];
+            int num = Integer.valueOf(splits[2]);
+            System.out.println(range);
+            System.out.println(num);
+            boolean toggle = r.nextBoolean();
+            if (toggle) {
+                // Mutate range
+            } else {
+                // Mutate number
+            }
+        }
     }
 
 }
