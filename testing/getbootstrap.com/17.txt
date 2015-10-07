@@ -1,8 +1,0 @@
-Changed term from 80.0 to 83.0
-.bs-docs-masthead {
-	padding: 80.0px 0.0;
-}
-
-.bs-docs-masthead {
-	padding: 83.0px 0.0;
-}

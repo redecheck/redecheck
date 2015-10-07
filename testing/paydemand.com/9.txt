@@ -1,8 +1,0 @@
-Changed term from 82.0 to 85.0
-.offset1 {
-	margin-left: 82.0px;
-}
-
-.offset1 {
-	margin-left: 85.0px;
-}

@@ -1,8 +1,0 @@
-Changed term from 0.0 to 1.0
-.row {
-	margin-left: 0.0;
-}
-
-.row {
-	margin-left: 1.0px;
-}

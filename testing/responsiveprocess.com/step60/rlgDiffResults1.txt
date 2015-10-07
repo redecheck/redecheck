@@ -1,7 +1,0 @@
-
-/HTML/BODY/HEADER/DIV/DIV/NAV/UL[2]
-
-Unmatched constraint in graph 1: 475 -> 774 :  + 332
-Unmatched constraint in graph 1: 775 -> 1300 :  + 342
-Unmatched constraint in graph 2: 480 -> 767 :  + 332
-Unmatched constraint in graph 2: 768 -> 1300 :  + 342

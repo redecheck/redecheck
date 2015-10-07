@@ -4,10 +4,9 @@ import com.rits.cloning.Cloner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,10 +57,11 @@ public class HTMLMutator {
 
     public static void main(String[] args) {
         HTMLMutator mutator = new HTMLMutator("demo.com/index.html", "demo.com", 1);
-//        System.out.println(mutator.page);
-//        System.out.println(mutator.candidates);
-        mutator.mutate();
-//        System.out.println(mutator.page);
+        for (int i = 1; i <= mutator.numMutants; i++) {
+            Document copy = mutator.cloner.deepClone(mutator.page);
+            mutator.mutate(copy);
+            mutator.writeNewHtml(i, copy);
+        }
     }
 
     public void parseHTML(String url) {
@@ -126,35 +126,113 @@ public class HTMLMutator {
         return classes;
     }
 
-
-
-    private void mutate() {
-        Collections.shuffle(candidates);
-        Element selection = candidates.get(0);
-        System.out.println("Mutation algorithm has chosen : " + selection.tagName());
-        ArrayList<String> options = getMutatableClasses(selection);
-        System.out.println("Mutatable classes are : " + options);
-        Collections.shuffle(options);
-        String classSelection = options.get(0);
-        System.out.println("Chosen string is " + classSelection);
-
-        m = bsGridPattern.matcher(classSelection);
-        m2 = fGridPattern.matcher(classSelection);
-
-        // Check if its a bootstrap one
-        if (m.matches()) {
-            String[] splits = classSelection.split("-");
-            String range = splits[1];
-            int num = Integer.valueOf(splits[2]);
-            System.out.println(range);
-            System.out.println(num);
-            boolean toggle = r.nextBoolean();
-            if (toggle) {
-                // Mutate range
-            } else {
-                // Mutate number
+    private Element getElementToMutate(Document copy, Element e) {
+        System.out.println("Element to match: \n" + e.cssSelector());
+        for (Element e2 : copy.getAllElements()) {
+            if (e.cssSelector().equals(e2.cssSelector())) {
+                return e2;
             }
         }
+        return null;
+    }
+
+    private void mutate(Document toMutate) {
+        boolean managedToMutate = false;
+        while(!managedToMutate) {
+            Collections.shuffle(candidates);
+            Element selection = candidates.get(0);
+            Element actualElement = getElementToMutate(toMutate, selection);
+            if (actualElement != null) {
+                ArrayList<String> options = getMutatableClasses(selection);
+                System.out.println(actualElement.classNames());
+                Collections.shuffle(options);
+                String classSelection = options.get(0);
+
+                m = bsGridPattern.matcher(classSelection);
+                m2 = fGridPattern.matcher(classSelection);
+                String[] bsRanges = new String[]{"xs", "sm", "md", "lg"};
+                String[] fRanges = new String[]{"small", "medium", "large"};
+                boolean changeOrAdd = r.nextBoolean();
+                if (changeOrAdd) {
+                    // We're mutating an existing class
+
+                    // Check if its a bootstrap one
+                    if (m.matches()) {
+                        String[] splits = classSelection.split("-");
+                        String range = splits[1];
+                        int num = Integer.valueOf(splits[2]);
+                        boolean toggle = r.nextBoolean();
+                        if (toggle) {
+                            // Mutate range
+                            //                    System.out.println("Mutating range");
+                            int index = r.nextInt(bsRanges.length);
+                            range = bsRanges[index];
+                        } else {
+                            // Mutate number
+                            //                    System.out.println("Mutating number");
+                            boolean plusMinus = r.nextBoolean();
+                            if (plusMinus)
+                                num++;
+                            else
+                                num--;
+                        }
+                        String newClass = "col-" + range + "-" + num;
+                        actualElement.removeClass(classSelection);
+                        actualElement.addClass(newClass);
+                        managedToMutate = true;
+                    } else if (m2.matches()) {
+                        String[] splits = classSelection.split("-");
+                        String range = splits[0];
+                        int num = Integer.valueOf(splits[1]);
+                        boolean toggle = r.nextBoolean();
+                        if (toggle) {
+                            // Mutate range
+                            System.out.println("Mutating range");
+                            int index = r.nextInt(fRanges.length);
+                            range = bsRanges[index];
+                        } else {
+                            // Mutate number
+                            System.out.println("Mutating number");
+                            boolean plusMinus = r.nextBoolean();
+                            if (plusMinus)
+                                num++;
+                            else
+                                num--;
+                        }
+                        String newClass = range + "-" + num;
+                        actualElement.removeClass(classSelection);
+                        actualElement.addClass(newClass);
+                        managedToMutate = true;
+                    }
+                } else {
+                    // We're adding a new class
+                    int index = r.nextInt(4);
+                    String newClassRange = bsRanges[index];
+                    int newClassNumber = r.nextInt(12) + 1;
+                    String newClass = "col-" + newClassRange + "-" + newClassNumber;
+                    selection.addClass(newClass);
+                    managedToMutate = true;
+                }
+            }
+            System.out.println(actualElement.classNames());
+        }
+    }
+
+    public void writeNewHtml(int i, Document mutated) {
+
+        PrintWriter output = null;
+        try {
+            String dirName = preamble.replace("file:///", "/") + shorthand + "/";
+            String fileName = i + ".html";
+
+            File file = new File (dirName + fileName);
+            output = new PrintWriter(new FileWriter(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        output.append(mutated.toString());
+        output.close();
     }
 
 }

@@ -1,8 +1,0 @@
-Changed term from 750.0 to 755.0
-.container {
-	max-width: 750.0px;
-}
-
-.container {
-	max-width: 755.0px;
-}

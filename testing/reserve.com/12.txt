@@ -1,8 +1,0 @@
-Changed term from 1024.0 to 1026.0
-.inner {
-	max-width: 1024.0px;
-}
-
-.inner {
-	max-width: 1026.0px;
-}

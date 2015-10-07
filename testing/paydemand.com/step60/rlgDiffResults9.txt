@@ -1,6 +1,0 @@
-
-/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV
-
-Unmatched sibling in graph 1 : Between 768 and 1300 => /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2] leftOf topAlign
-Unmatched sibling in graph 2 : Between 768 and 979 => /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2] above
-Unmatched sibling in graph 2 : Between 980 and 1300 => /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2] leftOf topAlign

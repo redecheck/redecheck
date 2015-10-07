@@ -1,8 +1,0 @@
-Changed term from 2.0 to -8.0
-.featured-products {
-	padding-bottom: 2.0em;
-}
-
-.featured-products {
-	padding-bottom: -8.0em;
-}

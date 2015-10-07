@@ -1,5 +1,0 @@
-
-/HTML/BODY/DIV/DIV/DIV[3]/H2
-
-Unmatched constraint in graph 1: 992 -> 1300 : 75% of parent
-Unmatched constraint in graph 2: 992 -> 1300 : 66.9% of parent + 1.43

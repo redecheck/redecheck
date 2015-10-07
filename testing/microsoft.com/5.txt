@@ -1,8 +1,0 @@
-Changed term from 1.688 to -5.3120003
-.mini-features {
-	margin: 1.688em 0.0;
-}
-
-.mini-features {
-	margin: -5.3120003em 0.0;
-}
