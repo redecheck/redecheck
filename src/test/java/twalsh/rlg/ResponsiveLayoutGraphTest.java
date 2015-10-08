@@ -710,9 +710,7 @@ public class ResponsiveLayoutGraphTest {
         assertEquals(ranges.size(), 2);
         Iterator iter = ranges.iterator();
         int[] array = (int[]) iter.next();
-        System.out.println(array[0] + " " + array[1]);
         int[] array2 = (int[]) iter.next();
-        System.out.println(array2[0] + " " + array2[1]);
         assertEquals(true, (Arrays.equals(array, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));
 
         assertEquals(true, (Arrays.equals(array2, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));

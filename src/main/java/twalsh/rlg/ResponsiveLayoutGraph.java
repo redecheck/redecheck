@@ -225,22 +225,37 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
+            System.out.println(restOfWidths[restOfGraphs.indexOf(ag)]);
             HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
-            HashMap<String, AGEdge> temp = ag.edgeMap;
+            HashMap<String, AGEdge> temp = ag.getEdgeMap();
             HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
             // Handle disappearing edges
+            System.out.println("Num disappearing: " + previousToMatch.size());
+            int numContains = 0;
+            for (AGEdge e : previousToMatch.values()) {
+                if(e instanceof Contains)
+                    numContains++;
+            }
+            System.out.println("Num contains from D : " + numContains);
             updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
 
             // Handle appearing edges
+            System.out.println("Num appearing: " + tempToMatch.size());
+            int numContains2 = 0;
+            for (AGEdge e : tempToMatch.values()) {
+                if(e instanceof Contains)
+                    numContains2++;
+            }
+            System.out.println("Num contains from A : " + numContains2);
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
 
-            previousMap = ag.edgeMap;
+            previousMap = ag.getEdgeMap();
 
-            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
@@ -301,6 +316,7 @@ public class ResponsiveLayoutGraph {
     public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
         for (String currUM : tempToMatch.keySet()) {
             AGEdge e = tempToMatch.get(currUM);
+            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
             int appearPoint = 0;
             Type t = null;
             AlignmentConstraint ac = null;
@@ -338,6 +354,7 @@ public class ResponsiveLayoutGraph {
     public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraphFactory ag) {
         for (String prevUM : previousToMatch.keySet()) {
             AGEdge e = previousToMatch.get(prevUM);
+            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
             int disappearPoint = 0;
             String flip="";
             if (e instanceof Contains) {
@@ -629,11 +646,15 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     public int findAppearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
+        if (!searchForNode) {
+//            System.out.println(min + " " + max);
+//            System.out.println(searchKey.contains("contains"));
+        }
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -664,7 +685,7 @@ public class ResponsiveLayoutGraph {
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
-
+//            System.out.println("Done");
             if (found1) {
               return min;
             } else if (!found1 && found2) {
@@ -676,7 +697,7 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -710,11 +731,12 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     public int findDisappearPoint(String searchKey, int min, int max, boolean searchForNode, String flippedKey) throws InterruptedException {
+//        System.out.println(min + " " + max);
         if (max-min==1) {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -741,13 +763,14 @@ public class ResponsiveLayoutGraph {
                 found1 = (e1.get(searchKey) != null) || (e1.get(flippedKey) != null);
                 found2 = (e2.get(searchKey) != null) || (e2.get(flippedKey) != null);
             }
+//            System.out.println("Done");
             return decideBreakpoint(min, max, found1, found2);
 
         } else {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -910,7 +933,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -952,7 +975,7 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, false);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);

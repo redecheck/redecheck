@@ -1,9 +1,7 @@
 package twalsh.redecheck;
 
 import edu.gatech.xpert.dom.layout.AlignmentGraphFactory;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.*;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.File;
@@ -28,7 +26,7 @@ public class Redecheck {
     public static String preamble;
     public static int startWidth;
     public static int finalWidth;
-    public static WebDriver driver;
+    public static PhantomJSDriver driver;
 
     /**
      * Main method to handle execution of the whole tool
@@ -77,30 +75,30 @@ public class Redecheck {
 
         long startTime = System.nanoTime();
         // Access oracle webpage and sample
-//        String oracleUrl = preamble + oracle + ".html";
-//        driver.get(oracleUrl);
-//        capturePageModel(oracleUrl, widths);
-//
-//        // Construct oracle RLG
-//        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
-//        ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
-//        for (int width : widths) {
-//            DomNode dn = oracleDoms.get(width);
-//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-////            AlignmentGraph ag = new AlignmentGraph(dn);
-//            oracleAgs.add(agf);
-//        }
-//        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-//        long endTime = System.nanoTime();
-//        long duration = (endTime - startTime);
-//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
-//        System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-//        oracleRlg.writeToGraphViz("oracle");
+        String oracleUrl = preamble + oracle + ".html";
+        driver.get(oracleUrl);
+        capturePageModel(oracleUrl, widths, true);
+
+        // Construct oracle RLG
+        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
+        ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
+        for (int width : widths) {
+            DomNode dn = oracleDoms.get(width);
+            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+//            AlignmentGraph ag = new AlignmentGraph(dn);
+            oracleAgs.add(agf);
+        }
+        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+        System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
+        oracleRlg.writeToGraphViz("oracle");
 
         // Access test webpage and sample
         String testUrl = preamble + test + ".html";
         driver.get(testUrl);
-        capturePageModel(testUrl, widths);
+        capturePageModel(testUrl, widths, true);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
@@ -113,9 +111,9 @@ public class Redecheck {
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
         testRlg.writeToGraphViz("test");
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime);
+//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         driver.close();
 
         // Perform the model comparison
@@ -166,7 +164,7 @@ public class Redecheck {
      * @param widths        widths at which to sample the page
      * @throws InterruptedException
      */
-    public static void capturePageModel(String url, int[] widths) throws InterruptedException {
+    public static void capturePageModel(String url, int[] widths, boolean takeScreenshot) throws InterruptedException {
         try {
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
@@ -187,6 +185,8 @@ public class Redecheck {
                 }
                 driver.manage().window().setSize(new Dimension(w, 600));
                 FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver));
+                if (takeScreenshot)
+                    captureScreenshot(new File(outFolder + "/screenshot.png"), driver);
                 counter++;
             }
         } catch (IOException e) {
@@ -201,7 +201,7 @@ public class Redecheck {
      * @return              the DOM as a JSON string
      * @throws IOException
      */
-    public static String extractDOM(String url, WebDriver driver) throws IOException {
+    public static String extractDOM(String url, PhantomJSDriver driver) throws IOException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String current = new java.io.File( "." ).getCanonicalPath();
         String script = Utils.readFile(current +"/resources/webdiff2.js");
@@ -227,6 +227,16 @@ public class Redecheck {
             }
         }
         return doms;
+    }
+
+    public static void captureScreenshot(File screenshot, PhantomJSDriver driver) {
+        File scrFile = driver.getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(scrFile, screenshot);
+        } catch (IOException e) {
+            System.err.println("Error saving screenshot");
+            e.printStackTrace();
+        }
     }
 
     public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
