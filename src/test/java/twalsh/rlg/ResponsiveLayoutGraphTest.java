@@ -1,6 +1,5 @@
 package twalsh.rlg;
 
-import com.google.common.collect.HashBasedTable;
 import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
@@ -703,16 +702,21 @@ public class ResponsiveLayoutGraphTest {
         Node p = new Node("parent");
         Node p2 = new Node("another");
         AlignmentConstraint ac = new AlignmentConstraint(p, n, Type.PARENT_CHILD, 400, 550, new boolean[] {false, false, false, false, false});
-        AlignmentConstraint ac2 = new AlignmentConstraint(p2, n, Type.PARENT_CHILD, 551, 620, new boolean[] {false, false, false, false, false, false});
+        AlignmentConstraint ac2 = new AlignmentConstraint(p2, n, Type.PARENT_CHILD, 551, 720, new boolean[] {false, false, false, false, false, false});
         ArrayList<AlignmentConstraint> acs = new ArrayList<>();
         acs.add(ac);
         acs.add(ac2);
         ArrayList<int[]> ranges = rlg.getWidthsForConstraints(acs);
         assertEquals(ranges.size(), 2);
-        int[] array = ranges.get(0);
-        assertEquals(true, Arrays.equals(array, new int[] {400, 500}));
-        int[] array2 = ranges.get(1);
-        assertEquals(true, Arrays.equals(array2, new int[] {600}));
+        Iterator iter = ranges.iterator();
+        int[] array = (int[]) iter.next();
+        System.out.println(array[0] + " " + array[1]);
+        int[] array2 = (int[]) iter.next();
+        System.out.println(array2[0] + " " + array2[1]);
+        assertEquals(true, (Arrays.equals(array, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));
+
+        assertEquals(true, (Arrays.equals(array2, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));
+
     }
 
     @Test
@@ -759,7 +763,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -767,7 +771,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getxPath()).thenReturn("parent");
         when(dn1.getTagName()).thenReturn("BODY");
 
-        HashMap<String, DomNode> dnmap = spy(new HashMap<>());
+        HashMap<String, DomNode> dnmap = spy(new HashMap<String, DomNode>());
         dnmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
@@ -786,7 +790,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -794,7 +798,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getxPath()).thenReturn("parent");
         when(dn1.getTagName()).thenReturn("BODY");
 
-        HashMap<String, DomNode> dnmap = spy(new HashMap<>());
+        HashMap<String, DomNode> dnmap = spy(new HashMap<String, DomNode>());
         dnmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
@@ -813,7 +817,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -828,8 +832,8 @@ public class ResponsiveLayoutGraphTest {
         when(dn2.getTagName()).thenReturn("BODY");
         AGNode agn2 = spy(new AGNode(dn1));
 
-        HashMap<String, DomNode> vmap = spy(new HashMap<>());
-        HashMap<String, DomNode> vmap2 = spy(new HashMap<>());
+        HashMap<String, DomNode> vmap = spy(new HashMap<String, DomNode>());
+        HashMap<String, DomNode> vmap2 = spy(new HashMap<String, DomNode>());
         vmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         AlignmentGraphFactory agf2 = spy(new AlignmentGraphFactory(dn2));
@@ -852,7 +856,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -892,7 +896,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -907,8 +911,8 @@ public class ResponsiveLayoutGraphTest {
         when(dn2.getTagName()).thenReturn("BODY");
         AGNode agn2 = spy(new AGNode(dn1));
 
-        HashMap<String, DomNode> vmap = spy(new HashMap<>());
-        HashMap<String, DomNode> vmap2 = spy(new HashMap<>());
+        HashMap<String, DomNode> vmap = spy(new HashMap<String, DomNode>());
+        HashMap<String, DomNode> vmap2 = spy(new HashMap<String, DomNode>());
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         AlignmentGraphFactory agf2 = spy(new AlignmentGraphFactory(dn2));
 
@@ -930,7 +934,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -938,7 +942,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getxPath()).thenReturn("node");
         when(dn1.getTagName()).thenReturn("BODY");
         AGNode agn1 = spy(new AGNode(dn1));
-        HashMap<String, DomNode> vmap = spy(new HashMap<>());
+        HashMap<String, DomNode> vmap = spy(new HashMap<String, DomNode>());
         vmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
@@ -957,7 +961,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -965,7 +969,7 @@ public class ResponsiveLayoutGraphTest {
         when(dn1.getxPath()).thenReturn("parent");
         when(dn1.getTagName()).thenReturn("BODY");
         AGNode agn1 = spy(new AGNode(dn1));
-        HashMap<String, DomNode> vmap = spy(new HashMap<>());
+        HashMap<String, DomNode> vmap = spy(new HashMap<String, DomNode>());
         vmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
@@ -984,7 +988,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -997,8 +1001,8 @@ public class ResponsiveLayoutGraphTest {
         when(dn2.getxPath()).thenReturn("parent");
         when(dn2.getTagName()).thenReturn("BODY");
 
-        HashMap<String, AGNode> vmap = spy(new HashMap<>());
-        HashMap<String, AGNode> vmap2 = spy(new HashMap<>());
+        HashMap<String, AGNode> vmap = spy(new HashMap<String, AGNode>());
+        HashMap<String, AGNode> vmap2 = spy(new HashMap<String, AGNode>());
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         AlignmentGraphFactory agf2 = spy(new AlignmentGraphFactory(dn2));
 
@@ -1020,7 +1024,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -1035,8 +1039,8 @@ public class ResponsiveLayoutGraphTest {
         when(dn2.getTagName()).thenReturn("BODY");
         AGNode agn2 = spy(new AGNode(dn1));
 
-        HashMap<String, DomNode> vmap = spy(new HashMap<>());
-        HashMap<String, DomNode> vmap2 = spy(new HashMap<>());
+        HashMap<String, DomNode> vmap = spy(new HashMap<String, DomNode>());
+        HashMap<String, DomNode> vmap2 = spy(new HashMap<String, DomNode>());
         vmap.put(dn1.getxPath(), dn1);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         AlignmentGraphFactory agf2 = spy(new AlignmentGraphFactory(dn2));
@@ -1059,7 +1063,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -1099,7 +1103,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         // Mock Dom and AG
@@ -1143,7 +1147,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         // Mock Dom and AG
@@ -1185,8 +1189,8 @@ public class ResponsiveLayoutGraphTest {
         rlg.url = "randomsite";
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
-        Map<Integer, DomNode> mockDoms = spy(new HashMap<>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -1242,7 +1246,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);
@@ -1302,7 +1306,7 @@ public class ResponsiveLayoutGraphTest {
         rlg.alreadyGathered = spy(new HashSet<Integer>());
         doReturn(true).when(rlg.alreadyGathered).contains(anyInt());
         Map<Integer, DomNode> mockDoms = spy(new HashMap<Integer, DomNode>());
-        when(Redecheck.loadDoms(anyObject(), anyString())).thenReturn(mockDoms);
+        when(Redecheck.loadDoms((int[]) anyObject(), anyString())).thenReturn(mockDoms);
 
         // Mock Dom and AG
         DomNode dn1 = mock(DomNode.class);

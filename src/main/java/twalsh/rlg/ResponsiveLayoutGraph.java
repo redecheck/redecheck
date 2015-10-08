@@ -138,7 +138,7 @@ public class ResponsiveLayoutGraph {
             // Update the previousMap variable to keep track of last set of nodes
             previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
             double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " |");
+            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
         }
         System.out.print("\n");
         // Update visibility widthConstraints of everything still visible
@@ -240,7 +240,7 @@ public class ResponsiveLayoutGraph {
             previousMap = ag.edgeMap;
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " |");
+            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
@@ -512,7 +512,7 @@ public class ResponsiveLayoutGraph {
 //                    e.printStackTrace();
                 }
                 double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
-                System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " |");
+                System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
             }
         System.out.println("");
         addWidthConstraintsToNodes();
@@ -795,15 +795,15 @@ public class ResponsiveLayoutGraph {
         }
 //        int numParents = 0;
         String previousParent = null;
-        HashMap<Integer, AlignmentConstraint> parentBreakpoints = new HashMap<Integer, AlignmentConstraint>();
+//        HashMap<Integer, AlignmentConstraint> parentBreakpoints = new HashMap<Integer, AlignmentConstraint>();
         HashMap<String, int[]> parentRanges = new HashMap<>();
 
 
         // Get all the different parents
         for (AlignmentConstraint c : ordered.values()) {
             if (!c.node1.xpath.equals(previousParent)) {
-                parentBreakpoints.put(c.min, c);
-                previousParent = c.node1.getXpath();
+//                parentBreakpoints.put(c.min, c);
+//                previousParent = c.node1.getXpath();
 
                 parentRanges.put(c.node1.getXpath(), new int[] {c.min, c.getMax()});
                 previousParent = c.node1.getXpath();
@@ -813,7 +813,6 @@ public class ResponsiveLayoutGraph {
                 range[1] = c.getMax();
             }
         }
-
         for (int[] range : parentRanges.values()) {
             ArrayList<Integer> temp = new ArrayList<>();
             for (int w : this.widths) {
@@ -825,7 +824,7 @@ public class ResponsiveLayoutGraph {
             for (Integer i : temp) {
                 widthArray[temp.indexOf(i)] = i;
             }
-            widthSets.add(widthArray);
+            widthSets.add(widthSets.size(), widthArray);
         }
 
 

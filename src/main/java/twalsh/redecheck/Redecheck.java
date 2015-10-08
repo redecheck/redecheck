@@ -77,25 +77,25 @@ public class Redecheck {
 
         long startTime = System.nanoTime();
         // Access oracle webpage and sample
-        String oracleUrl = preamble + oracle + ".html";
-        driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths);
-
-        // Construct oracle RLG
-        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
-        ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
-        for (int width : widths) {
-            DomNode dn = oracleDoms.get(width);
-            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-//            AlignmentGraph ag = new AlignmentGraph(dn);
-            oracleAgs.add(agf);
-        }
-        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
-        System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-        oracleRlg.writeToGraphViz("oracle");
+//        String oracleUrl = preamble + oracle + ".html";
+//        driver.get(oracleUrl);
+//        capturePageModel(oracleUrl, widths);
+//
+//        // Construct oracle RLG
+//        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
+//        ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
+//        for (int width : widths) {
+//            DomNode dn = oracleDoms.get(width);
+//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+////            AlignmentGraph ag = new AlignmentGraph(dn);
+//            oracleAgs.add(agf);
+//        }
+//        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime);
+//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+//        System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
+//        oracleRlg.writeToGraphViz("oracle");
 
         // Access test webpage and sample
         String testUrl = preamble + test + ".html";
@@ -113,15 +113,18 @@ public class Redecheck {
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
         System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
         testRlg.writeToGraphViz("test");
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         driver.close();
 
         // Perform the model comparison
-        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-        comp.compare();
-        comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
-        System.out.println("TESTING COMPLETE.");
+//        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
+//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+//        comp.compare();
+//        comp.compareMatchedNodes();
+//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+//        System.out.println("TESTING COMPLETE.");
 
         driver.quit();
     }
