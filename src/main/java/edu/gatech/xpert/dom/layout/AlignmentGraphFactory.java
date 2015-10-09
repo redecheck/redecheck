@@ -240,4 +240,12 @@ public class AlignmentGraphFactory {
     public HashMap<String, DomNode> getDomNodeMap() {
         return domNodeMap;
     }
+
+    public static String generateKey(AGEdge e) {
+
+        if (e instanceof Contains)
+            return e.getNode1().getxPath()+e.getNode2().getxPath()+"contains" + generateEdgeLabelling(e);
+        else
+            return e.getNode1().getxPath()+e.getNode2().getxPath()+"sibling" + generateEdgeLabelling(e);
+    }
 }

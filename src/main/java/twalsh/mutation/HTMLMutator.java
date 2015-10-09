@@ -56,7 +56,7 @@ public class HTMLMutator {
     }
 
     public static void main(String[] args) {
-        HTMLMutator mutator = new HTMLMutator("demo.com/index.html", "demo.com", 1);
+        HTMLMutator mutator = new HTMLMutator("demo.com/index.html", "demo.com", 10);
         for (int i = 1; i <= mutator.numMutants; i++) {
             Document copy = mutator.cloner.deepClone(mutator.page);
             mutator.mutate(copy);

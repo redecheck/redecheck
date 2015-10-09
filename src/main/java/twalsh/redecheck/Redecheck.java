@@ -77,7 +77,7 @@ public class Redecheck {
         // Access oracle webpage and sample
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths, true);
+        capturePageModel(oracleUrl, widths, false);
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
@@ -98,7 +98,7 @@ public class Redecheck {
         // Access test webpage and sample
         String testUrl = preamble + test + ".html";
         driver.get(testUrl);
-        capturePageModel(testUrl, widths, true);
+        capturePageModel(testUrl, widths, false);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
