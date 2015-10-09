@@ -138,7 +138,7 @@ public class ResponsiveLayoutGraph {
             // Update the previousMap variable to keep track of last set of nodes
             previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
             double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
         }
         System.out.print("\n");
         // Update visibility widthConstraints of everything still visible
@@ -225,7 +225,6 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
-            System.out.println(restOfWidths[restOfGraphs.indexOf(ag)]);
             HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
             HashMap<String, AGEdge> temp = ag.getEdgeMap();
             HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
@@ -235,7 +234,6 @@ public class ResponsiveLayoutGraph {
 
             // NEW METHOD FOR SAVING EFFORT
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
-            System.out.println("Number paired: " + matchedChangingEdges.size());
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
             // Handle disappearing edges
@@ -246,8 +244,8 @@ public class ResponsiveLayoutGraph {
 
             previousMap = ag.getEdgeMap();
 
-//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-//            System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
@@ -614,7 +612,7 @@ public class ResponsiveLayoutGraph {
 //                    e.printStackTrace();
                 }
                 double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
-                System.out.print("\rPROGRESS : |" + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
+                System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
             }
         System.out.println("");
         addWidthConstraintsToNodes();
