@@ -235,19 +235,25 @@ public class ResponsiveLayoutGraph {
 
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-
             // NEW METHOD FOR SAVING EFFORT
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
             System.out.println("Disappearing size " + previousToMatch.size());
+//            for (AGEdge a : previousToMatch.values()) {
+//                System.out.println(a);
+//            }
             // Handle disappearing edges
             updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
+            System.out.println();
 
             // Handle appearing edges
             System.out.println("Appearing size " + tempToMatch.size());
+//            for (AGEdge a : tempToMatch.values()) {
+//                System.out.println(a);
+//            }
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
-
+            System.out.println();
             previousMap = ag.getEdgeMap();
 
 //            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
@@ -266,6 +272,7 @@ public class ResponsiveLayoutGraph {
 
 
     private HashMap<AGEdge, AGEdge> pairUnmatchedEdges(HashMap<String, AGEdge> previous, HashMap<String, AGEdge> temp) {
+        System.out.println("Started pairing unmatched edges");
         HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previous.clone();
         HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
@@ -290,13 +297,14 @@ public class ResponsiveLayoutGraph {
                     previous.remove(s);
                     temp.remove(s2);
                 // Check for matching child, but differing parents
-                } else if ( ((!n1.getxPath().equals(n1m.getxPath())) && (n2.getxPath().equals(n2m.getxPath()))) ) {
+                } else if ( ((!n1.getxPath().equals(n1m.getxPath())) && (n2.getxPath().equals(n2m.getxPath())) && (e instanceof Contains) && (e2 instanceof Contains)) ) {
                     paired.put(e, e2);
                     previous.remove(s);
                     temp.remove(s2);
                 }
             }
         }
+        System.out.println("Finished pairing unmatched edges");
 
         return paired;
     }
@@ -348,6 +356,8 @@ public class ResponsiveLayoutGraph {
     }
 
     private void updatePairedEdges(HashMap<AGEdge, AGEdge> matchedChangingEdges, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
+        int counter=1;
+        System.out.println("Started updating pairs");
         for (AGEdge e : matchedChangingEdges.keySet()) {
             String pairedkey1 = AlignmentGraphFactory.generateKey(e);
             AGEdge matched = matchedChangingEdges.get(e);
@@ -409,12 +419,16 @@ public class ResponsiveLayoutGraph {
                 alCons.put(ac.generateKey(), ac);
                 alignmentConstraints.put(ac.generateKey(), new int[]{disappearPoint+1,0}, ac);
             }
-
+            double progressPerc = ((double) counter/ (double)matchedChangingEdges.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            counter++;
         }
+        System.out.println("Finished updating paired edges");
 
     }
 
     public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
+        int counter = 1;
         for (String currUM : tempToMatch.keySet()) {
             AGEdge e = tempToMatch.get(currUM);
 //            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
@@ -449,10 +463,15 @@ public class ResponsiveLayoutGraph {
                 alCons.put(ac.generateKey(), ac);
                 alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
             }
+
+            double progressPerc = ((double) counter/ (double)tempToMatch.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            counter++;
         }
     }
 
     public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraphFactory ag) {
+        int counter = 1;
         for (String prevUM : previousToMatch.keySet()) {
             AGEdge e = previousToMatch.get(prevUM);
 //            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
@@ -494,12 +513,17 @@ public class ResponsiveLayoutGraph {
                     }
                 }
             }
+
+            double progressPerc = ((double) counter/ (double)previousToMatch.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            counter++;
         }
 
     }
 
     public void checkForEdgeMatch(HashMap<String, AGEdge> previousMap, HashMap<String, AGEdge> previousToMatch, HashMap<String, AGEdge> temp, HashMap<String, AGEdge> tempToMatch) {
         String key = "", key2 = "";
+        int counter = 1;
         for (String s : previousMap.keySet()) {
             AGEdge e = previousMap.get(s);
             key = e.getNode1().getxPath() + e.getNode2().getxPath();
@@ -512,29 +536,37 @@ public class ResponsiveLayoutGraph {
                 key += "sibling" + AlignmentGraphFactory.generateEdgeLabelling(sTemp);
                 key2 += "sibling" + AlignmentGraphFactory.generateFlippedLabelling(sTemp);
             }
-            if (temp.get(key) != null || temp.get(key2) != null) {
-                boolean matched = false;
-                if (e instanceof Contains) {
-                    Contains c1 = (Contains) e;
-                    Contains c2 = (Contains) temp.get(key);
-                    matched = AlignmentGraphFactory.isAlignmentTheSame(c1, c2);
-                } else {
-                    Sibling s1 = (Sibling) e;
-                    Sibling s2;
-                    if (temp.get(key) != null) {
-                        s2 = (Sibling) temp.get(key);
-                    } else {
-                        s2 = (Sibling) temp.get(key2);
-                    }
-                    matched = AlignmentGraphFactory.isAlignmentTheSame(s1, s2);
-                }
-                if (matched) {
-                    previousToMatch.remove(key);
-                    tempToMatch.remove(key);
-                    previousToMatch.remove(key2);
-                    tempToMatch.remove(key2);
-                }
+            if ((temp.get(key) != null) || (temp.get(key2) != null)) {
+
+//            } else if  {
+                previousToMatch.remove(key);
+                tempToMatch.remove(key);
+                previousToMatch.remove(key2);
+                tempToMatch.remove(key2);
             }
+//                boolean matched = false;
+//                if (e instanceof Contains) {
+//                    Contains c1 = (Contains) e;
+//                    Contains c2 = (Contains) temp.get(key);
+//                    matched = AlignmentGraphFactory.isAlignmentTheSame(c1, c2);
+//                } else {
+//                    Sibling s1 = (Sibling) e;
+//                    Sibling s2;
+//                    if (temp.get(key) != null) {
+//                        s2 = (Sibling) temp.get(key);
+//                    } else {
+//                        s2 = (Sibling) temp.get(key2);
+//                    }
+//                    matched = AlignmentGraphFactory.isAlignmentTheSame(s1, s2);
+//                }
+//                if (matched) {
+
+
+//                }
+//            }
+//            double progressPerc = ((double) counter/ (double)previousMap.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            counter++;
         }
     }
 

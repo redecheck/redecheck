@@ -432,7 +432,7 @@ public class ResponsiveLayoutGraphTest {
         previousMap.put(sibling.getNode1().getxPath() + sibling.getNode2().getxPath() + "sibling" + AlignmentGraphFactory.generateEdgeLabelling(sibling), sibling);
 
         HashMap<String, AGEdge> temp = new HashMap<>();
-        temp.put(flipped.getNode1().getxPath() + flipped.getNode2().getxPath() + "sibling" + AlignmentGraphFactory.generateEdgeLabelling(flipped), flipped);
+        temp.put(flipped.getNode1().getxPath() + flipped.getNode2().getxPath() + "sibling" + AlignmentGraphFactory.generateFlippedLabelling(flipped), flipped);
 
 
         HashMap<String, AGEdge> previousToMatch = cloner.deepClone(previousMap);

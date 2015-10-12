@@ -54,10 +54,10 @@ public class JsonDomParser {
 			String xPath = getString(nodeData, "xpath");
 			node = new DomNode(parseTagName(xPath), xPath);
 			node.setId(getString(nodeData, "id"));
-			node.setAttributes(getAttributes(nodeData));
+//			node.setAttributes(getAttributes(nodeData));
 			node.setCoords(getCoords(nodeData));
 			try {
-				node.setZindex(nodeData.getInt("zindex"));
+//				node.setZindex(nodeData.getInt("zindex"));
 			} catch (Exception e) { /* Missing zindex */ }
 			break;
 		default:
