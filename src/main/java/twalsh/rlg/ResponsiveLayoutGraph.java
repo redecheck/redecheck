@@ -74,6 +74,9 @@ public class ResponsiveLayoutGraph {
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
+//        for (Node n : this.nodes.values()) {
+//            System.out.println(n.parentConstraints.size());
+//        }
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
@@ -225,6 +228,7 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
+            System.out.println("\n" + restOfWidths[restOfGraphs.indexOf(ag)]);
             HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
             HashMap<String, AGEdge> temp = ag.getEdgeMap();
             HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
@@ -236,16 +240,18 @@ public class ResponsiveLayoutGraph {
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
+            System.out.println("Disappearing size " + previousToMatch.size());
             // Handle disappearing edges
             updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
 
             // Handle appearing edges
+            System.out.println("Appearing size " + tempToMatch.size());
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
 
             previousMap = ag.getEdgeMap();
 
-            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
@@ -272,7 +278,19 @@ public class ResponsiveLayoutGraph {
                 AGEdge e2 = tempToMatch.get(s2);
                 DomNode n1m = e2.getNode1();
                 DomNode n2m = e2.getNode2();
+
+                // Checks to see if both node1 and node2 are the same.
                 if ( (n1.getxPath().equals(n1m.getxPath())) && (n2.getxPath().equals(n2m.getxPath()))) {
+                    paired.put(e, e2);
+                    previous.remove(s);
+                    temp.remove(s2);
+                // Check for the flipped sibling node match
+                } else if ( (n1.getxPath().equals(n2m.getxPath())) && (n2.getxPath().equals(n1m.getxPath())) ) {
+                    paired.put(e, e2);
+                    previous.remove(s);
+                    temp.remove(s2);
+                // Check for matching child, but differing parents
+                } else if ( ((!n1.getxPath().equals(n1m.getxPath())) && (n2.getxPath().equals(n2m.getxPath()))) ) {
                     paired.put(e, e2);
                     previous.remove(s);
                     temp.remove(s2);
@@ -562,7 +580,7 @@ public class ResponsiveLayoutGraph {
                             int[] widthsTemp = new int[validWidths.length];
                             int[] parentWidths = new int[validWidths.length];
                             int[] childWidths = new int[validWidths.length];
-                            doms = Redecheck.loadDoms(validWidths, url);
+//                            doms = Redecheck.loadDoms(validWidths, url);
                             // Gather parent and child widths
                             populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, s, parentXpath);
 

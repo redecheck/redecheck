@@ -85,7 +85,6 @@ public class Redecheck {
         for (int width : widths) {
             DomNode dn = oracleDoms.get(width);
             AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-//            AlignmentGraph ag = new AlignmentGraph(dn);
             oracleAgs.add(agf);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
@@ -93,24 +92,28 @@ public class Redecheck {
         long duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-        oracleRlg.writeToGraphViz("oracle");
+//        oracleRlg.writeToGraphViz("oracle");
 
         // Access test webpage and sample
-        String testUrl = preamble + test + ".html";
-        driver.get(testUrl);
-        capturePageModel(testUrl, widths, false);
-
-        // Construct test RLG
-        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
-        for (int width : widths) {
-            DomNode dn = testDoms.get(width);
-            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-            testAgs.add(agf);
-        }
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
-        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
-        testRlg.writeToGraphViz("test");
+//        startTime = System.nanoTime();
+//        String testUrl = preamble + test + ".html";
+//        driver.get(testUrl);
+//        capturePageModel(testUrl, widths, false);
+//
+//        // Construct test RLG
+//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+//        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
+//        for (int width : widths) {
+//            DomNode dn = testDoms.get(width);
+//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+//            testAgs.add(agf);
+//        }
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+//        endTime = System.nanoTime();
+//        duration = (endTime - startTime);
+//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+//        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
+//        testRlg.writeToGraphViz("test");
 //        long endTime = System.nanoTime();
 //        long duration = (endTime - startTime);
 //        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");

@@ -820,7 +820,7 @@ public class CSSMutator {
 
 
     public static void main(String[] args) throws IOException, CSSException {
-        CSSMutator mt = new CSSMutator("microsoft.com/index.html", "microsoft.com", 20);
+        CSSMutator mt = new CSSMutator("shield.com/index.html", "shield.com", 20);
         mt.initialiseFiles();
         int[] newOnes = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
 //		int[] newOnes = {0};
