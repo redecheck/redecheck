@@ -252,8 +252,10 @@ public class ResponsiveLayoutGraph {
 //            System.out.println();
 
             // Handle appearing edges
-            System.out.println("Appearing size before" + tempToMatch.size());
-            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag)+1]);
+            System.out.println("Appearing size before " + tempToMatch.size());
+            System.out.println("number of edges before " + this.alignmentConstraints.size());
+            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+            System.out.println("number of edges after " + this.alignmentConstraints.size());
             System.out.println("Appearing size after" + tempToMatch.size());
 //            for (AGEdge a : tempToMatch.values()) {
 //                System.out.println(a);
@@ -597,6 +599,8 @@ public class ResponsiveLayoutGraph {
                 if (ac != null) {
                     alCons.put(ac.generateKey(), ac);
                     alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
+                    tempToMatch.remove(s);
+                    tempToMatch.remove(flip);
                 }
             }
         }
