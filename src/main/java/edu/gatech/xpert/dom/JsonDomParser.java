@@ -46,23 +46,23 @@ public class JsonDomParser {
 	private DomNode getDomNode(JSONObject nodeData) throws JSONException {
 		DomNode node = null;
 		int type = getInt(nodeData, "type");
-		switch (type) {
-		case 0:
-			node = new DomNode(getString(nodeData, "text"));
-			break;
-		case 1:
+//		switch (type) {
+//		case 0:
+//			node = new DomNode(getString(nodeData, "text"));
+//			break;
+//		case 1:
 			String xPath = getString(nodeData, "xpath");
 			node = new DomNode(parseTagName(xPath), xPath);
 			node.setId(getString(nodeData, "id"));
 //			node.setAttributes(getAttributes(nodeData));
 			node.setCoords(getCoords(nodeData));
-			try {
-//				node.setZindex(nodeData.getInt("zindex"));
-			} catch (Exception e) { /* Missing zindex */ }
-			break;
-		default:
-			System.err.println("Unknown node type:" + type);
-		}
+//			try {
+////				node.setZindex(nodeData.getInt("zindex"));
+//			} catch (Exception e) { /* Missing zindex */ }
+//			break;
+//		default:
+//			System.err.println("Unknown node type:" + type);
+//		}
 		
 		return node;
 	}

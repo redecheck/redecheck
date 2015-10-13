@@ -27,6 +27,8 @@ public class Redecheck {
     public static int startWidth;
     public static int finalWidth;
     public static PhantomJSDriver driver;
+    public static JavascriptExecutor js;
+    static String scriptToExtract;
 
     /**
      * Main method to handle execution of the whole tool
@@ -65,12 +67,16 @@ public class Redecheck {
      * @param widths        the set of sampling widths to use.
      * @throws InterruptedException
      */
-    public static void runTool(String oracle, String test, String preamble, int[] widths) throws InterruptedException {
+    public static void runTool(String oracle, String test, String preamble, int[] widths) throws InterruptedException, IOException {
+        System.out.println(Runtime.getRuntime().maxMemory() / 1024);
+
         // Set up the PhantomJS driver to gather the DOMs
         DesiredCapabilities dCaps = new DesiredCapabilities();
         dCaps.setJavascriptEnabled(true);
         dCaps.setCapability("takesScreenshot", false);
         driver = getNewDriver(dCaps);
+        js = (JavascriptExecutor) driver;
+        scriptToExtract = Utils.readFile(current +"/resources/webdiff2.js");
 
 
         long startTime = System.nanoTime();
@@ -187,7 +193,7 @@ public class Redecheck {
                     }
                 }
                 driver.manage().window().setSize(new Dimension(w, 600));
-                FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver));
+                FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, scriptToExtract));
                 if (takeScreenshot)
                     captureScreenshot(new File(outFolder + "/screenshot.png"), driver);
                 counter++;
@@ -204,10 +210,7 @@ public class Redecheck {
      * @return              the DOM as a JSON string
      * @throws IOException
      */
-    public static String extractDOM(String url, PhantomJSDriver driver) throws IOException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String current = new java.io.File( "." ).getCanonicalPath();
-        String script = Utils.readFile(current +"/resources/webdiff2.js");
+    public static String extractDOM(String url, PhantomJSDriver driver, String script) throws IOException {
         return (String) js.executeScript(script);
     }
 

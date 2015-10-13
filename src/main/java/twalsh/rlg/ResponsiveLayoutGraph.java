@@ -80,6 +80,8 @@ public class ResponsiveLayoutGraph {
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");
+        System.out.println("Number of nodes: " + this.nodes.size());
+        System.out.println("Number of edges: " + this.alignmentConstraints.size());
     }
 
 
@@ -239,21 +241,25 @@ public class ResponsiveLayoutGraph {
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
-            System.out.println("Disappearing size " + previousToMatch.size());
+            System.out.println("Disappearing size before" + previousToMatch.size());
 //            for (AGEdge a : previousToMatch.values()) {
 //                System.out.println(a);
 //            }
+            checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag)+1]);
+            System.out.println("Disappearing size after" + previousToMatch.size());
             // Handle disappearing edges
             updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
-            System.out.println();
+//            System.out.println();
 
             // Handle appearing edges
-            System.out.println("Appearing size " + tempToMatch.size());
+            System.out.println("Appearing size before" + tempToMatch.size());
+            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag)+1]);
+            System.out.println("Appearing size after" + tempToMatch.size());
 //            for (AGEdge a : tempToMatch.values()) {
 //                System.out.println(a);
 //            }
             updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
-            System.out.println();
+//            System.out.println();
             previousMap = ag.getEdgeMap();
 
 //            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
@@ -271,8 +277,8 @@ public class ResponsiveLayoutGraph {
 
 
 
+
     private HashMap<AGEdge, AGEdge> pairUnmatchedEdges(HashMap<String, AGEdge> previous, HashMap<String, AGEdge> temp) {
-        System.out.println("Started pairing unmatched edges");
         HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previous.clone();
         HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
@@ -304,7 +310,6 @@ public class ResponsiveLayoutGraph {
                 }
             }
         }
-        System.out.println("Finished pairing unmatched edges");
 
         return paired;
     }
@@ -356,8 +361,6 @@ public class ResponsiveLayoutGraph {
     }
 
     private void updatePairedEdges(HashMap<AGEdge, AGEdge> matchedChangingEdges, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
-        int counter=1;
-        System.out.println("Started updating pairs");
         for (AGEdge e : matchedChangingEdges.keySet()) {
             String pairedkey1 = AlignmentGraphFactory.generateKey(e);
             AGEdge matched = matchedChangingEdges.get(e);
@@ -419,16 +422,11 @@ public class ResponsiveLayoutGraph {
                 alCons.put(ac.generateKey(), ac);
                 alignmentConstraints.put(ac.generateKey(), new int[]{disappearPoint+1,0}, ac);
             }
-            double progressPerc = ((double) counter/ (double)matchedChangingEdges.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-            counter++;
         }
-        System.out.println("Finished updating paired edges");
 
     }
 
     public void updateAppearingEdges(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag) {
-        int counter = 1;
         for (String currUM : tempToMatch.keySet()) {
             AGEdge e = tempToMatch.get(currUM);
 //            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
@@ -464,14 +462,10 @@ public class ResponsiveLayoutGraph {
                 alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
             }
 
-            double progressPerc = ((double) counter/ (double)tempToMatch.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-            counter++;
         }
     }
 
     public void updateDisappearingEdge(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraphFactory ag) {
-        int counter = 1;
         for (String prevUM : previousToMatch.keySet()) {
             AGEdge e = previousToMatch.get(prevUM);
 //            System.out.println(e + " " + AlignmentGraphFactory.generateEdgeLabelling(e));
@@ -513,17 +507,132 @@ public class ResponsiveLayoutGraph {
                     }
                 }
             }
-
-            double progressPerc = ((double) counter/ (double)previousToMatch.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-            counter++;
         }
-
     }
+
+    private void checkForNodeBasedDisappearances(HashMap<String, AGEdge> previousToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints, AlignmentGraphFactory ag, int min, int max) {
+        DomNode node1, node2;
+        String flip;
+        HashMap<String, AGEdge> tempMap = (HashMap<String, AGEdge>) previousToMatch.clone();
+        for (String s : tempMap.keySet()) {
+            flip="";
+            AGEdge edge = tempMap.get(s);
+            if (edge instanceof Sibling) {
+                Sibling s2 = (Sibling) edge;
+                flip = s2.getNode2().getxPath() + s2.getNode1().getxPath() + "sibling" + AlignmentGraphFactory.generateFlippedLabelling(s2);
+            }
+            node1 = edge.getNode1();
+            node2 = edge.getNode2();
+            if ( (nodeDisappears(node1, min, max)) || (nodeDisappears(node2, min, max)) ) {
+//                System.out.println(s);
+
+                // Get VC of disappearing node
+                VisibilityConstraint vc = this.nodes.get(node1.getxPath()).getVisibilityConstraints().get(0);
+                int disappearPoint = vc.getDisappear();
+
+                // Update with correct value
+                Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(s);
+                Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flip);
+                if (cons.size() > 0) {
+                    for (int[] pair : cons.keySet()) {
+                        // Get the one without a max value
+                        if (pair[1] == 0) {
+                            AlignmentConstraint aCon = cons.get(pair);
+                            aCon.setMax(disappearPoint);
+                            pair[1] = disappearPoint;
+                            previousToMatch.remove(s);
+                        }
+                    }
+                } else if (cons2.size() > 0) {
+                    for (int[] pair : cons2.keySet()) {
+                        // Get the one without a max value
+                        if (pair[1] == 0) {
+                            AlignmentConstraint aCon = cons2.get(pair);
+                            aCon.setMax(disappearPoint);
+                            pair[1] = disappearPoint;
+                            previousToMatch.remove(flip);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkForNodeBasedAppearances(HashMap<String, AGEdge> tempToMatch, HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints,HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory ag, int min, int max) {
+        DomNode node1, node2;
+        String flip;
+        HashMap<String, AGEdge> tempMap = (HashMap<String, AGEdge>) tempToMatch.clone();
+        for (String s : tempMap.keySet()) {
+            flip = "";
+            AGEdge edge = tempMap.get(s);
+            if (edge instanceof Sibling) {
+                Sibling s2 = (Sibling) edge;
+                flip = s2.getNode2().getxPath() + s2.getNode1().getxPath() + "sibling" + AlignmentGraphFactory.generateFlippedLabelling(s2);
+            }
+            node1 = edge.getNode1();
+            node2 = edge.getNode2();
+            if ((nodeAppears(node1, min, max)) || (nodeAppears(node2, min, max))) {
+//                System.out.println(s);
+
+                // Get VC of disappearing node
+                VisibilityConstraint vc = this.nodes.get(node1.getxPath()).getVisibilityConstraints().get(0);
+                int appearPoint = vc.getAppear();
+
+                Type t = null;
+                AlignmentConstraint ac = null;
+                if (edge instanceof Contains) {
+                    Contains c = (Contains) edge;
+                    t = Type.PARENT_CHILD;
+                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode2().getxPath()), this.nodes.get(edge.getNode1().getxPath()), t, appearPoint, 0,
+                            new boolean[]{c.isCentered(), c.isLeftJustified(), c.isRightJustified(), c.isMiddle(), c.isTopAligned(), c.isBottomAligned()});
+                }
+                else {
+                    t = Type.SIBLING;
+                    Sibling s2 = (Sibling) edge;
+
+                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode1().getxPath()), this.nodes.get(edge.getNode2().getxPath()), t, appearPoint, 0,
+                            new boolean[]{s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+
+                }
+                if (ac != null) {
+                    alCons.put(ac.generateKey(), ac);
+                    alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
+                }
+            }
+        }
+    }
+
+    private boolean nodeAppears(DomNode node1, int min, int max) {
+        Node n = this.nodes.get(node1.getxPath());
+        if ( n != null) {
+            ArrayList<VisibilityConstraint> vcs = n.getVisibilityConstraints();
+            for (VisibilityConstraint vc : vcs) {
+                int ap = vc.getAppear();
+                if ( (ap > min) && (ap < max) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean nodeDisappears(DomNode node1, int min, int max) {
+        Node n = this.nodes.get(node1.getxPath());
+        if ( n != null) {
+            ArrayList<VisibilityConstraint> vcs = n.getVisibilityConstraints();
+            for (VisibilityConstraint vc : vcs) {
+                int dp = vc.getDisappear();
+                if ( (dp > min) && (dp < max) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public void checkForEdgeMatch(HashMap<String, AGEdge> previousMap, HashMap<String, AGEdge> previousToMatch, HashMap<String, AGEdge> temp, HashMap<String, AGEdge> tempToMatch) {
         String key = "", key2 = "";
-        int counter = 1;
         for (String s : previousMap.keySet()) {
             AGEdge e = previousMap.get(s);
             key = e.getNode1().getxPath() + e.getNode2().getxPath();
@@ -564,9 +673,7 @@ public class ResponsiveLayoutGraph {
 
 //                }
 //            }
-//            double progressPerc = ((double) counter/ (double)previousMap.size())* 100;
-//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-            counter++;
+
         }
     }
 
@@ -595,10 +702,17 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     public void extractWidthConstraints() throws InterruptedException {
+//        for (String s : this.nodes.keySet()) {
+//            WidthConstraintExtractor wce = new WidthConstraintExtractor();
+//            Thread t = new Thread(wce);
+//            t.start();
+//        }
+
         System.out.println("Extracting Width Constraints.");
         Node n;
             int i = 0;
             for (String s : this.nodes.keySet()) {
+
                 i++;
                 try {
                     n = this.nodes.get(s);
