@@ -86,5 +86,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.unbescape:unbescape:1.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: jmagick:jmagick:6.6.9" level="project" />
+    <orderEntry type="library" name="Maven: org.im4java:im4java:1.4.0" level="project" />
   </component>
 </module>

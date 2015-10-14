@@ -29,6 +29,14 @@ public class Redecheck {
     public static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
+    public static final String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
+            "BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
+            "CUFONTEXT", "DD", "EM", "EMBED", "FIELDSET", "FONT", "FORM",
+            "HEAD", "HR", "I", "LABEL", "LEGEND", "LINK", "MAP", "MENUMACHINE",
+            "META", "NOFRAMES", "NOSCRIPT", "OBJECT", "OPTGROUP", "OPTION",
+            "PARAM", "S", "SCRIPT", "SMALL", "SPAN", "STRIKE", "STRONG",
+            "STYLE", "TBODY", "TITLE", "TR", "TT", "U" };
+
 
     /**
      * Main method to handle execution of the whole tool
@@ -81,6 +89,7 @@ public class Redecheck {
 
         long startTime = System.nanoTime();
         // Access oracle webpage and sample
+        System.out.println("\n\nGENERATING ORACLE RLG");
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
         capturePageModel(oracleUrl, widths, false);
@@ -102,19 +111,20 @@ public class Redecheck {
 
         // Access test webpage and sample
 //        startTime = System.nanoTime();
-//        String testUrl = preamble + test + ".html";
-//        driver.get(testUrl);
-//        capturePageModel(testUrl, widths, false);
-//
-//        // Construct test RLG
-//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-//        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
-//        for (int width : widths) {
-//            DomNode dn = testDoms.get(width);
-//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-//            testAgs.add(agf);
-//        }
-//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+        System.out.println("\n\nGENERATING TEST RLG");
+        String testUrl = preamble + test + ".html";
+        driver.get(testUrl);
+        capturePageModel(testUrl, widths, false);
+
+        // Construct test RLG
+        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
+        for (int width : widths) {
+            DomNode dn = testDoms.get(width);
+            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+            testAgs.add(agf);
+        }
+        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
 //        endTime = System.nanoTime();
 //        duration = (endTime - startTime);
 //        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
@@ -126,14 +136,20 @@ public class Redecheck {
         driver.close();
 
         // Perform the model comparison
-//        System.out.println("COMPARING TEST VERSION TO THE ORACLE \n");
-//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-//        comp.compare();
-//        comp.compareMatchedNodes();
-//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
-//        System.out.println("TESTING COMPLETE.");
+        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
+        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+        comp.compare();
+        comp.compareMatchedNodes();
+        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+        System.out.println("\n\nTESTING COMPLETE.");
 
         driver.quit();
+
+        for (int width : widths) {
+            DomNode dn = oracleDoms.get(width);
+            DomNode dn2 = testDoms.get(width);
+            System.out.println(width + " : " + domsEqual(dn, dn2));
+        }
     }
 
     /**
@@ -247,5 +263,117 @@ public class Redecheck {
 
     public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
         return new PhantomJSDriver(dCaps);
+    }
+
+    private static boolean domsEqual(DomNode dn1, DomNode dn2) {
+        int numMatches = 0;
+        DomNode match = null;
+        ArrayList<DomNode> worklist1 = new ArrayList<DomNode>();
+        ArrayList<DomNode> worklist2 = new ArrayList<DomNode>();
+        worklist1.add(dn1);
+        worklist2.add(dn2);
+        while (!worklist1.isEmpty()) {
+            DomNode toMatch = worklist1.remove(0);
+            String xpath = null;
+            if (toMatch.getxPath() == null) {
+                xpath = "";
+            } else {
+                xpath = toMatch.getxPath();
+            }
+            String parent = null;
+            String parent2 = null;
+            if (toMatch.getParent() != null) {
+                parent = toMatch.getParent().getxPath();
+            } else {
+                parent = "";
+            }
+            match=null;
+            for (DomNode dn : worklist2) {
+                String xpath2 = null;
+                if (dn.getxPath() == null) {
+                    xpath2 = "";
+                } else {
+                    xpath2 = dn.getxPath();
+                }
+                if (xpath.equals(xpath2)) {
+//					System.out.println("xpath");
+                    if (dn.getParent() != null) {
+                        parent2 = dn.getParent().getxPath();
+                    } else {
+                        parent2 = "";
+                    }
+                    if (parent.equals(parent2)) {
+//						System.out.println("parent");
+                        if (coordsMatch(toMatch.getCoords(), dn.getCoords())) {
+                            match = dn;
+                        }
+                    }
+                }
+            }
+            if (match != null) {
+                numMatches++;
+                worklist2.remove(match);
+                for (DomNode d : toMatch.getChildren()) {
+                    if (d.getTagName() != null) {
+                        if (!ignoreTag(d.getTagName())) {
+                            worklist1.add(d);
+                        }
+                    }
+                }
+                for (DomNode d2 : match.getChildren()) {
+                    if (d2.getTagName() != null) {
+                        if (!ignoreTag(d2.getTagName())) {
+                            worklist2.add(d2);
+                        }
+                    }
+                }
+            } else {
+//                System.out.println(toMatch);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean coordsMatch(int[] coords1, int[] coords2) {
+        if ((coords1 == null) && (coords2 == null)) {
+            return true;
+        } else if (!hasMeaningfulSize(coords1, coords2)) {
+            return true;
+        } else if ((coords1 == null) && (coords2 != null)) {
+            return false;
+        } else if ((coords1 != null) && (coords2 == null)) {
+            return false;
+        } else {
+            for (int i = 0; i < 4; i++) {
+                if (coords1[i] != coords2[i]) {
+//                    System.out.println(coords1[0] + ","+coords1[1] + ","+coords1[2] + ","+coords1[3]);
+//					System.out.println(coords1[i] +","+ coords2[i]);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean hasMeaningfulSize(int[] coords, int[] coords2) {
+        if ((coords[2] - coords[0]) < 5) {
+            return false;
+        } else if ((coords[3]- coords[1]) < 5) {
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean ignoreTag(String tagName) {
+//		System.out.println(tagName);
+        for (int i =0; i < tagsIgnore.length; i++) {
+
+            if (tagsIgnore[i].equals(tagName)) {
+//				System.out.println("TRUE");
+                return true;
+            }
+        }
+        return false;
     }
 }

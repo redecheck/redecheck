@@ -1,5 +1,6 @@
 package twalsh.redecheck;
 import com.rits.cloning.Cloner;
+import org.apache.commons.lang3.StringUtils;
 import twalsh.reporting.*;
 import twalsh.reporting.Error;
 import twalsh.rlg.*;
@@ -62,11 +63,15 @@ public class RLGComparator {
      * @return      the list of model differences between the two versions of the page
      */
     public ArrayList<String> compareMatchedNodes() {
+        int counter = 1;
         for (Node n : matchedNodes.keySet()) {
             Node m = matchedNodes.get(n);
             compareVisibilityConstraints(n, m);
             compareAlignmentConstraints(n, m);
             compareWidthConstraints(n, m);
+            double progressPerc = ((double) counter/ (double)matchedNodes.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            counter++;
         }
         return issues;
     }

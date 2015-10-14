@@ -230,7 +230,7 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
-            System.out.println("\n" + restOfWidths[restOfGraphs.indexOf(ag)]);
+//            System.out.println("\n" + restOfWidths[restOfGraphs.indexOf(ag)]);
             HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
             HashMap<String, AGEdge> temp = ag.getEdgeMap();
             HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
@@ -241,22 +241,22 @@ public class ResponsiveLayoutGraph {
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
-            System.out.println("Disappearing size before" + previousToMatch.size());
+//            System.out.println("Disappearing size before" + previousToMatch.size());
 //            for (AGEdge a : previousToMatch.values()) {
 //                System.out.println(a);
 //            }
             checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag)+1]);
-            System.out.println("Disappearing size after" + previousToMatch.size());
+//            System.out.println("Disappearing size after" + previousToMatch.size());
             // Handle disappearing edges
             updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
 //            System.out.println();
 
             // Handle appearing edges
-            System.out.println("Appearing size before " + tempToMatch.size());
-            System.out.println("number of edges before " + this.alignmentConstraints.size());
+//            System.out.println("Appearing size before " + tempToMatch.size());
+//            System.out.println("number of edges before " + this.alignmentConstraints.size());
             checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-            System.out.println("number of edges after " + this.alignmentConstraints.size());
-            System.out.println("Appearing size after" + tempToMatch.size());
+//            System.out.println("number of edges after " + this.alignmentConstraints.size());
+//            System.out.println("Appearing size after" + tempToMatch.size());
 //            for (AGEdge a : tempToMatch.values()) {
 //                System.out.println(a);
 //            }
@@ -264,8 +264,8 @@ public class ResponsiveLayoutGraph {
 //            System.out.println();
             previousMap = ag.getEdgeMap();
 
-//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
