@@ -14,7 +14,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import edu.gatech.xpert.dom.JsonDomParser;
 import edu.gatech.xpert.dom.DomNode;
-import edu.gatech.xpert.dom.layout.AlignmentGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +91,7 @@ public class Redecheck {
         System.out.println("\n\nGENERATING ORACLE RLG");
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths, false);
+        capturePageModel(oracleUrl, widths, true);
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
@@ -102,19 +101,19 @@ public class Redecheck {
             AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
             oracleAgs.add(agf);
         }
-        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
+        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, null, null);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-//        oracleRlg.writeToGraphViz("oracle");
+        oracleRlg.writeToGraphViz("oracle");
 
-        // Access test webpage and sample
-//        startTime = System.nanoTime();
+//         Access test webpage and sample
+        startTime = System.nanoTime();
         System.out.println("\n\nGENERATING TEST RLG");
         String testUrl = preamble + test + ".html";
         driver.get(testUrl);
-        capturePageModel(testUrl, widths, false);
+        capturePageModel(testUrl, widths, true);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
@@ -124,17 +123,11 @@ public class Redecheck {
             AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
             testAgs.add(agf);
         }
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
-//        endTime = System.nanoTime();
-//        duration = (endTime - startTime);
-//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
-//        System.out.println("NUMBER OF DOMS: " + testRlg.getAlreadyGathered().size());
-//        testRlg.writeToGraphViz("test");
-//        long endTime = System.nanoTime();
-//        long duration = (endTime - startTime);
-//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
         driver.close();
-
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         // Perform the model comparison
         System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
@@ -265,7 +258,10 @@ public class Redecheck {
         return new PhantomJSDriver(dCaps);
     }
 
-    private static boolean domsEqual(DomNode dn1, DomNode dn2) {
+    public static boolean domsEqual(DomNode dn1, DomNode dn2) {
+        if ( (dn1 == null) | (dn2 == null) ) {
+            return false;
+        }
         int numMatches = 0;
         DomNode match = null;
         ArrayList<DomNode> worklist1 = new ArrayList<DomNode>();

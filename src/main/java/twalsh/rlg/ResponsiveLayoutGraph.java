@@ -24,6 +24,7 @@ public class ResponsiveLayoutGraph {
     ArrayList<AlignmentGraphFactory> graphs;
     AlignmentGraphFactory first, last;
     AlignmentGraph ag;
+    ResponsiveLayoutGraph oracle;
 
 
 
@@ -31,6 +32,7 @@ public class ResponsiveLayoutGraph {
     String url;
     Map<Integer, DomNode> doms;
     Map<Integer, DomNode> tempDoms;
+    Map<Integer, DomNode> oracleDoms;
     int[] widths;
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
@@ -48,9 +50,10 @@ public class ResponsiveLayoutGraph {
      * @param stringWidths      set of ordered widths at which the page was sampled
      * @param url               the URL of the webpage under test
      * @param doms              the DOMs of the webpage at various viewport widths
+     * @param oDoms
      * @throws InterruptedException
      */
-    public ResponsiveLayoutGraph(ArrayList<AlignmentGraphFactory> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms) throws InterruptedException {
+    public ResponsiveLayoutGraph(ArrayList<AlignmentGraphFactory> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms, ResponsiveLayoutGraph o, Map<Integer, DomNode> oDoms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
         this.last = ags.get(ags.size()-1);
@@ -71,6 +74,10 @@ public class ResponsiveLayoutGraph {
             }
             alreadyGathered.add(s);
         }
+        oracle = o;
+        oracleDoms = oDoms;
+
+
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
@@ -230,39 +237,39 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
-//            System.out.println("\n" + restOfWidths[restOfGraphs.indexOf(ag)]);
-            HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
-            HashMap<String, AGEdge> temp = ag.getEdgeMap();
-            HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
+            int width = this.restOfWidths[restOfGraphs.indexOf(ag)];
+            DomNode oracleDN = null;
+            try {
+                oracleDN = oracleDoms.get(width);
+            } catch (Exception e) {
+                oracleDN = null;
+            }
+            DomNode testDN = doms.get(width);
+            if (Redecheck.domsEqual(oracleDN, testDN)) {
 
-            checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+                updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+            } else {
 
-            // NEW METHOD FOR SAVING EFFORT
-            HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
-            updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
+                HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
+                HashMap<String, AGEdge> temp = ag.getEdgeMap();
+                HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
-//            System.out.println("Disappearing size before" + previousToMatch.size());
-//            for (AGEdge a : previousToMatch.values()) {
-//                System.out.println(a);
-//            }
-            checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag)+1]);
-//            System.out.println("Disappearing size after" + previousToMatch.size());
-            // Handle disappearing edges
-            updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
-//            System.out.println();
+                checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-            // Handle appearing edges
-//            System.out.println("Appearing size before " + tempToMatch.size());
-//            System.out.println("number of edges before " + this.alignmentConstraints.size());
-            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-//            System.out.println("number of edges after " + this.alignmentConstraints.size());
-//            System.out.println("Appearing size after" + tempToMatch.size());
-//            for (AGEdge a : tempToMatch.values()) {
-//                System.out.println(a);
-//            }
-            updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
-//            System.out.println();
-            previousMap = ag.getEdgeMap();
+                // NEW METHOD FOR SAVING EFFORT
+                HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
+                updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
+
+                checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+                // Handle disappearing edges
+                updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
+
+                // Handle appearing edges
+                checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+
+                updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
+                previousMap = ag.getEdgeMap();
+            }
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
             System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
@@ -1318,17 +1325,45 @@ public class ResponsiveLayoutGraph {
 
     }
 
-//    public HashMap<String, Edge> generateEdgeMapFromAG(AlignmentGraph ag) {
-//        HashMap<String, Edge> edgeMap = new HashMap<>();
-//
-//        int counter = 0;
-//        for (Contains c : ag.getContains()) {
-//            edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+c.generateLabelling(),c);
-//        }
-//
-//        for (Sibling s : ag.getSiblings()) {
-//            edgeMap.put(s.getNode1().getxPath()+s.getNode2().getxPath()+"sibling"+s.generateLabelling(),s);
-//        }
-//        return edgeMap;
-//    }
+    private void updateWithOracleEdges(int min, int max) {
+        if (oracle != null) {
+            for (AlignmentConstraint ac : oracle.getAlignments().values()) {
+                // Check if the constraint appears between min and max
+                if ((ac.min > min) && (ac.min <= max)) {
+                    // If so, add to the collection of alignment constraints
+//                    System.out.println("Adding an AC");
+                                    this.alignments.put(ac.generateKey(), ac);
+                                    alignmentConstraints.put(ac.generateKey(), new int[]{ac.min, 0}, ac);
+                }
+
+                // Check if it disappears between min and max
+                if ((ac.max > min) && (ac.max <= max)) {
+//                    System.out.println("Completing an AC");
+                    // If so, update the relevant alignment constraint
+                                    Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(ac.generateKey());
+                    //                Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row();
+                                    if (cons.size() > 0) {
+                                        for (int[] pair : cons.keySet()) {
+                                            // Get the one without a max value
+                                            if (pair[1] == 0) {
+                                                AlignmentConstraint aCon = cons.get(pair);
+                                                aCon.setMax(ac.max);
+                                                pair[1] = ac.max;
+                                            }
+                                        }
+                                    }
+                    //                } else if (cons2.size() > 0) {
+                    //                    for (int[] pair : cons2.keySet()) {
+                    //                        // Get the one without a max value
+                    //                        if (pair[1] == 0) {
+                    //                            AlignmentConstraint aCon = cons2.get(pair);
+                    //                            aCon.setMax(ac.max);
+                    //                            pair[1] = ac.max;
+                    //                        }
+                    //                    }
+                    //                }
+                }
+            }
+        }
+    }
 }
