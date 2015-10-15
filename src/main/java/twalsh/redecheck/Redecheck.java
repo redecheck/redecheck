@@ -75,7 +75,6 @@ public class Redecheck {
      * @throws InterruptedException
      */
     public static void runTool(String oracle, String test, String preamble, int[] widths) throws InterruptedException, IOException {
-        System.out.println(Runtime.getRuntime().maxMemory() / 1024);
 
         // Set up the PhantomJS driver to gather the DOMs
         DesiredCapabilities dCaps = new DesiredCapabilities();
@@ -91,7 +90,7 @@ public class Redecheck {
         System.out.println("\n\nGENERATING ORACLE RLG");
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths, true);
+        capturePageModel(oracleUrl, widths, false);
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
@@ -108,12 +107,12 @@ public class Redecheck {
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
         oracleRlg.writeToGraphViz("oracle");
 
-//         Access test webpage and sample
+//      Access test webpage and sample
         startTime = System.nanoTime();
         System.out.println("\n\nGENERATING TEST RLG");
         String testUrl = preamble + test + ".html";
         driver.get(testUrl);
-        capturePageModel(testUrl, widths, true);
+        capturePageModel(testUrl, widths, false);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
@@ -128,6 +127,8 @@ public class Redecheck {
         endTime = System.nanoTime();
         duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+
+
         // Perform the model comparison
         System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
         RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
@@ -138,11 +139,11 @@ public class Redecheck {
 
         driver.quit();
 
-        for (int width : widths) {
-            DomNode dn = oracleDoms.get(width);
-            DomNode dn2 = testDoms.get(width);
-            System.out.println(width + " : " + domsEqual(dn, dn2));
-        }
+//        for (int width : widths) {
+//            DomNode dn = oracleDoms.get(width);
+//            DomNode dn2 = testDoms.get(width);
+//            System.out.println(width + " : " + domsEqual(dn, dn2));
+//        }
     }
 
     /**

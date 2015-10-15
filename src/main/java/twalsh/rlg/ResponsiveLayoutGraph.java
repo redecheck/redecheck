@@ -246,7 +246,6 @@ public class ResponsiveLayoutGraph {
             }
             DomNode testDN = doms.get(width);
             if (Redecheck.domsEqual(oracleDN, testDN)) {
-
                 updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
             } else {
 
@@ -713,12 +712,6 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     public void extractWidthConstraints() throws InterruptedException {
-//        for (String s : this.nodes.keySet()) {
-//            WidthConstraintExtractor wce = new WidthConstraintExtractor();
-//            Thread t = new Thread(wce);
-//            t.start();
-//        }
-
         System.out.println("Extracting Width Constraints.");
         Node n;
             int i = 0;
@@ -1324,6 +1317,17 @@ public class ResponsiveLayoutGraph {
         output.close();
 
     }
+
+//    private void updateWithOracleWidthConstraints(int min, int max, String xpath) {
+//        Node oracleNode = oracle.getNodes().get(xpath);
+//        Node testNode = this.getNodes().get(xpath);
+//
+//        for (WidthConstraint wc : oracleNode.getWidthConstraints()) {
+//            if ( (wc.min > min) && (wc.min < max)) {
+//                this.widthConstraints.put(s, new int[]{previousBreakpoint + 1, breakpoint}, wc);
+//            }
+//        }
+//    }
 
     private void updateWithOracleEdges(int min, int max) {
         if (oracle != null) {
