@@ -93,7 +93,7 @@ Different combinations of values for these parameters can be used to conduct dif
 Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0 to 19) of an open-source website, currently available at http://www.blacktie.co/demo/shield/. As the webpages themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
 
 ```
-java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/mutant2 --start 400 --end 1400 --step 40 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
+java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --start 400 --end 1400 --step 40 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
 ```
 
 Running the command above will allow you to see the tool in action with some different versions of a single webpage being used as input.
