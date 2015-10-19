@@ -46,7 +46,9 @@ public class RLGComparator {
         acErrors = new ArrayList<>();
         errors = new ArrayList<Error>();
         defaultWidths = new int[] {400, 640, 768, 1024};
+//        defaultWidths = new int[] {};
     }
+
 
     /**
      * Executes the overall comparison process

@@ -313,6 +313,7 @@ public class RLGComparatorTest {
         Node n1 = new Node("test");
         Node n2 = new Node("test");
         Node p = new Node("parent");
+        comp.defaultWidths = new int [] {400, 640, 768, 1024};
 
         WidthConstraint wc1 = new WidthConstraint(400, 800, 1, p, 0);
         n1.addWidthConstraint(wc1);

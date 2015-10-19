@@ -245,9 +245,10 @@ public class ResponsiveLayoutGraph {
                 oracleDN = null;
             }
             DomNode testDN = doms.get(width);
-            if (Redecheck.domsEqual(oracleDN, testDN)) {
-                updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-            } else {
+
+//            if (Redecheck.domsEqual(oracleDN, testDN)) {
+//                updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+//            } else {
 
                 HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
                 HashMap<String, AGEdge> temp = ag.getEdgeMap();
@@ -272,7 +273,7 @@ public class ResponsiveLayoutGraph {
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
             System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-        }
+//        }
 
         // Update  alignment constraints of everything still visible
         AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);
@@ -311,7 +312,8 @@ public class ResponsiveLayoutGraph {
                     previous.remove(s);
                     temp.remove(s2);
                 // Check for matching child, but differing parents
-                } else if ( ((!n1.getxPath().equals(n1m.getxPath())) && (n2.getxPath().equals(n2m.getxPath())) && (e instanceof Contains) && (e2 instanceof Contains)) ) {
+                } else if ( ((n1.getxPath().equals(n1m.getxPath())) && (!n2.getxPath().equals(n2m.getxPath())) && (e instanceof Contains) && (e2 instanceof Contains)) ) {
+//                    System.out.println(e);
                     paired.put(e, e2);
                     previous.remove(s);
                     temp.remove(s2);
@@ -363,6 +365,8 @@ public class ResponsiveLayoutGraph {
                             pair[1] = widths[widths.length - 1];
                         }
                     }
+                } else {
+                    System.out.println("Couldn't find existing constraint for " + stilVis);
                 }
             }
         }
@@ -372,6 +376,7 @@ public class ResponsiveLayoutGraph {
         for (AGEdge e : matchedChangingEdges.keySet()) {
             String pairedkey1 = AlignmentGraphFactory.generateKey(e);
             AGEdge matched = matchedChangingEdges.get(e);
+
             int disappearPoint = 0;
             String flip="";
             if (e instanceof Contains) {
@@ -417,18 +422,21 @@ public class ResponsiveLayoutGraph {
             if (matched instanceof Contains) {
                 t = Type.PARENT_CHILD;
                 Contains c = (Contains) matched;
-                ac = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), t, disappearPoint + 1, 0,
+                ac = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(matched.getNode1().getxPath()), t, disappearPoint, 0,
                         new boolean[]{c.isCentered(), c.isLeftJustified(), c.isRightJustified(), c.isMiddle(), c.isTopAligned(), c.isBottomAligned()});
             } else {
                 t = Type.SIBLING;
                 Sibling s2 = (Sibling) matched;
-                ac = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), t, disappearPoint+1, 0,
+                ac = new AlignmentConstraint(this.nodes.get(matched.getNode1().getxPath()), this.nodes.get(matched.getNode2().getxPath()), t, disappearPoint, 0,
                         new boolean[]{s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
 
             }
             if (ac != null) {
+
                 alCons.put(ac.generateKey(), ac);
-                alignmentConstraints.put(ac.generateKey(), new int[]{disappearPoint+1,0}, ac);
+//                System.out.println(alignmentConstraints.size());
+                alignmentConstraints.put(ac.generateKey(), new int[]{disappearPoint,0}, ac);
+//                System.out.println(alignmentConstraints.size());
             }
         }
 
@@ -494,6 +502,7 @@ public class ResponsiveLayoutGraph {
                     e1.printStackTrace();
                 }
             }
+
             Map<int[], AlignmentConstraint> cons = alignmentConstraints.row(prevUM);
             Map<int[], AlignmentConstraint> cons2 = alignmentConstraints.row(flip);
             if (cons.size() > 0) {
@@ -514,6 +523,8 @@ public class ResponsiveLayoutGraph {
                         pair[1] = disappearPoint-1;
                     }
                 }
+            } else {
+                System.out.println("Couldn't find existing constraint for " + prevUM);
             }
         }
     }
@@ -905,7 +916,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -948,7 +959,7 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -987,7 +998,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -1021,7 +1032,7 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);
@@ -1184,7 +1195,7 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
@@ -1226,7 +1237,7 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths, false);
+                Redecheck.capturePageModel(url, extraWidths);
                 alreadyGathered.add(mid);
             }
             tempDoms = Redecheck.loadDoms(extraWidths, url);

@@ -2,6 +2,7 @@ package twalsh.redecheck;
 
 import edu.gatech.xpert.dom.layout.AlignmentGraphFactory;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.File;
@@ -88,9 +89,9 @@ public class Redecheck {
         long startTime = System.nanoTime();
         // Access oracle webpage and sample
         System.out.println("\n\nGENERATING ORACLE RLG");
-        String oracleUrl = preamble + oracle + ".html";
-        driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths, true);
+        String oracleUrl = oracle + ".html";
+        driver.get(preamble + oracleUrl);
+        capturePageModel(oracleUrl, widths);
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
@@ -110,9 +111,9 @@ public class Redecheck {
 //      Access test webpage and sample
         startTime = System.nanoTime();
         System.out.println("\n\nGENERATING TEST RLG");
-        String testUrl = preamble + test + ".html";
-        driver.get(testUrl);
-        capturePageModel(testUrl, widths, true);
+        String testUrl = test + ".html";
+        driver.get(preamble + testUrl);
+        capturePageModel(testUrl, widths);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
@@ -123,6 +124,7 @@ public class Redecheck {
             testAgs.add(agf);
         }
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
+        testRlg.writeToGraphViz("test");
         driver.close();
         endTime = System.nanoTime();
         duration = (endTime - startTime);
@@ -139,15 +141,15 @@ public class Redecheck {
 
         driver.quit();
 
-        for (int width : widths) {
-            DomNode dn = oracleDoms.get(width);
-            DomNode dn2 = testDoms.get(width);
-            System.out.println(width + " : " + domsEqual(dn, dn2));
-            String oracleImage = current + "/../output/" + oracleUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
-            String testImage = current + "/../output/" + testUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
-            ImageComparator ic = new ImageComparator(oracleImage, testImage);
-            System.out.println(ic.compare());
-        }
+//        for (int width : widths) {
+//            DomNode dn = oracleDoms.get(width);
+//            DomNode dn2 = testDoms.get(width);
+//            System.out.println(width + " : " + domsEqual(dn, dn2));
+//            String oracleImage = current + "/../output/" + oracleUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
+//            String testImage = current + "/../output/" + testUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
+//            ImageComparator ic = new ImageComparator(oracleImage, testImage);
+//            System.out.println(ic.compare());
+//        }
     }
 
     /**
@@ -187,7 +189,7 @@ public class Redecheck {
      * @param widths        widths at which to sample the page
      * @throws InterruptedException
      */
-    public static void capturePageModel(String url, int[] widths, boolean takeScreenshot) throws InterruptedException {
+    public static void capturePageModel(String url, int[] widths) throws InterruptedException {
         try {
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
@@ -208,10 +210,9 @@ public class Redecheck {
                     }
                 }
                 driver.manage().window().setSize(new Dimension(w, 600));
-                Thread.sleep(100);
+
                 FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, scriptToExtract));
-                if (takeScreenshot)
-                    captureScreenshot(new File(outFolder + "/screenshot.png"), driver);
+
                 counter++;
             }
         } catch (IOException e) {
@@ -343,15 +344,13 @@ public class Redecheck {
             return true;
         } else if (!hasMeaningfulSize(coords1, coords2)) {
             return true;
-        } else if ((coords1 == null) && (coords2 != null)) {
+        } else if (coords1 == null) {
             return false;
-        } else if ((coords1 != null) && (coords2 == null)) {
+        } else if (coords2 == null) {
             return false;
         } else {
             for (int i = 0; i < 4; i++) {
                 if (coords1[i] != coords2[i]) {
-//                    System.out.println(coords1[0] + ","+coords1[1] + ","+coords1[2] + ","+coords1[3]);
-//					System.out.println(coords1[i] +","+ coords2[i]);
                     return false;
                 }
             }
