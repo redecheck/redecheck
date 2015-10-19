@@ -54,13 +54,13 @@ public class ImageComparator {
             // read the output from the command
 //            System.out.println("Here is the standard output of the command:\n");
             while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
+//                System.out.println(s);
             }
 
             // read any errors from the attempted command
 //            System.out.println("Here is the standard error of the command (if any):\n");
             while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
+//                System.out.println(s);
                 result = Integer.valueOf(s);
             }
 
@@ -79,7 +79,7 @@ public class ImageComparator {
     private void captureScreenshots(String url, int[] widths) throws InterruptedException {
         ChromeDriver driver = new ChromeDriver();
         driver.get("file:///" + preamble + url + ".html");
-        Thread.sleep(500);
+        Thread.sleep(1500);
 //        try {
             int counter = 0;
             for (int i = 0; i < widths.length; i++) {
@@ -100,7 +100,7 @@ public class ImageComparator {
                     }
                 }
                 driver.manage().window().setSize(new Dimension(w, 600));
-                Thread.sleep(250);
+                Thread.sleep(2000);
 
                 captureScreenshot(new File(outFolder + "/screenshot.png"), driver);
 
@@ -122,8 +122,8 @@ public class ImageComparator {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        int[] ws = new int[] {400,500,600,700,800,900,1000};
-        ImageComparator ic = new ImageComparator("rebeccamade.com/index", "rebeccamade.com/0", ws);
+        int[] ws = new int[] {400,500,600,700,800,900,1000, 1100, 1200, 1300};
+        ImageComparator ic = new ImageComparator("briefi.ng/index", "briefi.ng/1", ws);
 
     }
 }

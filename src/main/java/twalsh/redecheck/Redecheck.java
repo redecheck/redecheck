@@ -140,16 +140,6 @@ public class Redecheck {
         System.out.println("\n\nTESTING COMPLETE.");
 
         driver.quit();
-
-//        for (int width : widths) {
-//            DomNode dn = oracleDoms.get(width);
-//            DomNode dn2 = testDoms.get(width);
-//            System.out.println(width + " : " + domsEqual(dn, dn2));
-//            String oracleImage = current + "/../output/" + oracleUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
-//            String testImage = current + "/../output/" + testUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
-//            ImageComparator ic = new ImageComparator(oracleImage, testImage);
-//            System.out.println(ic.compare());
-//        }
     }
 
     /**

@@ -54,6 +54,7 @@ import twalsh.redecheck.Utils;
  */
 public class CSSMutator {
     String baseURL;
+    String current;
     ArrayList<String> cssFiles;
     HashSet<String> usedClasses;
     HashSet<String> usedTags;
@@ -73,7 +74,7 @@ public class CSSMutator {
     StyleSheet originalSS;
     Cloner cloner;
     String shorthand;
-    String preamble = "file:///Users/thomaswalsh/Documents/Workspace/rlt-tool/xpert/testing/";
+    String preamble = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
     HashMap<Integer, Integer> resToCheckWith;
     String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
             "BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
@@ -83,7 +84,8 @@ public class CSSMutator {
             "PARAM", "S", "SCRIPT", "SMALL", "SPAN", "STRIKE", "STRONG",
             "STYLE", "TBODY", "TITLE", "TR", "TT", "U" };
 
-    public CSSMutator(String baseUrl, String shortH, int numMutants) {
+    public CSSMutator(String baseUrl, String shortH, int numMutants) throws IOException {
+        current = new java.io.File( "." ).getCanonicalPath();
         this.baseURL = baseUrl;
         this.shorthand = shortH;
         usedClasses = new HashSet<String>();
@@ -105,6 +107,10 @@ public class CSSMutator {
         wantedProperties.add("margin-bottom");
         wantedProperties.add("margin-left");
         wantedProperties.add("margin-right");
+        wantedProperties.add("display");
+        wantedProperties.add("position");
+        wantedProperties.add("float");
+        wantedProperties.add("clear");
         mutatedFiles = new ArrayList<String>();
         random = new Random();
         this.numMutants = numMutants;
@@ -120,12 +126,20 @@ public class CSSMutator {
     }
 
     @SuppressWarnings("unchecked")
-    public void initialiseFiles() {
+    public void initialiseFiles() throws IOException {
         driver = new ChromeDriver();
+
         driver.get(preamble + baseURL);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String script = Utils.getPkgFileContents(CSSMutator.class, "getCssFiles.js");
-        cssFiles = (ArrayList<String>) js.executeScript(script);
+//        String script = Utils.getPkgFileContents(CSSMutator.class, "getCssFiles.js");
+        String script = null;
+        try {
+            script = Utils.readFile(current + "/resources/getCssFiles.js");
+            cssFiles = (ArrayList<String>) js.executeScript(script);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         driver.quit();
     }
@@ -169,8 +183,8 @@ public class CSSMutator {
             String s = cssContent[i];
 //			System.out.println(s);
             try {
-                System.out.println(cssFiles.get(i));
 //				String prettified = prettifyCss(s);
+//                System.out.println(s);
                 String prettified = s;
                 StyleSheet temp = CSSFactory.parse(prettified);
 //				System.out.println(temp);
@@ -179,8 +193,8 @@ public class CSSMutator {
                 } else {
                     ss.addAll(cloner.deepClone(temp.asList()));
                 }
-                System.out.println(temp.size());
-                System.out.println(ss.size());
+//                System.out.println(temp.size());
+//                System.out.println(ss.size());
 //				originalSS = cloner.deepClone(ss);
                 for (RuleBlock rb : temp.asList()) {
                     if (rb instanceof RuleSet) {
@@ -820,10 +834,10 @@ public class CSSMutator {
 
 
     public static void main(String[] args) throws IOException, CSSException {
-        CSSMutator mt = new CSSMutator("shield.com/index.html", "shield.com", 20);
+        CSSMutator mt = new CSSMutator("shield.com/index.html", "shield.com", 1);
         mt.initialiseFiles();
-        int[] newOnes = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
-//		int[] newOnes = {0};
+//        int[] newOnes = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+		int[] newOnes = {0};
         Set<Integer> set = new HashSet<Integer>();
         for (int i : newOnes) {
             set.add(i);
@@ -831,12 +845,14 @@ public class CSSMutator {
         mt.parseHTML(mt.shorthand);
         mt.loadInCss(mt.shorthand + "/");
         System.out.println(mt.getStats());
-        for (int i = 0; i < mt.numMutants; i++) {
-            if (set.contains((i))) {
-                mt.writeNewHtml(i, mt.mutatedFiles);
-                mt.mutate(i);
-            }
-        }
+        System.out.println(mt.regCandidates.size());
+        System.out.println(mt.mqCandidates.size());
+//        for (int i = 0; i < mt.numMutants; i++) {
+//            if (set.contains((i))) {
+//                mt.writeNewHtml(i, mt.mutatedFiles);
+//                mt.mutate(i);
+//            }
+//        }
 
 
 
