@@ -36,31 +36,49 @@ public class ImageComparator {
 
     }
 
+    public int compare() {
+        String s = null;
+        int result = 0;
+        try {
+            Process p = Runtime.getRuntime().exec("compare -metric ae " +this.oracle + " " +this.test + " null:");
+
+            BufferedReader stdInput = new BufferedReader(new
+                    InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(p.getErrorStream()));
+
+            // read the output from the command
+//            System.out.println("Here is the standard output of the command:\n");
+            while ((s = stdInput.readLine()) != null) {
+                System.out.println(s);
+            }
+
+            // read any errors from the attempted command
+//            System.out.println("Here is the standard error of the command (if any):\n");
+            while ((s = stdError.readLine()) != null) {
+                System.out.println(s);
+                result = Integer.valueOf(s);
+            }
+
+//            System.exit(0);
+        }
+        catch (IOException e) {
+            System.out.println("exception happened - here's what I know: ");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        return result;
+    }
+
     public static void main(String[] args) throws IOException {
         current = new java.io.File( "." ).getCanonicalPath();
         String desktopDir = current + "/../../../Desktop/";
         ImageComparator ic = new ImageComparator(desktopDir+"screenshot.png", desktopDir+"screenshot2.png");
-//
-//        System.out.println(current);
-//        CompareCmd comp = new CompareCmd();
-//        IMOperation op = new IMOperation();
-//        op.addImage(ic.oracle);
-//        op.addImage(ic.test);
-//        try {
-//            comp.run(op);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (IM4JavaException e) {
-//            e.printStackTrace();
-//        }
+
         String s = null;
 
         try {
-
-            // run the Unix "ps -ef" command
-            // using the Runtime exec method:
             Process p = Runtime.getRuntime().exec("compare -metric ae " +ic.oracle + " " +ic.test + " null:");
 
             BufferedReader stdInput = new BufferedReader(new

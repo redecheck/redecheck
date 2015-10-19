@@ -19,9 +19,14 @@ git clone https://github.com/redecheck/redecheck-tool.git
 
 As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/). However, if you would prefer to build the project using the command line, instructions to do so are also provided.
 
-<!-- #### Dependencies
+#### Dependencies
 
-ReDeCheck requires the use of existing code from the X-PERT project, developing by Choudhary et al and currently available at https://github.com/gatech/xpert. After cloning the repository, navigate to the `src` directory and copy the `edu` folder to the `src/java` directory of your ReDeCheck download, as shown below. 
+##### PhantomJS
+ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory of the `target` folder, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `target/resources` where ReDeCheck can access it correctly.
+
+##### WebDiff
+The `webdiff2.js` file is also vital for the execution of ReDeCheck. It is stored in `src/main/java/twalsh/rlg`. Simply copy the file and place in the `target/resources` directory like the PhantomJS executable.
+<!-- ReDeCheck requires the use of existing code from the X-PERT project, developing by Choudhary et al and currently available at https://github.com/gatech/xpert. After cloning the repository, navigate to the `src` directory and copy the `edu` folder to the `src/java` directory of your ReDeCheck download, as shown below. 
 ![File System](/readme-images/file-system.png)
 
 After placing the `edu` folder in the correct location, you will also need to move the *AlignmentGraphFactory.java* file into the `edu/gatech/xpert/dom/layout` directory, as this will allow ReDeCheck to access the information it requires from the X-PERT source code. The final folder structure for this step is shown below After completing both these steps, ReDeCheck should be ready for installation.
@@ -29,7 +34,7 @@ After placing the `edu` folder in the correct location, you will also need to mo
 
 #### Use of X-PERT
 
-ReDeCheck took inspiration from X-PERT, a software solution for automatically detecting cross browser incompatibilities, and reuses small amounts of code written by the developers of X-PERT. The licensing of the released version of X-PERT, available at https://github.com/gatech/xpert allows it to be bundled with ReDeCheck. The X-PERT code is contained within the `edu` directory of the `src` folder.
+ReDeCheck took inspiration from X-PERT, a software solution for automatically detecting cross browser incompatibilities, and reuses small amounts of code written by the developers of X-PERT. The licensing of the released version of X-PERT, available at https://github.com/gatech/xpert allows it to be bundled with ReDeCheck. The X-PERT code is contained within the `edu` directory of the `src` folder. A class 'AlignmentGraphFactory.java' is stored as a "bridge class" with the X-PERT class files to allow ReDeCheck to access them.
 
 #### If using Eclipse:
 

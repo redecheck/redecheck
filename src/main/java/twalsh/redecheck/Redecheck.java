@@ -79,7 +79,7 @@ public class Redecheck {
         // Set up the PhantomJS driver to gather the DOMs
         DesiredCapabilities dCaps = new DesiredCapabilities();
         dCaps.setJavascriptEnabled(true);
-        dCaps.setCapability("takesScreenshot", false);
+        dCaps.setCapability("takesScreenshot", true);
         driver = getNewDriver(dCaps);
         js = (JavascriptExecutor) driver;
         scriptToExtract = Utils.readFile(current +"/resources/webdiff2.js");
@@ -90,7 +90,7 @@ public class Redecheck {
         System.out.println("\n\nGENERATING ORACLE RLG");
         String oracleUrl = preamble + oracle + ".html";
         driver.get(oracleUrl);
-        capturePageModel(oracleUrl, widths, false);
+        capturePageModel(oracleUrl, widths, true);
 
         // Construct oracle RLG
         Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
@@ -112,7 +112,7 @@ public class Redecheck {
         System.out.println("\n\nGENERATING TEST RLG");
         String testUrl = preamble + test + ".html";
         driver.get(testUrl);
-        capturePageModel(testUrl, widths, false);
+        capturePageModel(testUrl, widths, true);
 
         // Construct test RLG
         Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
@@ -139,11 +139,15 @@ public class Redecheck {
 
         driver.quit();
 
-//        for (int width : widths) {
-//            DomNode dn = oracleDoms.get(width);
-//            DomNode dn2 = testDoms.get(width);
-//            System.out.println(width + " : " + domsEqual(dn, dn2));
-//        }
+        for (int width : widths) {
+            DomNode dn = oracleDoms.get(width);
+            DomNode dn2 = testDoms.get(width);
+            System.out.println(width + " : " + domsEqual(dn, dn2));
+            String oracleImage = current + "/../output/" + oracleUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
+            String testImage = current + "/../output/" + testUrl.replaceAll("/", "") + "/" + "width" + width + "/screenshot.png";
+            ImageComparator ic = new ImageComparator(oracleImage, testImage);
+            System.out.println(ic.compare());
+        }
     }
 
     /**
@@ -191,6 +195,7 @@ public class Redecheck {
                 String outFolder;
                 int w = widths[i];
                 outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
+//                System.out.println(outFolder);
                 File theDir = new File(outFolder);
                 if (!theDir.exists()) {
 
@@ -203,6 +208,7 @@ public class Redecheck {
                     }
                 }
                 driver.manage().window().setSize(new Dimension(w, 600));
+                Thread.sleep(100);
                 FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, scriptToExtract));
                 if (takeScreenshot)
                     captureScreenshot(new File(outFolder + "/screenshot.png"), driver);
