@@ -77,13 +77,21 @@ public class ResponsiveLayoutGraph {
         oracle = o;
         oracleDoms = oDoms;
 
+        for (DomNode dn : first.getDomNodeMap().values()) {
+        	try {
+        		if ( (Arrays.equals(dn.getCoords(), dn.getParent().getCoords())) && dn.getParent().getChildren().size() == 1 ) {
+        			System.out.println(dn.getxPath());
+        		}
+        	
+        	} catch (Exception e) {
+        		
+        	}
+        }
+        
 
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
-//        for (Node n : this.nodes.values()) {
-//            System.out.println(n.parentConstraints.size());
-//        }
         System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
         System.out.println("DONE WIDTH CONSTRAINTS");

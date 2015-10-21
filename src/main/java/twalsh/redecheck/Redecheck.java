@@ -186,7 +186,7 @@ public class Redecheck {
 
                 String outFolder;
                 int w = widths[i];
-                outFolder = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + w;
+                outFolder = current + "/../output/" + url.replaceAll("/", "").replace(".html", "") + "/" + "width" + w;
 //                System.out.println(outFolder);
                 File theDir = new File(outFolder);
                 if (!theDir.exists()) {
@@ -231,7 +231,7 @@ public class Redecheck {
         Map<Integer, DomNode> doms = new HashMap<Integer, DomNode>();
         JsonDomParser parser = new JsonDomParser();
         for (int width : widths) {
-            String file = current + "/../output/" + url.replaceAll("/", "") + "/" + "width" + width + "/dom.js";
+            String file = current + "/../output/" + url.replaceAll("/", "").replace(".html", "") + "/" + "width" + width + "/dom.js";
             try {
                 String domStr = FileUtils.readFileToString(new File(file));
                 doms.put(width, parser.parseJsonDom(domStr));

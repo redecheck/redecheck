@@ -56,9 +56,9 @@ public class JsonDomParser {
 			node.setId(getString(nodeData, "id"));
 //			node.setAttributes(getAttributes(nodeData));
 			node.setCoords(getCoords(nodeData));
-//			try {
-////				node.setZindex(nodeData.getInt("zindex"));
-//			} catch (Exception e) { /* Missing zindex */ }
+			try {
+				node.setZindex(nodeData.getInt("zindex"));
+			} catch (Exception e) { /* Missing zindex */ }
 //			break;
 //		default:
 //			System.err.println("Unknown node type:" + type);
