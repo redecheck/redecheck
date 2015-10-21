@@ -54,7 +54,7 @@ public class Redecheck {
                 "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
 
         current = new java.io.File( "." ).getCanonicalPath();
-        System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+        System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         CommandLineParser jce = new CommandLineParser();
         new JCommander(jce, args);
         String oracle = jce.oracle;
@@ -83,7 +83,7 @@ public class Redecheck {
         dCaps.setCapability("takesScreenshot", true);
         driver = getNewDriver(dCaps);
         js = (JavascriptExecutor) driver;
-        scriptToExtract = Utils.readFile(current +"/resources/webdiff2.js");
+        scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
 
 
         long startTime = System.nanoTime();

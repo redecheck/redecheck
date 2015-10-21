@@ -3,6 +3,7 @@ package twalsh.mutation;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -111,7 +112,7 @@ public class ImageComparator {
     }
 
     public static void captureScreenshot(File screenshot, ChromeDriver driver) {
-        File scrFile = driver.getScreenshotAs(OutputType.FILE);
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(scrFile, screenshot);
         } catch (IOException e) {

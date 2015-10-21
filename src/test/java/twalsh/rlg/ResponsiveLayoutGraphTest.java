@@ -711,9 +711,9 @@ public class ResponsiveLayoutGraphTest {
         Iterator iter = ranges.iterator();
         int[] array = (int[]) iter.next();
         int[] array2 = (int[]) iter.next();
-        assertEquals(true, (Arrays.equals(array, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));
-
-        assertEquals(true, (Arrays.equals(array2, new int[] {400, 500})) | (Arrays.equals(array, new int[] {600, 700})));
+        boolean rightWayRound = Arrays.equals(array, new int[] {400, 500}) && (Arrays.equals(array2, new int[] {600, 700}));
+        boolean flipped = Arrays.equals(array2, new int[] {400, 500}) && (Arrays.equals(array, new int[] {600, 700}));
+        assertEquals(true, rightWayRound || flipped);
 
     }
 

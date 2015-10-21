@@ -359,10 +359,11 @@ while(nodes.length > 0){
 	             	c('nodeid', nodeid),
 	             	c('pid', pid),
 					c('xpath', n, getXPath, true),
+					c('zindex', n, getZIndex),
 					c('coord', n, getDOMCoords)];
 					//c('clickable', n, isClickable),
 					//c('visible', n, isVisible),
-					//c('zindex', n, getZIndex),
+					
 					//c('attributes', n.attributes, getAttributes)];
 	  
 	  

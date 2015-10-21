@@ -145,7 +145,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.2</version>
+            <version>1.8.3</version>
         </dependency>
 
         <dependency>
@@ -164,6 +164,12 @@
             <groupId>org.im4java</groupId>
             <artifactId>im4java</artifactId>
             <version>1.4.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>de.sven-jacobs</groupId>
+            <artifactId>loremipsum</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>

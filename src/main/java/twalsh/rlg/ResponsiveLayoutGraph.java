@@ -269,11 +269,11 @@ public class ResponsiveLayoutGraph {
 
                 updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
                 previousMap = ag.getEdgeMap();
-            }
+//            }
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
             System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
-//        }
+        }
 
         // Update  alignment constraints of everything still visible
         AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);

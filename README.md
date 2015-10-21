@@ -22,10 +22,7 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 #### Dependencies
 
 ##### PhantomJS
-ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory of the `target` folder, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `target/resources` where ReDeCheck can access it correctly.
-
-##### WebDiff
-The `webdiff2.js` file is also vital for the execution of ReDeCheck. It is stored in `src/main/java/twalsh/rlg`. Simply copy the file and place in the `target/resources` directory like the PhantomJS executable.
+ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `resources` where ReDeCheck can access it correctly. 
 
 #### Use of X-PERT
 
