@@ -1,0 +1,45 @@
+
+/HTML/BODY/DIV[2]/DIV[2]/H1[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 :  + 674
+Unmatched constraint in graph 2: 983 -> 1300 :  + 674
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 794
+Unmatched constraint in graph 2: 983 -> 1199 :  + 794
+
+/HTML/BODY/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 :  + 830
+Unmatched constraint in graph 2: 983 -> 1300 :  + 830
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 794
+Unmatched constraint in graph 2: 983 -> 1199 :  + 794
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 794
+Unmatched constraint in graph 2: 983 -> 1199 :  + 794
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 794
+Unmatched constraint in graph 2: 983 -> 1199 :  + 794
+
+/HTML/BODY/DIV[2]/DIV[2]/P
+
+Unmatched constraint in graph 1: 992 -> 1300 :  + 674
+Unmatched constraint in graph 2: 983 -> 1300 :  + 674
+
+/HTML/BODY/DIV[2]/DIV[2]/H1
+
+Unmatched constraint in graph 1: 992 -> 1300 :  + 674
+Unmatched constraint in graph 2: 983 -> 1300 :  + 674
+
+/HTML/BODY/DIV[2]/DIV[2]/P[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 :  + 674
+Unmatched constraint in graph 2: 983 -> 1300 :  + 674

@@ -1,0 +1,24 @@
+Changed media query from 768.0 to 761.0
+@media screen AND (min-width: 768.0px) {
+	.modal-dialog {
+		width: 600.0px;
+		margin: 30.0px auto;
+	}
+
+	.modal-content {
+		-webkit-box-shadow: 0.0 5.0px 15.0px rgba(0,0,0,0.5);
+		box-shadow: 0.0 5.0px 15.0px rgba(0,0,0,0.5);
+	}
+}
+
+@media screen AND (min-width: 761.0px) {
+	.modal-dialog {
+		width: 600.0px;
+		margin: 30.0px auto;
+	}
+
+	.modal-content {
+		-webkit-box-shadow: 0.0 5.0px 15.0px rgba(0,0,0,0.5);
+		box-shadow: 0.0 5.0px 15.0px rgba(0,0,0,0.5);
+	}
+}

@@ -1,0 +1,18 @@
+===================== ITERATION 1 =====================
+
+
+===================== ITERATION 2 =====================
+
+
+447
+
+"MISSING-SIBLING-2","(/HTML/BODY/SECTION[3]-/HTML/BODY/SECTION[2])","(*-*)"
+"MISSING-SIBLING-2","(/HTML/BODY/SECTION[2]/DIV/DIV[2]/P-/HTML/BODY/SECTION[2]/DIV/DIV[2]/H1)","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/SECTION[4]-/HTML/BODY/SECTION)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/SECTION[2]/DIV/DIV[2]/H1-/HTML/BODY/SECTION[2]/DIV/DIV[2]/P)"
+"MISSING-SIBLING-2","(/HTML/BODY/SECTION-/HTML/BODY/SECTION[4])","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/SECTION[2]-/HTML/BODY/SECTION[3])"
+
+===================== ITERATION 3 =====================
+
+

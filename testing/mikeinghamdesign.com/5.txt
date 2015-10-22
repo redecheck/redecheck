@@ -1,0 +1,8 @@
+Changed term from 50.0 to 50.0
+.col-md-6 {
+	width: 50.0%;
+}
+
+.col-md-6 {
+	width: 50.0%;
+}

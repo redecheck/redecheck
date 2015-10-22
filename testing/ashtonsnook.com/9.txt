@@ -1,0 +1,12 @@
+Changed term from 0.0 to 5.0
+.nav {
+	margin-bottom: 0.0;
+	padding-left: 0.0;
+	list-style: none;
+}
+
+.nav {
+	margin-bottom: 5.0px;
+	padding-left: 0.0;
+	list-style: none;
+}

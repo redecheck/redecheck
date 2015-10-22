@@ -1,0 +1,142 @@
+/******************************************
+
+	Reality VS Reality ~ styles
+
+*******************************************/
+@import url(http://fonts.googleapis.com/css?family=Six+Caps);
+/*************** Basic Changes ~ probably used on all Unique Layout posts ***************/
+/* background IMG */
+/* line 14, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+div.site-inner {
+  background-image: url(texture.gif); }
+
+/* help out nav */
+/* line 19, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+nav.nav-primary {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8); }
+
+/* line 26, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+footer.entry-footer nav.post-links ul {
+  border-color: rgba(255, 255, 255, 0.5); }
+  /* line 30, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+  footer.entry-footer nav.post-links ul li a {
+    color: rgba(255, 255, 255, 0.4);
+    /* transition */
+    -moz-transition-property: color;
+    -o-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -moz-transition-timing-function: ease;
+    -o-transition-timing-function: ease;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease; }
+    /* line 36, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+    footer.entry-footer nav.post-links ul li a:hover, footer.entry-footer nav.post-links ul li a:focus {
+      color: rgba(255, 255, 255, 0.7); }
+
+/* comments & respond*/
+/* line 51, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+div.entry-comments article header.comment-header p.comment-author span,
+div.entry-comments article header.comment-header p.comment-author span a,
+div.entry-comments article header.comment-header p.comment-meta time a {
+  color: rgba(255, 255, 255, 0.7) !important; }
+/* line 56, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+div.entry-comments article header.comment-header span.top-comment-index {
+  color: rgba(255, 255, 255, 0.3) !important; }
+
+/* div.entry-comments */
+/* line 63, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+div.comment-respond {
+  color: rgba(255, 255, 255, 0.7); }
+
+/*************** Custom header and content styles ***************/
+/* line 70, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+header.entry-header h1.entry-title {
+  position: relative;
+  z-index: 60;
+  /* type */
+  font-family: "Six Caps";
+  color: white;
+  text-transform: uppercase;
+  font-size: 2em;
+  text-align: center;
+  /* push content down */
+  margin-bottom: 0.5em;
+  /* transition */
+  -moz-transition-property: color;
+  -o-transition-property: color;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -moz-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  -webkit-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  -moz-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  -webkit-transition-delay: 0.5s;
+  transition-delay: 0.5s; }
+  /* line 88, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+  header.entry-header h1.entry-title:hover, header.entry-header h1.entry-title:focus {
+    color: rgba(255, 255, 255, 0); }
+  /* line 94, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+  header.entry-header h1.entry-title span.word2 {
+    font-size: 0.45em;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    vertical-align: middle; }
+
+/* line 103, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+main.content {
+  /* article */ }
+  /* line 104, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+  main.content article {
+    /* div.entry-content */ }
+    /* line 105, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+    main.content article div.entry-content {
+      /* sun eye brain */
+      /* div.theme-img */ }
+      /* line 107, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+      main.content article div.entry-content p.entry-meta {
+        display: none; }
+      /* line 112, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+      main.content article div.entry-content div.theme-img {
+        position: absolute;
+        z-index: 50;
+        top: 7.6em;
+        left: 0;
+        opacity: 0.45;
+        /* kill silly WP br elems */
+        /* span */ }
+        /* line 120, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+        main.content article div.entry-content div.theme-img br {
+          display: none; }
+        /* line 124, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+        main.content article div.entry-content div.theme-img span {
+          display: inline-block;
+          width: 28%;
+          /* img */ }
+          /* line 128, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+          main.content article div.entry-content div.theme-img span.brain {
+            margin-left: 5%;
+            margin-right: 2%; }
+          /* line 132, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+          main.content article div.entry-content div.theme-img span.eye {
+            margin-right: 2%; }
+          /* line 136, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+          main.content article div.entry-content div.theme-img span img {
+            width: 100%;
+            height: auto; }
+      /* line 144, ../../../sass/unique-posts/reality-vs-reality/unique-styles.scss */
+      main.content article div.entry-content p {
+        color: rgba(255, 255, 255, 0.7); }
+
+/* main.content */

@@ -1,0 +1,183 @@
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+Unmatched contains in graph 1 : 0 -> 992 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION0 -> 992 : 
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  CJ,
+Unmatched contains in graph 2 : 0 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION0 -> 1300 : 
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION rightOf above
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION leftOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] rightOf
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV below
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV rightOf
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 318
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 404
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH TOPJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV992 -> 1300 :  LJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV992 -> 1300 :  LJ, TJ,
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+Unmatched contains in graph 1 : 0 -> 992 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION0 -> 992 : 
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+Unmatched contains in graph 2 : 0 -> 991 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION0 -> 991 : 
+Unmatched contains in graph 2 : 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] above
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] leftOf
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] above
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 318
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 404
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH BOTTOMJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  LJ, BJ
+ERROR WITH LEFTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  LJ, BJ
+ERROR WITH RIGHTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]992 -> 1300 :  LJ, BJ
+Unmatched sibling in graph 1 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV below leftEdge rightEdge
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+ERROR WITH LEFTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+ERROR WITH RIGHTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION rightOf above
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 318
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 404
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH TOPJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV992 -> 1300 :  LJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV992 -> 1300 :  LJ, TJ,
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 319
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 405
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH TOPJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]992 -> 1300 :  CJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV contains /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]992 -> 1300 :  CJ, TJ,
+ERROR WITH ABOVE Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] rightOf above
+ERROR WITH LEFTOF Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] rightOf above
+ERROR WITH RIGHTOF Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] rightOf above
+ERROR WITH TOP ALIGN Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] leftOf topAlign bottomAlign
+ERROR WITH BOTTOM ALIGN Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4] leftOf topAlign bottomAlign
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+Unmatched contains in graph 1 : 992 -> 1199 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION992 -> 1199 :  RJ, BJ
+Unmatched contains in graph 1 : 1200 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION1200 -> 1300 :  RJ,
+Unmatched contains in graph 2 : 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION rightOf below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION rightOf below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION rightOf topAlign bottomAlign
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 318
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 404
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH BOTTOMJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  LJ, BJ
+ERROR WITH LEFTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  LJ, BJ
+ERROR WITH RIGHTJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  RJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]992 -> 1300 :  LJ, BJ
+Unmatched sibling in graph 1 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV below leftEdge rightEdge
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+Unmatched contains in graph 1 : 0 -> 992 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION0 -> 992 : 
+Unmatched contains in graph 1 : 992 -> 1199 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION992 -> 1199 :  LJ, BJ
+Unmatched contains in graph 1 : 1200 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION1200 -> 1300 :  LJ,
+Unmatched contains in graph 2 : 0 -> 991 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION0 -> 991 : 
+Unmatched contains in graph 2 : 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION992 -> 1300 :  LJ,
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] above
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] leftOf
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] above
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 288
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 355
+Unmatched constraint in graph 2: 992 -> 1199 :  + 374
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 459
+Unmatched contains in graph 1 : 0 -> 992 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION0 -> 992 : 
+Unmatched contains in graph 1 : 992 -> 1199 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION992 -> 1199 :  CJ, BJ
+Unmatched contains in graph 1 : 1200 -> 1300 : /HTML/BODY/DIV[8]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION1200 -> 1300 :  CJ,
+Unmatched contains in graph 2 : 0 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION0 -> 1300 : 
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]
+Unmatched sibling in graph 1 : Between 0 and 992 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]/DIV/FIGURE/FIGCAPTION leftOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[4]/DIV/FIGURE/FIGCAPTION leftOf below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV/DIV/FIGURE/FIGCAPTION rightOf below
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV/DIV[3]/DIV/FIGURE/FIGCAPTION below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV below
+Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3]
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] rightOf
+Unmatched sibling in graph 2 : Between 0 and 991 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV below
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]/DIV/FIGURE/FIGCAPTION -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV rightOf
+
+/HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 319
+Unmatched constraint in graph 1: 1200 -> 1300 :  + 385
+Unmatched constraint in graph 2: 992 -> 1199 :  + 405
+Unmatched constraint in graph 2: 1200 -> 1300 :  + 489
+ERROR WITH TOPJUST 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]992 -> 1300 :  CJ, versus 992 -> 1300 : /HTML/BODY/DIV[8]/DIV[2]/DIV[2] contains /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2]992 -> 1300 :  CJ, TJ,
+ERROR WITH ABOVE Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] rightOf above
+ERROR WITH LEFTOF Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] rightOf above
+ERROR WITH RIGHTOF Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] leftOf topAlign bottomAlign versus Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] rightOf above
+ERROR WITH TOP ALIGN Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] leftOf topAlign bottomAlign
+ERROR WITH BOTTOM ALIGN Between 992 and 1300 => /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[2] -> /HTML/BODY/DIV[8]/DIV[2]/DIV[2]/DIV[3] leftOf topAlign bottomAlign

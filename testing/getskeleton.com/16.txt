@@ -1,0 +1,20 @@
+Changed term from 100.0 to 92.0
+.navbar, .navbar-spacer {
+	display: block;
+	width: 100.0%;
+	height: 6.5rem;
+	background: #ffffff;
+	z-index: 99.0;
+	border-top: 1.0px solid #eeeeee;
+	border-bottom: 1.0px solid #eeeeee;
+}
+
+.navbar, .navbar-spacer {
+	display: block;
+	width: 92.0%;
+	height: 6.5rem;
+	background: #ffffff;
+	z-index: 99.0;
+	border-top: 1.0px solid #eeeeee;
+	border-bottom: 1.0px solid #eeeeee;
+}

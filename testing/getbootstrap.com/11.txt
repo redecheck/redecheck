@@ -1,0 +1,42 @@
+Changed media query from 768.0 to 775.0
+@media (min-width: 768.0px) {
+	.bs-docs-featurette {
+		padding-top: 100.0px;
+		padding-bottom: 100.0px;
+	}
+
+	.bs-docs-featurette-title {
+		font-size: 40.0px;
+	}
+
+	.bs-docs-featurette .lead {
+		max-width: 80.0%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.bs-docs-featurette .img-responsive {
+		margin-top: 0.0;
+	}
+}
+
+@media (min-width: 775.0px) {
+	.bs-docs-featurette {
+		padding-top: 100.0px;
+		padding-bottom: 100.0px;
+	}
+
+	.bs-docs-featurette-title {
+		font-size: 40.0px;
+	}
+
+	.bs-docs-featurette .lead {
+		max-width: 80.0%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.bs-docs-featurette .img-responsive {
+		margin-top: 0.0;
+	}
+}

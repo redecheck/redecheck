@@ -1,0 +1,16 @@
+Changed term from 150.0 to 144.0
+#footer-more {
+	float: left;
+	font-size: 0.8em;
+	margin: 0.0;
+	text-align: left;
+	width: 150.0px;
+}
+
+#footer-more {
+	float: left;
+	font-size: 0.8em;
+	margin: 0.0;
+	text-align: left;
+	width: 144.0px;
+}

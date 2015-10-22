@@ -1,0 +1,72 @@
+Changed media query from 550.0 to 560.0
+@media (min-width: 550.0px) {
+	.header {
+		margin-top: 18.0rem;
+	}
+
+	.value-props {
+		margin-top: 9.0rem;
+		margin-bottom: 7.0rem;
+	}
+
+	.value-img {
+		margin-bottom: 1.0rem;
+	}
+
+	.example-grid .column, .example-grid .columns {
+		margin-bottom: 1.5rem;
+	}
+
+	.docs-section {
+		padding: 6.0rem 0.0;
+	}
+
+	.example-send-yourself-copy {
+		float: right;
+		margin-top: 12.0px;
+	}
+
+	.example-screenshot-wrapper {
+		position: absolute;
+		width: 48.0%;
+		height: 100.0%;
+		left: 0.0;
+		max-height: none;
+	}
+}
+
+@media (min-width: 560.0px) {
+	.header {
+		margin-top: 18.0rem;
+	}
+
+	.value-props {
+		margin-top: 9.0rem;
+		margin-bottom: 7.0rem;
+	}
+
+	.value-img {
+		margin-bottom: 1.0rem;
+	}
+
+	.example-grid .column, .example-grid .columns {
+		margin-bottom: 1.5rem;
+	}
+
+	.docs-section {
+		padding: 6.0rem 0.0;
+	}
+
+	.example-send-yourself-copy {
+		float: right;
+		margin-top: 12.0px;
+	}
+
+	.example-screenshot-wrapper {
+		position: absolute;
+		width: 48.0%;
+		height: 100.0%;
+		left: 0.0;
+		max-height: none;
+	}
+}

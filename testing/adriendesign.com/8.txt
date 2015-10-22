@@ -1,0 +1,32 @@
+Changed media query from 40.0 to 40.0
+@media (min-width: 40.0em) {
+	main.content section.portfolio ul.entries li.entry {
+		width: 33.0%;
+	}
+
+	main.content section.portfolio ul.entries li.entry span.image {
+		width: 20.0vw;
+		height: 20.0vw;
+		border-width: 1.5vw;
+	}
+
+	body.page-template-my-work-page-php main.content section.portfolio ul.entries li.entry {
+		margin-bottom: 2.0em;
+	}
+}
+
+@media (min-width: 40.0em) {
+	main.content section.portfolio ul.entries li.entry {
+		width: 33.0%;
+	}
+
+	main.content section.portfolio ul.entries li.entry span.image {
+		width: 20.0vw;
+		height: 20.0vw;
+		border-width: 1.5vw;
+	}
+
+	body.page-template-my-work-page-php main.content section.portfolio ul.entries li.entry {
+		margin-bottom: 2.0em;
+	}
+}

@@ -1,0 +1,8 @@
+Changed term from 1170.0 to 1176.0
+.container {
+	width: 1170.0px;
+}
+
+.container {
+	width: 1176.0px;
+}

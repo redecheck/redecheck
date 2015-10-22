@@ -1,0 +1,10 @@
+Changed term from 15.0 to 22.0
+.header, .marketing, .footer {
+	padding-left: 15.0px;
+	padding-right: 15.0px;
+}
+
+.header, .marketing, .footer {
+	padding-left: 15.0px;
+	padding-right: 22.0px;
+}

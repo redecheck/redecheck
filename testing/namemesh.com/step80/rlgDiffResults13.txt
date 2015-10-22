@@ -1,0 +1,4 @@
+
+/HTML/BODY/NAV/DIV[2]/UL[2]
+
+ERROR WITH TOP ALIGN Between 768 and 1300 => /HTML/BODY/NAV/DIV[2]/UL[2] -> /HTML/BODY/NAV/DIV rightOf topAlign bottomAlign

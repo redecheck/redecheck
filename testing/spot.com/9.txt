@@ -1,0 +1,12 @@
+Changed term from 30.0 to 23.0
+.modal-dialog {
+	width: 600.0px;
+	padding-top: 30.0px;
+	padding-bottom: 30.0px;
+}
+
+.modal-dialog {
+	width: 600.0px;
+	padding-top: 30.0px;
+	padding-bottom: 23.0px;
+}

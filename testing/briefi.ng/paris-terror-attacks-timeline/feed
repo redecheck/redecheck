@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>Comments on: Timeline: Paris Terror Attacks</title>
+	<atom:link href="http://briefi.ng/paris-terror-attacks-timeline/feed" rel="self" type="application/rss+xml" />
+	<link>http://briefi.ng</link>
+	<description>Stay informed.</description>
+	<lastBuildDate>Tue, 13 Jan 2015 13:09:27 +0000</lastBuildDate>
+		<sy:updatePeriod>hourly</sy:updatePeriod>
+		<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=4.0.1</generator>
+	<item>
+		<title>By: The next Charlie Hebdo cover is released, ISIS hacks CENTCOM’s Twitter account and more in today’s Briefing. &#124; Briefing</title>
+		<link>http://briefi.ng/paris-terror-attacks-timeline#comment-3</link>
+		<dc:creator><![CDATA[The next Charlie Hebdo cover is released, ISIS hacks CENTCOM’s Twitter account and more in today’s Briefing. &#124; Briefing]]></dc:creator>
+		<pubDate>Tue, 13 Jan 2015 13:09:27 +0000</pubDate>
+		<guid isPermaLink="false">http://briefi.ng/?page_id=314#comment-3</guid>
+		<description><![CDATA[[&#8230;] Issue Timeline &#8594; [&#8230;]]]></description>
+		<content:encoded><![CDATA[<p>[&#8230;] Issue Timeline &rarr; [&#8230;]</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: 1 million march in Paris, divers find the black boxes from Flight 8501 and more in today’s Briefing. &#124; Briefing</title>
+		<link>http://briefi.ng/paris-terror-attacks-timeline#comment-2</link>
+		<dc:creator><![CDATA[1 million march in Paris, divers find the black boxes from Flight 8501 and more in today’s Briefing. &#124; Briefing]]></dc:creator>
+		<pubDate>Mon, 12 Jan 2015 13:14:27 +0000</pubDate>
+		<guid isPermaLink="false">http://briefi.ng/?page_id=314#comment-2</guid>
+		<description><![CDATA[[&#8230;] EVENT TIMELINE &#8594; [&#8230;]]]></description>
+		<content:encoded><![CDATA[<p>[&#8230;] EVENT TIMELINE &rarr; [&#8230;]</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>

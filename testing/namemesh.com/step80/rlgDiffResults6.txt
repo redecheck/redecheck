@@ -1,0 +1,30 @@
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 25% of parent
+Unmatched constraint in graph 2: 992 -> 1300 : 28.26% of parent + -3.17
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[4]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 25% of parent
+Unmatched constraint in graph 2: 992 -> 1300 : 27.81% of parent + 2.61
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] rightOf topAlign
+Unmatched sibling in graph 1 : Between 0 and 991 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 992 and 1083 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] rightOf topAlign
+Unmatched sibling in graph 1 : Between 1084 and 1167 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 1168 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] rightOf topAlign
+Unmatched sibling in graph 2 : Between 992 and 1246 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] rightOf
+Unmatched sibling in graph 2 : Between 1247 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 0 and 1246 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 1247 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] leftOf below
+ERROR WITH TOP ALIGN Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV[4] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV rightOf topAlign
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[3]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 25% of parent
+Unmatched constraint in graph 2: 992 -> 1300 : 27.62% of parent + 4.7
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1300 : 25% of parent
+Unmatched constraint in graph 2: 992 -> 1300 : 27.93% of parent + 0.82

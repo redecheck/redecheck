@@ -1,0 +1,12 @@
+Changed term from 100.0 to 104.0
+.img-responsive {
+	display: block;
+	max-width: 100.0%;
+	height: auto;
+}
+
+.img-responsive {
+	display: block;
+	max-width: 104.0%;
+	height: auto;
+}

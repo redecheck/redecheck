@@ -1,0 +1,32 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/DIV/DIV/DIV[2]/DIV
+
+Unmatched sibling in graph 1 : Between 0 and 400 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 401 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] below
+Unmatched sibling in graph 2 : Between 0 and 407 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 408 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] below
+
+/HTML/BODY/DIV/DIV/DIV/DIV/DIV[2]
+
+Unmatched sibling in graph 1 : Between 0 and 400 => /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above leftEdge rightEdge
+Unmatched sibling in graph 1 : Between 401 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above
+Unmatched sibling in graph 2 : Between 0 and 407 => /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 408 and 1300 => /HTML/BODY/DIV/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+

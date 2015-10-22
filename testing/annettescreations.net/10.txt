@@ -1,0 +1,10 @@
+Changed term from 0.0 to 3.0
+.modal-title {
+	margin: 0.0;
+	line-height: 1.4285715;
+}
+
+.modal-title {
+	margin: 3.0px;
+	line-height: 1.4285715;
+}

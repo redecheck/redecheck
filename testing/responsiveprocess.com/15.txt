@@ -1,0 +1,124 @@
+Changed media query from 600.0 to 609.0
+@media screen AND (min-width: 600.0px) {
+	h1 {
+		font-size: 2.0em;
+	}
+
+	h2 {
+		font-size: 2.4em;
+	}
+
+	nav ul#logo li {
+		background: url('../img/logo3.png') no-repeat top;
+		height: 80.0px;
+		margin: 0.0;
+		text-indent: -9000.0em;
+		width: 85.0px;
+		background-size: 85.0px 80.0px;
+	}
+
+	nav ul#logo li a {
+		float: left;
+		height: 80.0px;
+		width: 85.0px;
+	}
+
+	nav ul#logo {
+		margin-bottom: 0.0;
+	}
+
+	.smallBox {
+		font-size: 1.0em;
+		width: 30.0%;
+	}
+
+	.step {
+		float: left;
+		width: 100.0%;
+	}
+
+	.step p {
+		float: right;
+		width: 48.0%;
+	}
+
+	p {
+		margin: 0.0 0.0 20.0px;
+	}
+
+	.step img {
+		float: left;
+		margin: 0.0 15.0px 15.0px 0.0;
+		width: 48.0%;
+	}
+
+	section#intro {
+		margin-top: 90.0px;
+	}
+
+	section#intro h1 {
+		font-size: 2.5em;
+	}
+}
+
+@media screen AND (min-width: 609.0px) {
+	h1 {
+		font-size: 2.0em;
+	}
+
+	h2 {
+		font-size: 2.4em;
+	}
+
+	nav ul#logo li {
+		background: url('../img/logo3.png') no-repeat top;
+		height: 80.0px;
+		margin: 0.0;
+		text-indent: -9000.0em;
+		width: 85.0px;
+		background-size: 85.0px 80.0px;
+	}
+
+	nav ul#logo li a {
+		float: left;
+		height: 80.0px;
+		width: 85.0px;
+	}
+
+	nav ul#logo {
+		margin-bottom: 0.0;
+	}
+
+	.smallBox {
+		font-size: 1.0em;
+		width: 30.0%;
+	}
+
+	.step {
+		float: left;
+		width: 100.0%;
+	}
+
+	.step p {
+		float: right;
+		width: 48.0%;
+	}
+
+	p {
+		margin: 0.0 0.0 20.0px;
+	}
+
+	.step img {
+		float: left;
+		margin: 0.0 15.0px 15.0px 0.0;
+		width: 48.0%;
+	}
+
+	section#intro {
+		margin-top: 90.0px;
+	}
+
+	section#intro h1 {
+		font-size: 2.5em;
+	}
+}

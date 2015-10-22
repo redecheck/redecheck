@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Startup Company Name Generator</title>
+ 
+<meta name="description" content="Brand name generator for startup, product, app and other online web business. Generators
+ include over 6M words with free social username checks.">
+<script data-cfasync="false" type='text/javascript'>
+var FDUPA = FDUPA || {};FDUPA.q = FDUPA.q || [];FDUPA.q.push(['mark', 'firstbyte', (new Date).getTime()]);
+</script>
+<link rel="icon" type="image/gif" href="media/favicon.gif">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="p:domain_verify" content="e3fb51a684ac3c2596c65249ade202f7">
+<link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="static/css/ncommon.css" type="text/css">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<meta property="og:title" content="#domain name #search made fun and easy - namemesh.com">
+<meta property="og:url" content="http://www.namemesh.com">
+<meta property="og:image" content="http://www.namemesh.com/static/namemesh.jpg">
+<link rel="stylesheet" href="static/css/select22.css" type="text/css">
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="index.html">NAME <i class="icon-th text-primary"></i> MESH</a>
+</div>
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+<ul class="nav navbar-nav">
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a href="http://www.namemesh.com/blog" class="pad-17">BLOG</a></li>
+</ul>
+</div>
+</nav>
+<div id="wrapper">
+<div id="content">
+<div class="container" id="sng">
+<br>
+<div class="row">
+<h1 class="text-center">Startup Company Name Generator</h1>
+</div>
+<br>
+<div class="row">
+<div class="row" id="quick">
+<br>
+<h2>Use 2-3 Keywords | <small><a href="company-name-generator#many">Go to 4 or more keywords tool >></a></small></h2>
+<br>
+<p class="text-center lead"> Just enter your main keywords to quickly generate company names and check domain availability.</p>
+<div class="row">
+<p class="col-md-6 col-md-offset-3 alert-warning" id="stip">
+<i class="icon-lightbulb icon-large"></i> <b>TIP</b> - Separate keywords by <b>space</b> for better results
+</p>
+<div class="input-group input-group-lg col-md-6 col-md-offset-3">
+<input id="sinpt" autofocus onkeydown="document.getElementById('stip').style.display='block';if (event.keyCode == 13) document.getElementById('sbtn').click()" type="text" class="form-control">
+<span class="input-group-btn">
+<button id="sbtn" class="btn btn-primary" type="button">
+Generate
+</button> </span>
+</div>
+<p class="col-md-6 col-md-offset-3">
+try - <a href="http://www.namemesh.com/domain-name-search/cool%20idea">cool idea</a> , <a href="http://www.namemesh.com/domain-name-search/app%20-%20maker">app - maker</a> , <a href="http://www.namemesh.com/domain-name-search/app*%20x">app* x</a>, <a href="http://www.namemesh.com/domain-name-search/pay*%20p%3F%3F">pay* p??</a> , <a href="http://www.namemesh.com/domain-name-search/live%20your%20dream">live your dream</a>
+</p>
+<br>
+<div class="col-md-6 col-md-offset-3 text-center">
+<p class="lead">With 20+ generators &amp; Social availability check!</p>
+</div>
+</div>
+<br><br>
+<div class="row">
+<div class="row col-md-3">
+<div class="panel panel-info">
+<div class="panel-heading">
+<h3 class="panel-title">COMMON</h3>
+</div>
+<div class="panel-body">
+<p>Check availability for the popular tlds like com, net, org and country specific tlds. Also suggests names separated by hyphens.</p>
+</div>
+</div>
+<br>
+<div class="pack">
+<div class="panel panel-info">
+<div class="panel-heading">
+<h3 class="panel-title">SIMILAR</h3>
+</div>
+<div class="panel-body">
+<p>Generate highly relevant name suggestions which are closely related to the primary keywords searched for. Some of the methods used for the task are as follows</p>
+<ul>
+<li>Synonyms, Antonyms and others using Thesaurus</li>
+<li>More suggestions using words that co-occur much more often than normally expected (also known as collocations) and words that often form
+a continuous sequence in a text or speech (also known as n-grams)</li>
+<li>With 6 million word relations database</li>
+<li>Real World Intelligence which takes into account nearby places, languages, similar products etc. Check these examples - (<a href="http://www.namemesh.com/domain-name-search/california">california</a>, <a href="http://www.namemesh.com/domain-name-search/mclaren">mclaren</a>, <a href="http://www.namemesh.com/domain-name-search/mac">mac</a>)</li>
+</ul>
+<p>Sometimes you might want to limit these alternative suggestions to one of the keywords or have keywords follow some characteristics based on
+length or starting and ending sequences. In these cases, you can use some special characters with your keywords :-</p>
+<ul>
+<li>To make sure the your keyword is never replaced or removed in the generated company name, you can use the <b>'*'</b> character with keyword.
+<p><b>For example, </b>: generating names for the keywords 'cool* company' will make sure that the word 'cool' is not substituted, whereas
+the keyword 'company' will be replaced with other similarly related words like business, firm, enterprise, brand etc</li>
+<li>For inspiration, you can use <b>'?'</b>, which matches any character. <p><b>For example</b> : For dictionary words comprising of 4 letters you can use
+'????' as the keyword in the input box. If you specify partial characters like 'a???', this will generate dictionary words of length four and starting with letter
+'a'.</p></li>
+</ul>
+<p>These options can be used multiple times within the same query.</p>
+</div>
+</div></div>
+</div>
+<div class="row col-md-3">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title">NEW</h3>
+</div>
+<div class="panel-body">
+<p>New gtlds domain availabilty check tool. The internet is changing with the launch of new gtlds like .company, .business, .enterprises, .brand which allows for more possibilities into
+getting the domain names you have always wanted. Currently, supporting hundreds of new gtlds. Gtlds related to your keywords are generated and checked.</p>
+</div>
+</div>
+<br>
+<div class="pack">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title">SEO</h3>
+</div>
+<div class="panel-body">
+<p>SEO can be a very important factor for your new company name. Using main keywords can help users
+understand your business very well. This will suggest name ideas while preserving your main keywords. Some of the ways to generate SEO domain ideas are as follows</p>
+<ul>
+<li>Very short additions to entered name like adding i, my, the, a, e as prefixes and adding me, it as suffixes. Hundreds of these popular
+prefixes and suffixes including dictionary words are used to generate company names including your main keywords.</li>
+<li>Words that can be derived from the root of your keyword, mostly including present, future, past and nouns which are dictionary words are generated.</li>
+<li>You can also tell the generator to use all dictionary words containing some sequence of letter by using <b>*</b>, followed by the sequence of letters
+. For example:- '*k' will include small dictionary words having the letter 'k'</li>
+</ul>
+</div>
+</div>
+</div></div>
+<div class="row col-md-3">
+<div class="panel panel-warning">
+<div class="panel-heading">
+<h3 class="panel-title">SHORT</h3>
+</div>
+<div class="panel-body">
+<p>This is a naming technique in which the tld itself is the part of the name. Hence, these tend to be short and brandable. Some examples would include rabb.it,
+stori.es etc</p>
+</div>
+</div>
+<br>
+<div class="pack">
+<div class="panel panel-warning">
+<div class="panel-heading">
+<h3 class="panel-title">FUN</h3>
+</div>
+<div class="panel-body">
+<p>Break, join, replace and rearrange words together to create new words. It's perfect for generating brandable company names.</p>
+<ul>
+<li>Merged Portmanteau - as the name suggests create words by merging or fusion which are very pronunciable and hence brandable.</li>
+<li>Acronyms</li>
+<li>Phonetic Variations</li>
+<li>Overlapping common parts of keywords</li>
+<li>Removing vowels</li>
+<li>Misspelling some keywords</li>
+</ul>
+</div>
+</div>
+</div></div>
+<div class="row col-md-3">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title">EXTRA</h3>
+</div>
+<div class="panel-body">
+<p>Other popular tlds are checked for availability. These includes some recently popular ones like .io and .co and others that go well with most of the words like
+.ly, .it and .me</p>
+</div>
+</div>
+<br>
+<div class="pack">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title">MIX</h3>
+</div>
+<div class="panel-body">
+<p>Mixing involves generating names by merging into some common and small suffixes and some dictionary words</p>
+<ul>
+<li>Portmanteau - Many companies are adding small suffixes like ify and ly and using it as their company name.
+This is a recent trend and has become very popular. Your keywords are mixed with some of these suffixes and shown.</li>
+<li>Overlapping the keywords with some dictionary words is also popular like in pinterest.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br><hr><br>
+<div class="row" id="many">
+<br>
+<h2>Use 4 or more keywords | <small><a href="company-name-generator#quick">Go to 2-3 keywords tool >></a></small></h2>
+<br>
+<p class="lead text-center"> Have many name ideas? Enter multiple keywords. Perfect for name brainstorming and bulk search.</p>
+<br>
+<div class="row">
+<form action="http://www.namemesh.com/company-name-generator/" method="post">
+<div style='display:none'><input type='hidden' name='csrfmiddlewaretoken' value='Qf15RyyvMqjwwuy9zK2iDxFEvVSqTrrd'/></div>
+<div class="divword pull-left col-md-6">
+<label class="col-md-10">Enter starting words here <small>(eg: face)</small></label>
+<input type='hidden' id='word1' class="mword col-md-12 col-xs-12" name="word1"/>
+</div>
+<div class="divword pull-right col-md-6">
+<label class="col-md-10">Enter ending words here <small>(eg: book)</small></label>
+<input type='hidden' id='word2' class="mword col-md-12 col-xs-12" name="word2"/>
+</div>
+<br style="clear: both;">
+<p class="text-muted">Get instant suggestions for keywords as you type. To add suggested words just <b>click</b> on the word in
+the drop-down list. You can also use <b>comma or space</b> for rapid typing. Even better you can <b>copy/paste</b>
+your entire words list.</p>
+<input type="hidden" id="fun" name="fun" value="5"/>
+<br>
+<div class="row col-md-4 col-md-offset-4">
+<input type="submit" id="jQueryButton1" class="btn btn-primary btn-lg col-md-9" name="Mesh Search" value="Generate Names ">
+</div>
+</form>
+</div>
+<br>
+<div id="info" class="hh1 text-center">
+<h3>How To Use The Tool</h3>
+<hr>
+<p>Specify all your preferred keywords for the name at once in 2 buckets</p>
+<p class="text-muted"> (groups for starting and ending words)</p>
+<table class="table-bordered">
+<tr>
+<td>cool, grab, snap</td>
+<td>pic, photo</td>
+</tr>
+</table>
+<p>Get more keyword suggestions instantly</p>
+<table class="table-bordered">
+<tr>
+<td>hot, flip</td>
+<td>picture, image</td>
+</tr>
+</table>
+<p class="lead">Create Cool Company Names!</p>
+<div class="row">
+<div class="row col-md-3">
+<div class="pack">
+<div class="panel panel-info">
+<div class="panel-heading">
+<h3 class="panel-title">JOIN</h3>
+</div>
+<div class="panel-body">
+<p>Generate all possible permutations of names by combining each word from first input with the second input and vice-versa. Names are ranked
+based on the ordering of the input. This is the best choice for your company name, if available.</p>
+</div>
+</div></div></div>
+<div class="row col-md-3">
+<div class="pack">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title">SIMILAR</h3>
+</div>
+<div class="panel-body">
+<p>Replaces first input with synonyms and other similar terms and combines it with the second inputs and vice-versa. The ranking of names is based on
+how similar the suggested words are.</p>
+</div>
+</div></div></div>
+<div class="row col-md-3">
+<div class="pack">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title">FUN</h3>
+</div>
+<div class="panel-body">
+<p>Combines words from first and second input fields in a number of ways by removing vowels, joining, breaking and merging the words together.
+It also uses acronyms, misspellings and other methods and can generate very good and unique brand names.</p>
+</div>
+</div></div></div>
+<div class="row col-md-3">
+<div class="pack">
+<div class="panel panel-warning">
+<div class="panel-heading">
+<h3 class="panel-title">PHONETIC</h3>
+</div>
+<div class="panel-body">
+<p>This produces phonetic variations on the words like replacing s with z, c with k and many others.</p>
+</div>
+</div></div></div></div>
+</div>
+</div>
+</div>
+</div>
+<br><br>
+</div>
+</div>
+<div id="footer" class="text-center">
+<hr>
+<p><a href="company-name-generator">Startup Name Generator</a>
+| <a href="http://www.namemesh.com/blog">Blog</a>
+| <a href="login">Login</a>
+| <a href="signup">Signup</a>
+| <a href="cdn-cgi/l/email-protection#57343839233634231739363a323a32243f7934383a">Contact</a> | <a href="terms">Terms of Use</a> | <a href="privacy">Privacy Policy</a></p>
+<p> &copy; 2015 NameMesh.com. All rights reserved.</p>
+</div>
+<script type="text/javascript" src="static/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="static/js/select2.js"></script>
+<script type="text/javascript">
+var show = 1;
+</script>
+<script type="text/javascript" src="static/js/common.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35287178-1']);
+  _gaq.push(['_setDomainName', 'namemesh.com']);
+  _gaq.push(['_setSiteSpeedSampleRate', 100]);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35287178-3', 'namemesh.com');
+  
+  ga('send', 'pageview');
+</script>
+<script data-cfasync="false" type='text/javascript'>
+(function(f,w,d){f.oe=w.onerror;f.os=w.onscroll;f.errs=[];f.scrj=[];var p=0;w.onscroll=function(){p&&f.scrj.push(new Date()-p);p = new Date();f.os&&f.os.apply(this,arguments);};w.onerror=function(){f.errs.push(arguments);f.oe&&f.oe.apply(this,arguments);};f.d=function(){f.q.push(['mark','dcl',(new Date).getTime()]);};f.o=function(){f.q.push(['mark','onload',(new Date).getTime()]);var a=d.createElement('script');a.type='text/javascript';a.async=true;a.src=(("http:"===d.location.protocol)?"http:":"https:")+"//"+'cdn.fueldeck.com/rupav2.js';var b=d.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);};if(w.addEventListener){w.addEventListener("DOMContentLoaded",f.d,false);w.addEventListener("load",f.o,false);}else if("undefined"!=typeof(w.attachEvent)){d.attachEvent("onreadystatechange",f.d);w.attachEvent("onload", f.o);}})(FDUPA,window,document);
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>

@@ -77,16 +77,7 @@ public class ResponsiveLayoutGraph {
         oracle = o;
         oracleDoms = oDoms;
 
-        for (DomNode dn : first.getDomNodeMap().values()) {
-        	try {
-        		if ( (Arrays.equals(dn.getCoords(), dn.getParent().getCoords())) && dn.getParent().getChildren().size() == 1 ) {
-        			System.out.println(dn.getxPath());
-        		}
-        	
-        	} catch (Exception e) {
-        		
-        	}
-        }
+       
         
 
         extractVisibilityConstraints();
@@ -602,31 +593,36 @@ public class ResponsiveLayoutGraph {
 //                System.out.println(s);
 
                 // Get VC of disappearing node
-                VisibilityConstraint vc = this.nodes.get(node1.getxPath()).getVisibilityConstraints().get(0);
-                int appearPoint = vc.getAppear();
-
-                Type t = null;
-                AlignmentConstraint ac = null;
-                if (edge instanceof Contains) {
-                    Contains c = (Contains) edge;
-                    t = Type.PARENT_CHILD;
-                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode2().getxPath()), this.nodes.get(edge.getNode1().getxPath()), t, appearPoint, 0,
-                            new boolean[]{c.isCentered(), c.isLeftJustified(), c.isRightJustified(), c.isMiddle(), c.isTopAligned(), c.isBottomAligned()});
-                }
-                else {
-                    t = Type.SIBLING;
-                    Sibling s2 = (Sibling) edge;
-
-                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode1().getxPath()), this.nodes.get(edge.getNode2().getxPath()), t, appearPoint, 0,
-                            new boolean[]{s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
-
-                }
-                if (ac != null) {
-                    alCons.put(ac.generateKey(), ac);
-                    alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
-                    tempToMatch.remove(s);
-                    tempToMatch.remove(flip);
-                }
+            	try {
+	                VisibilityConstraint vc = this.nodes.get(node1.getxPath()).getVisibilityConstraints().get(0);
+	                int appearPoint = vc.getAppear();
+	
+	                Type t = null;
+	                AlignmentConstraint ac = null;
+	                if (edge instanceof Contains) {
+	                    Contains c = (Contains) edge;
+	                    t = Type.PARENT_CHILD;
+	                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode2().getxPath()), this.nodes.get(edge.getNode1().getxPath()), t, appearPoint, 0,
+	                            new boolean[]{c.isCentered(), c.isLeftJustified(), c.isRightJustified(), c.isMiddle(), c.isTopAligned(), c.isBottomAligned()});
+	                }
+	                else {
+	                    t = Type.SIBLING;
+	                    Sibling s2 = (Sibling) edge;
+	
+	                    ac = new AlignmentConstraint(this.nodes.get(edge.getNode1().getxPath()), this.nodes.get(edge.getNode2().getxPath()), t, appearPoint, 0,
+	                            new boolean[]{s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+	
+	                }
+	                if (ac != null) {
+	                    alCons.put(ac.generateKey(), ac);
+	                    alignmentConstraints.put(ac.generateKey(), new int[]{appearPoint,0}, ac);
+	                    tempToMatch.remove(s);
+	                    tempToMatch.remove(flip);
+	                }
+            	} catch (NullPointerException e) {
+            		System.out.println(edge);
+            		System.out.println(this.nodes.get(node1.getxPath()));
+            	}
             }
         }
     }

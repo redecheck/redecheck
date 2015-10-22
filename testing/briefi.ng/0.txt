@@ -1,0 +1,8 @@
+Changed term from 66.666664 to 74.666664
+.col-md-8 {
+	width: 66.666664%;
+}
+
+.col-md-8 {
+	width: 74.666664%;
+}

@@ -1,0 +1,10 @@
+Changed term from 100.0 to 106.0
+.u-full-width {
+	width: 100.0%;
+	box-sizing: border-box;
+}
+
+.u-full-width {
+	width: 106.0%;
+	box-sizing: border-box;
+}

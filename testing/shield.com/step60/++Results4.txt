@@ -1,0 +1,70 @@
+===================== ITERATION 1 =====================
+
+TRUE POS: 7
+TRUE NEG: 104
+FALSE POS: 0
+FALSE NEG: 8
+
+===================== ITERATION 2 =====================
+
+TRUE POS: 6
+TRUE NEG: 105
+FALSE POS: 0
+FALSE NEG: 8
+
+===================== ITERATION 3 =====================
+
+TRUE POS: 10
+TRUE NEG: 96
+FALSE POS: 0
+FALSE NEG: 13
+
+===================== ITERATION 4 =====================
+
+TRUE POS: 6
+TRUE NEG: 95
+FALSE POS: 0
+FALSE NEG: 18
+
+===================== ITERATION 5 =====================
+
+TRUE POS: 5
+TRUE NEG: 100
+FALSE POS: 0
+FALSE NEG: 14
+
+===================== ITERATION 6 =====================
+
+TRUE POS: 5
+TRUE NEG: 99
+FALSE POS: 0
+FALSE NEG: 15
+
+===================== ITERATION 7 =====================
+
+TRUE POS: 3
+TRUE NEG: 111
+FALSE POS: 0
+FALSE NEG: 5
+
+===================== ITERATION 8 =====================
+
+TRUE POS: 6
+TRUE NEG: 103
+FALSE POS: 0
+FALSE NEG: 10
+
+===================== ITERATION 9 =====================
+
+TRUE POS: 6
+TRUE NEG: 98
+FALSE POS: 0
+FALSE NEG: 15
+
+===================== ITERATION 10 =====================
+
+TRUE POS: 4
+TRUE NEG: 103
+FALSE POS: 0
+FALSE NEG: 12
+

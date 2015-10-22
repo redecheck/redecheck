@@ -1,0 +1,18 @@
+Changed term from 0.0 to 3.0
+body {
+	background: #ffffff;
+	color: #777777;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14.0px;
+	line-height: 1.5em;
+	margin: 0.0;
+}
+
+body {
+	background: #ffffff;
+	color: #777777;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14.0px;
+	line-height: 1.5em;
+	margin: 3.0px;
+}

@@ -1,0 +1,10 @@
+Changed term from 28.0 to 26.0
+.spotify-logo {
+	width: 28.0px;
+	height: auto;
+}
+
+.spotify-logo {
+	width: 26.0px;
+	height: auto;
+}

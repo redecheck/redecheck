@@ -1,0 +1,28 @@
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV[2]
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -30
+Unmatched constraint in graph 1: 768 -> 991 :  + 714
+Unmatched constraint in graph 2: 0 -> 766 : 100% of parent + -30
+Unmatched constraint in graph 2: 767 -> 991 :  + 714
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV[2]
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -30
+Unmatched constraint in graph 1: 768 -> 991 :  + 714
+Unmatched constraint in graph 2: 0 -> 766 : 100% of parent + -30
+Unmatched constraint in graph 2: 767 -> 991 :  + 714
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -30
+Unmatched constraint in graph 1: 768 -> 991 :  + 714
+Unmatched constraint in graph 2: 0 -> 766 : 100% of parent + -30
+Unmatched constraint in graph 2: 767 -> 991 :  + 714
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -30
+Unmatched constraint in graph 1: 768 -> 991 :  + 714
+Unmatched constraint in graph 2: 0 -> 766 : 100% of parent + -30
+Unmatched constraint in graph 2: 767 -> 991 :  + 714

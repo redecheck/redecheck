@@ -1,0 +1,14 @@
+Changed term from 20.0 to 15.0
+.navbar {
+	position: relative;
+	min-height: 50.0px;
+	margin-bottom: 20.0px;
+	border: 1.0px solid transparent;
+}
+
+.navbar {
+	position: relative;
+	min-height: 50.0px;
+	margin-bottom: 15.0px;
+	border: 1.0px solid transparent;
+}

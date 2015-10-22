@@ -6826,4 +6826,8 @@ button.close {
 h4 {
   text-align: center;
 }
+
+li {
+	width: 150px;
+}
 /*# sourceMappingURL=bootstrap.css.map */

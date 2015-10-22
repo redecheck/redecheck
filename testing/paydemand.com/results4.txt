@@ -1,0 +1,33 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: Between 980 and 1300 => 100.0% of parent + -60.0
+Unmatched constraint in graph 2: Between 985 and 1300 => 100.0% of parent + -60.0
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: Between 980 and 1300 => 100.0% of parent + -60.0
+Unmatched constraint in graph 2: Between 985 and 1300 => 100.0% of parent + -60.0
+
+/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]
+
+Unmatched constraint in graph 1: Between 980 and 1300 =>  + 320.0
+Unmatched constraint in graph 2: Between 985 and 1300 =>  + 320.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+

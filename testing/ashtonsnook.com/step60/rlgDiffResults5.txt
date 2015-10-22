@@ -1,0 +1,43 @@
+
+/HTML/BODY/DIV/DIV/DIV[8]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 58.33% of parent + -99.33
+Unmatched constraint in graph 2: 992 -> 1300 : 51.29% of parent + -86.95
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 58.33% of parent + -99.33
+Unmatched constraint in graph 2: 992 -> 1300 : 51.29% of parent + -86.95
+
+/HTML/BODY/DIV/DIV/DIV[4]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 58.33% of parent + -99.33
+Unmatched constraint in graph 2: 992 -> 1300 : 51.29% of parent + -86.95
+
+/HTML/BODY/DIV/DIV/DIV[6]/DIV
+
+Unmatched sibling in graph 1 : Between 864 and 984 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] above leftEdge
+Unmatched sibling in graph 1 : Between 985 and 1042 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] leftOf topAlign
+Unmatched sibling in graph 1 : Between 1043 and 1300 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 864 and 991 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] above leftEdge
+Unmatched sibling in graph 2 : Between 992 and 1161 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] leftOf topAlign
+Unmatched sibling in graph 2 : Between 1162 and 1300 => /HTML/BODY/DIV/DIV/DIV[6]/DIV -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2] leftOf topAlign bottomAlign
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV
+
+Unmatched sibling in graph 1 : Between 864 and 991 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above leftEdge
+Unmatched sibling in graph 1 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 864 and 984 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] above leftEdge
+Unmatched sibling in graph 2 : Between 985 and 1074 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] leftOf topAlign
+Unmatched sibling in graph 2 : Between 1075 and 1300 => /HTML/BODY/DIV/DIV/DIV[2]/DIV -> /HTML/BODY/DIV/DIV/DIV[2]/DIV[2] leftOf topAlign bottomAlign
+
+/HTML/BODY/DIV/DIV/DIV[6]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1300 : 58.33% of parent + -99.33
+Unmatched constraint in graph 2: 992 -> 1300 : 51.29% of parent + -86.95
+
+/HTML/BODY/DIV/DIV/DIV[4]/DIV
+
+Unmatched sibling in graph 1 : Between 992 and 1211 => /HTML/BODY/DIV/DIV/DIV[4]/DIV -> /HTML/BODY/DIV/DIV/DIV[4]/DIV[2] leftOf topAlign
+Unmatched sibling in graph 1 : Between 1212 and 1300 => /HTML/BODY/DIV/DIV/DIV[4]/DIV -> /HTML/BODY/DIV/DIV/DIV[4]/DIV[2] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 992 and 1300 => /HTML/BODY/DIV/DIV/DIV[4]/DIV -> /HTML/BODY/DIV/DIV/DIV[4]/DIV[2] leftOf topAlign

@@ -1,0 +1,44 @@
+===================== ITERATION 1 =====================
+
+
+===================== ITERATION 2 =====================
+
+
+===================== ITERATION 3 =====================
+
+
+===================== ITERATION 4 =====================
+
+
+===================== ITERATION 5 =====================
+
+
+===================== ITERATION 6 =====================
+
+
+===================== ITERATION 7 =====================
+
+
+===================== ITERATION 8 =====================
+
+
+988
+
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]/P[2]-/HTML/BODY/DIV[2]/DIV[2]/H1[2])","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]/H1[2]-/HTML/BODY/DIV[2]/DIV[2]/H1)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]/H1[2]-/HTML/BODY/DIV[2]/DIV[2]/P[2])"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]/H1-/HTML/BODY/DIV[2]/DIV[2]/H1[2])","(*-*)"
+
+===================== ITERATION 9 =====================
+
+
+===================== ITERATION 10 =====================
+
+
+987
+
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]/P[2]-/HTML/BODY/DIV[2]/DIV[2]/H1[2])","(*-*)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]/H1[2]-/HTML/BODY/DIV[2]/DIV[2]/H1)"
+"MISSING-SIBLING-1","(*-*)","(/HTML/BODY/DIV[2]/DIV[2]/H1[2]-/HTML/BODY/DIV[2]/DIV[2]/P[2])"
+"MISSING-SIBLING-2","(/HTML/BODY/DIV[2]/DIV[2]/H1-/HTML/BODY/DIV[2]/DIV[2]/H1[2])","(*-*)"
+

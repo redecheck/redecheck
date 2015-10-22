@@ -6,6 +6,7 @@ import edu.gatech.xpert.dom.layout.Sibling;
 import edu.gatech.xpert.dom.layout.AGEdge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +24,95 @@ public class AlignmentGraphFactory {
         this.dn = dn;
         updateBodyTag();
         this.ag = new AlignmentGraph(this.dn);
+        
         this.nodeMap = ag.vMap;
         this.edgeMap = generateEdgeMap();
         this.domNodeMap = generateDomNodeMap();
-
+        assignParentsToNodes();
+        filterContainerNodes();
     }
 
-    private HashMap<String, DomNode> generateDomNodeMap() {
+    private void assignParentsToNodes() {
+		for (Contains c : this.ag.contains) {
+			AGNode p = c.getParent();
+			AGNode ch = c.getChild();
+			
+			nodeMap.get(ch.domNode.getxPath()).parent = p;
+		}
+		
+	}
+
+	private void filterContainerNodes() {
+//    	System.out.println("Before: " + this.nodeMap.size());
+    	// Make a clone to iterate through
+    	@SuppressWarnings("unchecked")
+		HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
+    	
+    	for (AGNode agn : nodeMapCopy.values()) {
+    		try {
+    			if ( (Arrays.equals(agn.domNode.getCoords(), agn.parent.domNode.getCoords())) && agn.parent.domNode.getChildren().size() == 1 ) {    				 
+    				// Get the children of element to be removed
+    				ArrayList<Contains> childrenEdges = getChildrenOfElement(agn);
+//    				System.out.println(childrenEdges.size());
+    				for (Contains c : childrenEdges) {
+    					AGNode child = c.getChild();
+    					// Create new parent edge
+    					Contains newCont = new Contains(agn.parent, this.nodeMap.get(child.domNode.getxPath()));
+    					
+    					// Remove old contains edge
+        				this.edgeMap.remove(c.child.domNode.getxPath()+c.parent.domNode.getxPath()+"contains"+generateEdgeLabelling(c));
+        				// Update node with new parent
+        				this.nodeMap.get(child.domNode.getxPath()).parent = this.nodeMap.get(c.parent.domNode.getxPath());
+        				
+        				// Add replacement edge to map
+        				this.edgeMap.put(newCont.parent.domNode.getxPath()+newCont.child.domNode.getxPath()+"contains"+generateEdgeLabelling(newCont), newCont);
+    				}
+    				
+    				// Remove original edge
+    				Contains original = getContainsEdge(agn);
+//    				System.out.println(original);
+//    				System.out.println(this.edgeMap.size());
+//    				String key = original.getChild().domNode.getxPath()+original.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(original);
+//    				System.out.println(key);
+    				edgeMap.remove(original.getChild().domNode.getxPath()+original.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(original));
+//    				System.out.println(this.edgeMap.size());
+    				
+    				// Remove the container element
+    				this.nodeMap.remove(agn.domNode.getxPath());
+    				this.domNodeMap.remove(agn.domNode.getxPath());
+    				
+    				
+    			}
+
+    		} catch (Exception e) {
+//    			System.out.println(agn);
+//    			e.printStackTrace();
+    		}
+    	}
+//    	System.out.println("After: " + this.nodeMap.size());
+	}
+
+	private Contains getContainsEdge(AGNode agn) {
+		for (Contains c : this.ag.contains) {
+			if (c.getChild().domNode.getxPath().equals(agn.domNode.getxPath())) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	private ArrayList<Contains> getChildrenOfElement(AGNode dn) {
+		ArrayList<Contains> edges = new ArrayList<Contains>();
+		for (Contains c : this.getAg().contains) {
+			if (c.getParent().domNode.getxPath().equals(dn.domNode.getxPath())) {
+				edges.add(c);
+			}
+		}
+		// TODO Auto-generated method stub
+		return edges;
+	}
+
+	private HashMap<String, DomNode> generateDomNodeMap() {
         HashMap<String, DomNode> map = new HashMap<>();
         for (String s : nodeMap.keySet()) {
             DomNode dn = nodeMap.get(s).domNode;
@@ -229,8 +312,8 @@ public class AlignmentGraphFactory {
         return this.ag;
     }
 
-    public Map<String, AGNode> getNodeMap() {
-        return nodeMap;
+    public HashMap<String, AGNode> getNodeMap() {
+        return (HashMap<String, AGNode>) nodeMap;
     }
 
     public HashMap<String,AGEdge> getEdgeMap() {

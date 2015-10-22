@@ -1,0 +1,45 @@
+
+/HTML/BODY/DIV[2]/DIV[4]
+
+Unmatched sibling in graph 2 : Between 435 and 558 => /HTML/BODY/DIV[2]/DIV[4] -> /HTML/BODY/DIV[2]/DIV[2]/P/IMG
+
+/HTML/BODY/DIV[2]/DIV[2]/P[2]
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/P[2] -> /HTML/BODY/DIV[2]/DIV[2]/P below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 580 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/P[2] -> /HTML/BODY/DIV[2]/DIV[2]/P below leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 559 and 579 => /HTML/BODY/DIV[2]/DIV[2]/P[2] -> /HTML/BODY/DIV[2]/DIV[2]/P/IMG
+
+/HTML/BODY/DIV[2]/DIV[2]/P/IMG
+
+Unmatched constraint in graph 1: 0 -> 579 : 100% of parent
+Unmatched constraint in graph 2: 0 -> 434 : 100% of parent
+Unmatched constraint in graph 2: 435 -> 558 : 100% of parent
+Unmatched constraint in graph 2: 559 -> 579 : 100% of parent
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV[2]/DIV[2]/P contains /HTML/BODY/DIV[2]/DIV[2]/P/IMG    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 434 : /HTML/BODY/DIV[2]/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]/P/IMG    0 -> 434 [20,178,1,200]
+Unmatched contains in graph 2 : 435 -> 558 : /HTML/BODY/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]/P/IMG    435 -> 558 [38,150,14,979]
+Unmatched contains in graph 2 : 559 -> 579 : /HTML/BODY/DIV[2]/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]/P/IMG    559 -> 579 [20,142,0,140]
+Unmatched contains in graph 2 : 580 -> 1300 : /HTML/BODY/DIV[2]/DIV[2]/P contains /HTML/BODY/DIV[2]/DIV[2]/P/IMG    580 -> 1300 
+Unmatched sibling in graph 2 : Between 435 and 558 => /HTML/BODY/DIV[2]/DIV[2]/P/IMG -> /HTML/BODY/DIV[2]/DIV[2]
+Unmatched sibling in graph 2 : Between 435 and 558 => /HTML/BODY/DIV[2]/DIV[2]/P/IMG -> /HTML/BODY/DIV[2]/DIV[3]
+
+/HTML/BODY/DIV[2]/DIV[2]/H1
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/H1 -> /HTML/BODY/DIV[2]/DIV[2]/P above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 580 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/H1 -> /HTML/BODY/DIV[2]/DIV[2]/P above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 559 and 579 => /HTML/BODY/DIV[2]/DIV[2]/H1 -> /HTML/BODY/DIV[2]/DIV[2]/P/IMG
+
+/HTML/BODY/DIV[2]/DIV[2]/H1[2]
+
+Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/H1[2] -> /HTML/BODY/DIV[2]/DIV[2]/P above leftEdge rightEdge
+Unmatched sibling in graph 2 : Between 559 and 579 => /HTML/BODY/DIV[2]/DIV[2]/H1[2] -> /HTML/BODY/DIV[2]/DIV[2]/P/IMG
+Unmatched sibling in graph 2 : Between 580 and 1300 => /HTML/BODY/DIV[2]/DIV[2]/H1[2] -> /HTML/BODY/DIV[2]/DIV[2]/P above leftEdge rightEdge
+
+/HTML/BODY/DIV[2]/DIV[2]/P
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -40
+Unmatched constraint in graph 2: 0 -> 579 : 94.12% of parent + 1.18
+Unmatched constraint in graph 2: 580 -> 767 : 100% of parent + -40
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV[2]/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]/P    0 -> 1300 
+Unmatched contains in graph 2 : 0 -> 579 : /HTML/BODY/DIV[2]/DIV[2]/P/IMG contains /HTML/BODY/DIV[2]/DIV[2]/P    0 -> 579 
+Unmatched contains in graph 2 : 580 -> 1300 : /HTML/BODY/DIV[2]/DIV[2] contains /HTML/BODY/DIV[2]/DIV[2]/P    580 -> 1300 

@@ -1,0 +1,8 @@
+Changed term from 100.0 to 102.0
+.col-sm-12 {
+	width: 100.0%;
+}
+
+.col-sm-12 {
+	width: 102.0%;
+}

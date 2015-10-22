@@ -1,0 +1,57 @@
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[2]
+
+Unmatched contains in graph 1 : 625 -> 751 : /HTML/BODY/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]625 -> 751 : 
+Unmatched contains in graph 1 : 752 -> 827 : /HTML/BODY/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]752 -> 827 :  MJ,
+Unmatched contains in graph 1 : 828 -> 991 : /HTML/BODY/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]828 -> 991 : 
+Unmatched contains in graph 2 : 625 -> 705 : /HTML/BODY/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]625 -> 705 : 
+Unmatched contains in graph 2 : 706 -> 991 : /HTML/BODY/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]706 -> 991 :  MJ,
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2]/UL
+
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2]/UL0 -> 1300 :  BJ
+Unmatched contains in graph 2 : 0 -> 590 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2]/UL0 -> 590 :  BJ
+Unmatched contains in graph 2 : 591 -> 991 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2]/UL591 -> 991 :  MJ,
+Unmatched contains in graph 2 : 992 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV[2]/UL992 -> 1300 :  BJ
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2]/UL
+
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2]/UL0 -> 1300 :  BJ
+Unmatched contains in graph 2 : 0 -> 434 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2]/UL0 -> 434 :  BJ
+Unmatched contains in graph 2 : 435 -> 991 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2]/UL435 -> 991 :  MJ,
+Unmatched contains in graph 2 : 992 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[4]/DIV[2]/DIV/DIV[2]/UL992 -> 1300 :  BJ
+
+/HTML/BODY/DIV/DIV/DIV[6]
+
+Unmatched contains in graph 1 : 0 -> 916 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[6]0 -> 916 : 
+Unmatched contains in graph 1 : 917 -> 991 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[6]917 -> 991 :  BJ
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[6]992 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[6]0 -> 1300 : 
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV[3]/DIV[2]
+
+Unmatched contains in graph 1 : 0 -> 1156 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[3]/DIV[2]0 -> 1156 :  BJ
+Unmatched contains in graph 2 : 0 -> 991 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[3]/DIV[2]0 -> 991 :  BJ
+Unmatched contains in graph 2 : 992 -> 1075 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[3]/DIV[2]992 -> 1075 : 
+Unmatched contains in graph 2 : 1076 -> 1156 : /HTML/BODY/DIV/DIV/DIV[2]/DIV[3] contains /HTML/BODY/DIV/DIV/DIV[2]/DIV[3]/DIV[2]1076 -> 1156 :  BJ
+
+/HTML/BODY/DIV/DIV/DIV[2]
+
+Unmatched contains in graph 1 : 0 -> 1103 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[2]0 -> 1103 :  TJ,
+Unmatched contains in graph 1 : 1104 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[2]1104 -> 1300 :  MJ,
+Unmatched contains in graph 2 : 0 -> 1106 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[2]0 -> 1106 :  TJ,
+Unmatched contains in graph 2 : 1107 -> 1300 : /HTML/BODY/DIV/DIV contains /HTML/BODY/DIV/DIV/DIV[2]1107 -> 1300 :  MJ,
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]
+
+Unmatched contains in graph 1 : 0 -> 827 : /HTML/BODY/DIV/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]0 -> 827 : 
+Unmatched contains in graph 1 : 828 -> 916 : /HTML/BODY/DIV/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]828 -> 916 :  BJ
+Unmatched contains in graph 1 : 917 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]917 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 1300 : /HTML/BODY/DIV/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]0 -> 1300 : 
+
+/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV
+
+Unmatched contains in graph 1 : 0 -> 596 : /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV0 -> 596 : 
+Unmatched contains in graph 1 : 597 -> 991 : /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV597 -> 991 :  TJ,
+Unmatched contains in graph 2 : 0 -> 600 : /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV0 -> 600 : 
+Unmatched contains in graph 2 : 601 -> 991 : /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV contains /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV601 -> 991 :  TJ,

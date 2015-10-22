@@ -1,0 +1,199 @@
+
+/HTML/BODY/SECTION[4]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/SECTION[4] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/SECTION[4] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/SECTION[4] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/SECTION[4] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+
+/HTML/BODY/DIV/DIV/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV[7]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV[7] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV[7] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV[7] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV[7] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/SECTION[2]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV/DIV/DIV/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 940
+Unmatched constraint in graph 2: 993 -> 1199 :  + 940
+
+/HTML/BODY/DIV[8]/DIV[2]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 996 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[4]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV[7]/DIV/DIV/DIV/IMG
+
+Unmatched contains in graph 1 : 0 -> 991 : /HTML/BODY/DIV[7]/DIV/DIV/DIV contains /HTML/BODY/DIV[7]/DIV/DIV/DIV/IMG0 -> 991 : 
+Unmatched contains in graph 1 : 992 -> 1199 : /HTML/BODY/DIV[7]/DIV/DIV/DIV contains /HTML/BODY/DIV[7]/DIV/DIV/DIV/IMG992 -> 1199 :  LJ,
+Unmatched contains in graph 2 : 0 -> 992 : /HTML/BODY/DIV[7]/DIV/DIV/DIV contains /HTML/BODY/DIV[7]/DIV/DIV/DIV/IMG0 -> 992 : 
+Unmatched contains in graph 2 : 993 -> 1199 : /HTML/BODY/DIV[7]/DIV/DIV/DIV contains /HTML/BODY/DIV[7]/DIV/DIV/DIV/IMG993 -> 1199 :  LJ,
+
+/HTML/BODY/DIV[12]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV[12] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV[12] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV[12] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV[12] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+
+/HTML/BODY/DIV[5]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV[7]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[4]/DIV/P
+
+Unmatched contains in graph 1 : 0 -> 991 : /HTML/BODY/SECTION[4]/DIV contains /HTML/BODY/SECTION[4]/DIV/P0 -> 991 :  BJ
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/SECTION[4]/DIV contains /HTML/BODY/SECTION[4]/DIV/P992 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 992 : /HTML/BODY/SECTION[4]/DIV contains /HTML/BODY/SECTION[4]/DIV/P0 -> 992 :  BJ
+Unmatched contains in graph 2 : 993 -> 1300 : /HTML/BODY/SECTION[4]/DIV contains /HTML/BODY/SECTION[4]/DIV/P993 -> 1300 : 
+
+/HTML/BODY/DIV[11]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV/DIV
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV/DIV -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV/DIV -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV/DIV -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV/DIV -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/DIV[6]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV/DIV/DIV/DIV[2]/UL
+
+Unmatched contains in graph 1 : 768 -> 991 : /HTML/BODY/DIV/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV/DIV[2]/UL768 -> 991 : 
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/DIV/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV/DIV[2]/UL992 -> 1300 :  LJ,
+Unmatched contains in graph 2 : 768 -> 992 : /HTML/BODY/DIV/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV/DIV[2]/UL768 -> 992 : 
+Unmatched contains in graph 2 : 993 -> 1300 : /HTML/BODY/DIV/DIV/DIV/DIV[2] contains /HTML/BODY/DIV/DIV/DIV/DIV[2]/UL993 -> 1300 :  LJ,
+
+/HTML/BODY/DIV[11]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV[11] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV[11] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV[11] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV[11] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+
+/HTML/BODY/SECTION[2]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/SECTION[2] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/SECTION[2] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/SECTION[2] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/SECTION[2] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/DIV[10]/DIV/DIV[3]/P
+
+Unmatched contains in graph 1 : 0 -> 991 : /HTML/BODY/DIV[10]/DIV/DIV[3] contains /HTML/BODY/DIV[10]/DIV/DIV[3]/P0 -> 991 : 
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/DIV[10]/DIV/DIV[3] contains /HTML/BODY/DIV[10]/DIV/DIV[3]/P992 -> 1300 :  BJ
+Unmatched contains in graph 2 : 0 -> 992 : /HTML/BODY/DIV[10]/DIV/DIV[3] contains /HTML/BODY/DIV[10]/DIV/DIV[3]/P0 -> 992 : 
+Unmatched contains in graph 2 : 993 -> 1300 : /HTML/BODY/DIV[10]/DIV/DIV[3] contains /HTML/BODY/DIV[10]/DIV/DIV[3]/P993 -> 1300 :  BJ
+
+/HTML/BODY/DIV[2]/HEADER
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV[2]/HEADER -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV[2]/HEADER -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV[2]/HEADER -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV[2]/HEADER -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/DIV[8]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV[5]/DIV[2]/DIV/IMG
+
+Unmatched constraint in graph 1: 0 -> 991 : 100% of parent + -30
+Unmatched constraint in graph 1: 992 -> 1199 :  + 844
+Unmatched constraint in graph 2: 0 -> 992 : 100% of parent + -30
+Unmatched constraint in graph 2: 993 -> 1199 :  + 844
+
+/HTML/BODY/DIV[4]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[5]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[3]/DIV
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[5]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/SECTION[5] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/SECTION[5] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/SECTION[5] -> /HTML/BODY/DIV[8]/DIV[2] below
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/SECTION[5] -> /HTML/BODY/DIV[8]/DIV[2] below rightEdge
+
+/HTML/BODY/DIV[3]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/DIV[3] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/SECTION
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/SECTION -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/SECTION -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/SECTION -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/SECTION -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+
+/HTML/BODY/DIV[9]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/DIV[10]
+
+Unmatched constraint in graph 1: 992 -> 1199 :  + 970
+Unmatched constraint in graph 2: 993 -> 1199 :  + 970
+
+/HTML/BODY/SECTION[2]/DIV/P
+
+Unmatched contains in graph 1 : 0 -> 991 : /HTML/BODY/SECTION[2]/DIV contains /HTML/BODY/SECTION[2]/DIV/P0 -> 991 :  BJ
+Unmatched contains in graph 1 : 992 -> 1300 : /HTML/BODY/SECTION[2]/DIV contains /HTML/BODY/SECTION[2]/DIV/P992 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 992 : /HTML/BODY/SECTION[2]/DIV contains /HTML/BODY/SECTION[2]/DIV/P0 -> 992 :  BJ
+Unmatched contains in graph 2 : 993 -> 1300 : /HTML/BODY/SECTION[2]/DIV contains /HTML/BODY/SECTION[2]/DIV/P993 -> 1300 : 
+
+/HTML/BODY/SECTION[3]
+
+Unmatched sibling in graph 1 : Between 778 and 984 => /HTML/BODY/SECTION[3] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 1 : Between 985 and 1011 => /HTML/BODY/SECTION[3] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge
+Unmatched sibling in graph 2 : Between 778 and 991 => /HTML/BODY/SECTION[3] -> /HTML/BODY/DIV[8]/DIV[2] above
+Unmatched sibling in graph 2 : Between 992 and 1011 => /HTML/BODY/SECTION[3] -> /HTML/BODY/DIV[8]/DIV[2] above rightEdge

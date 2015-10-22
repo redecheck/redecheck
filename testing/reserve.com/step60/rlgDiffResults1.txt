@@ -1,0 +1,11 @@
+
+/HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV/A[3]/IMG
+
+Unmatched contains in graph 1 : 0 -> 1300 : /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV contains /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV/A[3]/IMG0 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 1023 : /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV contains /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV/A[3]/IMG0 -> 1023 : 
+Unmatched contains in graph 2 : 1024 -> 1300 : /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV contains /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/DIV/A[3]/IMG1024 -> 1300 :  RJ,
+
+/HTML/BODY/FOOTER/DIV/DIV[2]/DIV
+
+Unmatched constraint in graph 1: 1024 -> 1300 :  + 150
+Unmatched constraint in graph 2: 1024 -> 1300 :  + 142

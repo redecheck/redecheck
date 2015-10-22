@@ -1,0 +1,54 @@
+
+/HTML/BODY/SECTION/DIV/DIV
+
+Unmatched constraint in graph 1: 1024 -> 1300 : 41.07% of parent + -10.57
+Unmatched constraint in graph 2: 1024 -> 1300 : 39.66% of parent + 3.14
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: 0 -> 1023 : 100% of parent
+Unmatched constraint in graph 1: 1024 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 0 -> 1025 : 100% of parent
+Unmatched constraint in graph 2: 1026 -> 1300 :  + 1026
+
+/HTML/BODY/SECTION[4]/DIV
+
+Unmatched constraint in graph 1: 1025 -> 1119 : 70% of parent + 240
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1025 -> 1119 : 72.5% of parent + 214
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: 1030 -> 1119 : 25% of parent + 744
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1030 -> 1119 : 27.5% of parent + 718
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026
+
+/HTML/BODY/SECTION[2]/DIV
+
+Unmatched constraint in graph 1: 1025 -> 1119 : 70% of parent + 240
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1025 -> 1119 : 72.5% of parent + 214
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026
+
+/HTML/BODY/SECTION/DIV
+
+Unmatched constraint in graph 1: 1024 -> 1119 : 70% of parent + 240
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1024 -> 1119 : 72.5% of parent + 214
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026
+
+/HTML/BODY/SECTION[5]/DIV
+
+Unmatched constraint in graph 1: 1024 -> 1119 : 70% of parent + 240
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1024 -> 1119 : 72.5% of parent + 214
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026
+
+/HTML/BODY/SECTION[3]/DIV
+
+Unmatched constraint in graph 1: 1025 -> 1119 : 70% of parent + 240
+Unmatched constraint in graph 1: 1120 -> 1300 :  + 1024
+Unmatched constraint in graph 2: 1025 -> 1119 : 72.5% of parent + 214
+Unmatched constraint in graph 2: 1120 -> 1300 :  + 1026

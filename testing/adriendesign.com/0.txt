@@ -1,0 +1,16 @@
+Changed media query from 80.0 to 87.0
+@media (min-width: 80.0em) {
+	body.single-post main.content div.entry-comments, body.single-post main.content div.comment-respond {
+		width: 75.0%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media (min-width: 87.0em) {
+	body.single-post main.content div.entry-comments, body.single-post main.content div.comment-respond {
+		width: 75.0%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

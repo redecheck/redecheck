@@ -1,0 +1,63 @@
+ISSUES FROM THE RLG DIFF
+/HTML/BODY/DIV[2]
+
+Unmatched constraint in graph 1: Between 992 and 1300 =>  + 830.0
+Unmatched constraint in graph 2: Between 983 and 1300 =>  + 830.0
+
+/HTML/BODY/DIV[2]/DIV[2]/H1
+
+Unmatched constraint in graph 1: Between 992 and 1300 =>  + 674.0
+Unmatched constraint in graph 2: Between 983 and 1300 =>  + 674.0
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV[2]
+
+Unmatched constraint in graph 1: Between 992 and 1199 =>  + 794.0
+Unmatched constraint in graph 2: Between 983 and 1199 =>  + 794.0
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV[2]
+
+Unmatched constraint in graph 1: Between 992 and 1199 =>  + 794.0
+Unmatched constraint in graph 2: Between 983 and 1199 =>  + 794.0
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV
+
+Unmatched constraint in graph 1: Between 992 and 1199 =>  + 794.0
+Unmatched constraint in graph 2: Between 983 and 1199 =>  + 794.0
+
+/HTML/BODY/DIV[2]/DIV[2]/P
+
+Unmatched constraint in graph 1: Between 992 and 1300 =>  + 674.0
+Unmatched constraint in graph 2: Between 983 and 1300 =>  + 674.0
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV
+
+Unmatched constraint in graph 1: Between 992 and 1199 =>  + 794.0
+Unmatched constraint in graph 2: Between 983 and 1199 =>  + 794.0
+
+/HTML/BODY/DIV[2]/DIV[2]/H1[2]
+
+Unmatched constraint in graph 1: Between 992 and 1300 =>  + 674.0
+Unmatched constraint in graph 2: Between 983 and 1300 =>  + 674.0
+
+/HTML/BODY/DIV[2]/DIV[2]/P[2]
+
+Unmatched constraint in graph 1: Between 992 and 1300 =>  + 674.0
+Unmatched constraint in graph 2: Between 983 and 1300 =>  + 674.0
+
+
+
+ISSUES FROM THE DOM DIFF
+480
+
+
+640
+
+
+768
+
+
+1024
+
+
+1200
+

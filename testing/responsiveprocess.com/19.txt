@@ -1,0 +1,12 @@
+Changed term from 100.0 to 99.0
+.step {
+	float: left;
+	margin-bottom: 3.0%;
+	width: 100.0%;
+}
+
+.step {
+	float: left;
+	margin-bottom: 3.0%;
+	width: 99.0%;
+}

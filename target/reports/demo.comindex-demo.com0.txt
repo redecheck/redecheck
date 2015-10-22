@@ -1,0 +1,20 @@
+====== Visibility Errors ====== 
+
+====== Alignment Errors ====== 
+
+
+/HTML/BODY/NAV/DIV/DIV[2] -> /HTML/BODY/NAV/DIV/DIV[2]/UL
+
+Differing bounds for {}
+	Oracle : 768 -> 1032
+	Test : 768 -> 1103
+
+Differing bounds for {centered}
+	Oracle : 1199 -> 1300
+	Test : 1283 -> 1300
+
+Differing bounds for {leftJust}
+	Oracle : 1033 -> 1198
+	Test : 1104 -> 1282
+====== Width Errors ====== 
+

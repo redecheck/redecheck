@@ -1,0 +1,7 @@
+
+/HTML/BODY/NAV/DIV[2]/UL[2]
+
+Unmatched contains in graph 1 : 0 -> 767 : /HTML/BODY/NAV/DIV[2] contains /HTML/BODY/NAV/DIV[2]/UL[2]0 -> 767 :  BJ
+Unmatched contains in graph 1 : 768 -> 1300 : /HTML/BODY/NAV/DIV[2] contains /HTML/BODY/NAV/DIV[2]/UL[2]768 -> 1300 : 
+Unmatched contains in graph 2 : 0 -> 773 : /HTML/BODY/NAV/DIV[2] contains /HTML/BODY/NAV/DIV[2]/UL[2]0 -> 773 :  BJ
+Unmatched contains in graph 2 : 774 -> 1300 : /HTML/BODY/NAV/DIV[2] contains /HTML/BODY/NAV/DIV[2]/UL[2]774 -> 1300 : 

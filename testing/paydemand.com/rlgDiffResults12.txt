@@ -1,0 +1,125 @@
+
+/HTML/BODY/ARTICLE[2]/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -40
+Unmatched constraint in graph 2: 0 -> 767 : 100% of parent + -31
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[4]
+
+Unmatched constraint in graph 1: 0 -> 1300 :  + 41
+Unmatched constraint in graph 2: 0 -> 1300 : 0.01% of parent + 40.88
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf above
+Unmatched sibling in graph 1 : Between 559 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf above
+Unmatched sibling in graph 2 : Between 550 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+
+/HTML/BODY/FOOTER/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -40
+Unmatched constraint in graph 2: 0 -> 767 : 100% of parent + -31
+
+/HTML/BODY/ARTICLE/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -40
+Unmatched constraint in graph 2: 0 -> 767 : 100% of parent + -31
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[3]
+
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] above
+Unmatched sibling in graph 1 : Between 559 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] above
+Unmatched sibling in graph 2 : Between 550 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[5]
+
+Unmatched constraint in graph 1: 0 -> 1300 :  + 51
+Unmatched constraint in graph 2: 0 -> 1300 : 0.01% of parent + 50.88
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf above
+Unmatched sibling in graph 1 : Between 559 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf above
+Unmatched sibling in graph 2 : Between 550 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+
+/HTML/BODY/HEADER/DIV
+
+Unmatched constraint in graph 1: 0 -> 767 : 100% of parent + -40
+Unmatched constraint in graph 2: 0 -> 767 : 100% of parent + -31
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI
+
+Unmatched constraint in graph 1: 0 -> 1300 : 0.02% of parent + 40.85
+Unmatched constraint in graph 2: 0 -> 1300 :  + 41
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf above
+Unmatched sibling in graph 1 : Between 559 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf above
+Unmatched sibling in graph 2 : Between 550 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[8]
+
+Unmatched constraint in graph 1: 0 -> 1300 :  + 17
+Unmatched constraint in graph 2: 0 -> 1300 : 0.39% of parent + 14.66
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 559 and 632 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf below
+Unmatched sibling in graph 1 : Between 633 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 550 and 623 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf below
+Unmatched sibling in graph 2 : Between 624 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[2]
+
+Unmatched constraint in graph 1: 0 -> 1300 : -0.39% of parent + 35.37
+Unmatched constraint in graph 2: 0 -> 1300 : 0.32% of parent + 31.4
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] above
+Unmatched sibling in graph 1 : Between 559 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] above
+Unmatched sibling in graph 2 : Between 550 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf topAlign bottomAlign
+
+/HTML/BODY/FOOTER/DIV/NAV/UL/LI[7]
+
+Unmatched constraint in graph 1: 0 -> 1300 : -0.39% of parent + 12.37
+Unmatched constraint in graph 2: 0 -> 1300 : 0.31% of parent + 8.52
+Unmatched sibling in graph 1 : Between 0 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] leftOf below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 0 and 558 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 1 : Between 559 and 592 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf below
+Unmatched sibling in graph 1 : Between 593 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] leftOf below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 0 and 549 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign
+Unmatched sibling in graph 2 : Between 550 and 583 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] leftOf below
+Unmatched sibling in graph 2 : Between 584 and 1300 => /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] rightOf topAlign bottomAlign

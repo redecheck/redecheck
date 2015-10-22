@@ -1,0 +1,8 @@
+Changed term from 20.0 to 11.0
+.sb-slidebar {
+	width: 20.0%;
+}
+
+.sb-slidebar {
+	width: 11.0%;
+}

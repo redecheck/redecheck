@@ -1,0 +1,28 @@
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -30.0
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 714.0
+Unmatched constraint in graph 2: Between 0 and 766 => 100.0% of parent + -30.0
+Unmatched constraint in graph 2: Between 767 and 991 =>  + 714.0
+
+/HTML/BODY/DIV[2]/DIV[3]/DIV[2]
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -30.0
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 714.0
+Unmatched constraint in graph 2: Between 0 and 766 => 100.0% of parent + -30.0
+Unmatched constraint in graph 2: Between 767 and 991 =>  + 714.0
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -30.0
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 714.0
+Unmatched constraint in graph 2: Between 0 and 766 => 100.0% of parent + -30.0
+Unmatched constraint in graph 2: Between 767 and 991 =>  + 714.0
+
+/HTML/BODY/DIV[2]/DIV[4]/DIV[2]
+
+Unmatched constraint in graph 1: Between 0 and 767 => 100.0% of parent + -30.0
+Unmatched constraint in graph 1: Between 768 and 991 =>  + 714.0
+Unmatched constraint in graph 2: Between 0 and 766 => 100.0% of parent + -30.0
+Unmatched constraint in graph 2: Between 767 and 991 =>  + 714.0
