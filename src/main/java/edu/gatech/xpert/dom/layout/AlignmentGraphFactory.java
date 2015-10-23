@@ -34,6 +34,9 @@ public class AlignmentGraphFactory {
     }
 
     private void filterNodes() {
+//    	System.out.println("Nodes before: " + this.nodeMap.size());
+//    	System.out.println("Edges before: " + this.edgeMap.size());
+    	
     	HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
     	
     	for (AGNode n : nodeMapCopy.values()) {
@@ -44,14 +47,34 @@ public class AlignmentGraphFactory {
         		boolean onlyChild = getChildrenOfNode(parent).size() == 1;
         		
         		if ( (Arrays.equals(dn.getCoords(), parent.domNode.getCoords())) && onlyChild) {
-//        			System.out.println(n);
+//        			System.out.println("GOING TO REMOVE " + n);
         			
         			// Remove the original contains edge
         			Contains oldContains = getChildrenOfNode(parent).get(0);
+        			
         			String key = oldContains.getChild().domNode.getxPath()+ oldContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(oldContains);
-//        			System.out.println("Before " +this.edgeMap.size());
+//        			if (this.edgeMap.get(key)==null) {
+//        				System.out.println(oldContains + generateEdgeLabelling(oldContains));
+//        				System.out.println("TEST: " +key);
+//        			}
+//        			System.out.println("AFTER: " + this.edgeMap.size());
+//        			for (String e : edgeMap.keySet()) {
+//        				System.out.println(e);
+//        			}
+        			int before = this.edgeMap.size();
+        			System.out.println(oldContains);
+        			System.out.println(this.getEdgeMap().get(key));
+        			System.out.println();
+//        			if (!this.getEdgeMap().containsKey(key)){
+////        				System.out.println("DOESN't CONTAINS " + key);
+//        				System.out.println(oldContains);
+//        			}
         			this.edgeMap.remove(key);
-//        			System.out.println("After " +this.edgeMap.size());
+        			int after = this.edgeMap.size();
+        			
+        			if (before == after) {
+//        				System.out.println("Couldn't remove " + key);
+        			}
         			
         			
         			ArrayList<Contains> childrenEdges = getChildrenOfNode(n);
@@ -62,12 +85,18 @@ public class AlignmentGraphFactory {
         				Contains newContains = new Contains(parent, cEdge.getChild());
 //        				System.out.println();
         				this.edgeMap.put(newContains.getChild().domNode.getxPath()+ newContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(newContains), newContains);
-        				
-        				this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent = parent;
+//        				System.out.println(cEdge.child);
+//        				System.out.println("Parent before: " + this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent);
+        				this.nodeMap.get(newContains.getChild().domNode.getxPath()).parent = newContains.getParent();
+//        				System.out.println("Parent after: " + this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent);
+//        				System.out.println();
         				
         				// Remove the old contains edges
         				this.edgeMap.remove(cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(cEdge));
+//        				
         			}
+        			
+        			
         			
         			// Remove the node that is just acting as a container
         			this.domNodeMap.remove(dn.getxPath());
@@ -78,6 +107,9 @@ public class AlignmentGraphFactory {
         		
         	}
         }
+    	
+//    	System.out.println("Nodes after: " + this.nodeMap.size());
+//    	System.out.println("Edges after: " + this.edgeMap.size());
 		
 	}
 
@@ -126,7 +158,15 @@ public class AlignmentGraphFactory {
 
         int counter = 0;
         for (Contains c : ag.contains) {
+//        	if (c.getChild().domNode.getxPath().equals("/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL")) {
+//        		System.out.println("COMP: " +c);
+//        		System.out.println("B" +edgeMap.size());
+//        	}
+        	
             edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+generateEdgeLabelling(c),c);
+//            if (c.getChild().domNode.getxPath().equals("/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL")) {
+//            	System.out.println("A" +edgeMap.size());
+//            }
         }
 
         for (Sibling s : ag.siblings) {

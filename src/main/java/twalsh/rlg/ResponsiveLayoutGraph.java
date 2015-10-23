@@ -683,21 +683,28 @@ public class ResponsiveLayoutGraph {
 
     public void setUpAlignmentConstraints(HashMap<String, AGEdge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
         for (String s : previousMap.keySet()) {
-            AGEdge e = previousMap.get(s);
-            if (e instanceof Contains) {
-                Contains c = (Contains) e;
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
-                        new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
-                alCons.put(con.generateKey(), con);
-                alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
-            }
-            else {
-                Sibling s2 = (Sibling) e;
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
-                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
-                alCons.put(con.generateKey(), con);
-                alignmentConstraints.put(con.generateKey(), new int[] {this.widths[0],0}, con);
-            }
+        	try {
+	            AGEdge e = previousMap.get(s);
+	            if (e instanceof Contains) {
+	                Contains c = (Contains) e;
+	                if (this.nodes.get(e.getNode2().getxPath()) == null) {
+	                	System.out.println(c);
+	                }
+	                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(c.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
+	                        new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
+	                alCons.put(con.generateKey(), con);
+	                alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
+	            }
+	            else {
+	                Sibling s2 = (Sibling) e;
+	                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
+	                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+	                alCons.put(con.generateKey(), con);
+	                alignmentConstraints.put(con.generateKey(), new int[] {this.widths[0],0}, con);
+	            }
+        	} catch (Exception e) {
+        		
+        	}
         }
     }
 
@@ -861,10 +868,14 @@ public class ResponsiveLayoutGraph {
      */
     public void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
-            if (ac.type == Type.PARENT_CHILD) {
-                Node child = this.nodes.get(ac.node2.getXpath());
-                child.addParentConstraint(ac);
-            }
+        	try {
+	            if (ac.type == Type.PARENT_CHILD) {
+	                Node child = this.nodes.get(ac.node2.getXpath());
+	                child.addParentConstraint(ac);
+	            }
+        	} catch (NullPointerException e) {
+        		System.out.println("Tried adding parent constraint with " + ac);
+        	}
         }
     }
 
