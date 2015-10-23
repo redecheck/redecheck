@@ -45,6 +45,15 @@ public class AlignmentGraphFactory {
         		
         		if ( (Arrays.equals(dn.getCoords(), parent.domNode.getCoords())) && onlyChild) {
 //        			System.out.println(n);
+        			
+        			// Remove the original contains edge
+        			Contains oldContains = getChildrenOfNode(parent).get(0);
+        			String key = oldContains.getChild().domNode.getxPath()+ oldContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(oldContains);
+//        			System.out.println("Before " +this.edgeMap.size());
+        			this.edgeMap.remove(key);
+//        			System.out.println("After " +this.edgeMap.size());
+        			
+        			
         			ArrayList<Contains> childrenEdges = getChildrenOfNode(n);
         			
         			for (Contains cEdge : childrenEdges) {
@@ -52,19 +61,13 @@ public class AlignmentGraphFactory {
         				// Create new contains edge between children and grandparent element
         				Contains newContains = new Contains(parent, cEdge.getChild());
 //        				System.out.println();
-        				this.edgeMap.put(newContains.getChild().domNode.getxPath()+ newContains.getParent().domNode.getxPath()+generateEdgeLabelling(newContains), newContains);
+        				this.edgeMap.put(newContains.getChild().domNode.getxPath()+ newContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(newContains), newContains);
         				
         				this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent = parent;
         				
         				// Remove the old contains edges
-        				this.edgeMap.remove(cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+generateEdgeLabelling(cEdge));
+        				this.edgeMap.remove(cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(cEdge));
         			}
-        			
-        			// Remove the original contains edge
-        			Contains oldContains = getChildrenOfNode(parent).get(0);
-        			System.out.println("Before " +this.edgeMap.size());
-        			this.edgeMap.remove(oldContains.getChild().domNode.getxPath()+ oldContains.getParent().domNode.getxPath()+generateEdgeLabelling(oldContains));
-        			System.out.println("After " +this.edgeMap.size());
         			
         			// Remove the node that is just acting as a container
         			this.domNodeMap.remove(dn.getxPath());
