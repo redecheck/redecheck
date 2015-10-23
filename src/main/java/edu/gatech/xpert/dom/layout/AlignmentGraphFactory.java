@@ -6,6 +6,7 @@ import edu.gatech.xpert.dom.layout.Sibling;
 import edu.gatech.xpert.dom.layout.AGEdge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public class AlignmentGraphFactory {
     public DomNode dn;
     AlignmentGraph ag;
-    public Map<String, AGNode> nodeMap;
+    public HashMap<String, AGNode> nodeMap;
     public HashMap<String, DomNode> domNodeMap;
     public HashMap<String, AGEdge> edgeMap;
 
@@ -23,13 +24,92 @@ public class AlignmentGraphFactory {
         this.dn = dn;
         updateBodyTag();
         this.ag = new AlignmentGraph(this.dn);
-        this.nodeMap = ag.vMap;
+        this.nodeMap = (HashMap<String, AGNode>) ag.vMap;
         this.edgeMap = generateEdgeMap();
         this.domNodeMap = generateDomNodeMap();
+        updateParentsOnNodes();
+        filterNodes();
+        
 
     }
 
-    private HashMap<String, DomNode> generateDomNodeMap() {
+    private void filterNodes() {
+    	HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
+    	
+    	for (AGNode n : nodeMapCopy.values()) {
+        	try {
+        		DomNode dn = n.domNode;
+        		AGNode parent = getParentOfAGNode(n);
+        		
+        		boolean onlyChild = getChildrenOfNode(parent).size() == 1;
+        		
+        		if ( (Arrays.equals(dn.getCoords(), parent.domNode.getCoords())) && onlyChild) {
+//        			System.out.println(n);
+        			ArrayList<Contains> childrenEdges = getChildrenOfNode(n);
+        			
+        			for (Contains cEdge : childrenEdges) {
+        				
+        				// Create new contains edge between children and grandparent element
+        				Contains newContains = new Contains(parent, cEdge.getChild());
+//        				System.out.println();
+        				this.edgeMap.put(newContains.getChild().domNode.getxPath()+ newContains.getParent().domNode.getxPath()+generateEdgeLabelling(newContains), newContains);
+        				
+        				this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent = parent;
+        				
+        				// Remove the old contains edges
+        				this.edgeMap.remove(cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+generateEdgeLabelling(cEdge));
+        			}
+        			
+        			// Remove the original contains edge
+        			Contains oldContains = getChildrenOfNode(parent).get(0);
+        			System.out.println("Before " +this.edgeMap.size());
+        			this.edgeMap.remove(oldContains.getChild().domNode.getxPath()+ oldContains.getParent().domNode.getxPath()+generateEdgeLabelling(oldContains));
+        			System.out.println("After " +this.edgeMap.size());
+        			
+        			// Remove the node that is just acting as a container
+        			this.domNodeMap.remove(dn.getxPath());
+        			this.nodeMap.remove(dn.getxPath());
+        		}
+        	
+        	} catch (NullPointerException e) {
+        		
+        	}
+        }
+		
+	}
+
+	private ArrayList<Contains> getChildrenOfNode(AGNode n) {
+		ArrayList<Contains> edges = new ArrayList<Contains>();
+		String target = n.domNode.getxPath();
+		for (Contains c : getAg().contains) {
+			String parent = c.getParent().domNode.getxPath();
+			if (parent.equals(target)) {
+				edges.add(c);
+			}
+		}
+		return edges;
+	}
+
+	private AGNode getParentOfAGNode(AGNode n) {
+		String target = n.domNode.getxPath();
+		for (Contains c : getAg().contains) {
+			String child = c.getChild().domNode.getxPath();
+			if (child.equals(target)) {
+				return c.getParent();
+			}
+		}
+		return null;
+	}
+
+	private void updateParentsOnNodes() {
+		for (Contains c : getAg().contains) {
+			String child = c.getChild().domNode.getxPath();
+			this.nodeMap.get(child).parent = c.getParent();
+		}
+		
+	}
+
+	private HashMap<String, DomNode> generateDomNodeMap() {
         HashMap<String, DomNode> map = new HashMap<>();
         for (String s : nodeMap.keySet()) {
             DomNode dn = nodeMap.get(s).domNode;
@@ -229,7 +309,7 @@ public class AlignmentGraphFactory {
         return this.ag;
     }
 
-    public Map<String, AGNode> getNodeMap() {
+    public HashMap<String, AGNode> getNodeMap() {
         return nodeMap;
     }
 

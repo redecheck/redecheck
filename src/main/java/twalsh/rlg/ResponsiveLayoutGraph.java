@@ -76,19 +76,7 @@ public class ResponsiveLayoutGraph {
         }
         oracle = o;
         oracleDoms = oDoms;
-
-        for (DomNode dn : first.getDomNodeMap().values()) {
-        	try {
-        		if ( (Arrays.equals(dn.getCoords(), dn.getParent().getCoords())) && dn.getParent().getChildren().size() == 1 ) {
-        			System.out.println(dn.getxPath());
-        		}
-        	
-        	} catch (Exception e) {
-        		
-        	}
-        }
         
-
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
@@ -245,38 +233,25 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
-            int width = this.restOfWidths[restOfGraphs.indexOf(ag)];
-            DomNode oracleDN = null;
-            try {
-                oracleDN = oracleDoms.get(width);
-            } catch (Exception e) {
-                oracleDN = null;
-            }
-            DomNode testDN = doms.get(width);
+            HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
+            HashMap<String, AGEdge> temp = ag.getEdgeMap();
+            HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
-//            if (Redecheck.domsEqual(oracleDN, testDN)) {
-//                updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-//            } else {
+            checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-                HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
-                HashMap<String, AGEdge> temp = ag.getEdgeMap();
-                HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
+            // NEW METHOD FOR SAVING EFFORT
+            HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
+            updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
-                checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+            checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+            // Handle disappearing edges
+            updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
 
-                // NEW METHOD FOR SAVING EFFORT
-                HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
-                updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
+            // Handle appearing edges
+            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
 
-                checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-                // Handle disappearing edges
-                updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
-
-                // Handle appearing edges
-                checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-
-                updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
-                previousMap = ag.getEdgeMap();
+            updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
+            previousMap = ag.getEdgeMap();
 //            }
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
@@ -1046,11 +1021,11 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
 
-            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
             boolean found;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.nodeMap;
+                HashMap<String, AGNode> n1 = extraAG.getNodeMap();
                 found = n1.get(searchKey) != null;
             } else {
                 HashMap<String, AGEdge> es = extraAG.edgeMap;
