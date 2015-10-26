@@ -38,43 +38,35 @@ public class AlignmentGraphFactory {
 //    	System.out.println("Edges before: " + this.edgeMap.size());
     	
     	HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
-    	
+    	ArrayList<AGEdge> toRemove = new ArrayList<AGEdge>();
+    	int before;
+    	int after;
     	for (AGNode n : nodeMapCopy.values()) {
         	try {
         		DomNode dn = n.domNode;
-        		AGNode parent = getParentOfAGNode(n);
+        		AGNode parent = n.parent;
+//        				etParentOfAGNode(n);
         		
         		boolean onlyChild = getChildrenOfNode(parent).size() == 1;
         		
         		if ( (Arrays.equals(dn.getCoords(), parent.domNode.getCoords())) && onlyChild) {
 //        			System.out.println("GOING TO REMOVE " + n);
-        			
+//        			System.out.println("PARENT IS " + parent);
         			// Remove the original contains edge
         			Contains oldContains = getChildrenOfNode(parent).get(0);
         			
+        			toRemove.add(oldContains);
         			String key = oldContains.getChild().domNode.getxPath()+ oldContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(oldContains);
-//        			if (this.edgeMap.get(key)==null) {
-//        				System.out.println(oldContains + generateEdgeLabelling(oldContains));
-//        				System.out.println("TEST: " +key);
-//        			}
-//        			System.out.println("AFTER: " + this.edgeMap.size());
-//        			for (String e : edgeMap.keySet()) {
-//        				System.out.println(e);
-//        			}
-        			int before = this.edgeMap.size();
-        			System.out.println(oldContains);
-        			System.out.println(this.getEdgeMap().get(key));
-        			System.out.println();
-//        			if (!this.getEdgeMap().containsKey(key)){
-////        				System.out.println("DOESN't CONTAINS " + key);
-//        				System.out.println(oldContains);
-//        			}
-        			this.edgeMap.remove(key);
-        			int after = this.edgeMap.size();
+//        			
+        			before = this.edgeMap.size();
         			
-        			if (before == after) {
-//        				System.out.println("Couldn't remove " + key);
-        			}
+        			this.edgeMap.remove(key);
+        			after = this.edgeMap.size();
+//        			if (after < before) {
+//        				System.out.println("Removed " + oldContains);
+//        			} else {
+//        				System.out.println("Didn't remove " + oldContains);
+//        			}
         			
         			
         			ArrayList<Contains> childrenEdges = getChildrenOfNode(n);
@@ -83,8 +75,18 @@ public class AlignmentGraphFactory {
         				
         				// Create new contains edge between children and grandparent element
         				Contains newContains = new Contains(parent, cEdge.getChild());
-//        				System.out.println();
+//        				System.out.println("Adding " + newContains);
+        				before = this.edgeMap.size();
         				this.edgeMap.put(newContains.getChild().domNode.getxPath()+ newContains.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(newContains), newContains);
+        				after = this.edgeMap.size();
+        				
+//        				if (after > before) {
+//            				System.out.println("Added " + newContains);
+//            			} else {
+//            				System.out.println("Didn't add " + newContains);
+//            			}
+        				
+        				
 //        				System.out.println(cEdge.child);
 //        				System.out.println("Parent before: " + this.nodeMap.get(cEdge.getChild().domNode.getxPath()).parent);
         				this.nodeMap.get(newContains.getChild().domNode.getxPath()).parent = newContains.getParent();
@@ -92,21 +94,41 @@ public class AlignmentGraphFactory {
 //        				System.out.println();
         				
         				// Remove the old contains edges
-        				this.edgeMap.remove(cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(cEdge));
+        				before = this.edgeMap.size();
+        				String newKey = cEdge.getChild().domNode.getxPath()+ cEdge.getParent().domNode.getxPath()+"contains"+generateEdgeLabelling(cEdge);
+//        				toRemove.add(this.edgeMap.get(newKey));
+//        				System.out.println("Removing " + this.edgeMap.get(newKey));
+        				this.edgeMap.remove(newKey);
+        				after = this.edgeMap.size();
+//        				if (after < before) {
+//            				System.out.println("Removed " + cEdge);
+//            			} else {
+//            				System.out.println("Didn't remove " + cEdge);
+//            			}
 //        				
         			}
-        			
-        			
-        			
+//        			System.out.println();
+        			before = this.nodeMap.size();
         			// Remove the node that is just acting as a container
         			this.domNodeMap.remove(dn.getxPath());
         			this.nodeMap.remove(dn.getxPath());
+        			after = this.nodeMap.size();
+//        			if (after < before) {
+//        				System.out.println("Removed " + dn.getxPath());
+//        			} else {
+//        				System.out.println("Didn't remove " + dn.getxPath());
+//        			}
         		}
         	
         	} catch (NullPointerException e) {
         		
         	}
         }
+    	
+//    	for (AGEdge e : toRemove) {
+//    		System.out.println(e);
+//    	}
+//    	System.out.println("END OF GRAPH");
     	
 //    	System.out.println("Nodes after: " + this.nodeMap.size());
 //    	System.out.println("Edges after: " + this.edgeMap.size());
@@ -116,10 +138,13 @@ public class AlignmentGraphFactory {
 	private ArrayList<Contains> getChildrenOfNode(AGNode n) {
 		ArrayList<Contains> edges = new ArrayList<Contains>();
 		String target = n.domNode.getxPath();
-		for (Contains c : getAg().contains) {
-			String parent = c.getParent().domNode.getxPath();
-			if (parent.equals(target)) {
-				edges.add(c);
+		for (AGEdge e : edgeMap.values()) {
+			if (e instanceof Contains) {
+				Contains c = (Contains) e;
+				String parent = c.getParent().domNode.getxPath();
+				if (parent.equals(target)) {
+					edges.add(c);
+				}
 			}
 		}
 		return edges;
