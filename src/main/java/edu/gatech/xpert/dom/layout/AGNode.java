@@ -1,5 +1,7 @@
 package edu.gatech.xpert.dom.layout;
 
+import java.util.ArrayList;
+
 import edu.gatech.xpert.dom.DomNode;
 
 /**
@@ -11,6 +13,7 @@ public class AGNode {
 	long area;
 	DomNode domNode;
 	AGNode parent;
+	ArrayList<Contains> childrenEdges;
 	
 	public AGNode(DomNode domNode) {
 		this.domNode = domNode;
@@ -20,6 +23,7 @@ public class AGNode {
 		x2 = c[2];
 		y2 = c[3];
 		area = (x2 - x1) * (y2 - y1);
+		childrenEdges = new ArrayList<>();
 	}
 
 	public long getArea() {

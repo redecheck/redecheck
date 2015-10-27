@@ -2,85 +2,163 @@
 
 /HTML/BODY/FOOTER/DIV/NAV
  Oracle: 400 -> 767
- Test: 400 -> 763====== Alignment Errors ====== 
+ Test: 400 -> 763/HTML/BODY/FOOTER/DIV/NAV/UL
+ Oracle: 768 -> 1300
+ Test: 764 -> 1300====== Alignment Errors ====== 
 
 
-/HTML/BODY/ARTICLE/DIV/DL/DT/IMG -> /HTML/BODY/SECTION/DIV[2]
+/HTML/BODY/ARTICLE/DIV/DL -> /HTML/BODY/ARTICLE/DIV/DL[2]
 
-Unmatched in oracle: /HTML/BODY/ARTICLE/DIV/DL/DT/IMG , /HTML/BODY/SECTION/DIV[2] , SIBLING , 480 , 539 , 
-/HTML/BODY/ARTICLE/DIV -> /HTML/BODY/ARTICLE/DIV/DL[2]
-
-Unmatched in oracle: /HTML/BODY/ARTICLE/DIV , /HTML/BODY/ARTICLE/DIV/DL[2] , PARENT_CHILD , 769 , 0 , leftJust
-/HTML/BODY/ARTICLE/DIV -> /HTML/BODY/ARTICLE/DIV/DL[3]
-
-Unmatched in oracle: /HTML/BODY/ARTICLE/DIV , /HTML/BODY/ARTICLE/DIV/DL[3] , PARENT_CHILD , 769 , 0 , leftJust
-/HTML/BODY/ARTICLE[2]/DIV/DIV -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV
-
-Unmatched in oracle: /HTML/BODY/ARTICLE[2]/DIV/DIV , /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV , PARENT_CHILD , 769 , 0 , 
-/HTML/BODY/ARTICLE[2]/DIV/DIV -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]
-
-Unmatched in oracle: /HTML/BODY/ARTICLE[2]/DIV/DIV , /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2] , PARENT_CHILD , 769 , 0 , 
-/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI/SPAN
-
-Unmatched in oracle: /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI , /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI/SPAN , PARENT_CHILD , 769 , 979 , leftJusttop
-/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[2] -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[2]/SPAN
-
-Unmatched in oracle: /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[2]/SPAN , PARENT_CHILD , 769 , 979 , leftJusttop
-/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[3] -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[3]/SPAN
-
-Unmatched in oracle: /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[3] , /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/UL/LI[3]/SPAN , PARENT_CHILD , 769 , 979 , leftJusttop
-/HTML/BODY/FOOTER/DIV -> /HTML/BODY/FOOTER/DIV/NAV
-
-Unmatched in oracle: /HTML/BODY/FOOTER/DIV , /HTML/BODY/FOOTER/DIV/NAV , PARENT_CHILD , 769 , 0 , 
-/HTML/BODY/FOOTER/DIV/NAV/UL -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3]
-
-Unmatched in oracle: /HTML/BODY/FOOTER/DIV/NAV/UL , /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3] , PARENT_CHILD , 569 , 0 , rightJusttop
-/HTML/BODY/FOOTER/DIV/NAV/UL -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6]
-
-Unmatched in oracle: /HTML/BODY/FOOTER/DIV/NAV/UL , /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] , PARENT_CHILD , 569 , 626 , rightJusttop
-/HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6]
-
-Unmatched in oracle: /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7] , /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6] , SIBLING , 569 , 600 , rightOf
-/HTML/BODY/HEADER/DIV -> /HTML/BODY/HEADER/DIV/A/IMG
-
-Unmatched in oracle: /HTML/BODY/HEADER/DIV , /HTML/BODY/HEADER/DIV/A/IMG , PARENT_CHILD , 481 , 0 , leftJust
-Unmatched in oracle: /HTML/BODY/HEADER/DIV , /HTML/BODY/HEADER/DIV/A/IMG , PARENT_CHILD , 408 , 479 , centeredtop
-/HTML/BODY/HEADER/DIV -> /HTML/BODY/HEADER/DIV/NAV
-
-Unmatched in oracle: /HTML/BODY/HEADER/DIV , /HTML/BODY/HEADER/DIV/NAV , PARENT_CHILD , 481 , 0 , leftJust
-/HTML/BODY/HEADER/DIV/NAV -> /HTML/BODY/HEADER/DIV/NAV/UL
-
-Unmatched in oracle: /HTML/BODY/HEADER/DIV/NAV , /HTML/BODY/HEADER/DIV/NAV/UL , PARENT_CHILD , 481 , 0 , rightJustbottom
-/HTML/BODY/SECTION -> /HTML/BODY/SECTION/A
-
-Unmatched in oracle: /HTML/BODY/SECTION , /HTML/BODY/SECTION/A , PARENT_CHILD , 814 , 0 , 
-Unmatched in oracle: /HTML/BODY/SECTION , /HTML/BODY/SECTION/A , PARENT_CHILD , 438 , 0 , centeredbottom
-/HTML/BODY/SECTION/A[2] -> /HTML/BODY/ARTICLE[2]
-
-Unmatched in oracle: /HTML/BODY/SECTION/A[2] , /HTML/BODY/ARTICLE[2] , SIBLING , 480 , 539 , below
-/HTML/BODY/SECTION/A[2] -> /HTML/BODY/ARTICLE
-
-Unmatched in oracle: /HTML/BODY/SECTION/A[2] , /HTML/BODY/ARTICLE , SIBLING , 480 , 539 , 
-/HTML/BODY/SECTION/A[2] -> /HTML/BODY/FOOTER
-
-Unmatched in oracle: /HTML/BODY/SECTION/A[2] , /HTML/BODY/FOOTER , SIBLING , 480 , 539 , below
-/HTML/BODY/SECTION/A[2] -> /HTML/BODY/HEADER
-
-Unmatched in oracle: /HTML/BODY/SECTION/A[2] , /HTML/BODY/HEADER , SIBLING , 480 , 539 , above
-/HTML/BODY/SECTION -> /HTML/BODY/SECTION/A[2]
-
-Unmatched in oracle: /HTML/BODY/SECTION , /HTML/BODY/SECTION/A[2] , PARENT_CHILD , 434 , 479 , centeredbottom
-/HTML/BODY/SECTION/A[2] -> /HTML/BODY/SECTION
-
-Unmatched in oracle: /HTML/BODY/SECTION/A[2] , /HTML/BODY/SECTION , SIBLING , 481 , 539 , 
-/HTML/BODY -> /HTML/BODY/SECTION/A[2]
-
-Unmatched in oracle: /HTML/BODY , /HTML/BODY/SECTION/A[2] , PARENT_CHILD , 502 , 539 , centered
-/HTML/BODY/ARTICLE/DIV/DL/DT -> /HTML/BODY/SECTION/DIV[2]
-
-Unmatched in oracle: /HTML/BODY/ARTICLE/DIV/DL/DT , /HTML/BODY/SECTION/DIV[2] , PARENT_CHILD , 481 , 539 , ====== Width Errors ====== 
-
-/HTML/BODY/ARTICLE/DIV/DL
-Differing bounds for {100.0% of /HTML/BODY/ARTICLE/DIV + 0.0}
+Differing bounds for {belowleftAlignrightAlign}
 	Oracle : 400 -> 767
 	Test : 400 -> 763
+
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/ARTICLE/DIV -> /HTML/BODY/ARTICLE/DIV/DL
+
+Differing bounds for {top}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+Differing bounds for {leftJust}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/ARTICLE/DIV -> /HTML/BODY/ARTICLE/DIV/DL[2]
+
+Differing bounds for {middle}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+Differing bounds for {centered}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL[2]
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/ARTICLE/DIV/DL[3] -> /HTML/BODY/ARTICLE/DIV/DL
+
+Differing bounds for {leftOftopAlignbottomAlign}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+/HTML/BODY/ARTICLE/DIV -> /HTML/BODY/ARTICLE/DIV/DL[3]
+
+Differing bounds for {bottom}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+Differing bounds for {rightJust}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2] -> /HTML/BODY/ARTICLE[2]/DIV/DIV/DIV[2]/H2
+
+Differing bounds for {}
+	Oracle : 400 -> 767
+	Test : 400 -> 763
+
+Differing bounds for {top}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300
+
+/HTML/BODY/FOOTER/DIV -> /HTML/BODY/FOOTER/DIV/NAV
+
+Differing bounds for {}
+	Oracle : 641 -> 767
+	Test : 641 -> 763
+
+/HTML/BODY/FOOTER/DIV -> /HTML/BODY/FOOTER/DIV/NAV/UL
+
+Differing bounds for {}
+	Oracle : 768 -> 979
+	Test : 764 -> 979
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[2]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[3]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[4]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[5]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[6]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[7]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/FOOTER/DIV/NAV -> /HTML/BODY/FOOTER/DIV/NAV/UL/LI[8]
+
+Differing bounds for {}
+	Oracle : 768 -> 0
+	Test : 764 -> 0
+
+/HTML/BODY/SECTION -> /HTML/BODY/SECTION/A
+
+Differing bounds for {leftJust}
+	Oracle : 400 -> 436
+	Test : 400 -> 456
+
+Differing bounds for {centered}
+	Oracle : 437 -> 812
+	Test : 457 -> 812
+
+/HTML/BODY/SECTION -> /HTML/BODY/SECTION/A[2]
+
+Differing bounds for {leftJustbottom}
+	Oracle : 400 -> 432
+	Test : 400 -> 456
+
+Differing bounds for {centeredbottom}
+	Oracle : 433 -> 474
+	Test : 457 -> 474
+====== Width Errors ====== 
+
+/HTML/BODY/FOOTER/DIV/NAV/UL
+Differing bounds for {0.0% of /HTML/BODY/FOOTER/DIV + 580.0}
+	Oracle : 768 -> 1300
+	Test : 764 -> 1300

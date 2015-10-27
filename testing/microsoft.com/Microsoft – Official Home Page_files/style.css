@@ -4665,7 +4665,7 @@ html[dir="rtl"].iem7 .grid-row .grid-unit {
 
 .media {
     background-color:#f0f0f0;
-    background-image:url(/CMSImages/progressIndicator40x40.gif?version=22bf30a9-5751-70e3-2c7d-7173410d2ed0);
+    /*background-image:url(/CMSImages/progressIndicator40x40.gif?version=22bf30a9-5751-70e3-2c7d-7173410d2ed0);*/
     background-repeat:no-repeat;
     background-position:center center;
     line-height:0;
@@ -7421,12 +7421,12 @@ body {
 }
 
 .hp-large-carousel .prev-next .prev,.carousel-prev {
-    background-image:url(/en-us/CMSImages/HPFeb15_arrow_left.png?version=a32ff256-bdcb-8b89-d50f-f71fad3c8b19);
+    /*background-image:url(/en-us/CMSImages/HPFeb15_arrow_left.png?version=a32ff256-bdcb-8b89-d50f-f71fad3c8b19);*/
     left:0
 }
 
 .hp-large-carousel .prev-next .next,.carousel-next {
-    background-image:url(/en-us/CMSImages/HPFeb15_arrow_right.png?version=8301e752-627c-7583-f79f-7b962228be74);
+    /*background-image:url(/en-us/CMSImages/HPFeb15_arrow_right.png?version=8301e752-627c-7583-f79f-7b962228be74);*/
     right:0
 }
 

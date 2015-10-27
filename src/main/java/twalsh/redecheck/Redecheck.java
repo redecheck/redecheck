@@ -26,6 +26,8 @@ public class Redecheck {
     public static String preamble;
     public static int startWidth;
     public static int finalWidth;
+    static HashMap<Integer, DomNode> oracleDoms;
+	static HashMap<Integer, DomNode> testDoms;
     public static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
@@ -62,6 +64,10 @@ public class Redecheck {
         preamble = jce.preamble;
         startWidth = jce.startWidth;
         finalWidth = jce.endWidth;
+        
+        oracleDoms = new HashMap<Integer, DomNode>();
+        testDoms = new HashMap<Integer, DomNode>();
+        
         int stepSize = jce.ss;
         int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
 
@@ -91,10 +97,10 @@ public class Redecheck {
         System.out.println("\n\nGENERATING ORACLE RLG");
         String oracleUrl = oracle + ".html";
         driver.get(preamble + oracleUrl);
-        capturePageModel(oracleUrl, widths);
+        capturePageModel(oracleUrl, widths, oracleDoms);
 
         // Construct oracle RLG
-        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
+//        Map<Integer, DomNode> oracleDoms = loadDoms(widths, oracleUrl);
         ArrayList<AlignmentGraphFactory> oracleAgs = new ArrayList<AlignmentGraphFactory>();
         for (int width : widths) {
             DomNode dn = oracleDoms.get(width);
@@ -106,38 +112,38 @@ public class Redecheck {
         long duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-//        oracleRlg.writeToGraphViz("oracle");
+        oracleRlg.writeToGraphViz("oracle");
 
 //      Access test webpage and sample
-        startTime = System.nanoTime();
-        System.out.println("\n\nGENERATING TEST RLG");
-        String testUrl = test + ".html";
-        driver.get(preamble + testUrl);
-        capturePageModel(testUrl, widths);
-
-        // Construct test RLG
-        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
-        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
-        for (int width : widths) {
-            DomNode dn = testDoms.get(width);
-            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-            testAgs.add(agf);
-        }
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
-//        testRlg.writeToGraphViz("test");
-        driver.close();
-        endTime = System.nanoTime();
-        duration = (endTime - startTime);
-        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
-
-
-        // Perform the model comparison
-        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
-        comp.compare();
-        comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
-        System.out.println("\n\nTESTING COMPLETE.");
+//        startTime = System.nanoTime();
+//        System.out.println("\n\nGENERATING TEST RLG");
+//        String testUrl = test + ".html";
+//        driver.get(preamble + testUrl);
+//        capturePageModel(testUrl, widths);
+//
+//        // Construct test RLG
+//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+//        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
+//        for (int width : widths) {
+//            DomNode dn = testDoms.get(width);
+//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+//            testAgs.add(agf);
+//        }
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
+////        testRlg.writeToGraphViz("test");
+//        driver.close();
+//        endTime = System.nanoTime();
+//        duration = (endTime - startTime);
+//        System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
+//
+//
+//        // Perform the model comparison
+//        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
+//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+//        comp.compare();
+//        comp.compareMatchedNodes();
+//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+//        System.out.println("\n\nTESTING COMPLETE.");
 
         driver.quit();
     }
@@ -173,42 +179,57 @@ public class Redecheck {
         return widthsArray;
     }
 
+    public static void capturePageModel(String url, int[] widths, HashMap<Integer, DomNode> doms) {
+    	JsonDomParser parser = new JsonDomParser();
+    	try {
+            int counter = 0;
+            for (int i = 0; i < widths.length; i++) {
+                int w = widths[i];
+                driver.manage().window().setSize(new Dimension(w, 600));
+                String extractedDom = extractDOM(url, driver, scriptToExtract);
+                doms.put(w, parser.parseJsonDom(extractedDom));
+            }
+    	} catch (Exception e) {
+    		
+    	}
+    }
+    
     /**
      * Samples the webpage by resizing the browser window to a sequence of widths and then extracting the DOM at each.
      * @param url           URL of webpage to be sampled
      * @param widths        widths at which to sample the page
      * @throws InterruptedException
      */
-    public static void capturePageModel(String url, int[] widths) throws InterruptedException {
-        try {
-            int counter = 0;
-            for (int i = 0; i < widths.length; i++) {
-
-                String outFolder;
-                int w = widths[i];
-                outFolder = current + "/../output/" + url.replaceAll("/", "").replace(".html", "") + "/" + "width" + w;
-//                System.out.println(outFolder);
-                File theDir = new File(outFolder);
-                if (!theDir.exists()) {
-
-                    boolean result = false;
-                    try {
-                        theDir.mkdir();
-                        result = true;
-                    } catch (SecurityException se) {
-                        //handle it
-                    }
-                }
-                driver.manage().window().setSize(new Dimension(w, 600));
-
-                FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, scriptToExtract));
-
-                counter++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void capturePageModel(String url, int[] widths) throws InterruptedException {
+//        try {
+//            int counter = 0;
+//            for (int i = 0; i < widths.length; i++) {
+//
+//                String outFolder;
+//                int w = widths[i];
+////                outFolder = current + "/../output/" + url.replaceAll("/", "").replace(".html", "") + "/" + "width" + w;
+////                System.out.println(outFolder);
+////                File theDir = new File(outFolder);
+////                if (!theDir.exists()) {
+////
+////                    boolean result = false;
+////                    try {
+////                        theDir.mkdir();
+////                        result = true;
+////                    } catch (SecurityException se) {
+////                        //handle it
+////                    }
+////                }
+//                driver.manage().window().setSize(new Dimension(w, 600));
+//
+//                FileUtils.writeStringToFile(new File(outFolder + "/dom.js"), extractDOM(url, driver, scriptToExtract));
+//
+//                counter++;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Executes the WebDiff javascript code on the webpage to extract the DOM.
@@ -242,15 +263,15 @@ public class Redecheck {
         return doms;
     }
 
-    public static void captureScreenshot(File screenshot, PhantomJSDriver driver) {
-        File scrFile = driver.getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(scrFile, screenshot);
-        } catch (IOException e) {
-            System.err.println("Error saving screenshot");
-            e.printStackTrace();
-        }
-    }
+//    public static void captureScreenshot(File screenshot, PhantomJSDriver driver) {
+//        File scrFile = driver.getScreenshotAs(OutputType.FILE);
+//        try {
+//            FileUtils.copyFile(scrFile, screenshot);
+//        } catch (IOException e) {
+//            System.err.println("Error saving screenshot");
+//            e.printStackTrace();
+//        }
+//    }
 
     public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
         return new PhantomJSDriver(dCaps);

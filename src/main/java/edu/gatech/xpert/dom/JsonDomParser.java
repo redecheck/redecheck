@@ -2,6 +2,7 @@ package edu.gatech.xpert.dom;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,16 +23,17 @@ public class JsonDomParser {
 			for (int i = 0; i < arrDom.length(); i++) {
 				JSONObject nodeData = arrDom.getJSONObject(i);
 				DomNode node = getDomNode(nodeData);
-				
-				// Rare case 
-				if(node.isTag() && node.getTagName().startsWith("/")) continue;
-				
-				domMap.put(nodeData.getInt("nodeid"), node);
-				
-				int parentId = getInt(nodeData, "pid");
-				if(domMap.containsKey(parentId)){
-					DomNode parent = domMap.get(parentId);
-					parent.addChild(node);
+				if (node != null) {
+					// Rare case 
+					if(node.isTag() && node.getTagName().startsWith("/")) continue;
+					
+					domMap.put(nodeData.getInt("nodeid"), node);
+					
+					int parentId = getInt(nodeData, "pid");
+					if(domMap.containsKey(parentId)){
+						DomNode parent = domMap.get(parentId);
+						parent.addChild(node);
+					}
 				}
 			}
 		} catch (JSONException e) {
@@ -45,7 +47,8 @@ public class JsonDomParser {
 
 	private DomNode getDomNode(JSONObject nodeData) throws JSONException {
 		DomNode node = null;
-		int type = getInt(nodeData, "type");
+		if (!Arrays.equals(new int[]{0,0,0,0}, getCoords(nodeData))) {
+			int type = getInt(nodeData, "type");
 //		switch (type) {
 //		case 0:
 //			node = new DomNode(getString(nodeData, "text"));
@@ -53,17 +56,17 @@ public class JsonDomParser {
 //		case 1:
 			String xPath = getString(nodeData, "xpath");
 			node = new DomNode(parseTagName(xPath), xPath);
-			node.setId(getString(nodeData, "id"));
+//			node.setId(getString(nodeData, "id"));
 //			node.setAttributes(getAttributes(nodeData));
 			node.setCoords(getCoords(nodeData));
-			try {
-				node.setZindex(nodeData.getInt("zindex"));
-			} catch (Exception e) { /* Missing zindex */ }
+//			try {
+//				node.setZindex(nodeData.getInt("zindex"));
+//			} catch (Exception e) { /* Missing zindex */ }
 //			break;
 //		default:
 //			System.err.println("Unknown node type:" + type);
 //		}
-		
+		}
 		return node;
 	}
 

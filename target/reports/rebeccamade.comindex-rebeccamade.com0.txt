@@ -3,525 +3,1756 @@
 ====== Alignment Errors ====== 
 
 
-/HTML/BODY/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/A/H1
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV , /HTML/BODY/DIV/DIV/DIV/A/H1 , PARENT_CHILD , 770 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV/DIV -> /HTML/BODY/DIV[2]/DIV/DIV/DIV/A/IMG
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV/DIV , /HTML/BODY/DIV[2]/DIV/DIV/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV/DIV , /HTML/BODY/DIV[2]/DIV/DIV/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[10]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[10]/DIV/A/IMG
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[10]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[10]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[13]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[13] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[14]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[14] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[15]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[15] , SIBLING , 769 , 991 , rightOf
+Differing bounds for {rightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
+
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[18] , SIBLING , 769 , 991 , belowrightOf
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowrightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , belowleftAlignrightAlign
+Differing bounds for {below}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , below
+Differing bounds for {belowrightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , above
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , 
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , rightOf
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {rightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[10] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[10] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , aboveleftAlignrightAlign
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[10]
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[10] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[10] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[11]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[11]/DIV/A/IMG
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[11]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[11]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[10]
+
+Differing bounds for {leftJustmiddle}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {middle}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[13]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[13] , SIBLING , 769 , 991 , 
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[14]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[14] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[15]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[15] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
+
+Differing bounds for {belowleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , below
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , belowleftAlignrightAlign
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {below}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , 
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[11] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[11] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , above
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[11]
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[11] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[11] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[12]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[12]/DIV/A/IMG
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[12]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[12]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[11]
+
+Differing bounds for {middle}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {centeredmiddle}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[14]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[14] , SIBLING , 769 , 991 , 
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[15]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[15] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[16] , SIBLING , 769 , 991 , belowleftOf
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {belowleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
+
+Differing bounds for {belowleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , belowleftOf
+Differing bounds for {below}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , below
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , above
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , aboveleftOf
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , leftOf
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[12] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[12] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , leftAlignrightAlign
-/HTML/BODY/DIV[2]/DIV/DIV[13]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[13]/DIV/A/IMG
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[13]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[13]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+Differing bounds for {leftOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[16] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[17] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[18] , SIBLING , 769 , 991 , rightOf
+Differing bounds for {rightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
+
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
+
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , above
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[13] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[13] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , aboverightOf
-/HTML/BODY/DIV[2]/DIV/DIV[14]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[14]/DIV/A/IMG
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[14]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[14]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[16] , SIBLING , 769 , 991 , 
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[17] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[18] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[14] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , above
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[14]
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[14] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[14] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[15]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[15]/DIV/A/IMG
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[15]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[15]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[14] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[14]
+
+Differing bounds for {centered}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[16] , SIBLING , 769 , 991 , leftOf
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[17] , SIBLING , 769 , 991 , 
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[18] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , belowleftOf
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , aboveleftOf
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , above
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[15] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , aboveleftOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[15]
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[15] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[15] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[16]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[16]/DIV/A/IMG
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[16]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[16]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2]/DIV/DIV[15] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[15]
+
+Differing bounds for {rightJust}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[17] , SIBLING , 769 , 991 , topAlignbottomAlign
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[18] , SIBLING , 769 , 991 , rightOftopAlignbottomAlign
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , 
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[16] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[16] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , aboveleftAlignrightAlign
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[16]
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[16] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[16] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[17]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[17]/DIV/A/IMG
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[17]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[17]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[16]
+
+Differing bounds for {leftJust}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightJust}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , above
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , above
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[17] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[17] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , above
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[17]
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[17] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[17] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[18]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[18]/DIV/A/IMG
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[18]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[18]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[17]
+
+Differing bounds for {centered}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftJustbottom}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[19] , SIBLING , 769 , 991 , leftOf
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[20] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[2] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , aboveleftOf
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , aboveleftOf
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , above
+Differing bounds for {aboverightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[18] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[18] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , aboveleftOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[18]
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[18] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[19]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[19]/DIV/A/IMG
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[19]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[19]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[18]
+
+Differing bounds for {bottom}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {rightJust}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19] , /HTML/BODY/DIV[2]/DIV/DIV[3] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , aboverightOf
+Differing bounds for {above}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[19] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , aboverightOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[19]
+Differing bounds for {aboverightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[19] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[19] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[20]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[20]/DIV/A/IMG
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[20]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[20]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[20]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[20]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2]/DIV/DIV[19] -> /HTML/BODY/DIV[2]/DIV/DIV
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[19]
+
+Differing bounds for {leftJustbottom}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {bottom}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[20] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , above
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[20] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , aboveleftAlignrightAlign
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[20] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , above
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[20]
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[20] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[20] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2]/DIV/A/IMG
+Differing bounds for {above}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[2]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[2]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[20] -> /HTML/BODY/DIV[2]/DIV/DIV
+
+Differing bounds for {aboveleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[20]
+
+Differing bounds for {rightJustbottom}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {centeredbottom}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[2] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[2] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[2] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , 
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[2]
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[2] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[3]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[3]/DIV/A/IMG
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[3]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[3]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2]/DIV/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2]/DIV/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Differing bounds for {rightOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[2]
+
+Differing bounds for {top}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {centeredtop}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3] , /HTML/BODY/DIV[2]/DIV/DIV[4] , SIBLING , 769 , 991 , leftOf
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , 
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[3] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , belowleftOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[3]
+Differing bounds for {belowleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[3] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[4]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[4]/DIV/A/IMG
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[4]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[4]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {below}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2]/DIV/DIV[3] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Differing bounds for {belowleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {belowleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[3]
+
+Differing bounds for {top}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {rightJusttop}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV[5] , SIBLING , 769 , 991 , topAlignbottomAlign
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV[6] , SIBLING , 769 , 991 , rightOftopAlignbottomAlign
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , rightOf
+Differing bounds for {belowleftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {rightOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[4] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[4] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , leftAlignrightAlign
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[4]
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[4] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[4] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[5]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[5]/DIV/A/IMG
+Differing bounds for {leftOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[5]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[5]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[4]
+
+Differing bounds for {leftJust}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightJusttop}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[5] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[5] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
 /HTML/BODY/DIV[2]/DIV/DIV[5] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[5] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[5] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , 
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[5] , PARENT_CHILD , 993 , 0 , top
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[5] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-/HTML/BODY/DIV[2]/DIV/DIV[6]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[6]/DIV/A/IMG
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[6]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[6]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[5]
+
+Differing bounds for {centered}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftJust}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[6] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6] , /HTML/BODY/DIV[2]/DIV/DIV[7] , SIBLING , 769 , 991 , leftOf
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[6] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6] , /HTML/BODY/DIV[2]/DIV/DIV[8] , SIBLING , 769 , 991 , 
+Differing bounds for {}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[6] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , leftAlignrightAlign
+Differing bounds for {leftAlignrightAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[6] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[6] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , leftOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[6]
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[6] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[7]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[7]/DIV/A/IMG
+Differing bounds for {leftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[7]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[7]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[7]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[7]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[6]
+
+Differing bounds for {rightJust}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[7] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[7] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , rightOftopAlignbottomAlign
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[7]
+Differing bounds for {rightOftopAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[7] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[8]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[8]/DIV/A/IMG
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[8]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[8]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[8]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[8]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2]/DIV/DIV[7] -> /HTML/BODY/DIV[2]/DIV/DIV
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[7]
+
+Differing bounds for {leftJust}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[8] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[8] , /HTML/BODY/DIV[2]/DIV/DIV[9] , SIBLING , 769 , 991 , topAlignbottomAlign
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+Differing bounds for {topAlignbottomAlign}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[8] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[8] , PARENT_CHILD , 993 , 0 , top
-/HTML/BODY/DIV[2]/DIV/DIV[9]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[9]/DIV/A/IMG
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[9]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[9]/DIV/A/IMG , PARENT_CHILD , 667 , 767 , centered
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[9]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[9]/DIV/A/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
+/HTML/BODY/DIV[2]/DIV/DIV[8] -> /HTML/BODY/DIV[2]/DIV/DIV
+
+Differing bounds for {above}
+	Oracle : 400 -> 991
+	Test : 400 -> 998
+
+Differing bounds for {leftOf}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[8]
+
+Differing bounds for {centered}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {rightJust}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+
 /HTML/BODY/DIV[2]/DIV/DIV[9] -> /HTML/BODY/DIV[2]/DIV/DIV
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV/DIV[9] , /HTML/BODY/DIV[2]/DIV/DIV , SIBLING , 769 , 991 , aboveleftOf
-/HTML/BODY/DIV[2]/DIV -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
 
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[9] , PARENT_CHILD , 769 , 0 , rightJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV , /HTML/BODY/DIV[2]/DIV/DIV[9] , PARENT_CHILD , 993 , 0 , top====== Width Errors ====== 
+Differing bounds for {aboveleftOf}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+/HTML/BODY/DIV[2] -> /HTML/BODY/DIV[2]/DIV/DIV[9]
+
+Differing bounds for {rightJust}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+
+Differing bounds for {leftJustmiddle}
+	Oracle : 992 -> 1300
+	Test : 999 -> 1300
+====== Width Errors ====== 
 
 /HTML/BODY/DIV
-Differing bounds for {0.0% of /HTML/BODY + 970.0}
-	Oracle : 992 -> 1199
-	Test : 999 -> 1199
-/HTML/BODY/DIV[2]
 Differing bounds for {0.0% of /HTML/BODY + 750.0}
 	Oracle : 768 -> 991
 	Test : 768 -> 998
+/HTML/BODY/DIV/DIV/DIV/NAV/UL
+Differing bounds for {0.0% of /HTML/BODY/DIV/DIV/DIV/NAV + 970.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]
+Differing bounds for {0.0% of /HTML/BODY + 970.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]/DIV/DIV
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[10]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[11]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
 /HTML/BODY/DIV[2]/DIV/DIV[12]
-Differing bounds for {0.0% of /HTML/BODY/DIV[2]/DIV + 250.0}
-	Oracle : 768 -> 991
-	Test : 768 -> 998
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
 /HTML/BODY/DIV[2]/DIV/DIV[13]
-Differing bounds for {0.0% of /HTML/BODY/DIV[2]/DIV + 250.0}
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
 	Oracle : 768 -> 991
 	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[14]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]/DIV/DIV[15]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[16]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[17]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]/DIV/DIV[18]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[19]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[20]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
 /HTML/BODY/DIV[2]/DIV/DIV[2]
-Differing bounds for {0.0% of /HTML/BODY/DIV[2]/DIV + 242.0}
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
 	Oracle : 992 -> 1199
 	Test : 999 -> 1199
 /HTML/BODY/DIV[2]/DIV/DIV[3]
-Differing bounds for {0.0% of /HTML/BODY/DIV[2]/DIV + 250.0}
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]/DIV/DIV[4]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
 	Oracle : 768 -> 991
 	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[5]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[6]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199
+/HTML/BODY/DIV[2]/DIV/DIV[7]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[8]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 250.0}
+	Oracle : 768 -> 991
+	Test : 768 -> 998
+/HTML/BODY/DIV[2]/DIV/DIV[9]
+Differing bounds for {0.0% of /HTML/BODY/DIV[2] + 242.0}
+	Oracle : 992 -> 1199
+	Test : 999 -> 1199

@@ -2,52 +2,5 @@
 
 ====== Alignment Errors ====== 
 
-
-/HTML/BODY/DIV[2]/DIV[2]/P[2]/A -> /HTML/BODY/DIV[2]/DIV[2]/P[2]/A[2]
-
-Unmatched in test: /HTML/BODY/DIV[2]/DIV[2]/P[2]/A , /HTML/BODY/DIV[2]/DIV[2]/P[2]/A[2] , SIBLING , 400 , 0 , leftAlignrightAlign
-/HTML/BODY/DIV[2]/DIV[2]/P[2] -> /HTML/BODY/DIV[2]/DIV[2]/P[2]/A
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[2]/P[2] , /HTML/BODY/DIV[2]/DIV[2]/P[2]/A , PARENT_CHILD , 464 , 0 , rightJusttop
-/HTML/BODY/DIV[2]/DIV[2]/P[2] -> /HTML/BODY/DIV[2]/DIV[2]/P[2]/A[2]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[2]/P[2] , /HTML/BODY/DIV[2]/DIV[2]/P[2]/A[2] , PARENT_CHILD , 464 , 586 , rightJusttop
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[2]/P[2] , /HTML/BODY/DIV[2]/DIV[2]/P[2]/A[2] , PARENT_CHILD , 406 , 462 , centeredmiddle
-/HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV[3]/DIV
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[3] , /HTML/BODY/DIV[2]/DIV[3]/DIV , PARENT_CHILD , 1201 , 0 , rightJust
-/HTML/BODY/DIV[2]/DIV[3]/DIV/P[2] -> /HTML/BODY/DIV[2]/DIV[3]/DIV/P[2]/A
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[3]/DIV/P[2] , /HTML/BODY/DIV[2]/DIV[3]/DIV/P[2]/A , PARENT_CHILD , 1201 , 1300 , leftJustmiddle
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[3]/DIV/P[2] , /HTML/BODY/DIV[2]/DIV[3]/DIV/P[2]/A , PARENT_CHILD , 462 , 546 , rightJusttop
-/HTML/BODY/DIV[2]/DIV[3]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[3]/DIV
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[3]/DIV[2] , /HTML/BODY/DIV[2]/DIV[3]/DIV , SIBLING , 1201 , 1300 , topAlign
-/HTML/BODY/DIV[2]/DIV[3] -> /HTML/BODY/DIV[2]/DIV[3]/DIV[2]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[3] , /HTML/BODY/DIV[2]/DIV[3]/DIV[2] , PARENT_CHILD , 1201 , 1300 , rightJust
-/HTML/BODY/DIV[2]/DIV[4]/DIV/H4 -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4]/DIV/H4 , /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG , PARENT_CHILD , 1201 , 1300 , leftJust
-/HTML/BODY/DIV[2]/DIV[4]/DIV/H4 -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4]/DIV/H4 , /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] , PARENT_CHILD , 1201 , 0 , leftJust
-/HTML/BODY/DIV[2]/DIV[4] -> /HTML/BODY/DIV[2]/DIV[4]/DIV
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4] , /HTML/BODY/DIV[2]/DIV[4]/DIV , PARENT_CHILD , 1201 , 0 , rightJust
-/HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4 -> /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4/IMG
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4 , /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4/IMG , PARENT_CHILD , 1201 , 0 , rightJust
-/HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4 -> /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4/IMG[2]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4 , /HTML/BODY/DIV[2]/DIV[4]/DIV[2]/H4/IMG[2] , PARENT_CHILD , 1201 , 1300 , rightJust
-/HTML/BODY/DIV[2]/DIV[4]/DIV[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4]/DIV[2] , /HTML/BODY/DIV[2]/DIV[4]/DIV , SIBLING , 1201 , 1300 , topAlignbottomAlign
-/HTML/BODY/DIV[2]/DIV[4] -> /HTML/BODY/DIV[2]/DIV[4]/DIV[2]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/DIV[4] , /HTML/BODY/DIV[2]/DIV[4]/DIV[2] , PARENT_CHILD , 1201 , 1300 , rightJust
-/HTML/BODY -> /HTML/BODY/DIV[2]
-
-Unmatched in oracle: /HTML/BODY , /HTML/BODY/DIV[2] , PARENT_CHILD , 1187 , 1300 , leftJust====== Width Errors ====== 
+====== Width Errors ====== 
 

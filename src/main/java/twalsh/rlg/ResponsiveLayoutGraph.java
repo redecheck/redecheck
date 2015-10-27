@@ -32,7 +32,8 @@ public class ResponsiveLayoutGraph {
     String url;
     Map<Integer, DomNode> doms;
     Map<Integer, DomNode> tempDoms;
-    Map<Integer, DomNode> oracleDoms;
+    HashMap<Integer, DomNode> oracleDoms;
+    HashMap<Integer, AlignmentGraphFactory> factories;
     int[] widths;
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
@@ -53,13 +54,15 @@ public class ResponsiveLayoutGraph {
      * @param oDoms
      * @throws InterruptedException
      */
-    public ResponsiveLayoutGraph(ArrayList<AlignmentGraphFactory> ags, int[] stringWidths, String url, Map<Integer, DomNode> doms, ResponsiveLayoutGraph o, Map<Integer, DomNode> oDoms) throws InterruptedException {
+    public ResponsiveLayoutGraph(ArrayList<AlignmentGraphFactory> ags, int[] stringWidths, String url, HashMap<Integer, DomNode> doms, ResponsiveLayoutGraph o, Map<Integer, DomNode> oDoms) throws InterruptedException {
         this.graphs = ags;
         this.first = ags.get(0);
         this.last = ags.get(ags.size()-1);
         restOfGraphs =  new ArrayList<AlignmentGraphFactory>();
+        factories = new HashMap<Integer, AlignmentGraphFactory>();
         for (AlignmentGraphFactory agf : graphs) {
             restOfGraphs.add(agf);
+            factories.put(stringWidths[graphs.indexOf(agf)], agf);
         }
         restOfGraphs.remove(0);
         this.url = url;
@@ -75,7 +78,7 @@ public class ResponsiveLayoutGraph {
             alreadyGathered.add(s);
         }
         oracle = o;
-        oracleDoms = oDoms;
+        oracleDoms = (HashMap<Integer, DomNode>) oDoms;
         
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
@@ -145,10 +148,10 @@ public class ResponsiveLayoutGraph {
 
             // Update the previousMap variable to keep track of last set of nodes
             previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
-            double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
         }
-        System.out.print("\n");
+//        System.out.print("\n");
         // Update visibility widthConstraints of everything still visible
         updateRemainingNodes(visCons, last);
 
@@ -254,15 +257,15 @@ public class ResponsiveLayoutGraph {
             previousMap = ag.getEdgeMap();
 //            }
 
-            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
         AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);
         updateRemainingEdges(alCons, last);
 
-        System.out.println();
+//        System.out.println();
         addParentConstraintsToNodes();
         this.alignments = alCons;
     }
@@ -785,10 +788,10 @@ public class ResponsiveLayoutGraph {
                 } catch (NullPointerException e) {
 //                    e.printStackTrace();
                 }
-                double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
-                System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
+//                double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
+//                System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
             }
-        System.out.println("");
+//        System.out.println("");
         addWidthConstraintsToNodes();
     }
 
@@ -805,8 +808,8 @@ public class ResponsiveLayoutGraph {
     public void populateWidthArrays(int[] validWidths, int[] widthsTemp, int[] parentWidths, int[] childWidths, String s, String parentXpath) {
         for (int i = 0; i < validWidths.length; i++) {
             try {
-                DomNode dn = doms.get(validWidths[i]);
-                AlignmentGraphFactory agf = getAlignmentGraphFactory(dn);
+//                DomNode dn = doms.get(validWidths[i]);
+                AlignmentGraphFactory agf = getAlignmentGraphFactory(validWidths[i]);
                 ag = agf.getAg();
                 widthsTemp[i] = validWidths[i];
                 HashMap<String, DomNode> dnMap = agf.getDomNodeMap();
@@ -819,10 +822,22 @@ public class ResponsiveLayoutGraph {
             }
         }
     }
-
-    public AlignmentGraphFactory getAlignmentGraphFactory(DomNode dn) {
-        return new AlignmentGraphFactory(dn);
+    
+    public AlignmentGraphFactory getAlignmentGraphFactory(int width) {
+    	AlignmentGraphFactory agf = factories.get(width);
+    	if (agf != null) {
+    		return agf;
+    	} else {
+    		tempDoms = Redecheck.loadDoms(new int[]{width}, url);
+    		AlignmentGraphFactory newAGF = new AlignmentGraphFactory(tempDoms.get(width));
+    		factories.put(width, newAGF);
+    		return newAGF;	
+    	}
     }
+
+//    public AlignmentGraphFactory getAlignmentGraphFactory(DomNode dn) {
+//        return new AlignmentGraphFactory(dn);
+//    }
 
     public AlignmentGraph getAlignmentGraph(DomNode dn) {
         return new AlignmentGraph(dn);
@@ -915,15 +930,15 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
 
             for (int w : extraWidths) {
-                DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory agf = getAlignmentGraphFactory(dn);
+//                DomNode dn = tempDoms.get(w);
+                AlignmentGraphFactory agf = getAlignmentGraphFactory(w);
                 extraGraphs.add(agf);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
@@ -958,13 +973,13 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(mid);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
-            DomNode dn = tempDoms.get(mid);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            DomNode dn = tempDoms.get(mid);
 
-            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(mid);
             boolean found = false;
             if (searchForNode) {
                 HashMap<String, DomNode> n1 = extraAG.getDomNodeMap();
@@ -997,15 +1012,15 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
 
             for (int w : extraWidths) {
-                DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory ag =  getAlignmentGraphFactory(dn);
+//                DomNode dn = tempDoms.get(w);
+                AlignmentGraphFactory ag =  getAlignmentGraphFactory(w);
                 extraGraphs.add(ag);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
@@ -1031,13 +1046,13 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(mid);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
-            DomNode dn = tempDoms.get(extraWidths[0]);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            DomNode dn = tempDoms.get(extraWidths[0]);
 
-            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(extraWidths[0]);
             boolean found;
 
             if (searchForNode) {
@@ -1194,15 +1209,15 @@ public class ResponsiveLayoutGraph {
             int[] extraWidths = new int[] {min,max};
             ArrayList<AlignmentGraphFactory> extraGraphs = new ArrayList<AlignmentGraphFactory>();
             if ( (!alreadyGathered.contains(min)) || (!alreadyGathered.contains(max)) ) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(min);
                 alreadyGathered.add(max);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
 
             for (int w : extraWidths) {
-                DomNode dn = tempDoms.get(w);
-                AlignmentGraphFactory ag = getAlignmentGraphFactory(dn);
+//                DomNode dn = tempDoms.get(w);
+                AlignmentGraphFactory ag = getAlignmentGraphFactory(w);
                 extraGraphs.add(ag);
             }
             AlignmentGraphFactory ag1 = extraGraphs.get(0);
@@ -1236,12 +1251,12 @@ public class ResponsiveLayoutGraph {
             int mid = (max+min)/2;
             int[] extraWidths = new int[] {mid};
             if (!alreadyGathered.contains(mid)) {
-                Redecheck.capturePageModel(url, extraWidths);
+                Redecheck.capturePageModel(url, extraWidths, oracleDoms);
                 alreadyGathered.add(mid);
             }
-            tempDoms = Redecheck.loadDoms(extraWidths, url);
-            DomNode dn = tempDoms.get(extraWidths[0]);
-            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
+//            tempDoms = Redecheck.loadDoms(extraWidths, url);
+//            DomNode dn = tempDoms.get(extraWidths[0]);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(extraWidths[0]);
 
             Map<String, DomNode> map1 = extraAG.getDomNodeMap();
 

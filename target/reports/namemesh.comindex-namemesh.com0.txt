@@ -6,107 +6,31 @@
 /HTML/BODY/DIV/DIV/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV/H1
 
 Differing bounds for {bottom}
-	Oracle : 713 -> 1300
-	Test : 761 -> 1300
+	Oracle : 712 -> 1300
+	Test : 750 -> 1300
+
+Differing bounds for {}
+	Oracle : 400 -> 711
+	Test : 400 -> 749
+
+/HTML/BODY/DIV/DIV/DIV -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV
+
+Differing bounds for {top}
+	Oracle : 400 -> 407
+	Test : 400 -> 431
+
+Differing bounds for {}
+	Oracle : 408 -> 1300
+	Test : 432 -> 1300
 
 /HTML/BODY/DIV/DIV/DIV/DIV/DIV[3] -> /HTML/BODY/DIV/DIV/DIV/DIV/DIV[3]/H2
 
-Differing bounds for {bottom}
-	Oracle : 651 -> 1300
-	Test : 761 -> 1300
-
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[3]
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[3] , PARENT_CHILD , 463 , 611 , top
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[3] , PARENT_CHILD , 681 , 701 , centered
-Differing bounds for {}
-	Oracle : 703 -> 991
-	Test : 761 -> 991
-
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[4]
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[4] , PARENT_CHILD , 488 , 611 , top
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[5] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[5] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A , SIBLING , 438 , 542 , aboverightOf
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[5]
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[5] , PARENT_CHILD , 544 , 611 , top
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[6] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[3]
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[6] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[3] , SIBLING , 438 , 602 , aboverightOf
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[6]
-
-Unmatched in oracle: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL/LI[2]/A[6] , PARENT_CHILD , 544 , 0 , top
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2]/B
-
-Unmatched in test: /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2] , /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2]/B , PARENT_CHILD , 761 , 0 , bottom
-/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2] -> /HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/UL[2]/LI[2]/P
+Differing bounds for {top}
+	Oracle : 400 -> 649
+	Test : 400 -> 676
 
 Differing bounds for {bottom}
-	Oracle : 689 -> 991
-	Test : 761 -> 991
-
-/HTML/BODY/DIV/DIV/DIV[4]/DIV[2]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV[4]/DIV[2]/DIV[2]/P/A
-
-Differing bounds for {}
-	Oracle : 741 -> 991
-	Test : 761 -> 991
-
-/HTML/BODY/DIV/DIV/DIV[5]/DIV/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV[5]/DIV/DIV[2]/P/A
-
-Differing bounds for {centered}
-	Oracle : 657 -> 849
-	Test : 761 -> 849
-
-/HTML/BODY/DIV/DIV/DIV[6]/DIV[2]/DIV[2]/P -> /HTML/BODY/DIV/DIV/DIV[6]/DIV[2]/DIV[2]/P/A
-
-Differing bounds for {centered}
-	Oracle : 719 -> 903
-	Test : 761 -> 903
-
-/HTML/BODY/DIV[2]/P/A -> /HTML/BODY/DIV[2]/P/A[7]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A , /HTML/BODY/DIV[2]/P/A[7] , SIBLING , 559 , 0 , leftOftopAlignbottomAlign
-/HTML/BODY/DIV[2]/P -> /HTML/BODY/DIV[2]/P/A
-
-Differing bounds for {}
-	Oracle : 667 -> 1300
-	Test : 761 -> 1300
-
-/HTML/BODY/DIV[2]/P/A[2] -> /HTML/BODY/DIV[2]/P/A[7]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[2] , /HTML/BODY/DIV[2]/P/A[7] , SIBLING , 518 , 557 , rightOftopAlign
-/HTML/BODY/DIV[2]/P/A[3] -> /HTML/BODY/DIV[2]/P/A[7]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[3] , /HTML/BODY/DIV[2]/P/A[7] , SIBLING , 518 , 557 , topAlign
-/HTML/BODY/DIV[2]/P/A[7] -> /HTML/BODY/DIV[2]/P/A[4]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[7] , /HTML/BODY/DIV[2]/P/A[4] , PARENT_CHILD , 518 , 557 , leftJusttop
-/HTML/BODY/DIV[2]/P -> /HTML/BODY/DIV[2]/P/A[4]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[4] , PARENT_CHILD , 518 , 0 , rightJust
-/HTML/BODY/DIV[2]/P/A[7] -> /HTML/BODY/DIV[2]/P/A[5]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[7] , /HTML/BODY/DIV[2]/P/A[5] , PARENT_CHILD , 518 , 557 , top
-/HTML/BODY/DIV[2]/P -> /HTML/BODY/DIV[2]/P/A[5]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[5] , PARENT_CHILD , 518 , 0 , rightJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[5] , PARENT_CHILD , 402 , 516 , top
-/HTML/BODY/DIV[2]/P/A[7] -> /HTML/BODY/DIV[2]/P/A[6]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[7] , /HTML/BODY/DIV[2]/P/A[6] , PARENT_CHILD , 517 , 557 , top
-/HTML/BODY/DIV[2]/P/A[6] -> /HTML/BODY/DIV[2]/P/A[7]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[6] , /HTML/BODY/DIV[2]/P/A[7] , SIBLING , 559 , 0 , leftOftopAlignbottomAlign
-/HTML/BODY/DIV[2]/P -> /HTML/BODY/DIV[2]/P/A[6]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[6] , PARENT_CHILD , 415 , 0 , top
-/HTML/BODY/DIV[2]/P/A[7] -> /HTML/BODY/DIV[2]/P/A
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P/A[7] , /HTML/BODY/DIV[2]/P/A , SIBLING , 518 , 0 , rightOftopAlign
-/HTML/BODY/DIV[2]/P -> /HTML/BODY/DIV[2]/P/A[7]
-
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[7] , PARENT_CHILD , 518 , 619 , rightJust
-Unmatched in oracle: /HTML/BODY/DIV[2]/P , /HTML/BODY/DIV[2]/P/A[7] , PARENT_CHILD , 415 , 0 , top====== Width Errors ====== 
+	Oracle : 650 -> 1300
+	Test : 677 -> 1300
+====== Width Errors ====== 
 

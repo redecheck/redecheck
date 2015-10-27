@@ -1,6 +1,8 @@
 ====== Visibility Errors ====== 
 
-====== Alignment Errors ====== 
+/HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN
+ Oracle: 641 -> 1300
+ Test: 648 -> 1300====== Alignment Errors ====== 
 
 
 /HTML/BODY/FOOTER/BLOCKQUOTE -> /HTML/BODY/FOOTER/BLOCKQUOTE/CITE
@@ -13,36 +15,36 @@ Differing bounds for {middle}
 	Oracle : 641 -> 1300
 	Test : 648 -> 1300
 
-/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2] -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV
+/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI/A -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[3]/A
 
-Differing bounds for {leftOftopAlignbottomAlign}
-	Oracle : 644 -> 1300
-	Test : 650 -> 1300
+Differing bounds for {belowleftAlign}
+	Oracle : 653 -> 738
+	Test : 641 -> 738
 
-Differing bounds for {topAlignbottomAlign}
-	Oracle : 400 -> 643
-	Test : 400 -> 649
+/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[2]/A -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[3]/A
 
-/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[2]/A -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL
+Differing bounds for {belowleftAlign}
+	Oracle : 653 -> 706
+	Test : 641 -> 706
+
+/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[3]/A -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL
 
 Differing bounds for {leftAlign}
-	Oracle : 641 -> 672
-	Test : 648 -> 672
+	Oracle : 653 -> 786
+	Test : 641 -> 786
 
-/HTML/BODY/FOOTER/DIV/DIV[2]/DIV -> /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A
+/HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[4]/A -> /HTML/BODY/FOOTER/DIV/DIV/DIV/DIV[2]/UL/LI[3]/A
 
-Differing bounds for {centeredmiddle}
-	Oracle : 496 -> 640
-	Test : 501 -> 640
+Differing bounds for {aboveleftAlignrightAlign}
+	Oracle : 653 -> 798
+	Test : 641 -> 798
 
-Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A , PARENT_CHILD , 496 , 500 , rightJustmiddle
 /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A -> /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN
 
-Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN , PARENT_CHILD , 1030 , 1040 , 
-Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN , PARENT_CHILD , 1041 , 0 , middle
+Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN , PARENT_CHILD , 1091 , 0 , middle
 /HTML/BODY/FOOTER/DIV/DIV[2]/DIV -> /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN
 
-Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN , PARENT_CHILD , 1030 , 0 , 
+Unmatched in test: /HTML/BODY/FOOTER/DIV/DIV[2]/DIV , /HTML/BODY/FOOTER/DIV/DIV[2]/DIV/A/SPAN , PARENT_CHILD , 1015 , 0 , 
 /HTML/BODY/FOOTER -> /HTML/BODY/FOOTER/DIV
 
 Differing bounds for {}
@@ -53,49 +55,29 @@ Differing bounds for {bottom}
 	Oracle : 400 -> 640
 	Test : 400 -> 647
 
-/HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN -> /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN
-
-Unmatched in test: /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN , /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN , PARENT_CHILD , 661 , 0 , 
 /HTML/BODY/HEADER/DIV/DIV/DIV -> /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN
 
-Differing bounds for {leftJust}
-	Oracle : 721 -> 940
-	Test : 721 -> 960
-
 Differing bounds for {}
-	Oracle : 400 -> 720
-	Test : 400 -> 647
+	Oracle : 641 -> 700
+	Test : 648 -> 700
 
-Differing bounds for {leftJusttop}
-	Oracle : 941 -> 1300
-	Test : 961 -> 1300
-
-/HTML/BODY/HEADER/DIV/DIV -> /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN
-
-Unmatched in test: /HTML/BODY/HEADER/DIV/DIV , /HTML/BODY/HEADER/DIV/DIV/DIV/A/SPAN , PARENT_CHILD , 661 , 0 , 
-/HTML/BODY/HEADER/DIV/DIV/DIV -> /HTML/BODY/HEADER/DIV/DIV/DIV
-
-Unmatched in test: /HTML/BODY/HEADER/DIV/DIV/DIV , /HTML/BODY/HEADER/DIV/DIV/DIV , PARENT_CHILD , 648 , 0 , 
-/HTML/BODY/HEADER/DIV/DIV -> /HTML/BODY/HEADER/DIV/DIV/DIV
-
-Unmatched in oracle: /HTML/BODY/HEADER/DIV/DIV , /HTML/BODY/HEADER/DIV/DIV/DIV , PARENT_CHILD , 641 , 741 , leftJust
 /HTML/BODY/HEADER/DIV/DIV -> /HTML/BODY/HEADER/DIV/DIV[2]
 
+Unmatched in oracle: /HTML/BODY/HEADER/DIV/DIV , /HTML/BODY/HEADER/DIV/DIV[2] , SIBLING , 1031 , 1060 , rightOftopAlignbottomAlign
 Differing bounds for {topAlignbottomAlign}
-	Oracle : 870 -> 880
-	Test : 901 -> 920
-
-Unmatched in test: /HTML/BODY/HEADER/DIV/DIV , /HTML/BODY/HEADER/DIV/DIV[2] , SIBLING , 881 , 900 , rightOftopAlignbottomAlign====== Width Errors ====== 
+	Oracle : 1061 -> 1240
+	Test : 1110 -> 1300
+====== Width Errors ====== 
 
 /HTML/BODY/DIV[2]
 Differing bounds for {100.0% of /HTML/BODY + -20.0}
 	Oracle : 400 -> 640
 	Test : 400 -> 647
 /HTML/BODY/FOOTER
-Differing bounds for {100.0% of /HTML/BODY + -20.0}
-	Oracle : 400 -> 640
-	Test : 400 -> 647
-/HTML/BODY/HEADER
 Differing bounds for {90.0% of /HTML/BODY + 0.0}
 	Oracle : 641 -> 1300
 	Test : 648 -> 1300
+/HTML/BODY/HEADER
+Differing bounds for {100.0% of /HTML/BODY + -20.0}
+	Oracle : 400 -> 640
+	Test : 400 -> 647

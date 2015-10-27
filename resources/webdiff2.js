@@ -320,6 +320,8 @@ function getNodeValue(node){
 
 
 
+
+
 window.scrollTo(0, 0);
 
 /**
@@ -341,8 +343,6 @@ if(heads && heads.length > 0){
 nodes.push([document.body,-1]);
 
 
-
-
 while(nodes.length > 0){
   //process node
   var t = nodes.pop(), n = t[0], pid=t[1]; 
@@ -355,11 +355,11 @@ while(nodes.length > 0){
 	  //data += 	'{'+ arr.toString()+'},';
   }else{
 	  var arr = [c('type',1),
-	             	c('id', n.id, null, true), 
+	             	// c('id', n.id, null, true), 
 	             	c('nodeid', nodeid),
 	             	c('pid', pid),
 					c('xpath', n, getXPath, true),
-					c('zindex', n, getZIndex),
+					// c('zindex', n, getZIndex),
 					c('coord', n, getDOMCoords)];
 					//c('clickable', n, isClickable),
 					//c('visible', n, isVisible),
