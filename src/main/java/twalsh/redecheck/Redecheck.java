@@ -106,7 +106,7 @@ public class Redecheck {
         long duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-        oracleRlg.writeToGraphViz("oracle");
+//        oracleRlg.writeToGraphViz("oracle");
 
 //      Access test webpage and sample
         startTime = System.nanoTime();
@@ -124,7 +124,7 @@ public class Redecheck {
             testAgs.add(agf);
         }
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
-        testRlg.writeToGraphViz("test");
+//        testRlg.writeToGraphViz("test");
         driver.close();
         endTime = System.nanoTime();
         duration = (endTime - startTime);

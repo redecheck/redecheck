@@ -39,7 +39,16 @@ public class AlignmentConstraint implements Comparable<AlignmentConstraint> {
      * @return      the formatted string
      */
     public String toString() {
-        return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max + " , " + this.generateLabelling();
+    	try {
+    		return node1.xpath + " , " + node2.xpath + " , " + type + " , " + min + " , " + max + " , " + this.generateLabelling();
+    	} catch (NullPointerException e) {
+    		System.out.println("Node 1: " + node1.getXpath());
+//    		System.out.println("Node 2: " + node2);
+    		System.out.println(type);
+    		System.out.println(min);
+    		System.out.println(max);
+    	}
+    	return "";
     }
 
     public Node getNode1() {
@@ -100,13 +109,18 @@ public class AlignmentConstraint implements Comparable<AlignmentConstraint> {
      */
     public String generateKey() {
         String t = "";
-        if (type == Type.PARENT_CHILD) {
-            t = "contains";
-            return node2.xpath + node1.xpath + t + generateLabelling();
-        } else {
-            t = "sibling";
-            return node1.xpath + node2.xpath + t + generateLabelling();
+        try {
+	        if (type == Type.PARENT_CHILD) {
+	            t = "contains";
+	            return node2.xpath + node1.xpath + t + generateLabelling();
+	        } else {
+	            t = "sibling";
+	            return node1.xpath + node2.xpath + t + generateLabelling();
+	        }
+        } catch (NullPointerException e) {
+//        	System.out.println(node1 + "    " + node2);
         }
+        return "";
 
     }
 

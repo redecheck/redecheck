@@ -76,10 +76,7 @@ public class ResponsiveLayoutGraph {
         }
         oracle = o;
         oracleDoms = oDoms;
-
-       
         
-
         extractVisibilityConstraints();
         System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
@@ -236,38 +233,25 @@ public class ResponsiveLayoutGraph {
         setUpAlignmentConstraints(previousMap, alCons);
 
         for (AlignmentGraphFactory ag : restOfGraphs) {
-            int width = this.restOfWidths[restOfGraphs.indexOf(ag)];
-            DomNode oracleDN = null;
-            try {
-                oracleDN = oracleDoms.get(width);
-            } catch (Exception e) {
-                oracleDN = null;
-            }
-            DomNode testDN = doms.get(width);
+            HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
+            HashMap<String, AGEdge> temp = ag.getEdgeMap();
+            HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
-//            if (Redecheck.domsEqual(oracleDN, testDN)) {
-//                updateWithOracleEdges(this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-//            } else {
+            checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-                HashMap<String, AGEdge> previousToMatch = (HashMap<String, AGEdge>) previousMap.clone();
-                HashMap<String, AGEdge> temp = ag.getEdgeMap();
-                HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
+            // NEW METHOD FOR SAVING EFFORT
+            HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
+            updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
 
-                checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
+            checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+            // Handle disappearing edges
+            updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
 
-                // NEW METHOD FOR SAVING EFFORT
-                HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
-                updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
+            // Handle appearing edges
+            checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
 
-                checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-                // Handle disappearing edges
-                updateDisappearingEdge(previousToMatch, alignmentConstraints, ag);
-
-                // Handle appearing edges
-                checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-
-                updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
-                previousMap = ag.getEdgeMap();
+            updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
+            previousMap = ag.getEdgeMap();
 //            }
 
             double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
@@ -704,21 +688,28 @@ public class ResponsiveLayoutGraph {
 
     public void setUpAlignmentConstraints(HashMap<String, AGEdge> previousMap, HashMap<String, AlignmentConstraint> alCons) {
         for (String s : previousMap.keySet()) {
-            AGEdge e = previousMap.get(s);
-            if (e instanceof Contains) {
-                Contains c = (Contains) e;
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(e.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
-                        new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
-                alCons.put(con.generateKey(), con);
-                alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
-            }
-            else {
-                Sibling s2 = (Sibling) e;
-                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
-                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
-                alCons.put(con.generateKey(), con);
-                alignmentConstraints.put(con.generateKey(), new int[] {this.widths[0],0}, con);
-            }
+        	try {
+	            AGEdge e = previousMap.get(s);
+	            if (e instanceof Contains) {
+	                Contains c = (Contains) e;
+	                if (this.nodes.get(e.getNode2().getxPath()) == null) {
+	                	System.out.println(c);
+	                }
+	                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode2().getxPath()), this.nodes.get(c.getNode1().getxPath()), Type.PARENT_CHILD, this.widths[0], 0,
+	                        new boolean[] {c.isCentered(), c.isLeftJustified(),c.isRightJustified(),c.isMiddle(),c.isTopAligned(),c.isBottomAligned()});
+	                alCons.put(con.generateKey(), con);
+	                alignmentConstraints.put(con.generateKey(), new int[]{this.widths[0],0}, con);
+	            }
+	            else {
+	                Sibling s2 = (Sibling) e;
+	                AlignmentConstraint con = new AlignmentConstraint(this.nodes.get(e.getNode1().getxPath()), this.nodes.get(e.getNode2().getxPath()), Type.SIBLING, this.widths[0], 0,
+	                        new boolean[] {s2.isTopBottom(),s2.isBottomTop(),s2.isRightLeft(),s2.isLeftRight(), s2.isTopEdgeAligned(),s2.isBottomEdgeAligned(),s2.isLeftEdgeAligned(), s2.isRightEdgeAligned()});
+	                alCons.put(con.generateKey(), con);
+	                alignmentConstraints.put(con.generateKey(), new int[] {this.widths[0],0}, con);
+	            }
+        	} catch (Exception e) {
+        		
+        	}
         }
     }
 
@@ -882,10 +873,14 @@ public class ResponsiveLayoutGraph {
      */
     public void addParentConstraintsToNodes() {
         for (AlignmentConstraint ac : this.alignmentConstraints.values()) {
-            if (ac.type == Type.PARENT_CHILD) {
-                Node child = this.nodes.get(ac.node2.getXpath());
-                child.addParentConstraint(ac);
-            }
+        	try {
+	            if (ac.type == Type.PARENT_CHILD) {
+	                Node child = this.nodes.get(ac.node2.getXpath());
+	                child.addParentConstraint(ac);
+	            }
+        	} catch (NullPointerException e) {
+        		System.out.println("Tried adding parent constraint with " + ac);
+        	}
         }
     }
 
@@ -1042,11 +1037,11 @@ public class ResponsiveLayoutGraph {
             tempDoms = Redecheck.loadDoms(extraWidths, url);
             DomNode dn = tempDoms.get(extraWidths[0]);
 
-            AlignmentGraphFactory extraAG = new AlignmentGraphFactory(dn);
+            AlignmentGraphFactory extraAG = getAlignmentGraphFactory(dn);
             boolean found;
 
             if (searchForNode) {
-                HashMap<String, AGNode> n1 = (HashMap<String, AGNode>) extraAG.nodeMap;
+                HashMap<String, AGNode> n1 = extraAG.getNodeMap();
                 found = n1.get(searchKey) != null;
             } else {
                 HashMap<String, AGEdge> es = extraAG.edgeMap;
