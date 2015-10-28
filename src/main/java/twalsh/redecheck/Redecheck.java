@@ -4,6 +4,7 @@ import edu.gatech.xpert.dom.layout.AlignmentGraphFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 
 import java.io.File;
 import org.apache.commons.io.FileUtils;
@@ -87,6 +88,10 @@ public class Redecheck {
         DesiredCapabilities dCaps = new DesiredCapabilities();
         dCaps.setJavascriptEnabled(true);
         dCaps.setCapability("takesScreenshot", true);
+        String[] phantomArgs = new  String[] {
+        	    "--webdriver-loglevel=NONE"
+        	};
+        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
         driver = getNewDriver(dCaps);
         js = (JavascriptExecutor) driver;
         scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
@@ -94,7 +99,7 @@ public class Redecheck {
 
         long startTime = System.nanoTime();
         // Access oracle webpage and sample
-        System.out.println("\n\nGENERATING ORACLE RLG");
+        System.out.println("\n\nGENERATING ORACLE RLG for " + oracle);
         String oracleUrl = oracle + ".html";
         driver.get(preamble + oracleUrl);
         capturePageModel(oracleUrl, widths, oracleDoms);
@@ -107,29 +112,29 @@ public class Redecheck {
             AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
             oracleAgs.add(agf);
         }
-        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms, null, null);
+        ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println("EXECUTION TIME WAS : " + duration/1000000000 + " SECONDS");
         System.out.println("NUMBER OF DOMS: " + oracleRlg.getAlreadyGathered().size());
-        oracleRlg.writeToGraphViz("oracle");
+//        oracleRlg.writeToGraphViz("oracle");
 
 //      Access test webpage and sample
 //        startTime = System.nanoTime();
 //        System.out.println("\n\nGENERATING TEST RLG");
 //        String testUrl = test + ".html";
 //        driver.get(preamble + testUrl);
-//        capturePageModel(testUrl, widths);
-//
-//        // Construct test RLG
-//        Map<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
+//        capturePageModel(testUrl, widths, testDoms);
+
+        // Construct test RLG
+//        HashMap<Integer, DomNode> testDoms = loadDoms(widths, testUrl);
 //        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
 //        for (int width : widths) {
 //            DomNode dn = testDoms.get(width);
 //            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
 //            testAgs.add(agf);
 //        }
-//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms, oracleRlg, oracleDoms);
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
 ////        testRlg.writeToGraphViz("test");
 //        driver.close();
 //        endTime = System.nanoTime();
@@ -180,10 +185,11 @@ public class Redecheck {
     }
 
     public static void capturePageModel(String url, int[] widths, HashMap<Integer, DomNode> doms) {
+    	
     	JsonDomParser parser = new JsonDomParser();
     	try {
             int counter = 0;
-            for (int i = 0; i < widths.length; i++) {
+            for (int i = 0; i < widths.length; i++) {   
                 int w = widths[i];
                 driver.manage().window().setSize(new Dimension(w, 600));
                 String extractedDom = extractDOM(url, driver, scriptToExtract);

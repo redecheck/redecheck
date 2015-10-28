@@ -21,32 +21,29 @@ public class AlignmentGraphFactory {
     public HashMap<String, AGEdge> edgeMap;
 
     public AlignmentGraphFactory(DomNode dn) {
-//    	long start = System.nanoTime();
         this.dn = dn;
         updateBodyTag();
         this.ag = new AlignmentGraph(this.dn);
         this.nodeMap = (HashMap<String, AGNode>) ag.vMap;
         this.edgeMap = generateEdgeMap();
         this.domNodeMap = generateDomNodeMap();
-        updateParentsOnNodes();
-        filterNodes();
-//        long end = System.nanoTime();
-//        System.out.println((end-start)*1.0/1000000);
+//        updateParentsOnNodes();
+//        filterNodes();
     }
 
-    private void assignParentsToNodes() {
-		for (Contains c : this.ag.contains) {
-			AGNode p = c.getParent();
-			AGNode ch = c.getChild();
-			
-			nodeMap.get(ch.domNode.getxPath()).parent = p;
-		}
-		
-	}
+//    private void assignParentsToNodes() {
+//		for (Contains c : this.ag.contains) {
+//			AGNode p = c.getParent();
+//			AGNode ch = c.getChild();
+//			
+//			nodeMap.get(ch.domNode.getxPath()).parent = p;
+//		}
+//		
+//	}
 
     private void filterNodes() {
-//    	System.out.println("Before: " + this.nodeMap.size());
-    	HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
+    	@SuppressWarnings("unchecked")
+		HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
     	for (AGNode n : nodeMapCopy.values()) {
         	try {
         		DomNode dn = n.domNode;
@@ -95,20 +92,20 @@ public class AlignmentGraphFactory {
 //    	System.out.println("After: " + this.nodeMap.size());
 	}
 
-	private ArrayList<Contains> getChildrenOfNode(AGNode n) {
-		ArrayList<Contains> edges = new ArrayList<Contains>();
-		String target = n.domNode.getxPath();
-		for (AGEdge e : edgeMap.values()) {
-			if (e instanceof Contains) {
-				Contains c = (Contains) e;
-				String parent = c.getParent().domNode.getxPath();
-				if (parent.equals(target)) {
-					edges.add(c);
-				}
-			}
-		}
-		return edges;
-	}
+//	private ArrayList<Contains> getChildrenOfNode(AGNode n) {
+//		ArrayList<Contains> edges = new ArrayList<Contains>();
+//		String target = n.domNode.getxPath();
+//		for (AGEdge e : edgeMap.values()) {
+//			if (e instanceof Contains) {
+//				Contains c = (Contains) e;
+//				String parent = c.getParent().domNode.getxPath();
+//				if (parent.equals(target)) {
+//					edges.add(c);
+//				}
+//			}
+//		}
+//		return edges;
+//	}
 
 
 	private void updateParentsOnNodes() {
@@ -130,10 +127,7 @@ public class AlignmentGraphFactory {
 
     private HashMap<String, AGEdge> generateEdgeMap() {
         HashMap<String, AGEdge> edgeMap = new HashMap<>();
-
-        int counter = 0;
         for (Contains c : ag.contains) {
-        	
             edgeMap.put(c.getNode1().getxPath()+c.getNode2().getxPath()+"contains"+generateEdgeLabelling(c),c);
             this.nodeMap.get(c.parent.domNode.getxPath()).childrenEdges.add(c);
         }

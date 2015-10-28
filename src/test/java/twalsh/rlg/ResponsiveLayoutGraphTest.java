@@ -619,7 +619,7 @@ public class ResponsiveLayoutGraphTest {
         doReturn(645).when(rlg).findDisappearPoint(anyString(), anyInt(), anyInt(), anyBoolean(), anyString());
         doReturn(0).when(rlg.restOfGraphs).indexOf(any(AlignmentGraph.class));
 
-        rlg.updateDisappearingEdge(previousMap, rlg.alignmentConstraints, agf);
+        rlg.updateDisappearingEdges(previousMap, rlg.alignmentConstraints, agf);
         assertEquals(0, cons.get(ac1.generateKey()).getMax());
         assertEquals(644, cons.get(ac2.generateKey()).getMax());
         assertEquals(644, cons.get(ac3.generateKey()).getMax());
@@ -744,7 +744,7 @@ public class ResponsiveLayoutGraphTest {
         agf.domNodeMap.put(dn2.getxPath(), dn2);
 
         when(rlg.doms.get(anyInt())).thenReturn(dn1);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(DomNode.class));
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(Integer.class));
         PowerMockito.doReturn(dnmap).when(agf).getDomNodeMap();
 
         rlg.populateWidthArrays(validWidths, widthsTemp, parentWidths, childWidths, "node", "parent");
@@ -774,7 +774,7 @@ public class ResponsiveLayoutGraphTest {
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(DomNode.class));
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(Integer.class));
         PowerMockito.doReturn(dnmap).when(agf).getDomNodeMap();
 
         rlg.findAppearPoint("parent", 400, 500, true, "dontneed");
@@ -801,7 +801,7 @@ public class ResponsiveLayoutGraphTest {
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(DomNode.class));
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(any(Integer.class));
         PowerMockito.doReturn(dnmap).when(agf).getDomNodeMap();
 
         rlg.findAppearPoint("node", 400, 500, true, "dontneed");
@@ -838,9 +838,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findAppearPoint("node", 420, 421, true, "dontneed");
@@ -878,9 +878,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findAppearPoint("node", 420, 421, true, "dontneed");
@@ -916,9 +916,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findAppearPoint("nomatch", 420, 421, true, "dontneed");
@@ -945,7 +945,7 @@ public class ResponsiveLayoutGraphTest {
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(anyInt());
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
 
         rlg.findDisappearPoint("node", 400, 500, true, "dontneed");
@@ -972,7 +972,7 @@ public class ResponsiveLayoutGraphTest {
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
 
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(anyInt());
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
 
         rlg.findDisappearPoint("node", 400, 500, true, "dontneed");
@@ -1006,9 +1006,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findDisappearPoint("node", 420, 421, true, "dontneed");
@@ -1045,9 +1045,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findDisappearPoint("node", 420, 421, true, "dontneed");
@@ -1085,9 +1085,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(420);
         doReturn(dn2).when(mockDoms).get(421);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(420);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn2);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(421);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findDisappearPoint("node", 420, 421, true, "dontneed");
@@ -1126,7 +1126,7 @@ public class ResponsiveLayoutGraphTest {
         vmap.put(dn2.getxPath(), dn2);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(anyInt());
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
 
         try {
@@ -1170,7 +1170,7 @@ public class ResponsiveLayoutGraphTest {
         vmap.put(dn2.getxPath(), dn2);
         AlignmentGraphFactory agf = spy(new AlignmentGraphFactory(dn1));
         doReturn(dn1).when(mockDoms).get(anyInt());
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(anyInt());
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
 
         try {
@@ -1228,9 +1228,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(767);
         doReturn(dn3).when(mockDoms).get(768);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(767);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn3);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(768);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
@@ -1288,9 +1288,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(767);
         doReturn(dn3).when(mockDoms).get(768);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(767);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn3);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(768);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
@@ -1349,9 +1349,9 @@ public class ResponsiveLayoutGraphTest {
 
         doReturn(dn1).when(mockDoms).get(767);
         doReturn(dn3).when(mockDoms).get(768);
-        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(dn1);
+        PowerMockito.doReturn(agf).when(rlg).getAlignmentGraphFactory(767);
         PowerMockito.doReturn(vmap).when(agf).getDomNodeMap();
-        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(dn3);
+        PowerMockito.doReturn(agf2).when(rlg).getAlignmentGraphFactory(768);
         PowerMockito.doReturn(vmap2).when(agf2).getDomNodeMap();
 
         int expected = rlg.findWidthBreakpoint(eq, 767, 768, "node", "parent");
