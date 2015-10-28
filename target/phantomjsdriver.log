@@ -3108,3 +3108,209 @@
   (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
   (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
 [INFO  - 2015-10-27T16:26:22.850Z] ShutdownReqHand - _handle - About to shutdown
+[INFO  - 2015-10-27T16:30:16.980Z] GhostDriver - Main - running on port 42390
+[INFO  - 2015-10-27T16:30:17.677Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:30:17.677Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:30:17.677Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:30:17.677Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 0230e390-7cc8-11e5-8a8b-fb54a36a680d
+[ERROR - 2015-10-27T16:30:17.858Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:30:17.858Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:30:17.871Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:30:17.871Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:30:17.878Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:30:17.878Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:30:18.228Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:30:18.228Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:30:23.257Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:30:23.257Z] Session [0230e390-7cc8-11e5-8a8b-fb54a36a680d] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:31:22.681Z] ShutdownReqHand - _handle - About to shutdown
+[INFO  - 2015-10-27T16:34:13.560Z] GhostDriver - Main - running on port 28902
+[INFO  - 2015-10-27T16:34:13.766Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:34:13.766Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:34:13.766Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:34:13.766Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 8ee95d30-7cc8-11e5-9ede-816b5b7bfb77
+[ERROR - 2015-10-27T16:34:13.956Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:34:13.956Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:34:13.969Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:34:13.969Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:34:13.984Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:34:13.984Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:34:14.334Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:34:14.334Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:34:17.268Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:34:17.269Z] Session [8ee95d30-7cc8-11e5-9ede-816b5b7bfb77] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:35:08.631Z] ShutdownReqHand - _handle - About to shutdown
+[INFO  - 2015-10-27T16:40:58.273Z] GhostDriver - Main - running on port 15150
+[INFO  - 2015-10-27T16:40:58.480Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:40:58.480Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:40:58.480Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:40:58.480Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 8023aac0-7cc9-11e5-9710-970a3f59d163
+[ERROR - 2015-10-27T16:40:58.682Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:40:58.682Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:40:58.695Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:40:58.695Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:40:58.702Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:40:58.702Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:40:59.033Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:40:59.033Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:41:02.063Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:41:02.063Z] Session [8023aac0-7cc9-11e5-9710-970a3f59d163] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:47:44.904Z] GhostDriver - Main - running on port 22501
+[INFO  - 2015-10-27T16:47:45.126Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:47:45.126Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:47:45.126Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:47:45.126Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 7284ec20-7cca-11e5-9ac7-bb04a447fa03
+[ERROR - 2015-10-27T16:47:45.297Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:47:45.297Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:47:45.310Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:47:45.310Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:47:45.316Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:47:45.317Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:47:45.694Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:47:45.694Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:47:48.619Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:47:48.619Z] Session [7284ec20-7cca-11e5-9ac7-bb04a447fa03] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:50:42.245Z] GhostDriver - Main - running on port 15521
+[INFO  - 2015-10-27T16:50:42.464Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:50:42.464Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:50:42.464Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:50:42.464Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: dc388dc0-7cca-11e5-99ba-073083fcb82a
+[ERROR - 2015-10-27T16:50:42.661Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:50:42.661Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:50:42.674Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:50:42.674Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:50:42.681Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:50:42.681Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:50:43.019Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:50:43.019Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:50:46.103Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:50:46.103Z] Session [dc388dc0-7cca-11e5-99ba-073083fcb82a] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:53:36.652Z] GhostDriver - Main - running on port 31540
+[INFO  - 2015-10-27T16:53:36.865Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:53:36.865Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:53:36.865Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:53:36.865Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 442c08d0-7ccb-11e5-9c69-5fc85ab22e28
+[ERROR - 2015-10-27T16:53:37.033Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:53:37.033Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:53:37.045Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:53:37.045Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:53:37.053Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:53:37.053Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:53:37.379Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:53:37.379Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:53:40.242Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:53:40.242Z] Session [442c08d0-7ccb-11e5-9c69-5fc85ab22e28] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:54:18.056Z] GhostDriver - Main - running on port 7611
+[INFO  - 2015-10-27T16:54:18.331Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2015-10-27T16:54:18.331Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.customHeaders:  - {}
+[INFO  - 2015-10-27T16:54:18.331Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-27T16:54:18.331Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 5ce36580-7ccb-11e5-a4b8-cbd04099d707
+[ERROR - 2015-10-27T16:54:18.531Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:54:18.531Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:269)
+[ERROR - 2015-10-27T16:54:18.546Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:54:18.547Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:54:18.553Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:54:18.554Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/index.html:279)
+[ERROR - 2015-10-27T16:54:18.878Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 't.setAttribute')
+[ERROR - 2015-10-27T16:54:18.878Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/script.jsx:1)
+  (anonymous function) (:1)
+[ERROR - 2015-10-27T16:54:21.809Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 'zff3a["testAlias"]')
+[ERROR - 2015-10-27T16:54:21.809Z] Session [5ce36580-7ccb-11e5-a4b8-cbd04099d707] - page.onError - stack:
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_capi.js:59)
+  (anonymous function) (file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/microsoft.com/Microsoft%20%E2%80%93%20Official%20Home%20Page_files/wt_lib.js:7)
+[INFO  - 2015-10-27T16:55:10.577Z] ShutdownReqHand - _handle - About to shutdown
