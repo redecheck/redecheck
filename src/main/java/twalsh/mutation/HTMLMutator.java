@@ -26,13 +26,13 @@ public class HTMLMutator {
     Document page;
     ArrayList<String> cssFiles;
     String preamble = "file:///Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
-    String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
-            "BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
-            "CUFONTEXT", "DD", "EM", "EMBED", "FIELDSET", "FONT", "FORM",
-            "HEAD", "HR", "I", "LABEL", "LEGEND", "LINK", "MAP", "MENUMACHINE",
-            "META", "NOFRAMES", "NOSCRIPT", "OBJECT", "OPTGROUP", "OPTION",
-            "PARAM", "S", "SCRIPT", "SMALL", "SPAN", "STRIKE", "STRONG",
-            "STYLE", "TBODY", "TITLE", "TR", "TT", "U" };
+//    String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
+//            "BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
+//            "CUFONTEXT", "DD", "EM", "EMBED", "FIELDSET", "FONT", "FORM",
+//            "HEAD", "HR", "I", "LABEL", "LEGEND", "LINK", "MAP", "MENUMACHINE",
+//            "META", "NOFRAMES", "NOSCRIPT", "OBJECT", "OPTGROUP", "OPTION",
+//            "PARAM", "S", "SCRIPT", "SMALL", "SPAN", "STRIKE", "STRONG",
+//            "STYLE", "TBODY", "TITLE", "TR", "TT", "U" };
     private String htmlContent;
     Pattern bsGridPattern = Pattern.compile("col-[a-z]*-[0-9]*");
     Pattern fGridPattern = Pattern.compile("([a-z]*-)*[0-9]");
@@ -57,13 +57,13 @@ public class HTMLMutator {
         r = new Random();
         loremIpsum = new LoremIpsum();
         parseHTML(baseUrl);
-//        for (Element e : htmlCandidates) {
-//        	System.out.println(e);
-//        }
     }
 
     public static void main(String[] args) {
-        HTMLMutator mutator = new HTMLMutator("demo.com/index.html", "demo.com", 1);
+        HTMLMutator mutator = new HTMLMutator("demo.com/index.html", "demo.com", 5);
+        System.out.println(mutator.htmlCandidates.size());
+        System.out.println(mutator.classCandidates.size());
+        
         for (int i = 1; i <= mutator.numMutants; i++) {
             Document copy = mutator.cloner.deepClone(mutator.page);
             mutator.mutateContent(copy);
@@ -82,21 +82,24 @@ public class HTMLMutator {
             Document doc = Jsoup.parse(contents);
             page = doc;
             for (Element e : doc.getAllElements()) {
-                if (!ignoreTag(e.tagName().toUpperCase())) {
+//                if (!ignoreTag(e.tagName().toUpperCase())) {
                     if (e.classNames().size() > 0) {
                         for (String c : e.classNames()) {
                             if (isGridSizingClass(c)) {
                                 usedClasses.add(c);
                                 classCandidates.add(e);
                             }
-                            htmlCandidates.add(e);
+                            
                         }
+                    }
+                    if (!e.ownText().equals("")) {
+                    	htmlCandidates.add(e);
                     }
                     if (!e.id().equals("")) {
                         usedIds.add("#" + e.id());
                     }
                     usedTags.add(e.tagName());
-                }
+//                }
             }
             this.htmlContent = contents;
             input.close();
@@ -107,15 +110,15 @@ public class HTMLMutator {
     }
 
 
-    private boolean ignoreTag(String tagName) {
-        for (int i =0; i < tagsIgnore.length; i++) {
-
-            if (tagsIgnore[i].equals(tagName)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean ignoreTag(String tagName) {
+//        for (int i =0; i < tagsIgnore.length; i++) {
+//
+//            if (tagsIgnore[i].equals(tagName)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 
     private boolean isGridSizingClass(String htmlClass) {
@@ -135,7 +138,6 @@ public class HTMLMutator {
     }
 
      public Element getElementToMutate(Document copy, Element e) {
-//         System.out.println("Element to match: \n" + e.cssSelector());
          for (Element e2 : copy.getAllElements()) {
              if (e.cssSelector().equals(e2.cssSelector())) {
                  return e2;
@@ -156,20 +158,32 @@ public class HTMLMutator {
     		 
     		 // Check we found an actual element to mutate
     		 if (actualElement != null) {
-    			 System.out.println(actualElement.tagName());
-    			 System.out.println(actualElement.ownText());
-    			 int numberOfWords = actualElement.ownText().split(" ").length;
-    			 System.out.println(numberOfWords);
+    			 String[] words = actualElement.ownText().split(" ");
+    			 int numberOfWords = words.length;
     			 int incrementer;
     			 if (numberOfWords < 10) {
     				 
     				 incrementer = r.nextInt(5);
     			 } else {
-    				 incrementer = numberOfWords/10;
+    				 int size = numberOfWords/10;
+    				 incrementer = r.nextInt(size);
     			 }
-    			 actualElement.text(actualElement.ownText() + loremIpsum.getWords(incrementer, 3));
-    			 managedToMutate = true;
-    			 System.out.println(actualElement.ownText());
+    			 boolean toggle = r.nextBoolean();
+    			 if (toggle) {
+    				 actualElement.text(actualElement.ownText() + " " + loremIpsum.getWords(incrementer, 3));
+    				 managedToMutate = true;
+    			 } else {
+    				 System.out.println("Cutting down string by " + incrementer + " words");
+    				 int newNumWords = numberOfWords-incrementer;
+    				 String newContent = "";
+    				 int counter = 0;
+    				 while (newContent.length() < newNumWords) {
+    					 newContent = newContent + words[counter] + " ";
+    					 counter++;
+    				 }
+    				 actualElement.text(newContent);
+    				 managedToMutate = true;
+    			 }
     			 
     		 }
     	 }
