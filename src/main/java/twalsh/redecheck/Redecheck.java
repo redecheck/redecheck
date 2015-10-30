@@ -27,6 +27,7 @@ public class Redecheck {
     public static String preamble;
     public static int startWidth;
     public static int finalWidth;
+    public static int[] widthsToCheck;
     static HashMap<Integer, DomNode> oracleDoms;
 	static HashMap<Integer, DomNode> testDoms;
     public static PhantomJSDriver driver;
@@ -58,20 +59,25 @@ public class Redecheck {
 
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
-        CommandLineParser jce = new CommandLineParser();
-        new JCommander(jce, args);
-        String oracle = jce.oracle;
-        String test = jce.test;
-        preamble = jce.preamble;
-        startWidth = jce.startWidth;
-        finalWidth = jce.endWidth;
+        CommandLineParser clp = new CommandLineParser();
+        new JCommander(clp, args);
+        String oracle = clp.oracle;
+        String test = clp.test;
+        preamble = clp.preamble;
+        startWidth = clp.startWidth;
+        finalWidth = clp.endWidth;
+//        String[] widthSplits = clp.checkWidths.split(",");
+//        widthsToCheck = new int[widthSplits.length];
+//        for (int i = 0; i < widthSplits.length; i++) {
+//        	widthsToCheck[i] = Integer.valueOf(widthSplits[i]);
+//        }
+        widthsToCheck = new int[]{};
         
         oracleDoms = new HashMap<Integer, DomNode>();
         testDoms = new HashMap<Integer, DomNode>();
         
-        int stepSize = jce.ss;
+        int stepSize = clp.ss;
         int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
-
         runTool(oracle, test, preamble, sampleWidths);
     }
 
@@ -110,7 +116,8 @@ public class Redecheck {
             oracleAgs.add(agf);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-
+        oracleRlg.writeToGraphViz("oracle");
+        
 //      Access test webpage and sample
         System.out.println("\n\nGENERATING TEST RLG");
         String testUrl = test + ".html";
@@ -126,12 +133,13 @@ public class Redecheck {
         }
         
         ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+        testRlg.writeToGraphViz("test");
         driver.close();
 
 
         // Perform the model comparison
         System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg);
+        RLGComparator comp = new RLGComparator(oracleRlg, testRlg, widthsToCheck);
         comp.compare();
         comp.compareMatchedNodes();
         comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));

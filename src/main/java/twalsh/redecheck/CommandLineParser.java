@@ -26,6 +26,9 @@ public class CommandLineParser {
 
     @Parameter(names = "--end", description = "End width for sampling")
     public int endWidth;
+    
+//    @Parameter(names = {"--checkwidths"}, description = "Set of widths to filter results with")
+//    public String checkWidths;
 
     @Parameter(names = "--preamble", description = "Preamble for the two URL parameters")
     public String preamble;

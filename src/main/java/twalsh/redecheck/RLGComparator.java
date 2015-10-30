@@ -38,15 +38,15 @@ public class RLGComparator {
      * @param r1    the oracle RLG
      * @param r2    the test RLG
      */
-    public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2) {
+    public RLGComparator(ResponsiveLayoutGraph r1, ResponsiveLayoutGraph r2, int[] ws) {
         rlg1 = r1;
         rlg2 = r2;
         vcErrors = new ArrayList<>();
         wcErrors = new ArrayList<>();
         acErrors = new ArrayList<>();
         errors = new ArrayList<Error>();
-        defaultWidths = new int[] {400, 640, 768, 1024};
-//        defaultWidths = new int[] {};
+//        defaultWidths = new int[] {400, 640, 768, 1024};
+        defaultWidths = ws;
     }
 
 

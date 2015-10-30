@@ -124,7 +124,7 @@ public class ImageComparator {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int[] ws = new int[] {400,500,600,700,800,900,1000, 1100, 1200, 1300};
-        ImageComparator ic = new ImageComparator("briefi.ng/index", "briefi.ng/1", ws);
+        ImageComparator ic = new ImageComparator("microsoft.com/index", "microsoft.com/0", ws);
 
     }
 }

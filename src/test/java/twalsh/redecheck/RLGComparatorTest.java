@@ -23,7 +23,7 @@ public class RLGComparatorTest {
     public void setup() {
         rlg1 = mock(ResponsiveLayoutGraph.class);
         rlg2 = mock(ResponsiveLayoutGraph.class);
-        comp = spy(new RLGComparator(rlg1, rlg2));
+        comp = spy(new RLGComparator(rlg1, rlg2, new int[]{}));
         comp.cloner = new Cloner();
     }
 

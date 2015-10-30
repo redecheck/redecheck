@@ -242,48 +242,26 @@ public class ResponsiveLayoutGraph {
 
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-            // NEW METHOD FOR SAVING EFFORT
-//            long startTime = System.nanoTime();
-            HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
-//            long endTime = System.nanoTime();
-//            long duration = (endTime - startTime);
-//            System.out.println("Matching pairs " + duration*1.0/1000000);
             
-//            startTime = System.nanoTime();
+            HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
-//            endTime = System.nanoTime();
-//            duration = (endTime - startTime);
-//            System.out.println("Updating pairs " + duration*1.0/1000000);
-
-//            startTime = System.nanoTime();
             
             if (previousToMatch.size() != 0) {
             	checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
             	// Handle disappearing edges
-//            	System.out.println("Number of disappearing: " + previousToMatch.size());
             	updateDisappearingEdges(previousToMatch, alignmentConstraints, ag);
             }
-//            endTime = System.nanoTime();
-//            duration = (endTime - startTime);
-//            System.out.println("Disappearing " + duration*1.0/1000000);
-            
+//          
             // Handle appearing edges
-//            startTime = System.nanoTime();
-            
             if (tempToMatch.size() !=0) {
             	checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-//            	System.out.println("Number of appearing: " + tempToMatch.size());
             	updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
             }
-//            endTime = System.nanoTime();
-//            duration = (endTime - startTime);
-////            System.out.println("Appearing " + duration*1.0/1000000);
             previousMap = ag.getEdgeMap();
-//            System.out.println();
-//            }
 
-//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+
+            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
