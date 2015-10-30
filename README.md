@@ -76,12 +76,12 @@ preamble  |	Preamble for navigating to local versions of the webpage in the file
 An example showing the command line input is presented below:
 
 ```
-java -jar redecheck-jar-with-dependencies.jar --oracle live.mysite.com/home --test dev.mysite.com/home --step 40 --start 400 --end 1400
+java -jar redecheck-jar-with-dependencies.jar --oracle demo.com/index --test demo.com/0 --step 20 --start 400 --end 1400
 ```
 
-In the example above, the current live version of the webpage under test (*live.mysite.com/home*) is being used as the oracle to compare against the test version (*dev.mysite.com/home*).
+In the example above, the current live version of the webpage under test (*demo.com/index*) is being used as the oracle to compare against the test version (*demo.com/0*).
 
-The remaining three parameters are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px. 
+The remaining three parameters (step, start, end) are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px. 
 
 Different combinations of values for these parameters can be used to conduct different types of testing. For instance, the values above would produce in a regular strength testing across a wide range of devices, from smartphones to tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on smartphones, the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of device resolutions.
 
@@ -90,7 +90,7 @@ Different combinations of values for these parameters can be used to conduct dif
 Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0 to 19) of an open-source website, currently available at http://www.blacktie.co/demo/shield/. As the webpages themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
 
 ```
-java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --start 400 --end 1400 --step 40 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
+java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --step 40 --start 400 --end 1400 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
 ```
 
 Running the command above will allow you to see the tool in action with some different versions of a single webpage being used as input.

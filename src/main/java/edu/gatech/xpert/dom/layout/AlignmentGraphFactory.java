@@ -31,16 +31,6 @@ public class AlignmentGraphFactory {
 //        filterNodes();
     }
 
-//    private void assignParentsToNodes() {
-//		for (Contains c : this.ag.contains) {
-//			AGNode p = c.getParent();
-//			AGNode ch = c.getChild();
-//			
-//			nodeMap.get(ch.domNode.getxPath()).parent = p;
-//		}
-//		
-//	}
-
     private void filterNodes() {
     	@SuppressWarnings("unchecked")
 		HashMap<String, AGNode> nodeMapCopy = (HashMap<String, AGNode>) this.getNodeMap().clone();
