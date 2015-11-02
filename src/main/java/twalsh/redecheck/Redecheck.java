@@ -3,16 +3,26 @@ package twalsh.redecheck;
 import edu.gatech.xpert.dom.layout.AlignmentGraphFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.beust.jcommander.JCommander;
 
+import com.thoughtworks.xstream.*;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import twalsh.rlg.Node;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import edu.gatech.xpert.dom.JsonDomParser;
 import edu.gatech.xpert.dom.DomNode;
@@ -33,6 +43,7 @@ public class Redecheck {
     public static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
+    
     public static final String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
             "BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
             "CUFONTEXT", "DD", "EM", "EMBED", "FIELDSET", "FONT", "FORM",
@@ -116,34 +127,37 @@ public class Redecheck {
             oracleAgs.add(agf);
         }
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
-        oracleRlg.writeToGraphViz("oracle");
         
-//      Access test webpage and sample
-        System.out.println("\n\nGENERATING TEST RLG");
-        String testUrl = test + ".html";
-        driver.get(preamble + testUrl);
-        capturePageModel(testUrl, widths, testDoms);
-
-        // Construct test RLG
-        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
-        for (int width : widths) {
-            DomNode dn = testDoms.get(width);
-            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-            testAgs.add(agf);
-        }
         
-        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
-        testRlg.writeToGraphViz("test");
-        driver.close();
+        oracleRlg.writeToGraphViz("filteredoracle");
 
-
-        // Perform the model comparison
-        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
-        RLGComparator comp = new RLGComparator(oracleRlg, testRlg, widthsToCheck);
-        comp.compare();
-        comp.compareMatchedNodes();
-        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
-        System.out.println("\n\nTESTING COMPLETE.");
+//        
+////      Access test webpage and sample
+//        System.out.println("\n\nGENERATING TEST RLG");
+//        String testUrl = test + ".html";
+//        driver.get(preamble + testUrl);
+//        capturePageModel(testUrl, widths, testDoms);
+//
+//        // Construct test RLG
+//        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
+//        for (int width : widths) {
+//            DomNode dn = testDoms.get(width);
+//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+//            testAgs.add(agf);
+//        }
+//        
+//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+//        testRlg.writeToGraphViz("test");
+//        driver.close();
+//
+//
+//        // Perform the model comparison
+//        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
+//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg, widthsToCheck);
+//        comp.compare();
+//        comp.compareMatchedNodes();
+//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+//        System.out.println("\n\nTESTING COMPLETE.");
 
         driver.quit();
     }

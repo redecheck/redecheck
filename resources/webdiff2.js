@@ -335,6 +335,9 @@ var nodeCtr=0;
 
 var maxHeight = 0;
 
+var toIgnore = ["SCRIPT", "A", "LINK", "STYLE", "#text", "HEAD", "META", "TITLE"];
+//var toIgnore = [];
+
 //Process body nodes
 var heads = document.getElementsByTagName("head");
 if(heads && heads.length > 0){
@@ -380,11 +383,16 @@ while(nodes.length > 0){
   
   //push children
   var cs = n.childNodes;
+  
   for(var ch in cs){
     var child = cs[ch];
     if(child){
     	var nn = child.nodeName;
-    	if(nn && nn != "#comment" && nn.charAt(0) != '/'){ nodes.push([child,nodeid]); }
+    	if(nn && nn != "#comment" && toIgnore.indexOf(nn) == -1 && nn.charAt(0) != '/'){
+    		nodes.push([child,nodeid]);
+    	} else if(toIgnore.indexOf(nn) != -1 && child.childNodes.length != 0){
+    		nodes.push([child,nodeid]);
+    	}
     }
   }
 }

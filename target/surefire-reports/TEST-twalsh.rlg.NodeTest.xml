@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="twalsh.rlg.NodeTest" time="0.04" errors="0" skipped="0">
+<testsuite tests="5" failures="0" name="twalsh.rlg.NodeTest" time="0.031" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib"/>
@@ -27,7 +27,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/thomaswalsh/Documents/Workspace/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf4830730994134301332.tmp"/>
+    <property name="classworlds.conf" value="/Users/thomaswalsh/Documents/Workspace/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf877744220591233900.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/thomaswalsh/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -63,9 +63,9 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="twalsh.rlg.NodeTest" name="testAddVisibilityConstraint" time="0.022"/>
+  <testcase classname="twalsh.rlg.NodeTest" name="testAddVisibilityConstraint" time="0.014"/>
   <testcase classname="twalsh.rlg.NodeTest" name="testToString" time="0.002"/>
   <testcase classname="twalsh.rlg.NodeTest" name="testGraphVizLabel" time="0"/>
-  <testcase classname="twalsh.rlg.NodeTest" name="testAddParentConstraint" time="0.005"/>
-  <testcase classname="twalsh.rlg.NodeTest" name="testAddWidthConstraint" time="0.011"/>
+  <testcase classname="twalsh.rlg.NodeTest" name="testAddParentConstraint" time="0.01"/>
+  <testcase classname="twalsh.rlg.NodeTest" name="testAddWidthConstraint" time="0.005"/>
 </testsuite>
