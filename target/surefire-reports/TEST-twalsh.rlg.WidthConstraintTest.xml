@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="12" failures="0" name="twalsh.rlg.WidthConstraintTest" time="0.003" errors="0" skipped="0">
+<testsuite tests="12" failures="0" name="twalsh.rlg.WidthConstraintTest" time="0.004" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre/lib"/>
@@ -27,7 +27,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/thomaswalsh/Documents/Workspace/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf7466253154203359732.tmp"/>
+    <property name="classworlds.conf" value="/Users/thomaswalsh/Documents/Workspace/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf4830730994134301332.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/thomaswalsh/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -67,10 +67,10 @@
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetAdjustment" time="0"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetAdjustment" time="0"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetPercentage" time="0"/>
-  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetParent" time="0.001"/>
+  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetParent" time="0"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetParent" time="0"/>
-  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetMax" time="0"/>
-  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetMin" time="0"/>
+  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetMax" time="0.001"/>
+  <testcase classname="twalsh.rlg.WidthConstraintTest" name="testGetMin" time="0.001"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetPercentage" time="0"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetMax" time="0"/>
   <testcase classname="twalsh.rlg.WidthConstraintTest" name="testSetMin" time="0"/>
