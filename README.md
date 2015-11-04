@@ -21,6 +21,9 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 
 #### Dependencies
 
+##### Java Version
+ReDeCheck has been implemented to run using Java Development Kit 7, which can be downloaded from `http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html`. After downloading and installing, you are also likely to have set Java 1.7 as the chosen JDK for the ReDeCheck project.
+
 ##### PhantomJS
 ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `resources` where ReDeCheck can access it correctly. 
 
