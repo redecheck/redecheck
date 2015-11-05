@@ -22,10 +22,12 @@ As ReDeCheck has been implemented as a Maven project using Java, the easiest met
 #### Dependencies
 
 ##### Java Version
+
 ReDeCheck has been implemented to run using Java Development Kit 7, which can be downloaded from `http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html`. After downloading and installing, you are also likely to have set Java 1.7 as the chosen JDK for the ReDeCheck project.
 
 ##### PhantomJS
-ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `resources` where ReDeCheck can access it correctly. 
+
+ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory, where Maven stored all of its built objects. You may have to create this folder manually through your file explorer. This tool has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from `https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to `resources` where ReDeCheck can access it correctly.
 
 #### Use of X-PERT
 
@@ -84,7 +86,7 @@ java -jar redecheck-jar-with-dependencies.jar --oracle demo.com/index --test dem
 
 In the example above, the current live version of the webpage under test (*demo.com/index*) is being used as the oracle to compare against the test version (*demo.com/0*).
 
-The remaining three parameters (step, start, end) are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px. 
+The remaining three parameters (step, start, end) are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px.
 
 Different combinations of values for these parameters can be used to conduct different types of testing. For instance, the values above would produce in a regular strength testing across a wide range of devices, from smartphones to tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on smartphones, the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of device resolutions.
 
@@ -121,10 +123,10 @@ In this example, the report shows that the `button` element contained within the
 
 ```
 /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
- Oracle: 
+ Oracle:
 	400 -> 1300     rightOf,topAlign,bottomAlign
 
- Test: 
+ Test:
 	400 -> 440     	below
 	441 -> 1300     rightOf,topAlign,bottomAlign
 ```
@@ -134,10 +136,10 @@ The example shows that in the oracle version of the webpage the two images (`IMG
 #### Width Errors
 ```
 /HTML/BODY/DIV[2]/DIV/DIV[6]
- Oracle: 
+ Oracle:
 	400 --> 767 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
 	768 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
- Test: 
+ Test:
 	400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
 	776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
 ```
