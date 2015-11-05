@@ -67,6 +67,8 @@ public class Redecheck {
 //                "| (\\ (   | (      | |   ) || (      | |      | (   ) || (      | |      |  ( \\ \\ \n" +
 //                "| ) \\ \\__| (____/\\| (__/  )| (____/\\| (____/\\| )   ( || (____/\\| (____/\\|  /  \\ \n" +
 //                "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
+    	
+    	long startTime = System.nanoTime();
 
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
@@ -90,6 +92,9 @@ public class Redecheck {
         int stepSize = clp.ss;
         int[] sampleWidths = buildWidthArray(startWidth, finalWidth, stepSize);
         runTool(oracle, test, preamble, sampleWidths);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("EXECUTION TIME: " + (duration*1.0)/1000000000 + " seconds");
     }
 
     /**
