@@ -139,29 +139,29 @@ public class Redecheck {
 //        
 ////      Access test webpage and sample
 //        System.out.println("\n\nGENERATING TEST RLG");
-//        String testUrl = test + ".html";
-//        driver.get(preamble + testUrl);
-//        capturePageModel(testUrl, widths, testDoms);
+        String testUrl = test + ".html";
+        driver.get(preamble + testUrl);
+        capturePageModel(testUrl, widths, testDoms);
 //
 //        // Construct test RLG
-//        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
-//        for (int width : widths) {
-//            DomNode dn = testDoms.get(width);
-//            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
-//            testAgs.add(agf);
-//        }
-//        
-//        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
+        ArrayList<AlignmentGraphFactory> testAgs = new ArrayList<AlignmentGraphFactory>();
+        for (int width : widths) {
+            DomNode dn = testDoms.get(width);
+            AlignmentGraphFactory agf = new AlignmentGraphFactory(dn);
+            testAgs.add(agf);
+        }
+        
+        ResponsiveLayoutGraph testRlg = new ResponsiveLayoutGraph(testAgs, widths, testUrl, testDoms);
 //        testRlg.writeToGraphViz("test");
 //        driver.close();
 //
 //
 //        // Perform the model comparison
 //        System.out.println("\n\nCOMPARING TEST VERSION TO THE ORACLE \n");
-//        RLGComparator comp = new RLGComparator(oracleRlg, testRlg, widthsToCheck);
-//        comp.compare();
-//        comp.compareMatchedNodes();
-//        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
+        RLGComparator comp = new RLGComparator(oracleRlg, testRlg, widthsToCheck);
+        comp.compare();
+        comp.compareMatchedNodes();
+        comp.writeRLGDiffToFile(current, "/" + oracle.replace("/","") + "-" + test.replace("/",""));
 //        System.out.println("\n\nTESTING COMPLETE.");
 
         driver.quit();
