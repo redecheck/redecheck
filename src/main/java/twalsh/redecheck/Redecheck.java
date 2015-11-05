@@ -60,13 +60,13 @@ public class Redecheck {
      * @throws IOException
      */
     public static void main(String[] args) throws InterruptedException, IOException {
-        System.out.println("(  ____ )(  ____ \\(  __  \\ (  ____ \\(  ____ \\|\\     /|(  ____ \\(  ____ \\| \\    /\\\n"+
-                "| (    )|| (    \\/| (  \\  )| (    \\/| (    \\/| )   ( || (    \\/| (    \\/|  \\  / /\n" +
-                "| (____)|| (__    | |   ) || (__    | |      | (___) || (__    | |      |  (_/ / \n" +
-                "|     __)|  __)   | |   | ||  __)   | |      |  ___  ||  __)   | |      |   _ (  \n" +
-                "| (\\ (   | (      | |   ) || (      | |      | (   ) || (      | |      |  ( \\ \\ \n" +
-                "| ) \\ \\__| (____/\\| (__/  )| (____/\\| (____/\\| )   ( || (____/\\| (____/\\|  /  \\ \n" +
-                "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
+//        System.out.println("(  ____ )(  ____ \\(  __  \\ (  ____ \\(  ____ \\|\\     /|(  ____ \\(  ____ \\| \\    /\\\n"+
+//                "| (    )|| (    \\/| (  \\  )| (    \\/| (    \\/| )   ( || (    \\/| (    \\/|  \\  / /\n" +
+//                "| (____)|| (__    | |   ) || (__    | |      | (___) || (__    | |      |  (_/ / \n" +
+//                "|     __)|  __)   | |   | ||  __)   | |      |  ___  ||  __)   | |      |   _ (  \n" +
+//                "| (\\ (   | (      | |   ) || (      | |      | (   ) || (      | |      |  ( \\ \\ \n" +
+//                "| ) \\ \\__| (____/\\| (__/  )| (____/\\| (____/\\| )   ( || (____/\\| (____/\\|  /  \\ \n" +
+//                "|/   \\__/(_______/(______/ (_______/(_______/|/     \\|(_______/(_______/|_/    \\/");
 
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
@@ -114,7 +114,7 @@ public class Redecheck {
         scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
         
         // Access oracle webpage and sample
-        System.out.println("\n\nGENERATING ORACLE RLG for " + oracle);
+//        System.out.println("\n\nGENERATING ORACLE RLG for " + oracle);
         String oracleUrl = oracle + ".html";
         driver.get(preamble + oracleUrl);
         capturePageModel(oracleUrl, widths, oracleDoms);
@@ -129,7 +129,7 @@ public class Redecheck {
         ResponsiveLayoutGraph oracleRlg = new ResponsiveLayoutGraph(oracleAgs, widths, oracleUrl, oracleDoms);
         
         
-        oracleRlg.writeToGraphViz("filteredoracle");
+//        oracleRlg.writeToGraphViz("filteredoracle");
 
 //        
 ////      Access test webpage and sample

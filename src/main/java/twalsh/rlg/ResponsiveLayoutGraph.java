@@ -81,13 +81,13 @@ public class ResponsiveLayoutGraph {
 //        oracleDoms = (HashMap<Integer, DomNode>) oDoms;
         
         extractVisibilityConstraints();
-        System.out.println("DONE VISIBILITY CONSTRAINTS");
+//        System.out.println("DONE VISIBILITY CONSTRAINTS");
         extractAlignmentConstraints();
-        System.out.println("DONE ALIGNMENT CONSTRAINTS");
+//        System.out.println("DONE ALIGNMENT CONSTRAINTS");
         extractWidthConstraints();
-        System.out.println("DONE WIDTH CONSTRAINTS");
-        System.out.println("Number of nodes: " + this.nodes.size());
-        System.out.println("Number of edges: " + this.alignmentConstraints.size());
+//        System.out.println("DONE WIDTH CONSTRAINTS");
+//        System.out.println("Number of nodes: " + this.nodes.size());
+//        System.out.println("Number of edges: " + this.alignmentConstraints.size());
     }
 
 
@@ -125,7 +125,7 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     private void extractVisibilityConstraints() throws InterruptedException {
-        System.out.println("Extracting Visibility Constraints.");
+//        System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
         HashMap<String, DomNode> domNodes =  first.domNodeMap;
         HashMap<String, DomNode> previousMap = (HashMap<String, DomNode>) first.domNodeMap;
@@ -148,10 +148,10 @@ public class ResponsiveLayoutGraph {
 
             // Update the previousMap variable to keep track of last set of nodes
             previousMap = (HashMap<String, DomNode>) agf.domNodeMap;
-            double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(agf)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int) progressPerc) + " | " + (int)progressPerc + "%");
         }
-        System.out.print("\n");
+//        System.out.print("\n");
         // Update visibility widthConstraints of everything still visible
         updateRemainingNodes(visCons, last);
 
@@ -228,7 +228,7 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     private void extractAlignmentConstraints() throws InterruptedException {
-        System.out.println("Extracting Alignment Constraints");
+//        System.out.println("Extracting Alignment Constraints");
         HashMap<String, AGEdge> previousMap = first.edgeMap;
         HashMap<String, AlignmentConstraint> alCons = new HashMap<String, AlignmentConstraint>();
 
@@ -260,15 +260,15 @@ public class ResponsiveLayoutGraph {
             previousMap = ag.getEdgeMap();
 
 
-            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
+//            double progressPerc = ((double) (restOfGraphs.indexOf(ag)+1)/ (double)restOfGraphs.size())* 100;
+//            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
         }
 
         // Update  alignment constraints of everything still visible
         AlignmentGraphFactory last = restOfGraphs.get(restOfGraphs.size()-1);
         updateRemainingEdges(alCons, last);
 
-        System.out.println();
+//        System.out.println();
         addParentConstraintsToNodes();
         this.alignments = alCons;
     }
@@ -719,7 +719,7 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     public void extractWidthConstraints() throws InterruptedException {
-        System.out.println("Extracting Width Constraints.");
+//        System.out.println("Extracting Width Constraints.");
         Node n;
             int i = 0;
             for (String s : this.nodes.keySet()) {
@@ -786,10 +786,10 @@ public class ResponsiveLayoutGraph {
                 } catch (NullPointerException e) {
 //                    e.printStackTrace();
                 }
-                double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
-                System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
+//                double progressPerc = ((double) (i)/ (double)this.nodes.size())* 100;
+//                System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int)progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " +(int) progressPerc + "%");
             }
-        System.out.println("");
+//        System.out.println("");
         addWidthConstraintsToNodes();
     }
 
