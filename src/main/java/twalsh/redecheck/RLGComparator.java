@@ -45,7 +45,6 @@ public class RLGComparator {
         wcErrors = new ArrayList<>();
         acErrors = new ArrayList<>();
         errors = new ArrayList<Error>();
-//        defaultWidths = new int[] {400, 640, 768, 1024};
         defaultWidths = ws;
     }
 
@@ -71,8 +70,6 @@ public class RLGComparator {
             compareVisibilityConstraints(n, m);
             compareAlignmentConstraints(n, m);
             compareWidthConstraints(n, m);
-            double progressPerc = ((double) counter/ (double)matchedNodes.size())* 100;
-            System.out.print("\rPROGRESS : | " + StringUtils.repeat("=", (int) progressPerc) + StringUtils.repeat(" ", 100 - (int)progressPerc) + " | " + (int)progressPerc + "%");
             counter++;
         }
         return issues;
