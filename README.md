@@ -157,6 +157,15 @@ The example shows that in the oracle version of the web page the two images (`IM
 ```
 The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact behaviour each element exhibits and whether they are different in the two versions of the web page.
 
+## Building and Execution Environment
+
+All of the previous instructions for building, installing, and using ReDeCheck have been tested on Mac OS X 10.11 "El
+Capitan" and Ubuntu Linux 15.04 "Vivid Vervet". All development and testing on the Mac OS X workstations was done with
+Java Standard Edition 1.7, while the same was done with Java Standard Edition 1.8 on the Ubuntu workstation. While
+ReDeCheck is very likely to work on other Unix-based development environments, we cannot guarantee correct results for
+systems different the ones mentioned previously. Currently, we do not provide full support for the building,
+installation, and use of ReDeCheck on Windows; forks and pull requests that provide this functionality are welcomed.
+
 ## Problems or Praise?
 
 If you have any problems with building, installing, or executing ReDeCheck, then please feel free to create an issue
