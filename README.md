@@ -46,11 +46,19 @@ your operating system or your integrated development environments to accomplish 
 
 ##### PhantomJS
 
-ReDeCheck requires a PhantomJS executable be placed inside the `resources` directory, where Maven stored all of its
-built objects. You may have to create this folder manually through your file explorer. This tool has been developed and
-tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems from
-`https://bitbucket.org/ariya/phantomjs/downloads`. Once downloaded, move the executable phantomjs file from `bin` to
-`resources` where ReDeCheck can access it correctly.
+PhantomJS is a "headless web stack" that allows ReDeCheck to interact with the responsive web site subject to testing;
+to learn more about this tool, please visit http://phantomjs.org/.  ReDeCheck requires that you place a PhantomJS
+executable inside the `resources/` directory where Maven will store all of the objects that it build during the
+compilation phase.  You may have to create this folder manually through your file explorer or terminal window.
+
+ReDeCheck has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems
+from https://bitbucket.org/ariya/phantomjs/downloads. Once the archive is downloaded, decompress it using a tool
+provided by your operating system. Now, move the `phantomjs` executable &mdash; found in the `bin/` directory of your
+platform-specific directory for PhantomJS &mdash; to the `resources/` directory where ReDeCheck can access it correctly.
+
+You can test if `phantomjs` is installed correctly by using your terminal window to navigate to the `resources/`
+directory and typing `./phantomjs --version`. If this command does not output `1.9.8` or it outputs an error message,
+then you need to repair your installation of PhantomJS before continuing to install and use ReDeCheck.
 
 #### Use of X-PERT
 
