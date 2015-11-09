@@ -160,10 +160,10 @@ The example above shows that element `DIV[6]` exhibits different width behaviour
 ## Building and Execution Environment
 
 All of the previous instructions for building, installing, and using ReDeCheck have been tested on Mac OS X 10.11 "El
-Capitan" and Ubuntu Linux 15.04 "Vivid Vervet". All development and testing on the Mac OS X workstations was done with
-Java Standard Edition 1.7, while the same was done with Java Standard Edition 1.8 on the Ubuntu workstation. While
+Capitan" and Ubuntu Linux 15.04 "Vivid Vervet". All of the development and testing on the Mac OS X workstations was done
+with Java Standard Edition 1.7, while the same work was done with Java Standard Edition 1.8 on the Ubuntu workstation. While
 ReDeCheck is very likely to work on other Unix-based development environments, we cannot guarantee correct results for
-systems different the ones mentioned previously. Currently, we do not provide full support for the building,
+systems different than the ones mentioned previously. Currently, we do not provide full support for the building,
 installation, and use of ReDeCheck on Windows; forks and pull requests that provide this functionality are welcomed.
 
 ## Problems or Praise?
