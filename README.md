@@ -1,15 +1,15 @@
-#Welcome to ReDeCheck!
+# Welcome to ReDeCheck!
 
 ReDeCheck is an automated tool designed to aid developers with the process of testing the layouts of responsive (i.e.,
 "mobile ready") web sites. With the huge range of devices available nowadays, performing adequate quality assurance on a
 sufficient range of devices is extremely difficult, if not impossible. Yet, since it is important to have a high-quality
 mobile-ready web site, ReDeCheck makes responsive web testing both efficient and effective!
 
-##Maven
+## Maven
 
 The project has been implemented using Maven, a build automation tool for Java projects. If you wish to build the tool from scratch, you will first need to install on your workstation. If you already have Maven installed, please skip to the next section. Otherwise, follow the installation guidelines here https://maven.apache.org/install.html.
 
-##Downloading and Installing
+## Downloading and Installing
 
 1. Clone the ReDeCheck project repository using either a VCS client or the following command
 `
