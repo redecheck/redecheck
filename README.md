@@ -21,15 +21,15 @@ follow the installation guidelines at https://maven.apache.org/install.html.
 
 2. If you wish to use the provided .jar file included with ReDeCheck, then please skip to "Running ReDeCheck" section.
 
-3. Otherwise if you want to build ReDeCheck from its source code, then follow the instructions in the next section.
+3. Otherwise, if you want to build ReDeCheck from its source code, then follow the instructions in the next section.
 
 ### Installing
 
 As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool
 involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the
-IDE. Instructions are presented for doing this using two common IDEs; Eclipse (https://www.eclipse.org/downloads/) and
+IDE. Instructions are presented for doing this using two common IDEs: Eclipse (https://www.eclipse.org/downloads/) and
 IntelliJ (https://www.jetbrains.com/idea/download/). However, if you would prefer to build the project using the command
-line, instructions to do so are also provided.
+line in an appropriate terminal emulator, then instructions to do so are also provided.
 
 #### Dependencies
 
