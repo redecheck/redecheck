@@ -75,7 +75,7 @@ ReDeCheck took inspiration from X-PERT, a software solution for automatically de
 Once you have ReDeCheck correctly packaged and ready to run, there are two main requirements for effective use of the tool:
 
 1. Understanding the configuration parameters and how they affect the way the tool works
-2. Understanding the reports produced by the tool to effectively analyse the differences between the two versions of the webpage under test.
+2. Understanding the reports produced by the tool to effectively analyse the differences between the two versions of the web page under test.
 
 ### Configuration Parameters
 
@@ -83,12 +83,12 @@ ReDeCheck is run from the command line and takes five compulsory arguments which
 
 Argument     |  Description
 -------     |   ---------------
-oracle      |   URL of the oracle version of the webpage
-test        |   URL of the test version of the webpage
-step        |   The step size to use during the sampling process. For example, a step size of 40 would result in the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
+oracle      |   URL of the oracle version of the web page
+test        |   URL of the test version of the web page
+step        |   The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (400px, 440px, 480px, ...)
 start       |   The viewport width at which to start sampling
 end         |   The viewport width at which to finish sampling
-preamble  | Preamble for navigating to local versions of the webpage in the file system.
+preamble  | Preamble for navigating to local versions of the web page in the file system.
 
 An example showing the command line input is presented below:
 
@@ -96,21 +96,21 @@ An example showing the command line input is presented below:
 java -jar redecheck-jar-with-dependencies.jar --oracle demo.com/index --test demo.com/0 --step 20 --start 400 --end 1400
 ```
 
-In the example above, the current live version of the webpage under test (*demo.com/index*) is being used as the oracle to compare against the test version (*demo.com/0*).
+In the example above, the current live version of the web page under test (*demo.com/index*) is being used as the oracle to compare against the test version (*demo.com/0*).
 
-The remaining three parameters (step, start, end) are used to control the generation of layout model used to compare the two versions of the webpage. The parameters shown in the example above would result the initial sampling process examining the webpages at 40px intervals between the viewport widths of 400px and 1400px.
+The remaining three parameters (step, start, end) are used to control the generation of layout model used to compare the two versions of the web page. The parameters shown in the example above would result the initial sampling process examining the web pages at 40px intervals between the viewport widths of 400px and 1400px.
 
 Different combinations of values for these parameters can be used to conduct different types of testing. For instance, the values above would produce in a regular strength testing across a wide range of devices, from smartphones to tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on smartphones, the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of device resolutions.
 
 #### Running the Shield Example
 
-Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0 to 19) of an open-source website, currently available at http://www.blacktie.co/demo/shield/. As the webpages themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
+Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0 to 19) of an open-source website, currently available at http://www.blacktie.co/demo/shield/. As the web pages themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
 
 ```
 java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --step 40 --start 400 --end 1400 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
 ```
 
-Running the command above will allow you to see the tool in action with some different versions of a single webpage being used as input.
+Running the command above will allow you to see the tool in action with some different versions of a single web page being used as input.
 
 ### Interpreting and Understanding the Reports
 
@@ -143,7 +143,7 @@ In this example, the report shows that the `button` element contained within the
     441 -> 1300     rightOf,topAlign,bottomAlign
 ```
 
-The example shows that in the oracle version of the webpage the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
+The example shows that in the oracle version of the web page the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
 
 #### Width Errors
 ```
@@ -155,7 +155,7 @@ The example shows that in the oracle version of the webpage the two images (`IMG
     400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
     776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
 ```
-The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact behaviour each element exhibits and whether they are different in the two versions of the webpage.
+The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact behaviour each element exhibits and whether they are different in the two versions of the web page.
 
 ## Troubleshooting
 
