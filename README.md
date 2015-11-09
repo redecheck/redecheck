@@ -9,8 +9,8 @@ mobile-ready web site, ReDeCheck makes responsive web testing both efficient and
 
 The ReDeCheck project has been implemented using Maven, a build automation tool for projects implemented in the Java
 programming language. If you wish to build the ReDeCheck tool from its source code, then you will first need to install
-Maven on your workstation. If you already have Maven installed, please skip to the next section. Otherwise, follow the
-installation guidelines at https://maven.apache.org/install.html.
+Maven on your workstation. If you have already installed Maven, then please go directly to the next section. Otherwise,
+follow the installation guidelines at https://maven.apache.org/install.html.
 
 ## Downloading and Installing
 
