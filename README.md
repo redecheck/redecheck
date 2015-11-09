@@ -62,11 +62,17 @@ then you need to repair your installation of PhantomJS before continuing to inst
 
 #### Use of X-PERT
 
-ReDeCheck took inspiration from X-PERT, a software solution for automatically detecting cross browser incompatibilities,
-and reuses small amounts of code written by the developers of X-PERT. The licensing of the released version of X-PERT,
-available at https://github.com/gatech/xpert allows it to be bundled with ReDeCheck. The X-PERT code is contained within
-the `edu` directory of the `src` folder. A class 'AlignmentGraphFactory.java' is stored as a "bridge class" with the
-X-PERT class files to allow ReDeCheck to access them.
+Where appropriate to avoid duplicating effort, ReDeCheck re-uses methods from the alignment graph code of the X-PERT
+tool that can automatically detect cross-browser incompatibilities. Since X-PERT is available under the MIT license from
+https://github.com/gatech/xpert, the developers of ReDeCheck have bundled X-PERT's source code in the ReDeCheck
+repository.  X-PERT's source code is contained within the `edu/` directory of the `src/` directory. ReDeCheck contains a
+class called `AlignmentGraphFactory` that operates as a "bridge" to the X-PERT classes, thus allowing ReDeCheck to
+seamlessly access them.
+
+More details about the X-PERT system are available in the following paper:
+
+- S. Roy Choudhary, M. R. Prasad, and A. Orso, “X-PERT: Accurate identification of cross-browser issues in Web
+applications,” in Proc. of the 35th ICSE, 2013
 
 #### If using Eclipse:
 
