@@ -1,4 +1,5 @@
 /target/
 /output/
 /testing/
+/resources/phantomjs
 /src/main/java/twalsh/mutation/
