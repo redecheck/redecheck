@@ -35,9 +35,12 @@ line, instructions to do so are also provided.
 
 ##### Java Version
 
-ReDeCheck has been implemented to run using Java Development Kit 7 or 8, which can be downloaded from
-`http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html`. After downloading and installing,
-you are also likely to have set Java 1.7 as the chosen JDK for the ReDeCheck project.
+ReDeCheck has been implemented to run using Java Development Kit (JDK) 7 or 8, which can be downloaded from
+http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html and
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html, respectively. Instead of
+downloading the JDK from one of the aforementioned Web sites, you can also use your operating system's package manager
+to install it correctly. After downloading and installing the JDK, you are also likely to have set Java 1.7 (or, Java
+1.8) as the chosen Java Development Kit for the ReDeCheck project.
 
 ##### PhantomJS
 
