@@ -39,7 +39,7 @@ are also provided.
 ReDeCheck has been implemented to run using Java Development Kit (JDK) 7 or 8, which can be downloaded from
 http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html and
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html, respectively. Instead of
-downloading the JDK from one of the aforementioned Web sites, you can also use your operating system's package manager
+downloading the JDK from one of the aforementioned web sites, you can also use your operating system's package manager
 to install it correctly. After downloading and installing the JDK, you are also likely to have to set Java 1.7 (or, Java
 1.8) as the chosen Java Development Kit for the ReDeCheck project. Please follow the instructions provided by either
 your operating system or your integrated development environments to accomplish this task.
@@ -129,7 +129,7 @@ device resolutions.
 #### Running the Shield Example
 
 Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0
-to 19) of an open-source website, currently available at http://www.blacktie.co/demo/shield/. As the web pages
+to 19) of an open-source web site, currently available at http://www.blacktie.co/demo/shield/. As the web pages
 themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
 
 ```
@@ -141,7 +141,7 @@ being used as input.
 
 ### Interpreting and Understanding the Reports
 
-After the tool has finishing comparing the two versions of the website, a report is produced and should open
+After the tool has finishing comparing the two versions of the web site, a report is produced and should open
 automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports,
 which should make it as easy as possible to locate and fix any detected problems.
 
@@ -178,7 +178,7 @@ as changing the intended alignment of other nearby elements, so it is important 
 
 The example shows that in the oracle version of the web page the two images (`IMG` and `IMG[2]`) are always side by
 side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps
-onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look
+onto a different line at a small range of narrow viewport widths, which may make the overall layout of the web site look
 unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can
 be detected and fixed before the new version of the site goes live.
 
