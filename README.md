@@ -74,7 +74,7 @@ More details about the X-PERT system are available in the following paper:
 - S. Roy Choudhary, M. R. Prasad, and A. Orso, “X-PERT: Accurate identification of cross-browser issues in Web
 applications,” in Proc. of the 35th ICSE, 2013
 
-#### If using Eclipse:
+#### Installation with Eclipse
 
 1. Select 'File' -> 'Import'.
 2. From the project options, select 'Maven' -> 'Existing Maven Projects'.
@@ -83,7 +83,7 @@ applications,” in Proc. of the 35th ICSE, 2013
 5. To generate the jar file, select 'Run' -> 'Run As' -> 'maven install'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
-#### If using IntelliJ:
+#### Installation with IntelliJ
 
 1. Select 'File' -> 'Open'.
 2. Navigate to the root directory of your copy of ReDeCheck.
@@ -92,7 +92,7 @@ applications,” in Proc. of the 35th ICSE, 2013
 5. Select the ReDeCheck project and click 'package'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
-#### If using command line:
+#### Installation at the Command Line
 
 1. Navigate to the root directory containing your copy of ReDeCheck. (Use the cd command as shown below)
 2. Type the following command to build the tool: `mvn package`
