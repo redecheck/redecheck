@@ -81,14 +81,14 @@ Once you have ReDeCheck correctly packaged and ready to run, there are two main 
 
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its execution. The *preamble* parameter is optional, and is mainly used when testing local web pages. These arguments are defined and described below:
 
-Argument     |	Description
--------		|	---------------
-oracle		|	URL of the oracle version of the webpage
-test 		|	URL of the test version of the webpage
-step		|	The step size to use during the sampling process. For example, a step size of 40 would result in the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
-start		|	The viewport width at which to start sampling
-end			|	The viewport width at which to finish sampling
-preamble  |	Preamble for navigating to local versions of the webpage in the file system.
+Argument     |  Description
+-------     |   ---------------
+oracle      |   URL of the oracle version of the webpage
+test        |   URL of the test version of the webpage
+step        |   The step size to use during the sampling process. For example, a step size of 40 would result in the webpage being sampled at 40px intervals (400px, 440px, 480px, ...)
+start       |   The viewport width at which to start sampling
+end         |   The viewport width at which to finish sampling
+preamble  | Preamble for navigating to local versions of the webpage in the file system.
 
 An example showing the command line input is presented below:
 
@@ -124,9 +124,9 @@ The report is split into three sections, corresponding to the three main layout 
 HTML/BODY/NAV/BUTTON
 
 Oracle:
-	400 -> 767
+    400 -> 767
 Test:
-	400 -> 775
+    400 -> 775
 ```
 
 In this example, the report shows that the `button` element contained within the `nav` element is visible at a different range of viewport widths in the test version compared to the oracle. This could potentially have further impacts, such as changing the intended alignment of other nearby elements, so it is important to check.
@@ -136,11 +136,11 @@ In this example, the report shows that the `button` element contained within the
 ```
 /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
  Oracle:
-	400 -> 1300     rightOf,topAlign,bottomAlign
+    400 -> 1300     rightOf,topAlign,bottomAlign
 
  Test:
-	400 -> 440     	below
-	441 -> 1300     rightOf,topAlign,bottomAlign
+    400 -> 440      below
+    441 -> 1300     rightOf,topAlign,bottomAlign
 ```
 
 The example shows that in the oracle version of the webpage the two images (`IMG` and `IMG[2]`) are always side by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the website look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can be detected and fixed before the new version of the site goes live.
@@ -149,11 +149,11 @@ The example shows that in the oracle version of the webpage the two images (`IMG
 ```
 /HTML/BODY/DIV[2]/DIV/DIV[6]
  Oracle:
-	400 --> 767 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
-	768 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
+    400 --> 767 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
+    768 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
  Test:
-	400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
-	776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
+    400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
+    776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
 ```
 The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact behaviour each element exhibits and whether they are different in the two versions of the webpage.
 
