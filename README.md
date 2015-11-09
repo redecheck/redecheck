@@ -26,7 +26,7 @@ follow the installation guidelines at https://maven.apache.org/install.html.
 ### Installing
 
 As ReDeCheck has been implemented as a Maven project using Java, the easiest method of generating the executable tool
-involves importing the project into an Integrated Development Environment (IDE) and generating the .jar from inside the
+involves importing the project into an integrated development environment (IDE) and generating the .jar from inside the
 IDE. Instructions are presented for doing this using two common IDEs: Eclipse (https://www.eclipse.org/downloads/) and
 IntelliJ (https://www.jetbrains.com/idea/download/). However, if you would prefer to build the project using the command
 line in an appropriate terminal emulator, then instructions to do so are also provided.
@@ -39,8 +39,9 @@ ReDeCheck has been implemented to run using Java Development Kit (JDK) 7 or 8, w
 http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html and
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html, respectively. Instead of
 downloading the JDK from one of the aforementioned Web sites, you can also use your operating system's package manager
-to install it correctly. After downloading and installing the JDK, you are also likely to have set Java 1.7 (or, Java
-1.8) as the chosen Java Development Kit for the ReDeCheck project.
+to install it correctly. After downloading and installing the JDK, you are also likely to have to set Java 1.7 (or, Java
+1.8) as the chosen Java Development Kit for the ReDeCheck project. Please follow the instructions provided by either
+your operating system or your integrated development environments to accomplish this task.
 
 ##### PhantomJS
 
