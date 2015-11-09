@@ -76,19 +76,19 @@ applications,” in Proc. of the 35th ICSE, 2013
 
 #### Installation with Eclipse
 
-1. Select 'File' -> 'Import'.
-2. From the project options, select 'Maven' -> 'Existing Maven Projects'.
+1. Select 'File' &rarr; 'Import'.
+2. From the project options, select 'Maven' &rarr; 'Existing Maven Projects'.
 3. Select the root directory of your downloaded copy of ReDeCheck.
 4. Click 'Finish' to complete the import.
-5. To generate the jar file, select 'Run' -> 'Run As' -> 'maven install'.
+5. To generate the jar file, select 'Run' &rarr; 'Run As' &rarr; 'maven install'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
 #### Installation with IntelliJ
 
-1. Select 'File' -> 'Open'.
+1. Select 'File' &rarr; 'Open'.
 2. Navigate to the root directory of your copy of ReDeCheck.
 3. Select the 'pom.xml' file and click 'Finish'.
-4. Open the Maven Projects toolbar  using 'View' -> 'Tool Windows' -> 'Maven Projects'.
+4. Open the Maven Projects toolbar  using 'View' &rarr; 'Tool Windows' &rarr; 'Maven Projects'.
 5. Select the ReDeCheck project and click 'package'.
 6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
 
