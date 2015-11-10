@@ -109,9 +109,11 @@ to effectively use the tool:
 
 ### Configuration Parameters
 
-ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its
-execution. The *preamble* parameter is optional and is mainly used when testing web pages that are stored locally.
-ReDeCheck's arguments are defined and described in the following table:
+The remainder of this tutorial assumes that ReDeCheck is run from the `target/` directory that contains the
+`redecheck-jar-with-dependencies.jar` file. ReDeCheck is run from the command line and takes five compulsory arguments
+which control various facets of its execution. The *preamble* parameter is optional and is mainly used when testing web
+pages that are stored locally on the file system. ReDeCheck's arguments are defined and described in the following
+table:
 
 Argument | Description
 -------  | ---------------
