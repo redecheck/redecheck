@@ -1,8 +1,0 @@
-
-/HTML/BODY/DIV/DIV[4]
-
-Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/DIV/DIV[4] -> /HTML/BODY/DIV/DIV[3] below leftEdge rightEdge
-
-/HTML/BODY/DIV/DIV[3]
-
-Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/DIV/DIV[3] -> /HTML/BODY/DIV/DIV[4] above leftEdge rightEdge

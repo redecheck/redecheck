@@ -1,8 +1,0 @@
-
-/HTML/BODY/SECTION[4]
-
-Unmatched sibling in graph 1 : Between 0 and 1300 => /HTML/BODY/SECTION[4] -> /HTML/BODY/FOOTER above leftEdge rightEdge
-
-/HTML/BODY/FOOTER
-
-Unmatched sibling in graph 2 : Between 0 and 1300 => /HTML/BODY/FOOTER -> /HTML/BODY/SECTION[4] below leftEdge rightEdge

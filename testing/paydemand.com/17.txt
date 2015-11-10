@@ -1,8 +1,0 @@
-Changed term from 100.0 to 104.0
-.offset1 {
-	margin-left: 100.0px;
-}
-
-.offset1 {
-	margin-left: 104.0px;
-}

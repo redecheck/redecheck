@@ -1,8 +1,0 @@
-Changed term from 46.0 to 40.0
-footer.site-footer div.wrap div.wrap-inner div.row1 ul.web.icons li.shield {
-	width: 46.0px;
-}
-
-footer.site-footer div.wrap div.wrap-inner div.row1 ul.web.icons li.shield {
-	width: 40.0px;
-}

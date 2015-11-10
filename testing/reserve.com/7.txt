@@ -1,8 +1,0 @@
-Changed term from 2.0 to -1.0
-#footer-more {
-	margin: 2.0em 0.0 0.0;
-}
-
-#footer-more {
-	margin: -1.0em 0.0 0.0;
-}

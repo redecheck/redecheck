@@ -1,8 +1,0 @@
-Changed term from 50.0 to 53.0
-.medium-6 {
-	width: 50.0%;
-}
-
-.medium-6 {
-	width: 53.0%;
-}

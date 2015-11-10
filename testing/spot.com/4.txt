@@ -1,8 +1,0 @@
-Changed term from 33.333332 to 35.333332
-.col-lg-4 {
-	width: 33.333332%;
-}
-
-.col-lg-4 {
-	width: 35.333332%;
-}

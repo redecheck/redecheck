@@ -1,8 +1,0 @@
-Changed term from 100.0 to 106.0
-.col-xs-12 {
-	width: 100.0%;
-}
-
-.col-xs-12 {
-	width: 106.0%;
-}

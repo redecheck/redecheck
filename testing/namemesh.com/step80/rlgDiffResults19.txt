@@ -1,5 +1,0 @@
-
-/HTML/BODY/NAV/DIV
-
-Unmatched constraint in graph 1: 768 -> 1300 :  + 169
-Unmatched constraint in graph 2: 768 -> 1300 :  + 159

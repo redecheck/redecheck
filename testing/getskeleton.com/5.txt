@@ -1,8 +1,0 @@
-Changed term from 1.0 to 4.0
-button, .button {
-	margin-bottom: 1.0rem;
-}
-
-button, .button {
-	margin-bottom: 4.0rem;
-}

@@ -1,8 +1,0 @@
-Changed term from 7.5 to 6.5
-.navbar-nav {
-	margin: 7.5px -15.0px;
-}
-
-.navbar-nav {
-	margin: 6.5px -15.0px;
-}

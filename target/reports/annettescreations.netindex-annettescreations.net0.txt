@@ -1,6 +1,0 @@
-====== Visibility Errors ====== 
-
-====== Alignment Errors ====== 
-
-====== Width Errors ====== 
-
