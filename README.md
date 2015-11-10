@@ -81,16 +81,16 @@ applications,” in Proc. of the 35th ICSE, 2013
 3. Select the root directory of your downloaded copy of ReDeCheck.
 4. Click 'Finish' to complete the import.
 5. To generate the JAR file, select 'Run' &rarr; 'Run As' &rarr; 'maven install'.
-6. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with Eclipse failed and you will not yet be able to use ReDeCheck.
+6. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with Eclipse failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try another IDE or the command-line-based approach.
 
 #### Installation with IntelliJ
 
 1. Select 'File' &rarr; 'Open'.
-2. Navigate to the root directory of your copy of ReDeCheck.
+2. Navigate to the root directory of your installation of ReDeCheck.
 3. Select the 'pom.xml' file and click 'Finish'.
-4. Open the Maven Projects toolbar  using 'View' &rarr; 'Tool Windows' &rarr; 'Maven Projects'.
+4. Open the Maven Projects toolbar using 'View' &rarr; 'Tool Windows' &rarr; 'Maven Projects'.
 5. Select the ReDeCheck project and click 'package'.
-6. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
+6. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with IntelliJ failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try another IDE or the command-line-based approach. 
 
 #### Installation at the Command Line
 
