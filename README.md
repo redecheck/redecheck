@@ -94,10 +94,10 @@ applications,” in Proc. of the 35th ICSE, 2013
 
 #### Installation at the Command Line
 
-1. Navigate to the root directory containing your copy of ReDeCheck. (Use the cd command as shown below)
+1. Navigate to the root directory containing of your installation of ReDeCheck.
 2. Type the following command to build the tool: `mvn package`
 3. Maven will build the project from scratch, downloading all the required dependencies for the project automatically.
-4. A jar entitled redecheck-jar-with-dependencies.jar should have been created in the */target* directory of your ReDeCheck download.
+6. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with the command line failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try one of the methods that uses an IDE.
 
 ## Running ReDeCheck
 
