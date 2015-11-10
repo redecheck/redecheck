@@ -231,6 +231,8 @@ installation, and use of ReDeCheck on Windows; forks and pull requests that prov
 
 If you have any problems with building, installing, or executing ReDeCheck, then please feel free to create an issue
 associated with this Git repository using the "Issues" link at the top of this site. The contributors to the
-redecheck-tool repository will do all that they can to resolve your issue and ensure that the entire tool works well in
-your situation. If you find that ReDeCheck works well, then we also encourage you to "star" and "watch" the project!
-Finally, thank you for your interest in responsive web testing and the ReDeCheck tool!
+`redecheck-tool` the repository will do all that they can to resolve your issue and ensure that the entire tool works
+well in your development environment and for your web site. If you find that ReDeCheck works well, then we also
+encourage you to "star" and "watch" the project!
+
+Thank you for your interest in responsive web testing and the ReDeCheck tool!
