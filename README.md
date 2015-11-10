@@ -117,10 +117,10 @@ Argument | Description
 -------  | ---------------
 oracle   | URL of the oracle version of the web page
 test     | URL of the test version of the web page
-step     | The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (400px, 440px, 480px, ...)
+step     | The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (e.g., 400px, 440px, 480px, ...)
 start    | The viewport width at which to start sampling
 end      | The viewport width at which to finish sampling
-preamble | Preamble for navigating to local versions of the web page in the file system.
+preamble | Preamble for navigating to the local versions of the web page in the file system
 
 An example showing the command line input is presented below:
 
