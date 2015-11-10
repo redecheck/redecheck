@@ -130,18 +130,18 @@ An example showing the command line input is presented below:
 java -jar redecheck-jar-with-dependencies.jar --oracle demo.com/index --test demo.com/0 --step 20 --start 400 --end 1400
 ```
 
-In the example above, the current live version of the web page under test (*demo.com/index*) is being used as the oracle
+In the previous example, the current live version of the web page under test (*demo.com/index*) is being used as the oracle
 to compare against the test version (*demo.com/0*).
 
-The remaining three parameters (i.e., step, start, and end) are used to control the generation of layout model used to
-compare the two versions of the web page. The parameters shown in the example above would result the initial sampling
-process examining the web pages at 40px intervals between the viewport widths of 400px and 1400px.
+The remaining three parameters (i.e., step, start, and end) are used to control the generation of the layout model used
+to compare the two versions of the web page. The parameters shown in the example above would result in the initial
+sampling process examining the web pages at 40px intervals between the viewport widths of 400px and 1400px.
 
 Different combinations of values for these parameters can be used to conduct different types of testing. For instance,
-the values above would produce in a regular strength testing across a wide range of devices, from mobile phones to
-tablets and up to laptops and desktops. However, if the tester only wishes to test the page's layout on mobile phones,
-the parameters could be set to 10, 320 and 800 respectively, performing a more thorough test on a smaller range of
-device resolutions.
+the values chosen for the previous example would support "regular strength" testing across a wide range of devices, from
+mobile phones to tablets up to laptops and desktops. However, if the tester only wishes to test the page's layout on
+mobile phones, the parameters could be set to 10, 320, and 800, respectively, performing a more thorough test on a
+smaller range of device resolutions.
 
 #### Running the Shield Example
 
