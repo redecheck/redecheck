@@ -153,14 +153,14 @@ themselves are local, rather than live on the web, the *preamble* parameter is r
 java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --step 40 --start 400 --end 1400 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
 ```
 
-Running the command above will allow you to see the tool in action with some different versions of a single web page
+Running the aforementioned command will allow you to see the tool in action with some different versions of a single web page
 being used as input.
 
 ### Interpreting and Understanding the Reports
 
-After the tool has finishing comparing the two versions of the web site, a report is produced and should open
+After the tool has finished comparing the two versions of the web site, it produces a report that should display
 automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports,
-which should make it as easy as possible to locate and fix any detected problems.
+thus making it as easy as is possible to locate and fix any detected problems.
 
 The report is split into three sections, corresponding to the three main layout features of responsive web design:
 visibility, alignment and width. Here we'll present an example of each category of error, with a guide on how to
