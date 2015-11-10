@@ -1,9 +1,10 @@
 # Welcome to ReDeCheck!
 
-ReDeCheck is an automated tool designed to aid developers with the process of testing the layouts of responsive (i.e.,
-"mobile ready") web sites. With the huge range of devices available nowadays, performing adequate quality assurance on a
-sufficient range of devices is extremely difficult, if not impossible. Yet, since it is important to have a high-quality
-mobile-ready web site, ReDeCheck makes responsive web testing both efficient and effective!
+ReDeCheck (REsponsive DEsign CHECKer, pronounced “Ready Check”) is an automated tool designed to aid developers during
+the process of testing the layouts of responsive (i.e., "mobile ready") web sites. With the huge range of devices
+currently available, performing adequate quality assurance on a sufficient range of devices is extremely difficult, if
+not impossible. Yet, since it is important to have a high-quality mobile-ready web site, ReDeCheck makes responsive web
+testing both efficient and effective!
 
 ## Installing Maven
 
