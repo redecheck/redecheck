@@ -110,17 +110,17 @@ to effectively use the tool:
 ### Configuration Parameters
 
 ReDeCheck is run from the command line and takes five compulsory arguments which control various facets of its
-execution. The *preamble* parameter is optional, and is mainly used when testing local web pages. These arguments are
-defined and described below:
+execution. The *preamble* parameter is optional and is mainly used when testing web pages that are stored locally.
+ReDeCheck's arguments are defined and described in the following table:
 
-Argument     |  Description
--------     |   ---------------
-oracle      |   URL of the oracle version of the web page
-test        |   URL of the test version of the web page
-step        |   The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (400px, 440px, 480px, ...)
-start       |   The viewport width at which to start sampling
-end         |   The viewport width at which to finish sampling
-preamble  | Preamble for navigating to local versions of the web page in the file system.
+Argument | Description
+-------  | ---------------
+oracle   | URL of the oracle version of the web page
+test     | URL of the test version of the web page
+step     | The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (400px, 440px, 480px, ...)
+start    | The viewport width at which to start sampling
+end      | The viewport width at which to finish sampling
+preamble | Preamble for navigating to local versions of the web page in the file system.
 
 An example showing the command line input is presented below:
 
