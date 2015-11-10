@@ -145,9 +145,10 @@ smaller range of device resolutions.
 
 #### Running the Shield Example
 
-Provided with the download of ReDeCheck is directory containing an oracle version (index) and twenty mutants (numbered 0
-to 19) of an open-source web site, currently available at http://www.blacktie.co/demo/shield/. As the web pages
-themselves are local, rather than live on the web, the *preamble* parameter is required to run the tool:
+Provided with the download of ReDeCheck is directory containing an oracle version (i.e., the `index`) and twenty mutants
+(i.e., those numbered 0 to 19) of an open-source web site, currently available at http://www.blacktie.co/demo/shield/.
+As the web pages themselves are local, rather than live on the web, the *preamble* parameter is required to run the
+tool:
 
 ```
 java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --step 40 --start 400 --end 1400 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
@@ -163,8 +164,8 @@ automatically on the screen. To get the most out of ReDeCheck, it is important t
 thus making it as easy as is possible to locate and fix any detected problems.
 
 The report is split into three sections, corresponding to the three main layout features of responsive web design:
-visibility, alignment and width. Here we'll present an example of each category of error, with a guide on how to
-understand them:
+visibility, alignment and width. In the following content, we'll present an example of each category of error, in
+addition to furnishing a guide on how to understand them:
 
 #### Visibility Errors
 
@@ -178,8 +179,9 @@ Test:
 ```
 
 In this example, the report shows that the `button` element contained within the `nav` element is visible at a different
-range of viewport widths in the test version compared to the oracle. This could potentially have further impacts, such
-as changing the intended alignment of other nearby elements, so it is important to check.
+range of viewport widths in the test version compared to the oracle. This could potentially have further types of
+impacts, such as changing the intended alignment of other nearby elements. As such, so it is important to check the
+visibility of this `nav` at different viewport widths.
 
 #### Alignment Errors
 
@@ -193,11 +195,12 @@ as changing the intended alignment of other nearby elements, so it is important 
     441 -> 1300     rightOf,topAlign,bottomAlign
 ```
 
-The example shows that in the oracle version of the web page the two images (`IMG` and `IMG[2]`) are always side by
-side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image wraps
-onto a different line at a small range of narrow viewport widths, which may make the overall layout of the web site look
-unprofessional and in some severe cases, difficult to use. It is therefore beneficial to all involved if this issue can
-be detected and fixed before the new version of the site goes live.
+The example shows that in the oracle version of the web page the two images (i.e., `IMG` and `IMG[2]`) are always side
+by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image
+wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the web
+site look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to both developers,
+testers, and, ultimately, the users of the web site, if this issue can be detected and fixed before the new version of
+the site goes live.
 
 #### Width Errors
 ```
