@@ -101,10 +101,11 @@ applications,” in Proc. of the 35th ICSE, 2013
 
 ## Running ReDeCheck
 
-Once you have ReDeCheck correctly packaged and ready to run, there are two main requirements for effective use of the tool:
+Once you have ReDeCheck correctly packaged and ready to run, then there are two points that you must understand in order
+to effectively use the tool:
 
-1. Understanding the configuration parameters and how they affect the way the tool works
-2. Understanding the reports produced by the tool to effectively analyse the differences between the two versions of the web page under test.
+1. The configuration parameters and how they affect the way the tool works.
+2. The reports produced by the tool and the way in which they support the analysis of the differences between the two versions of a web page under test.
 
 ### Configuration Parameters
 
