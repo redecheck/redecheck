@@ -118,7 +118,6 @@ public class ResponsiveLayoutGraph {
      * @throws InterruptedException
      */
     private void extractVisibilityConstraints() throws InterruptedException {
-//        System.out.println("Extracting Visibility Constraints.");
         HashMap<String, VisibilityConstraint> visCons = new HashMap<>();
         HashMap<String, DomNode> domNodes =  first.domNodeMap;
         HashMap<String, DomNode> previousMap = (HashMap<String, DomNode>) first.domNodeMap;
@@ -130,7 +129,7 @@ public class ResponsiveLayoutGraph {
             HashMap<String, DomNode> temp = (HashMap<String, DomNode>) agf.domNodeMap;
             HashMap<String, DomNode> tempToMatch = (HashMap<String, DomNode>) temp.clone();
 
-
+            // Matches the nodes seen at the last sample point to those seen at the current one
             checkForNodeMatch(previousMap, temp, previousToMatch, tempToMatch);
 
             // Handle any disappearing elements
@@ -150,6 +149,10 @@ public class ResponsiveLayoutGraph {
         attachVisConsToNodes(visCons);
     }
 
+    /**
+     * Takes a map of visibility constraints and adds them to the relevant nodes
+     * @param visCons	the map of constraints to be added
+     */
     public void attachVisConsToNodes(HashMap<String, VisibilityConstraint> visCons) {
         for (String x : this.nodes.keySet()) {
             Node n = this.nodes.get(x);
@@ -158,6 +161,11 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Updates the visibility constraints of any nodes visible at the final sample point
+     * @param visCons	the visibility constraints that may need to be updated
+     * @param last		the data from the final sample point
+     */
     public void updateRemainingNodes(HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory last) {
         for (String stilVis : last.getNodeMap().keySet()) {
             VisibilityConstraint vc = visCons.get(stilVis);
@@ -167,42 +175,78 @@ public class ResponsiveLayoutGraph {
         }
     }
 
+    /**
+     * Takes a set of nodes appearing at a given sample point and created visibility constraints and node objects for each
+     * @param tempToMatch	the set of appearing nodes
+     * @param visCons		the map of visibility constraints to add to
+     * @param agf			the AlignmentGraphFactory containing the appearing nodes
+     */
     public void updateAppearingNode(HashMap<String, DomNode> tempToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
-        for (String currUM : tempToMatch.keySet()) {
+        // Iterate through all appearing nodes
+    	for (String currUM : tempToMatch.keySet()) {
             int appearPoint = 0;
             try {
+            	// Find the point at which it appears
                 appearPoint = findAppearPoint(currUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
+            	
             }
+            
+            // Create a node object and a matching visibility constraint for the appearing element
             nodes.put(currUM, new Node(currUM));
             visCons.put(currUM, new VisibilityConstraint(appearPoint, 0));
         }
     }
 
+    /**
+     * Takes a set of disappearing elements and updates the visibility constraints linked to them
+     * @param previousToMatch	the set of disappearing nodes
+     * @param visCons			the map of visibility constraints to update
+     * @param agf				the AlignmentGraphFactory containing the disappearing nodes
+     */
     public void updateDisappearingNode(HashMap<String, DomNode> previousToMatch, HashMap<String, VisibilityConstraint> visCons, AlignmentGraphFactory agf) {
-        for (String prevUM : previousToMatch.keySet()) {
+        // Iterate through all disappearing nodes
+    	for (String prevUM : previousToMatch.keySet()) {
             int disappearPoint = 0;
             try {
+            	// Find the point at which it disappears
                 disappearPoint = findDisappearPoint(prevUM, widths[restOfGraphs.indexOf(agf)], widths[restOfGraphs.indexOf(agf) + 1], true, "");
             } catch (InterruptedException e) {
             }
+            
+            // Get the existing visibility constraint for the node and update it with the disappearPoint
             VisibilityConstraint vc = visCons.get(prevUM);
             vc.setDisappear(disappearPoint - 1);
         }
     }
 
+    /**
+     * Takes the set of nodes from two consecutive sample points and matches the nodes
+     * @param previousMap		the previous set of nodes
+     * @param temp				the current set of nodes
+     * @param previousToMatch	a copy of previousMap used for matching
+     * @param tempToMatch		a copy of temp used for matching
+     */
     public void checkForNodeMatch(HashMap<String, DomNode> previousMap, HashMap<String, DomNode> temp, HashMap<String, DomNode> previousToMatch, HashMap<String, DomNode> tempToMatch) {
-        for (String s : previousMap.keySet()) {
+        // Iterate through all nodes in the previous map
+    	for (String s : previousMap.keySet()) {
+    		// See if that node is visible in the current map
             if (temp.get(s) != null) {
-                // Found a node match
+                // If so, remove the matched nodes from their respective sets
                 previousToMatch.remove(s);
                 tempToMatch.remove(s);
             }
         }
     }
 
+    /**
+     * Sets up visibility constraints for all nodes visible at the first sample point
+     * @param domnodes		the map of elements visible at the first sample point
+     * @param cons			the map into which to add the new constraints
+     */
     public void setUpVisibilityConstraints(HashMap<String, DomNode> domnodes, HashMap<String, VisibilityConstraint> cons) {
-        for (DomNode node : domnodes.values()) {
+        // Iterate through all elements
+    	for (DomNode node : domnodes.values()) {
             // Add each node to overall set
             String xpath = node.getxPath();
             nodes.put(xpath, new Node(xpath));
@@ -228,21 +272,28 @@ public class ResponsiveLayoutGraph {
             HashMap<String, AGEdge> temp = ag.getEdgeMap();
             HashMap<String, AGEdge> tempToMatch = (HashMap<String, AGEdge>) temp.clone();
 
+            // Match the edges visible at both sample points
             checkForEdgeMatch(previousMap, previousToMatch, temp, tempToMatch);
 
-            
+            // Pair any unmatched edges and update the alignment constraints
             HashMap<AGEdge, AGEdge> matchedChangingEdges = pairUnmatchedEdges(previousToMatch, tempToMatch);
             updatePairedEdges(matchedChangingEdges, alignmentConstraints, alCons, ag);
             
+            // If there are still some disappearing edges left
             if (previousToMatch.size() != 0) {
+            	// Check whether the edge has disappeared because one of the nodes has
             	checkForNodeBasedDisappearances(previousToMatch, alignmentConstraints, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
-            	// Handle disappearing edges
+            	
+            	// Update any remaining disappearing edges
             	updateDisappearingEdges(previousToMatch, alignmentConstraints, ag);
             }
-//          
-            // Handle appearing edges
+          
+            // If there are still appearing edges left
             if (tempToMatch.size() !=0) {
+            	// Check whether the edge has appeared because one of the nodes has
             	checkForNodeBasedAppearances(tempToMatch, alignmentConstraints, alCons, ag, this.widths[restOfGraphs.indexOf(ag)], this.widths[restOfGraphs.indexOf(ag) + 1]);
+            	
+            	// Update any remaining appearing edges
             	updateAppearingEdges(tempToMatch, alignmentConstraints, alCons, ag);
             }
             previousMap = ag.getEdgeMap();
