@@ -337,7 +337,6 @@ public class ResponsiveLayoutGraph {
                     temp.remove(s2);
                 // Check for matching child, but differing parents
                 } else if ( ((n1.getxPath().equals(n1m.getxPath())) && (!n2.getxPath().equals(n2m.getxPath())) && (e instanceof Contains) && (e2 instanceof Contains)) ) {
-//                    System.out.println(e);
                     paired.put(e, e2);
                     previous.remove(s);
                     temp.remove(s2);
@@ -348,6 +347,9 @@ public class ResponsiveLayoutGraph {
         return paired;
     }
 
+    /**
+        
+    */
     public void updateRemainingEdges(HashMap<String, AlignmentConstraint> alCons, AlignmentGraphFactory last) {
         for (String stilVis : last.getEdgeMap().keySet()) {
             AGEdge e = last.getEdgeMap().get(stilVis);
