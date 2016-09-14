@@ -540,14 +540,14 @@ public class Redecheck {
      */
     public static void capturePageModel(String url, int[] widths, HashMap<Integer, DomNode> doms, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories) {
         // Create a parser for the DOM strings
-        if (!swf.getCapture().isStarted()) {
-            swf.getCapture().start();
-        } else if (swf.getCapture().isSuspended()) {
-            swf.getCapture().resume();
-        }
-        if (swf.getProcess().isStarted()) {
-            swf.getProcess().suspend();
-        }
+//        if (!swf.getCapture().isStarted()) {
+//            swf.getCapture().start();
+//        } else if (swf.getCapture().isSuspended()) {
+//            swf.getCapture().resume();
+//        }
+//        if (swf.getProcess().isStarted()) {
+//            swf.getProcess().suspend();
+//        }
         JsonDomParser parser = new JsonDomParser();
         File domFile=null;
         try {
@@ -582,13 +582,13 @@ public class Redecheck {
 
                 while (!consecutiveMatches) {
                     // Extract the DOM and save it to the HashMap.
-                    if (!swf.getSleep().isStarted()) {
-                        swf.getSleep().start();
-                    } else {
-                        swf.getSleep().resume();
-                    }
+//                    if (!swf.getSleep().isStarted()) {
+//                        swf.getSleep().start();
+//                    } else {
+//                        swf.getSleep().resume();
+//                    }
                     Thread.sleep(sleep);
-                    swf.getSleep().suspend();
+//                    swf.getSleep().suspend();
 
                     String extractedDom = extractDOM(wdriver, scriptToExtract, swf.getExtract());
 
@@ -611,22 +611,22 @@ public class Redecheck {
             e.printStackTrace();
         }
 
-        swf.getCapture().suspend();
-        if (swf.getProcess().isStarted()) {
-            swf.getProcess().resume();
-        }
+//        swf.getCapture().suspend();
+//        if (swf.getProcess().isStarted()) {
+//            swf.getProcess().resume();
+//        }
     }
 
     public static String extractDOM(PhantomJSDriver pjsdriver, String script, StopWatch sw) throws IOException {
 
-        if (!sw.isStarted()) {
-            sw.start();
-        } else if (sw.isSuspended()) {
-            sw.resume();
-        }
+//        if (!sw.isStarted()) {
+//            sw.start();
+//        } else if (sw.isSuspended()) {
+//            sw.resume();
+//        }
 
         String result =  (String) pjsdriver.executeScript(script);
-        sw.suspend();
+//        sw.suspend();
         return result;
     }
 

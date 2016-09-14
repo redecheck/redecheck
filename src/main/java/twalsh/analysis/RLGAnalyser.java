@@ -8,6 +8,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 import twalsh.layout.Element;
 import twalsh.layout.Layout;
 import twalsh.layout.LayoutFactory;
+import twalsh.layout.Sibling;
 import twalsh.redecheck.RLGThread;
 import twalsh.rlg.AlignmentConstraint;
 import twalsh.rlg.Node;
@@ -67,24 +68,24 @@ public class RLGAnalyser {
 
 
 
-        ArrayList<ResponsiveLayoutError> cloned0 = (ArrayList<ResponsiveLayoutError>) errors.clone();
-
-        for (ResponsiveLayoutError rle : cloned0) {
-            if (rle instanceof SmallRangeError) {
-                for (ResponsiveLayoutError rle2 : cloned0) {
-                    if (rle2 instanceof OverlappingError) {
-                        if (((SmallRangeError) rle).ac == ((OverlappingError) rle2).constraint) {
-                            errors.remove(rle);
-                        }
-                    }
-                    if (rle2 instanceof OverflowError) {
-                        if (((SmallRangeError) rle).ac == ((OverflowError) rle2).getOfCon()) {
-                            errors.remove(rle);
-                        }
-                    }
-                }
-            }
-        }
+//        ArrayList<ResponsiveLayoutError> cloned0 = (ArrayList<ResponsiveLayoutError>) errors.clone();
+//
+//        for (ResponsiveLayoutError rle : cloned0) {
+//            if (rle instanceof SmallRangeError) {
+//                for (ResponsiveLayoutError rle2 : cloned0) {
+//                    if (rle2 instanceof OverlappingError) {
+//                        if (((SmallRangeError) rle).ac == ((OverlappingError) rle2).constraint) {
+//                            errors.remove(rle);
+//                        }
+//                    }
+//                    if (rle2 instanceof OverflowError) {
+//                        if (((SmallRangeError) rle).ac == ((OverflowError) rle2).getOfCon()) {
+//                            errors.remove(rle);
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         ArrayList<ResponsiveLayoutError> cloned1 = (ArrayList<ResponsiveLayoutError>) errors.clone();
 
@@ -139,10 +140,11 @@ public class RLGAnalyser {
                 if (diffR == 1 || diffB == 1 || diffL == 1 || diffT == 1) {
 //                    System.out.println("One pixel overflow");
                     errors.remove(rle);
-                } else if (parentAlsoOverflowed(((OverflowError) rle).getOverflowed(), cloned2)) {
-//                    System.out.println("REMOVING " + rle+ " BECAUSE OF PARENT OVERFLOW");
-                    errors.remove(rle);
                 }
+//                else if (parentAlsoOverflowed(((OverflowError) rle).getOverflowed(), cloned2)) {
+////                    System.out.println("REMOVING " + rle+ " BECAUSE OF PARENT OVERFLOW");
+//                    errors.remove(rle);
+//                }
             }
         }
     }
@@ -173,71 +175,34 @@ public class RLGAnalyser {
         for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
             if (ac.getType() == Type.SIBLING) {
                 if (ac.getAttributes()[10]) {
-//                    ArrayList<AlignmentConstraint> matchingPcAcs = getParentChildConstraints(ac.getNode1(), ac.getNode2());
-//                    ArrayList<AlignmentConstraint> n1pcs = ac.getNode1().getParentConstraints();
-//                    ArrayList<AlignmentConstraint> n2pcs = ac.getNode2().getParentConstraints();
-//                    AlignmentConstraint match = null, m1 = null, m2 = null;
-//                    if (matchingPcAcs.size() > 0) {
-//                        for (AlignmentConstraint con : matchingPcAcs) {
-//                            if ((con.getMin() == ac.getMax()+1) || (con.getMax() == ac.getMin()-1)) {
-//                                match = con;
-//                            } else {
-//
-//                            }
-//                        }
-//                    }
 
 
                     HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
-                    HashSet<Node> n1AncestryB = getAncestry(ac.getNode1(), ac.getMin()-1);
-
                     HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax()+1);
-                    HashSet<Node> n2AncestryB = getAncestry(ac.getNode2(), ac.getMin()-1);
-//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV/FORM/DIV")) {
-//                        System.out.println("Boo");
-//                    }
                     if (n1Ancestry.contains(ac.getNode2())) {
-//                        System.out.println(ac);
                         OverflowError ofe = new OverflowError(ac.getNode1(), ac);
                         errors.add(ofe);
                     } else if (n2Ancestry.contains(ac.getNode1())) {
-//                        System.out.println(ac);
                         OverflowError ofe = new OverflowError(ac.getNode2(), ac);
                         errors.add(ofe);
                     } else {
-//                        System.out.println(ac + " was just an overlap");
-                        OverlappingError oe = new OverlappingError(ac);
-                        errors.add(oe);
+                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true);
+                        AlignmentConstraint next = getPreviousOrNextConstraint(ac, false);
+                        if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/HEADER/DIV/FORM/BUTTON")) {
+                            System.out.println();
+                        }
+                        if (prev != null && prev.getType() == Type.SIBLING) {
+                            if (prev.getAttributes()[10] == false) {
+                                OverlappingError oe = new OverlappingError(ac);
+                                errors.add(oe);
+                            }
+                        } else if (next != null && next.getType() == Type.SIBLING) {
+                            if (next.getAttributes()[10] == false) {
+                                OverlappingError oe = new OverlappingError(ac);
+                                errors.add(oe);
+                            }
+                        }
                     }
-//                    if (n2Ancestry.contains(ac.getNode1())) {
-//                        System.out.println("Hoo");
-//                        System.out.println(ac);
-//                        for (Node n : n2Ancestry) {
-//                            System.out.println(n.getXpath());
-//                        }
-//                    }
-//                    for (AlignmentConstraint ac1 : n1pcs) {
-//                        if ((ac1.getMin() == ac.getMax()+1) || (ac1.getMax() == ac.getMin()-1)) {
-////                            System.out.println("MATCHED " + ac + " WITH " + ac1);
-//                            m1 = ac1;
-//                        }
-//                    }
-//                    for (AlignmentConstraint ac2 : n2pcs) {
-//                        if ((ac2.getMin() == ac.getMax()+1) || (ac2.getMax() == ac.getMin()-1)) {
-////                            System.out.println("MATCHED " + ac + " WITH " + ac1);
-//                            m2 = ac2;
-//                        }
-//                    }
-
-//                    if (match == null) {
-////                        if (m1 != null || m2 != null) {
-////                            System.out.println("Found a match for " + ac + "\n");
-////                        }
-//
-//                    } else {
-//
-//
-//                    }
                 }
             }
         }
