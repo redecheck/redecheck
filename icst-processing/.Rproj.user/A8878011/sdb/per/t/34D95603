@@ -1,0 +1,17 @@
+{
+    "contents" : "3-Minute-Journal,23.530,01.252,04.064\nAccountKiller,26.234,00.669,02.774\nBugMeNot,26.049,01.778,03.458\nCloudConvert,44.186,01.067,07.793\nCovered-Calendar,25.431,04.884,03.936\nDays-Old,08.206,00.016,00.003\nDictation,19.283,00.423,01.631\nGetPocket,53.211,33.921,17.481\nHotelWifiTest,28.378,21.841,05.406\nMailinator,22.171,01.679,09.415\nMidwayMeetup,23.719,03.511,06.630\nNinite-new,04.792,02.039,04.641\nPdf-Escape,19.734,05.415,10.109\nRainyMood,10.505,00.007,00.003\nStumbleUpon,32.484,00.027,04.722\nUserSearch,28.652,00.558,04.235\nWhatShouldIReadNext,13.997,02.422,00.942\nWillMyPhoneWork,13.845,02.048,08.689\nZeroDollarMovies,26.885,00.023,00.030\n",
+    "created" : 1472809901011.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2112610090",
+    "id" : "34D95603",
+    "lastKnownWriteTime" : 1472812219,
+    "path" : "~/Documents/PhD/redecheck/icst-processing/timeData.csv",
+    "project_path" : "timeData.csv",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "text"
+}
