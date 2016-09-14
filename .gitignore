@@ -7,7 +7,6 @@
 /.idea/
 /screenshots/
 /testing/
-/reports/
 .project
 phantomjsdriver.log
 Redecheck.iml
