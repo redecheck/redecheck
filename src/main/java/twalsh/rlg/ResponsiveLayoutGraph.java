@@ -318,7 +318,9 @@ public class ResponsiveLayoutGraph {
         for (LayoutFactory lf : restOfLayouts) {
             currentWidth = this.widths[restOfLayouts.indexOf(lf)+1];
 //            System.out.println(currentWidth);
-
+//            if (currentWidth == 1400) {
+//                System.out.println();
+//            }
             prevToMatch = (HashMap<String, Relationship>) prev.clone();
             curr = lf.getRelationships();
             currToMatch = (HashMap<String, Relationship>) curr.clone();
@@ -360,6 +362,7 @@ public class ResponsiveLayoutGraph {
         updateRemainingEdges(alCons, last);
         addParentConstraintsToNodes();
 //        this.alignments = alCons;
+//        System.out.println("FINISHED");
     }
 
 

@@ -71,6 +71,25 @@ public class Layout {
             }
         }
 
+//        for (int c : parentMap.keySet()) {
+//            try {
+//                if (parentMap.containsKey(parentMap.get(c))) {
+//                    if (parentMap.get(parentMap.get(c)) == c) {
+//                        System.out.println(c + " and " + parentMap.get(c));
+//                        for (int x : parentMap.keySet()) {
+//                            if (parentMap.get(x) == c) {
+//                                System.out.println(xpaths.get(x) + " child of " + xpaths.get(parentMap.get(x)));
+//                            }
+//                        }
+//                    }
+//                }
+//
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
 //        System.out.println(rectangles.size() + " rectangles");
 //        System.out.println(parentMap.size() + " in parent map");
 //        for (Integer i : rectangles.keySet()) {
@@ -92,14 +111,17 @@ public class Layout {
 //                if (p.getXpath().equals("/HTML/BODY/DIV[2]")) {
 //                    System.out.println("body/div[2] contains " + c);
 //                }
-                ParentChild pc = new ParentChild(p, c);
-                c.setParent(p);
-                relationships.put(pc.getKey(), pc);
 
-                if (!parents.containsKey(p)) {
-                    parents.put(p, new ArrayList<Element>());
-                }
-                parents.get(p).add(c);
+                ParentChild pc = new ParentChild(p, c);
+//                if (!flippedParent(pc)) {
+                    c.setParent(p);
+                    relationships.put(pc.getKey(), pc);
+
+                    if (!parents.containsKey(p)) {
+                        parents.put(p, new ArrayList<Element>());
+                    }
+                    parents.get(p).add(c);
+//                }
             }
         }
 
@@ -115,6 +137,12 @@ public class Layout {
         }
 
         for (Relationship r : relationships.values()) {
+//            if (r.getNode1().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV[3]") && r.getNode2().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI")) {
+//                System.out.println(r);
+//            }
+//            if (r.getNode2().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV[3]") && r.getNode1().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI")) {
+//                System.out.println(r);
+//            }
             if (r instanceof Sibling) {
 //                if ( (r.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) || (r.getNode1().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV"))) {
 //                    System.out.println(r);
@@ -143,6 +171,17 @@ public class Layout {
         }
     }
 
+    private boolean flippedParent(ParentChild pc) {
+        for (Relationship r : relationships.values()) {
+            if (r instanceof ParentChild) {
+                if (r.getNode1() == pc.getNode2() && r.getNode2() == pc.getNode1()) {
+//                    System.out.println("FLIPPED" + pc);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
     public List<Integer> getChildren(final int elementId) {

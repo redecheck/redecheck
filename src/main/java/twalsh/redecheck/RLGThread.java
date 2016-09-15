@@ -102,11 +102,6 @@ public class RLGThread implements Runnable {
                 LayoutFactory lf = lFactories.get(width);
                 oracleLFs.add(lf);
             }
-//            LogEntries logs = webDriver.manage().logs().get("browser");
-//            System.out.println(logs.getAll().size());
-//            for (LogEntry le : logs) {
-//                System.out.println(le);
-//            }
 
             this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
 //            this.swf.getProcess().stop();
@@ -115,6 +110,8 @@ public class RLGThread implements Runnable {
             this.swf.getDetect().start();
 //            System.out.println("LOOKING FOR FAULTS");
 
+//            System.out.println(rlg.getNodes().get("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI"));
+//            System.out.println(rlg.getNodes().get("/HTML/BODY/MAIN/DIV/DIV/DIV[3]"));
             RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
             ArrayList<ResponsiveLayoutError> errors = analyser.analyse();
             this.swf.getDetect().stop();

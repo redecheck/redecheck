@@ -51,8 +51,6 @@ public class RLGAnalyser {
         errors = new ArrayList<>();
 
         checkForViewportOverflows();
-//        checkForOverflowingElements();
-//        checkForOverlappingElements();
         detectOverflowOrOverlap();
         checkForSmallRanges();
         checkForWrappingElements();
@@ -149,35 +147,45 @@ public class RLGAnalyser {
 
     private void checkForViewportOverflows() {
         for (Node n : rlg.getNodes().values()) {
-            ArrayList<AlignmentConstraint> pCons = n.getParentConstraints();
-            TreeMap<Integer, Integer> conBounds = new TreeMap<>();
-            for (AlignmentConstraint pc : pCons) {
-                conBounds.put(pc.getMin(), pc.getMax());
-            }
-            if (n.getXpath().equals("/HTML/BODY/DIV[4]/DIV[3]/DIV/DIV[2]/DIV[4]/DIV")) {
-                System.out.println("BOO");
-            }
-//            System.out.println(n.getXpath());
-            int gmin = vmin;
-            for (Map.Entry e : conBounds.entrySet()) {
-                int gmax = (int)e.getKey()-1;
-                System.out.println(gmin + " " + gmax);
-                if (gmin < gmax) {
-                   String key = isVisible(n, gmin, gmax);
-                    if (!key.equals("")) {
-                        int repMin = getNumberFromKey(key,0);
-                        int repMax = getNumberFromKey(key,1);
-                        ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+            if (!n.getXpath().equals("/HTML/BODY")) {
+                ArrayList<AlignmentConstraint> pCons = n.getParentConstraints();
+                TreeMap<Integer, Integer> conBounds = new TreeMap<>();
+                for (AlignmentConstraint pc : pCons) {
+                    conBounds.put(pc.getMin(), pc.getMax());
+                }
+//                 if (n.getXpath().equals("/HTML/BODY/MAIN/DIV[6]/UL/LI/DIV")) {
+//                     System.out.println("BOO");
+//                 }
+                //            System.out.println(n.getXpath());
+                if (pCons.size() == 0) {
+                    String key = isVisible(n, vmin, vmax);
+                    int repMin = getNumberFromKey(key, 0);
+                    int repMax = getNumberFromKey(key, 1);
+                    ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+                    errors.add(voe);
+                } else {
+                    int gmin = vmin;
+                    for (Map.Entry e : conBounds.entrySet()) {
+                        int gmax = (int) e.getKey() - 1;
+                        // System.out.println(gmin + " " + gmax);
+                        if (gmin < gmax) {
+                            String key = isVisible(n, gmin, gmax);
+                            if (!key.equals("")) {
+                                int repMin = getNumberFromKey(key, 0);
+                                int repMax = getNumberFromKey(key, 1);
+                                ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+                                errors.add(voe);
+                            }
+
+                            //
+                        }
+                        gmin = (int) e.getValue() + 1;
+                    }
+                    if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
+                        ViewportOverflowError voe = new ViewportOverflowError(n, gmin, vmax);
                         errors.add(voe);
                     }
-
-//
                 }
-                gmin = (int) e.getValue()+1;
-            }
-            if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
-                ViewportOverflowError voe = new ViewportOverflowError(n, gmin, vmax);
-                errors.add(voe);
             }
         }
     }
@@ -188,7 +196,11 @@ public class RLGAnalyser {
             int visMin = vc.appear;
             int visMax = vc.disappear;
             if (gmax >= visMin && gmax <= visMax) {
-                return gmin+":"+gmax;
+                if (visMin <= gmin) {
+                    return gmin+":"+gmax;
+                } else {
+                    return visMin + ":" + gmax;
+                }
 //                System.out.println();
             }
         }
@@ -199,6 +211,7 @@ public class RLGAnalyser {
         for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
             if (ac.getType() == Type.SIBLING) {
                 if (ac.getAttributes()[10]) {
+//                    System.out.println(ac);
 
 
                     HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
@@ -224,16 +237,16 @@ public class RLGAnalyser {
 //                            }
 //                        }
                         if (prev == null && next == null) {
-                            olPrev = true;
-                            olNext = true;
+                            olPrev = false;
+                            olNext = false;
                         } else if (prev != null && prev.getType() == Type.SIBLING) {
-                            if (prev.getAttributes()[10] == true) {
+                            if (prev.getAttributes()[10]) {
                                 olPrev = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
-                            if (next.getAttributes()[10] == true) {
+                            if (next.getAttributes()[10]) {
                                 olNext = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
@@ -251,19 +264,29 @@ public class RLGAnalyser {
 
     private HashSet<Node> getAncestry(Node node1, int i) {
         HashSet<Node> ancestors = new HashSet<>();
-
+//        System.out.println("GETTING ANCESTORS FOR " + node1.getXpath());
         ArrayList<Node> workList = new ArrayList<>();
         workList.add(node1);
+        ArrayList<Node> analysed = new ArrayList<>();
+        try {
+            while (!workList.isEmpty()) {
+                Node n = workList.remove(0);
 
-        while (!workList.isEmpty()) {
-            Node n = workList.remove(0);
-            ArrayList<AlignmentConstraint> cons = n.getParentConstraints();
-            for (AlignmentConstraint ac : cons) {
-                if (ac.getMin()<=i && ac.getMax() >= i) {
-                    ancestors.add(ac.getNode1());
-                    workList.add(ac.getNode1());
+                ArrayList<AlignmentConstraint> cons = n.getParentConstraints();
+                for (AlignmentConstraint ac : cons) {
+                    if (ac.getMin() <= i && ac.getMax() >= i) {
+//                        System.out.println(ac.getNode1().getXpath());
+                        ancestors.add(ac.getNode1());
+                        if (!analysed.contains(ac.getNode1())) {
+                            workList.add(ac.getNode1());
+                        }
+
+                    }
                 }
+                analysed.add(n);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return ancestors;
     }

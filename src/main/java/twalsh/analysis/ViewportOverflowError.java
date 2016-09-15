@@ -45,26 +45,28 @@ public class ViewportOverflowError extends ResponsiveLayoutError {
 
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
-        int captureWidth = min;
-        HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
-
-        BufferedImage img;
-        img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
-        LayoutFactory lf = lfs.get(captureWidth);
-        Element e1 = lf.getElementMap().get(node.getXpath());
-        Element body = lf.getElementMap().get("/HTML/BODY");
-
-        Graphics2D g2d = img.createGraphics();
-        g2d.setColor(Color.CYAN);
-        int[] coords = e1.getCoordsArray();
-        g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
-
-        g2d.setColor(Color.BLACK);
-        int[] coords2 = body.getCoordsArray();
-        g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
-
-        g2d.dispose();
         try {
+            int captureWidth = min;
+            HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
+
+            BufferedImage img;
+            img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+            LayoutFactory lf = lfs.get(captureWidth);
+            Element e1 = lf.getElementMap().get(node.getXpath());
+            Element body = lf.getElementMap().get("/HTML/BODY");
+
+            Graphics2D g2d = img.createGraphics();
+            g2d.setColor(Color.RED);
+            g2d.setStroke(new BasicStroke(2));
+
+            int[] coords = e1.getCoordsArray();
+            g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
+
+            g2d.setColor(Color.GREEN);
+            int[] coords2 = body.getCoordsArray();
+            g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
+
+            g2d.dispose();
             String[] splits = url.split("/");
             String webpage = splits[0];
             String mutant = "index-" + timeStamp;
