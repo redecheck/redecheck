@@ -188,19 +188,26 @@ public class RLGAnalyser {
                     } else {
                         AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true);
                         AlignmentConstraint next = getPreviousOrNextConstraint(ac, false);
-                        if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/HEADER/DIV/FORM/BUTTON")) {
-                            System.out.println();
-                        }
+//                        if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/HEADER/DIV/FORM/BUTTON")) {
+//                            System.out.println();
+//                        }
+                        boolean olPrev=false,olNext=false;
                         if (prev != null && prev.getType() == Type.SIBLING) {
                             if (prev.getAttributes()[10] == false) {
-                                OverlappingError oe = new OverlappingError(ac);
-                                errors.add(oe);
+                                olPrev = true;
+//                                OverlappingError oe = new OverlappingError(ac);
+//                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
                             if (next.getAttributes()[10] == false) {
-                                OverlappingError oe = new OverlappingError(ac);
-                                errors.add(oe);
+                                olNext = true;
+//                                OverlappingError oe = new OverlappingError(ac);
+//                                errors.add(oe);
                             }
+                        }
+                        if (!olPrev || !olNext) {
+                            OverlappingError oe = new OverlappingError(ac);
+                            errors.add(oe);
                         }
                     }
                 }

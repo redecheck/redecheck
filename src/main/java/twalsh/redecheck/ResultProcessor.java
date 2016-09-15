@@ -25,6 +25,7 @@ public class ResultProcessor {
 	static String preamble = "/Users/thomaswalsh/Documents/PhD/redecheck-journal-paper-data/";
 	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
+	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
 	ArrayList<File> nonDetected;
@@ -331,6 +332,21 @@ public class ResultProcessor {
 //		}
 //		return "";
 //	}
+
+	private static String getMultiExecutionTime(String webpage, int i) {
+		String result = "";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(redecheckicst+"times/"+webpage + "/timings" + i + ".csv"));
+
+			result += br.readLine();
+
+			br.close();
+			return result.substring(0, result.length()-1);
+		} catch (Exception e) {
+//			e.printStackTrace();
+		}
+		return "";
+	}
 
 	private static String getExecutionTime(File f) {
 		String result = "";
@@ -779,6 +795,7 @@ public class ResultProcessor {
 //		processAllMutants(rp.webpages);
 		ArrayList<File> files = rp.readInSetOfMutants("/src/main/java/icst-websites.txt");
 		String timeData = "";
+		String multiTimeData = "";
 		for (File f : files) {
 
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
@@ -794,13 +811,18 @@ public class ResultProcessor {
 				System.out.println(webpage + classificationString + " & " + actualFaultCount + " \\\\");
 			}
 //			String dataString = WebpageMutator.getWebpageData(f);
+			for (int i = 1; i <= 5; i++) {
+				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+			}
 		}
+		System.out.println(multiTimeData);
 
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-
+		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}
+
 
 
 
