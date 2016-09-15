@@ -10,15 +10,13 @@ import twalsh.layout.Layout;
 import twalsh.layout.LayoutFactory;
 import twalsh.layout.Sibling;
 import twalsh.redecheck.RLGThread;
-import twalsh.rlg.AlignmentConstraint;
-import twalsh.rlg.Node;
-import twalsh.rlg.ResponsiveLayoutGraph;
-import twalsh.rlg.Type;
+import twalsh.rlg.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.lang.Math.abs;
@@ -152,23 +150,49 @@ public class RLGAnalyser {
     private void checkForViewportOverflows() {
         for (Node n : rlg.getNodes().values()) {
             ArrayList<AlignmentConstraint> pCons = n.getParentConstraints();
-            int visMin = n.getVisibilityConstraints().get(0).appear;
-            int visMax = n.getVisibilityConstraints().get(0).disappear;
             TreeMap<Integer, Integer> conBounds = new TreeMap<>();
             for (AlignmentConstraint pc : pCons) {
                 conBounds.put(pc.getMin(), pc.getMax());
             }
-            int prevMax = 0;
+            if (n.getXpath().equals("/HTML/BODY/DIV[4]/DIV[3]/DIV/DIV[2]/DIV[4]/DIV")) {
+                System.out.println("BOO");
+            }
+//            System.out.println(n.getXpath());
+            int gmin = vmin;
             for (Map.Entry e : conBounds.entrySet()) {
-                if ((int) e.getKey() != prevMax+1 && (prevMax != 0)) {
-//                    IS IT VISIBLE
-                    ViewportOverflowError voe = new ViewportOverflowError(n, prevMax+1, (int) e.getKey());
-                    errors.add(voe);
+                int gmax = (int)e.getKey()-1;
+                System.out.println(gmin + " " + gmax);
+                if (gmin < gmax) {
+                   String key = isVisible(n, gmin, gmax);
+                    if (!key.equals("")) {
+                        int repMin = getNumberFromKey(key,0);
+                        int repMax = getNumberFromKey(key,1);
+                        ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+                        errors.add(voe);
+                    }
+
 //
                 }
-                prevMax = (int) e.getValue();
+                gmin = (int) e.getValue()+1;
+            }
+            if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
+                ViewportOverflowError voe = new ViewportOverflowError(n, gmin, vmax);
+                errors.add(voe);
             }
         }
+    }
+
+    private String isVisible(Node n, int gmin, int gmax) {
+        ArrayList<VisibilityConstraint> vcons = n.getVisibilityConstraints();
+        for (VisibilityConstraint vc : vcons) {
+            int visMin = vc.appear;
+            int visMax = vc.disappear;
+            if (gmax >= visMin && gmax <= visMax) {
+                return gmin+":"+gmax;
+//                System.out.println();
+            }
+        }
+        return "";
     }
 
     private void detectOverflowOrOverlap() {
@@ -186,21 +210,31 @@ public class RLGAnalyser {
                         OverflowError ofe = new OverflowError(ac.getNode2(), ac);
                         errors.add(ofe);
                     } else {
-                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true);
-                        AlignmentConstraint next = getPreviousOrNextConstraint(ac, false);
+                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
+                        AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
 //                        if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/HEADER/DIV/FORM/BUTTON")) {
 //                            System.out.println();
 //                        }
-                        boolean olPrev=false,olNext=false;
-                        if (prev != null && prev.getType() == Type.SIBLING) {
-                            if (prev.getAttributes()[10] == false) {
-                                olPrev = true;
+                        boolean olPrev=true,olNext=true;
+//                        if (prev != null && prev.getType() == Type.SIBLING) {
+//                            if (prev.getAttributes()[10] == false) {
+//                                olPrev = true;
+////                                OverlappingError oe = new OverlappingError(ac);
+////                                errors.add(oe);
+//                            }
+//                        }
+                        if (prev == null && next == null) {
+                            olPrev = true;
+                            olNext = true;
+                        } else if (prev != null && prev.getType() == Type.SIBLING) {
+                            if (prev.getAttributes()[10] == true) {
+                                olPrev = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
-                            if (next.getAttributes()[10] == false) {
-                                olNext = true;
+                            if (next.getAttributes()[10] == true) {
+                                olNext = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
                             }
@@ -341,9 +375,9 @@ public class RLGAnalyser {
 
     private void checkForSmallRanges() {
         for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
-            if ( (ac.getMax() - ac.getMin()) == 0 ) {
-                AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true);
-                AlignmentConstraint next = getPreviousOrNextConstraint(ac, false);
+            if ( (ac.getMax() - ac.getMin()) < 5 ) {
+                AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, true);
+                AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, true);
                 if (prev != null && next != null) {
 //                if (ac.getMin() != vmin && ac.getMax() != vmax) {
                     SmallRangeError sre = new SmallRangeError(ac, prev, next);
@@ -353,22 +387,34 @@ public class RLGAnalyser {
         }
     }
 
-    private AlignmentConstraint getPreviousOrNextConstraint(AlignmentConstraint ac, boolean i) {
+    private AlignmentConstraint getPreviousOrNextConstraint(AlignmentConstraint ac, boolean i, boolean matchType) {
         String ac1xp = ac.getNode1().getXpath();
         String ac2xp = ac.getNode2().getXpath();
 
         for (AlignmentConstraint con : rlg.getAlignmentConstraints().values()) {
-//            if (con.getType() == ac.getType()) {
+//
                 String con1xp = con.getNode1().getXpath();
                 String con2xp = con.getNode2().getXpath();
                 if ( (ac1xp.equals(con1xp) && ac2xp.equals(con2xp)) || (ac1xp.equals(con2xp) && ac2xp.equals(con1xp)) ) {
                     if (i) {
                         if (con.getMax() == ac.getMin()-1) {
-                            return con;
+                            if (!matchType) {
+                                return con;
+                            } else {
+                                if (con.getType() == ac.getType()) {
+                                    return con;
+                                }
+                            }
                         }
                     } else {
                         if (con.getMin() == ac.getMax()+1) {
-                            return con;
+                            if (!matchType) {
+                                return con;
+                            } else {
+                                if (con.getType() == ac.getType()) {
+                                    return con;
+                                }
+                            }
                         }
                     }
                 }
@@ -624,10 +670,10 @@ public class RLGAnalyser {
                 }
 
                 HashMap<String, ArrayList<ArrayList<Node>>> totalRows = new HashMap<>();
-                HashMap<String, ArrayList<ArrayList<Node>>> totalCols = new HashMap<>();
+//                HashMap<String, ArrayList<ArrayList<Node>>> totalCols = new HashMap<>();
                 HashMap<String, ArrayList<Node>> totalNotInRows = new HashMap<>();
                 HashMap<String, HashMap<String, ArrayList<AlignmentConstraint>>> totalRowCons = new HashMap<>();
-                HashMap<String, HashMap<String, ArrayList<AlignmentConstraint>>> totalColCons = new HashMap<>();
+//                HashMap<String, HashMap<String, ArrayList<AlignmentConstraint>>> totalColCons = new HashMap<>();
                 HashMap<String, HashSet<Node>> nodesInParentMap = new HashMap<>();
 
 
@@ -642,10 +688,10 @@ public class RLGAnalyser {
                         HashMap<String, ArrayList<AlignmentConstraint>> rowSibConstraints = new HashMap<>();
                         HashMap<String, ArrayList<AlignmentConstraint>> rowPCConstraints = new HashMap<>();
 
-                        HashMap<String, ArrayList<AlignmentConstraint>> colSibConstraints = new HashMap<>();
-                        HashMap<String, ArrayList<AlignmentConstraint>> colPCConstraints = new HashMap<>();
+//                        HashMap<String, ArrayList<AlignmentConstraint>> colSibConstraints = new HashMap<>();
+//                        HashMap<String, ArrayList<AlignmentConstraint>> colPCConstraints = new HashMap<>();
                         ArrayList<Node> nodesNotInRows = (ArrayList<Node>) children.clone();
-                        ArrayList<Node> nodesNotInColumns = (ArrayList<Node>) children.clone();
+//                        ArrayList<Node> nodesNotInColumns = (ArrayList<Node>) children.clone();
                         HashSet<AlignmentConstraint> fullSet = grouped.get(key);
                         HashSet<AlignmentConstraint> overlapping = new HashSet<>();
 
@@ -667,9 +713,9 @@ public class RLGAnalyser {
                                         rowSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
                                         rowSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
                                     } else {
-                                        columns.add(newRowCol);
-                                        colSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
-                                        colSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
+//                                        columns.add(newRowCol);
+//                                        colSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
+//                                        colSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
                                     }
                                 } else {
                                     // Add the remaining element to the row
@@ -685,10 +731,10 @@ public class RLGAnalyser {
                                         rowSibConstraints.put(setOfNodesToString(match), cons);
                                         rowSibConstraints.get(setOfNodesToString(match)).add(ac);
                                     } else {
-                                        ArrayList<AlignmentConstraint> cons = colSibConstraints.get(matchKey);
-                                        colSibConstraints.remove(matchKey);
-                                        colSibConstraints.put(setOfNodesToString(match), cons);
-                                        colSibConstraints.get(setOfNodesToString(match)).add(ac);
+//                                        ArrayList<AlignmentConstraint> cons = colSibConstraints.get(matchKey);
+//                                        colSibConstraints.remove(matchKey);
+//                                        colSibConstraints.put(setOfNodesToString(match), cons);
+//                                        colSibConstraints.get(setOfNodesToString(match)).add(ac);
                                     }
                                 }
 
@@ -697,8 +743,8 @@ public class RLGAnalyser {
                                     nodesNotInRows.remove(ac.getNode1());
                                     nodesNotInRows.remove(ac.getNode2());
                                 } else {
-                                    nodesNotInColumns.remove(ac.getNode1());
-                                    nodesNotInColumns.remove(ac.getNode2());
+//                                    nodesNotInColumns.remove(ac.getNode1());
+//                                    nodesNotInColumns.remove(ac.getNode2());
                                 }
 
                             } else if (toggle == 0) {
@@ -709,39 +755,39 @@ public class RLGAnalyser {
 
 
                         // Filter elements that are in rows and the same column. CAN HAPPEN, TRUST ME!
-                        for (ArrayList<Node> colToFilter : columns) {
-
-                            ArrayList<Node> temp = (ArrayList<Node>) colToFilter.clone();
-                            for (Node f1 : temp) {
-                                for (Node f2 : temp) {
-                                    if (f1 != f2) {
-                                        if (elementsAlsoInRow(f1, f2, rows)) {
-                                            // Need to remove from the column
-                                            colToFilter.remove(f1);
-                                            colToFilter.remove(f2);
-                                            removeConstraintsFromCol(f1, f2, colSibConstraints, colToFilter);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        for (ArrayList<Node> rowToFilter : rows) {
-
-                            ArrayList<Node> temp = (ArrayList<Node>) rowToFilter.clone();
-                            for (Node f1 : temp) {
-                                for (Node f2 : temp) {
-                                    if (f1 != f2) {
-                                        if (elementsAlsoInRow(f1, f2, columns)) {
-                                            // Need to remove from the column
-                                            rowToFilter.remove(f1);
-                                            rowToFilter.remove(f2);
-                                            removeConstraintsFromCol(f1, f2, rowSibConstraints, rowToFilter);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+//                        for (ArrayList<Node> colToFilter : columns) {
+//
+//                            ArrayList<Node> temp = (ArrayList<Node>) colToFilter.clone();
+//                            for (Node f1 : temp) {
+//                                for (Node f2 : temp) {
+//                                    if (f1 != f2) {
+//                                        if (elementsAlsoInRow(f1, f2, rows)) {
+//                                            // Need to remove from the column
+//                                            colToFilter.remove(f1);
+//                                            colToFilter.remove(f2);
+//                                            removeConstraintsFromCol(f1, f2, colSibConstraints, colToFilter);
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//                        for (ArrayList<Node> rowToFilter : rows) {
+//
+//                            ArrayList<Node> temp = (ArrayList<Node>) rowToFilter.clone();
+//                            for (Node f1 : temp) {
+//                                for (Node f2 : temp) {
+//                                    if (f1 != f2) {
+//                                        if (elementsAlsoInRow(f1, f2, columns)) {
+//                                            // Need to remove from the column
+//                                            rowToFilter.remove(f1);
+//                                            rowToFilter.remove(f2);
+//                                            removeConstraintsFromCol(f1, f2, rowSibConstraints, rowToFilter);
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
 
                         // FILTER ANY OVERLAPPING ELEMENTS
 
@@ -759,22 +805,22 @@ public class RLGAnalyser {
                             }
 
 
-                            ArrayList<ArrayList<Node>> clonedCols = (ArrayList<ArrayList<Node>>) columns.clone();
-                            for (ArrayList<Node> col : clonedCols) {
-                                if (col.contains(acOV.getNode1()) && col.contains(acOV.getNode2())) {
-                                    ArrayList<Node> actualColumn = columns.get(clonedCols.indexOf(col));
-                                    actualColumn.remove(acOV.getNode1());
-                                    actualColumn.remove(acOV.getNode2());
-                                    removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), colSibConstraints, col);
-                                }
-                            }
+//                            ArrayList<ArrayList<Node>> clonedCols = (ArrayList<ArrayList<Node>>) columns.clone();
+//                            for (ArrayList<Node> col : clonedCols) {
+//                                if (col.contains(acOV.getNode1()) && col.contains(acOV.getNode2())) {
+//                                    ArrayList<Node> actualColumn = columns.get(clonedCols.indexOf(col));
+//                                    actualColumn.remove(acOV.getNode1());
+//                                    actualColumn.remove(acOV.getNode2());
+//                                    removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), colSibConstraints, col);
+//                                }
+//                            }
                         }
 
                         totalRows.put(key, rows);
-                        totalCols.put(key, columns);
+//                        totalCols.put(key, columns);
                         totalNotInRows.put(key, nodesNotInRows);
                         totalRowCons.put(key, rowSibConstraints);
-                        totalColCons.put(key, colSibConstraints);
+//                        totalColCons.put(key, colSibConstraints);
 
 
 
@@ -789,10 +835,10 @@ public class RLGAnalyser {
 
                 for (String key: totalRows.keySet()) {
                     ArrayList<ArrayList<Node>> rows = totalRows.get(key);
-                    ArrayList<ArrayList<Node>> cols = totalCols.get(key);
+//                    ArrayList<ArrayList<Node>> cols = totalCols.get(key);
                     ArrayList<Node> not = totalNotInRows.get(key);
                     HashMap<String, ArrayList<AlignmentConstraint>> consRow = totalRowCons.get(key);
-                    HashMap<String, ArrayList<AlignmentConstraint>> consCol = totalColCons.get(key);
+//                    HashMap<String, ArrayList<AlignmentConstraint>> consCol = totalColCons.get(key);
                     for (Node notInRow : not) {
 
                         // Need to refine this to the entire row becoming a column!
@@ -810,8 +856,8 @@ public class RLGAnalyser {
 
                         }
                     }
-                    checkAlignments(consRow, key, true);
-                    checkAlignments(consCol, key, false);
+//                    checkAlignments(consRow, key, true);
+//                    checkAlignments(consCol, key, false);
                 }
 
 
