@@ -1,0 +1,8 @@
+/HTML/BODY/DIV/DIV overflowed the viewport window between 1200 and 1229
+
+/HTML/BODY/DIV[3]/DIV overflowed the viewport window between 1200 and 1229
+
+/HTML/BODY/DIV[4]/DIV overflowed the viewport window between 1200 and 1229
+
+ELEMENTS /HTML/BODY/DIV/DIV/DIV[4] AND /HTML/BODY/DIV/DIV/DIV ARE OVERLAPPING BETWEEN 400 AND 767
+
