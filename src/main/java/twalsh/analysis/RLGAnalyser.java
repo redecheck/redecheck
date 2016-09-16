@@ -240,13 +240,13 @@ public class RLGAnalyser {
                             olPrev = false;
                             olNext = false;
                         } else if (prev != null && prev.getType() == Type.SIBLING) {
-                            if (prev.getAttributes()[10]) {
+                            if (!prev.getAttributes()[10]) {
                                 olPrev = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
-                            if (next.getAttributes()[10]) {
+                            if (!next.getAttributes()[10]) {
                                 olNext = false;
 //                                OverlappingError oe = new OverlappingError(ac);
 //                                errors.add(oe);
