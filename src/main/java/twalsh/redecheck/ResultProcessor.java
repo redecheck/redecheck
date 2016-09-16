@@ -790,12 +790,38 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) {
 		ResultProcessor rp = new ResultProcessor();
+		String[] webpages = new String[] {"3-Minute-Journal",
+				"AccountKiller",
+				"AirBnb",
+				"BugMeNot",
+				"CloudConvert",
+				"Covered-Calendar",
+				"Days-Old",
+				"Dictation",
+				"Duolingo",
+				"GetPocket",
+				"Honey",
+				"HotelWifiTest",
+				"Mailinator",
+				"MidwayMeetup",
+				"Ninite-new",
+				"Pdf-Escape",
+				"PepFeed",
+				"RainyMood",
+				"RunPee",
+				"StumbleUpon",
+				"TopDocumentary",
+				"UserSearch",
+				"WhatShouldIReadNext",
+				"WillMyPhoneWork",
+				"ZeroDollarMovies"};
 //		writeTimesAndDomsToFile(rp.webpages, 30);
 //		rp.generateStepSizeResults(rp.webpages);
 //		processAllMutants(rp.webpages);
 		ArrayList<File> files = rp.readInSetOfMutants("/src/main/java/icst-websites.txt");
 		String timeData = "";
 		String multiTimeData = "";
+		String subjectData = "";
 		for (File f : files) {
 
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
@@ -810,15 +836,23 @@ public class ResultProcessor {
 				String classificationString = getClassification(mostRecentRun);
 				System.out.println(webpage + classificationString + " & " + actualFaultCount + " \\\\");
 			}
-//			String dataString = WebpageMutator.getWebpageData(f);
+
 			for (int i = 1; i <= 5; i++) {
 				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
 			}
 		}
-		System.out.println(multiTimeData);
-
+//		for (String wp : webpages) {
+//			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
+//			try {
+//				subjectData +=wp + " & "+ mutator.getStatistics(wp) +"\\\\\n";
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println(multiTimeData);
+//		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
+//		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}
@@ -846,7 +880,7 @@ public class ResultProcessor {
 		counts.put("OF", new HashMap<Integer, Integer>());
 		counts.put("OL", new HashMap<Integer, Integer>());
 		counts.put("W", new HashMap<Integer, Integer>());
-		counts.put("M", new HashMap<Integer, Integer>());
+//		counts.put("M", new HashMap<Integer, Integer>());
 
 		for (String s : counts.keySet()) {
 			HashMap<Integer, Integer> map = counts.get(s);
@@ -871,7 +905,8 @@ public class ResultProcessor {
 				line2 = br2.readLine();
 			}
 			br.close();
-			result = getResultsFromMap("VO", counts) + getResultsFromMap("OF", counts) + getResultsFromMap("OL", counts) + getResultsFromMap("SR", counts) + getResultsFromMap("W", counts) + getResultsFromMap("M", counts);
+			result = getResultsFromMap("VO", counts) + getResultsFromMap("OF", counts) + getResultsFromMap("OL", counts)
+					+ getResultsFromMap("SR", counts) + getResultsFromMap("W", counts);
 //
 			return result;
 		} catch (Exception e) {

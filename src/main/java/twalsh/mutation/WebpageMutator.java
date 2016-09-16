@@ -39,7 +39,7 @@ public class WebpageMutator {
 	
 	// Update this to the path to your project
 	String preamble = "file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/";
-	
+	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/fault-examples/";
 	// Storage for mutation candidates and other things
 	HashSet<String> usedClassesHTML, usedTagsHTML, usedIdsHTML;
 	HashSet<String> usedClassesCSS, usedTagsCSS, usedIdsCSS;
@@ -83,10 +83,10 @@ public class WebpageMutator {
         usedDeclarations = 0;
 		
 		try {
-			extractCssFiles(baseURL);
+//			extractCssFiles(baseURL);
 			parseHTML(baseURL);
-			loadInCss(this.baseURL);
-		} catch (IOException e) {
+//			loadInCss(this.baseURL);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -125,7 +125,7 @@ public class WebpageMutator {
 	public void parseHTML(String url) {
         String contents = "";
         try {
-            BufferedReader input = new BufferedReader(new FileReader((preamble + url).replace("file:", "")));
+            BufferedReader input = new BufferedReader(new FileReader((preamble2 + url).replace("file:", "")));
             String inputLine;
             while ((inputLine = input.readLine()) != null) {
                 contents += inputLine;
@@ -357,24 +357,37 @@ public class WebpageMutator {
         return 0;
     }
 
-    public static String getWebpageData(File f) {
-        String result = "";
-        String dirString = f.toString().replace("redecheck/reports", "fault-examples");
-        try {
-            int htmlLines = countLines((dirString+"/index.html").replace("file:", ""));
-            System.out.println(htmlLines);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+//    public static String getWebpageData(File f) {
+//        String result = "";
+//        String dirString = f.toString().replace("redecheck-icst/reports", "fault-examples");
+//        try {
+//            int htmlLines = countLines((dirString+"/index.html").replace("file:", ""));
+//            System.out.println(htmlLines);
+//
+//            int numDomNodes = 2;
+//            int numBlocks = 0;
+//            int numDecs = 0;
+//            int numCSSSelectors;
+//            ArrayList<Element> worklist = new ArrayList<Element>();
+//            worklist.add(this.page.head());
+//            worklist.add(this.page.body());
+//            while (worklist.size() > 0) {
+//                Element e = worklist.remove(0);
+//                numDomNodes += e.children().size();
+//                worklist.addAll(e.children());
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
-    private String getStatistics(String url) throws IOException {
+    public String getStatistics(String url) throws IOException {
         int htmlLines = countLines((preamble + url+"/index/index.html").replace("file:", ""));
         int cssLines = 0;
-        for (String cssFile : cssFiles) {
-            cssLines += countLines(preamble.replace("file:","") + shorthand + "/index/" + cssFile.replace("./",""));
-        }
+//        for (String cssFile : cssFiles) {
+//            cssLines += countLines(preamble.replace("file:","") + shorthand + "/index/" + cssFile.replace("./",""));
+//        }
         int numDomNodes = 2;
         int numBlocks = 0;
         int numDecs = 0;
@@ -389,26 +402,27 @@ public class WebpageMutator {
         }
 
 
-        for (StyleSheet ss : stylesheets.values()) {
-            for (RuleBlock rb : ss) {
-                numBlocks++;
-                if (rb instanceof RuleSet) {
-                    RuleSet casted = (RuleSet) rb;
-                    for (Declaration d : casted.asList()) {
-                        numDecs++;
-                    }
-                } else if (rb instanceof RuleMedia) {
-                    RuleMedia casted2 = (RuleMedia) rb;
-                    for (RuleSet rs : casted2.asList()) {
-                        numBlocks++;
-                        for (Declaration d : rs.asList()) {
-                            numDecs++;
-                        }
-                    }
-                }
-            }
-        }
-        return " & " + htmlLines + " & " + numDomNodes + " & " + cssLines + " & " + numBlocks + "(" + usedBlocks + ") & " + numDecs + "(" + usedDeclarations + ")";
+//        for (StyleSheet ss : stylesheets.values()) {
+//            for (RuleBlock rb : ss) {
+//                numBlocks++;
+//                if (rb instanceof RuleSet) {
+//                    RuleSet casted = (RuleSet) rb;
+//                    for (Declaration d : casted.asList()) {
+//                        numDecs++;
+//                    }
+//                } else if (rb instanceof RuleMedia) {
+//                    RuleMedia casted2 = (RuleMedia) rb;
+//                    for (RuleSet rs : casted2.asList()) {
+//                        numBlocks++;
+//                        for (Declaration d : rs.asList()) {
+//                            numDecs++;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        return " & " + numDomNodes;
+//        return " & " + htmlLines + " & " + numDomNodes + " & " + cssLines + " & " + numBlocks + "(" + usedBlocks + ") & " + numDecs + "(" + usedDeclarations + ")";
     }
 
 

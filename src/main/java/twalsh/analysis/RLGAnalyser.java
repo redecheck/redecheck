@@ -158,9 +158,9 @@ public class RLGAnalyser {
 //                 }
                 //            System.out.println(n.getXpath());
                 if (pCons.size() == 0) {
-                    String key = isVisible(n, vmin, vmax);
-                    int repMin = getNumberFromKey(key, 0);
-                    int repMax = getNumberFromKey(key, 1);
+//                    String key = isVisible(n, vmin, vmax);
+                    int repMin = n.getVisibilityConstraints().get(0).appear;
+                    int repMax = n.getVisibilityConstraints().get(0).disappear;
                     ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
                     errors.add(voe);
                 } else {
@@ -203,6 +203,7 @@ public class RLGAnalyser {
                 }
 //                System.out.println();
             }
+
         }
         return "";
     }
