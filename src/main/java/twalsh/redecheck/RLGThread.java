@@ -28,21 +28,21 @@ public class RLGThread implements Runnable {
     public String browser;
     static String scriptToExtract;
 
-    String current;
-    String fullUrl;
-    String shortUrl;
-    HashMap<Integer, DomNode> doms;
-    HashMap<Integer, LayoutFactory> lFactories;
-    String sampleTechnique;
-    boolean binarySearch;
-    int startW, endW, stepSize;
-    String preamble;
-    int sleep;
-    int[] sampleWidths;
-    int initialDoms;
-    public StopwatchFactory swf;
-    ArrayList<Integer> breakpoints;
-    String ts;
+    private String current;
+    private String fullUrl;
+    private String shortUrl;
+    private HashMap<Integer, DomNode> doms;
+    private HashMap<Integer, LayoutFactory> lFactories;
+    private String sampleTechnique;
+    private boolean binarySearch;
+    private int startW, endW, stepSize;
+    private String preamble;
+    private int sleep;
+    private int[] sampleWidths;
+    private int initialDoms;
+    StopwatchFactory swf;
+    private ArrayList<Integer> breakpoints;
+    private String ts;
 
 
 
