@@ -314,8 +314,12 @@ public class Redecheck {
     }
 
     private static String getTimeStringFromStopwatch(StopWatch sw) {
-        String[] splits = sw.toString().split(":");
-        return splits[splits.length-1];
+//        System.out.println(sw.getTime());
+//        String[] splits = sw.toString().split(":");
+        double time = (sw.getTime()) / 1000.0;
+        String timeS =  String.valueOf(time);
+//        System.out.println(timeS);
+        return timeS;
     }
 
     private static void copyMutantInfo() {
