@@ -586,7 +586,7 @@ public class CSSMutator {
         output.close();
     }
 
-    public static String prettifyCss(String minified) {
+    public static String prettifyCss(String minified, WebDriver d) {
         String res="";
         try {
         	String current = new java.io.File( "." ).getCanonicalPath();
@@ -597,12 +597,12 @@ public class CSSMutator {
             	    "--webdriver-loglevel=NONE"
             	};
             dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-            PhantomJSDriver newdriver = new PhantomJSDriver(dCaps);
-            newdriver.get("http://mrcoles.com/blog/css-unminify/");
-            JavascriptExecutor js = (JavascriptExecutor) newdriver;
+//            Fire newdriver = new PhantomJSDriver(dCaps);
+            d.get("http://mrcoles.com/blog/css-unminify/");
+            JavascriptExecutor js = (JavascriptExecutor) d;
             String prettifyScript = Utils.readFile(current +"/resources/prettify.js");
             res = (String) js.executeScript(prettifyScript, minified);
-            newdriver.quit();
+            d.quit();
         } catch (Exception e) {
             e.printStackTrace();
         }

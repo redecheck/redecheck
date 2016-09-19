@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.openqa.jetty.html.Style;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -83,43 +84,48 @@ public class WebpageMutator {
         usedDeclarations = 0;
 		
 		try {
-//			extractCssFiles(baseURL);
+            driver = new FirefoxDriver();
+			extractCssFiles(baseURL);
 			parseHTML(baseURL);
-//			loadInCss(this.baseURL);
+			loadInCss(this.baseURL);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+        driver.quit();
+
 	}
 
 	@SuppressWarnings("unchecked")
     public void extractCssFiles(String baseURL) throws IOException {
-    	DesiredCapabilities dCaps = new DesiredCapabilities();
-        dCaps.setJavascriptEnabled(true);
-        dCaps.setCapability("takesScreenshot", true);
-        String[] phantomArgs = new  String[] {
-        	    "--webdriver-loglevel=NONE"
-        	};
-        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        driver = new PhantomJSDriver(dCaps);
+//    	DesiredCapabilities dCaps = new DesiredCapabilities();
+//        dCaps.setJavascriptEnabled(true);
+//        dCaps.setCapability("takesScreenshot", true);
+//        String[] phantomArgs = new  String[] {
+//        	    "--webdriver-loglevel=NONE"
+//        	};
+//        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//        driver = new FirefoxDriver();
 
-        driver.get(preamble + baseURL);
+        driver.get(preamble2 + baseURL);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String script = null;
         try {
         	current = new java.io.File( "." ).getCanonicalPath(); 
             script = Utils.readFile(current + "/resources/getCssFiles.js");
+//            System.out.println(current + "/resources/getCssFiles.js");
             ArrayList<String> files = (ArrayList<String>) js.executeScript(script);
+//            System.out.println(files.size());
             cssFiles = new LinkedHashSet<>();
             for (int i = 0; i < files.size(); i++) {
+//                System.out.println(files.get(i));
                 cssFiles.add(files.get(i));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        driver.quit();
+//        driver.quit();
     }
 	
 	public void parseHTML(String url) {
@@ -135,6 +141,9 @@ public class WebpageMutator {
             for (Element e : doc.getAllElements()) {
         		// Load in information for HTML mutation
                 if (e.classNames().size() > 0) {
+                    if (e.tag().equals("STYLE")) {
+                        System.out.println(e);
+                    }
                     for (String c : e.classNames()) {
 //                        if (HTMLMutator.isGridSizingClass(c)) {
                         usedClassesHTML.add(c);
@@ -195,7 +204,7 @@ public class WebpageMutator {
                     cssUrl = new URL("http:" + cssFile);
                     break;
                 } else {
-                    cssUrl = new URL((preamble + shorthand + "/index/" + cssFile.replace("./","")));
+                    cssUrl = new URL((preamble2 + shorthand + "/" + cssFile.replace("./","")));
                 }
                 System.out.println(cssUrl);
                 conn = cssUrl.openConnection();
@@ -217,9 +226,9 @@ public class WebpageMutator {
             String s = cssContent.get(k);
 //            System.out.println(k);
             try {
-				String prettified = CSSMutator.prettifyCss(s);
-                StyleSheet temp = CSSFactory.parse(prettified);
-                StyleSheet toSave = CSSFactory.parse(prettified);
+//				String prettified = CSSMutator.prettifyCss(s, driver);
+                StyleSheet temp = CSSFactory.parse(s);
+                StyleSheet toSave = CSSFactory.parse(s);
                 stylesheets.put(k, toSave);
 //                
                 for (RuleBlock rb : temp.asList()) {
@@ -402,67 +411,97 @@ public class WebpageMutator {
         }
 
 
-//        for (StyleSheet ss : stylesheets.values()) {
-//            for (RuleBlock rb : ss) {
-//                numBlocks++;
-//                if (rb instanceof RuleSet) {
-//                    RuleSet casted = (RuleSet) rb;
-//                    for (Declaration d : casted.asList()) {
-//                        numDecs++;
-//                    }
-//                } else if (rb instanceof RuleMedia) {
-//                    RuleMedia casted2 = (RuleMedia) rb;
-//                    for (RuleSet rs : casted2.asList()) {
-//                        numBlocks++;
-//                        for (Declaration d : rs.asList()) {
-//                            numDecs++;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        return " & " + numDomNodes;
+        for (StyleSheet ss : stylesheets.values()) {
+            for (RuleBlock rb : ss) {
+                numBlocks++;
+                if (rb instanceof RuleSet) {
+                    RuleSet casted = (RuleSet) rb;
+                    for (Declaration d : casted.asList()) {
+                        numDecs++;
+                    }
+                } else if (rb instanceof RuleMedia) {
+                    RuleMedia casted2 = (RuleMedia) rb;
+                    for (RuleSet rs : casted2.asList()) {
+                        numBlocks++;
+                        for (Declaration d : rs.asList()) {
+                            numDecs++;
+                        }
+                    }
+                }
+            }
+        }
+//        String countscript = Utils.readFile(current + "/resources/countCSSRules.js");
+//        ((JavascriptExecutor)driver).executeScript(countscript)
+        return " & " + numDomNodes + " & " + numDecs;
+//        + "(" + usedDeclarations + ")";
 //        return " & " + htmlLines + " & " + numDomNodes + " & " + cssLines + " & " + numBlocks + "(" + usedBlocks + ") & " + numDecs + "(" + usedDeclarations + ")";
     }
 
 
 	
 	public static void main(String[] args) throws IOException {
+
         String stats = "";
-        String[] webpages = new String[] {"coursera.com"};
+        String[] webpages = new String[] {
+                "3-Minute-Journal",
+                "AccountKiller",
+                "AirBnb",
+                "BugMeNot",
+                "CloudConvert",
+                "Covered-Calendar",
+                "Days-Old",
+                "Dictation",
+                "Duolingo",
+                "GetPocket",
+                "Honey",
+                "HotelWifiTest",
+                "Mailinator",
+                "MidwayMeetup",
+                "Ninite-new",
+                "Pdf-Escape",
+                "PepFeed",
+                "RainyMood",
+                "RunPee",
+                "StumbleUpon",
+                "TopDocumentary",
+                "UserSearch",
+                "WhatShouldIReadNext",
+                "WillMyPhoneWork",
+                "ZeroDollarMovies"};
 //                {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
 
 		current = new java.io.File( "." ).getCanonicalPath();
 		System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
 		for (String wp : webpages) {
-            WebpageMutator mutator = new WebpageMutator(wp+"/index/index.html", wp, 0);
+            WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
 //
             Document toMutate = mutator.cloner.deepClone(mutator.page);
             stats += wp + mutator.getStatistics(wp) + "\n";
 //            System.out.println(mutator.usedClassesHTML.size() + mutator.usedIdsHTML.size() + mutator.usedTagsHTML.size());
 //            System.out.println(mutator.usedClassesCSS.size() + mutator.usedIdsCSS.size() + mutator.usedTagsCSS.size());
-            for (int i = 1; i <= mutator.numberOfMutants; i++) {
-                try {
-                    int selector = random.nextInt(8);
-                    if (selector == 2 || selector == 3) {
-                        if (mutator.mqCandidates.size() == 0) {
-                            throw new Exception();
-                        }
-                    }
-                    if (selector <= 3) {
-                        CSSMutator cssMutator = new CSSMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.ruleCandidates, mutator.mqCandidates, toMutate, i);
-                        cssMutator.mutate(selector);
-                    } else {
-                        HTMLMutator htmlMutator = new HTMLMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.classCandidates, mutator.htmlCandidates, toMutate, mutator.usedClassesHTML, mutator.usedIdsHTML, mutator.usedTagsHTML, i);
-                        htmlMutator.mutate(selector);
-                    }
-                    mutator.copyResourcesDirectory(i);
-                } catch (Exception e) {
-
-                }
-            }
+//            for (int i = 1; i <= mutator.numberOfMutants; i++) {
+//                try {
+//                    int selector = random.nextInt(8);
+//                    if (selector == 2 || selector == 3) {
+//                        if (mutator.mqCandidates.size() == 0) {
+//                            throw new Exception();
+//                        }
+//                    }
+//                    if (selector <= 3) {
+//                        CSSMutator cssMutator = new CSSMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.ruleCandidates, mutator.mqCandidates, toMutate, i);
+//                        cssMutator.mutate(selector);
+//                    } else {
+//                        HTMLMutator htmlMutator = new HTMLMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.classCandidates, mutator.htmlCandidates, toMutate, mutator.usedClassesHTML, mutator.usedIdsHTML, mutator.usedTagsHTML, i);
+//                        htmlMutator.mutate(selector);
+//                    }
+//                    mutator.copyResourcesDirectory(i);
+//                } catch (Exception e) {
+//
+//                }
+//            }
         }
-//        System.out.println(stats);
+
+        System.out.println(stats);
 	}
 
 
