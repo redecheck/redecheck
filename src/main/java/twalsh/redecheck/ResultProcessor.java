@@ -3,6 +3,7 @@ package twalsh.redecheck;
 import com.google.common.math.DoubleMath;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.math3.geometry.spherical.oned.ArcsSet;
 import org.apache.commons.math3.linear.Array2DRowFieldMatrix;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import twalsh.mutation.WebpageMutator;
@@ -239,7 +240,7 @@ public class ResultProcessor {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			while((line = bufferedReader.readLine()) != null) {
-				files.add(new File(current + "/reports/" + line));
+				files.add(new File(current + "/reports-final/" + line));
 			}
 
 			// Always close files.
@@ -833,41 +834,43 @@ public class ResultProcessor {
 			int errorCount = getErrorCount(mostRecentRun);
 			String actualFaultCount = getActualFaults(mostRecentRun);
 			if (errorCount != -1) {
-				String classificationString = getClassification(mostRecentRun);
-//				System.out.println(webpage + classificationString + " & " + actualFaultCount + " \\\\");
+				ArrayList<Integer> tpIndexes = new ArrayList<>();
+				String classificationString = getClassification(mostRecentRun, tpIndexes);
+				int disFailCount = getFailuresFromFile(mostRecentRun, tpIndexes);
+				System.out.println(webpage + classificationString + " & " + actualFaultCount + " & " + disFailCount + " \\\\");
 			}
 
-//			for (int i = 1; i <= 30; i++) {
-//				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-//			}
+			for (int i = 1; i <= 30; i++) {
+				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+			}
 
 
 //			File fl = new File(dir);
-			File[] runfiles = f.listFiles(new FileFilter() {
-				public boolean accept(File file) {
-					return file.isDirectory();
-				}
-			});
-			System.out.println(f.getAbsolutePath() + "  " + runfiles.length);
-			HashMap<Integer, ArrayList<File>> faultCounts = new HashMap<>();
-			for (File ff : runfiles) {
-				int ec = getErrorCount(ff);
-				if (!faultCounts.containsKey(ec)) {
-					faultCounts.put(ec, new ArrayList<File>());
-				}
-				faultCounts.get(ec).add(ff);
-			}
-			if (faultCounts.entrySet().size() > 1) {
-				for (Integer i : faultCounts.keySet()) {
-					if (faultCounts.get(i).size() == 1) {
-						for (File dodgy: faultCounts.get(i)) {
-							System.out.println(dodgy);
-						}
-					}
-					System.out.println(i + " faults were reported " +faultCounts.get(i).size() + " times");
-				}
-			}
-			System.out.println();
+//			File[] runfiles = f.listFiles(new FileFilter() {
+//				public boolean accept(File file) {
+//					return file.isDirectory();
+//				}
+//			});
+//			System.out.println(f.getAbsolutePath() + "  " + runfiles.length);
+//			HashMap<Integer, ArrayList<File>> faultCounts = new HashMap<>();
+//			for (File ff : runfiles) {
+//				int ec = getErrorCount(ff);
+//				if (!faultCounts.containsKey(ec)) {
+//					faultCounts.put(ec, new ArrayList<File>());
+//				}
+//				faultCounts.get(ec).add(ff);
+//			}
+//			if (faultCounts.entrySet().size() > 1) {
+//				for (Integer i : faultCounts.keySet()) {
+//					if (faultCounts.get(i).size() == 1) {
+//						for (File dodgy: faultCounts.get(i)) {
+//							System.out.println(dodgy);
+//						}
+//					}
+//					System.out.println(i + " faults were reported " +faultCounts.get(i).size() + " times");
+//				}
+//			}
+//			System.out.println();
 		}
 //		for (String wp : webpages) {
 //			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
@@ -880,12 +883,80 @@ public class ResultProcessor {
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-//		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data-new.csv");
+//		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}
 
+	private static int getFailuresFromFile(File f, ArrayList<Integer> tpIndexes) {
+		HashSet<String> errorStrings = new HashSet<>();
 
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
+			String line = br.readLine();
+			int errorIndex = 1;
+			boolean foundBounds = false;
+			String[] splits, splits2;
+			int min = 0, max=0;
+			while(line != null) {
+				if (line.contains("overflowed the viewport")) {
+					splits = line.split(" and ");
+					splits2 = splits[0].split("between ");
+					min = Integer.valueOf(splits2[1]);
+					max = Integer.valueOf(splits[1]);
+					foundBounds = true;
+				} else if (line.contains("OVERLAPPING")) {
+					try {
+//						System.out.println(line);
+						splits = line.split(" AND ");
+						splits2 = splits[1].split("BETWEEN ");
+						min = Integer.valueOf(splits2[1]);
+						max = Integer.valueOf(splits[2]);
+//
+						foundBounds = true;
+					} catch (Exception e ) {
+						System.out.println("Issue with " + line);
+					}
+				} else if (line.contains("THIS:")) {
+					splits = line.split(" , ");
+					min = Integer.valueOf(splits[3]);
+					max = Integer.valueOf(splits[4]);
+					foundBounds = true;
+				} else if (line.contains("WRAPPING")) {
+					splits = line.split(" -> ");
+					splits2 = splits[0].split("RANGE ");
+					min = Integer.valueOf(splits2[1]);
+					max = Integer.valueOf(splits[1].split(":")[0]);
+					foundBounds = true;
+				} else if (line.contains("OVERFLOWED ITS PARENT")) {
+					try {
+//						System.out.println(line);
+						splits = line.split(" AND ");
+						splits2 = splits[0].split("BETWEEN ");
+						min = Integer.valueOf(splits2[1]);
+						max = Integer.valueOf(splits[1]);
+//
+						foundBounds = true;
+					} catch (Exception e ) {
+						System.out.println("Issue with " + line);
+					}
+				}
+
+				if (tpIndexes.contains(errorIndex)) {
+					errorStrings.add(min+" - " + max);
+				}
+
+				if (line.equals("")) {
+					errorIndex++;
+					foundBounds = false;
+				}
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return errorStrings.size();
+	}
 
 
 	private static String getActualFaults(File f) {
@@ -900,7 +971,7 @@ public class ResultProcessor {
 		return "Null";
 	}
 
-	private static String getClassification(File f) {
+	private static String getClassification(File f, ArrayList<Integer> tpIndexes) {
 		String result = "";
 		HashMap<String, HashMap<Integer, Integer>> counts = new HashMap<>();
 		counts.put("SR", new HashMap<Integer, Integer>());
@@ -925,15 +996,18 @@ public class ResultProcessor {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			String line2 = br2.readLine();
-			int count = 0;
+			int count = 1;
 			while (line != null) {
+				if (line.equals("1")) {
+					tpIndexes.add(count);
+				}
 				updateCounts(counts, line, line2);
 				count ++;
 				line = br.readLine();
 				line2 = br2.readLine();
 			}
 			br.close();
-			result = getResultsFromMap("VO", counts) + getResultsFromMap("OF", counts) + getResultsFromMap("OL", counts)
+			result = getResultsFromMap("OL", counts) + getResultsFromMap("OF", counts) + getResultsFromMap("VO", counts)
 					+ getResultsFromMap("SR", counts) + getResultsFromMap("W", counts);
 //
 			return result;
@@ -945,7 +1019,23 @@ public class ResultProcessor {
 
 	private static String getResultsFromMap(String sr, HashMap<String, HashMap<Integer, Integer>> counts) {
 		HashMap<Integer, Integer> iCounts = counts.get(sr);
-		return " & " + iCounts.get(1) + " & " + iCounts.get(0) + " & " + iCounts.get(-1);
+		String mCount, nmCount, fpCount;
+		if (iCounts.get(1) == 0) {
+			mCount = "-";
+		} else {
+			mCount = String.valueOf(iCounts.get(1));
+		}
+		if (iCounts.get(0) == 0) {
+			nmCount = "-";
+		} else {
+			nmCount = String.valueOf(iCounts.get(0));
+		}
+		if (iCounts.get(-1) == 0) {
+			fpCount = "-";
+		} else {
+			fpCount = String.valueOf(iCounts.get(-1));
+		}
+		return " & " + mCount + " & " + nmCount + " & " + fpCount;
 	}
 
 	private static void updateCounts(HashMap<String, HashMap<Integer, Integer>> counts, String line, String line2) {
