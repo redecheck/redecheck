@@ -1,0 +1,7 @@
+"Sticky" footer is not actually overlapping with highlighted content
+Header bar overlapping with main container
+No visual overflow
+No visual overlap of content
+No visual overlap of content
+Significant layout change at 989px and 992px
+Significant layout change at 989px and 992px

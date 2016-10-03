@@ -2,6 +2,8 @@ package twalsh.redecheck;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.distribution.IntegerDistribution;
+import org.jsoup.nodes.Document;
+import twalsh.mutation.WebpageMutator;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -22,6 +24,7 @@ public class ResultProcessor {
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
 	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck.github.io/";
+	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
 	ArrayList<File> nonDetected;
@@ -784,7 +787,7 @@ public class ResultProcessor {
 		writeToFile(rq4Result, preamble, "generated-tables/fullrq4results.csv");
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
 		String[] webpages = new String[] {"3-Minute-Journal",
 				"AccountKiller",
@@ -845,6 +848,10 @@ public class ResultProcessor {
 
 
 
+//
+//				Document toMutate = mutator.cloner.deepClone(mutator.page);
+
+
 //			for (int i = 1; i <= 30; i++) {
 //				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
 //			}
@@ -900,10 +907,17 @@ public class ResultProcessor {
 	private static void writeJekyllFile(String jekyllCode, String webpage) {
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage) {
+	private static String addInScreenshotTable(File mostRecentRun, String webpage) throws IOException {
 //		System.out.println(webpage);
 		String jekyllCode = "";
-		jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: 0\ndecs: 0\nfullurl: \n---\n";
+		String current = new java.io.File( "." ).getCanonicalPath();
+		System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+
+		WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
+		int numElements = mutator.getElementCount(faultExamples + webpage);
+		int numDecs = mutator.getDeclarationCount();
+
+		jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: \n---\n";
 		jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
 
 		File[] files = mostRecentRun.listFiles(new FileFilter() {

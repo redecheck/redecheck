@@ -1,0 +1,4 @@
+Header bar and masthead overlapping
+Clear overlap of content
+Clear overlap of content
+Significant change in layout at 979px and 981px

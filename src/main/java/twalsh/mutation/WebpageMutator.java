@@ -437,6 +437,53 @@ public class WebpageMutator {
 //        return " & " + htmlLines + " & " + numDomNodes + " & " + cssLines + " & " + numBlocks + "(" + usedBlocks + ") & " + numDecs + "(" + usedDeclarations + ")";
     }
 
+    public int getElementCount(String url) throws IOException {
+        int htmlLines = countLines((preamble + url+"/index.html").replace("file:", ""));
+        int cssLines = 0;
+//        for (String cssFile : cssFiles) {
+//            cssLines += countLines(preamble.replace("file:","") + shorthand + "/index/" + cssFile.replace("./",""));
+//        }
+        int numDomNodes = 2;
+
+        ArrayList<Element> worklist = new ArrayList<Element>();
+        worklist.add(this.page.head());
+        worklist.add(this.page.body());
+        while (worklist.size() > 0) {
+            Element e = worklist.remove(0);
+            numDomNodes += e.children().size();
+            worklist.addAll(e.children());
+        }
+
+        return numDomNodes;
+    }
+
+    public int getDeclarationCount() {
+        int numBlocks = 0;
+        int numDecs = 0;
+        int numCSSSelectors;
+
+        for (StyleSheet ss : stylesheets.values()) {
+            for (RuleBlock rb : ss) {
+                numBlocks++;
+                if (rb instanceof RuleSet) {
+                    RuleSet casted = (RuleSet) rb;
+                    for (Declaration d : casted.asList()) {
+                        numDecs++;
+                    }
+                } else if (rb instanceof RuleMedia) {
+                    RuleMedia casted2 = (RuleMedia) rb;
+                    for (RuleSet rs : casted2.asList()) {
+                        numBlocks++;
+                        for (Declaration d : rs.asList()) {
+                            numDecs++;
+                        }
+                    }
+                }
+            }
+        }
+        return numDecs;
+    }
+
 
 	
 	public static void main(String[] args) throws IOException {
@@ -503,6 +550,7 @@ public class WebpageMutator {
 
         System.out.println(stats);
 	}
+
 
 
 }

@@ -1,0 +1,8 @@
+No visual overflow
+No visual overlap
+No visual overlap
+No visual overlap
+Search form clearly overflowing the header
+No visual overflow
+Search button clearly overlapping with header
+Button wrapped from row with label and input box
