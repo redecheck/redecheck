@@ -142,7 +142,7 @@ public class WebpageMutator {
         		// Load in information for HTML mutation
                 if (e.classNames().size() > 0) {
                     if (e.tag().equals("STYLE")) {
-                        System.out.println(e);
+//                        System.out.println(e);
                     }
                     for (String c : e.classNames()) {
 //                        if (HTMLMutator.isGridSizingClass(c)) {
@@ -206,7 +206,7 @@ public class WebpageMutator {
                 } else {
                     cssUrl = new URL((preamble2 + shorthand + "/" + cssFile.replace("./","")));
                 }
-                System.out.println(cssUrl);
+//                System.out.println(cssUrl);
                 conn = cssUrl.openConnection();
                 BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;

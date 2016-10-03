@@ -23,7 +23,7 @@ public class ResultProcessor {
 	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
-	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck.github.io/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
@@ -789,7 +789,8 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
-		String[] webpages = new String[] {"3-Minute-Journal",
+		String[] webpages = new String[] {
+				"3-Minute-Journal",
 				"AccountKiller",
 				"AirBnb",
 				"BugMeNot",
@@ -798,14 +799,14 @@ public class ResultProcessor {
 				"Days-Old",
 				"Dictation",
 				"Duolingo",
-				"GetPocket",
 				"Honey",
 				"HotelWifiTest",
 				"Mailinator",
 				"MidwayMeetup",
-				"Ninite-new",
+				"Ninite",
 				"Pdf-Escape",
 				"PepFeed",
+				"GetPocket",
 				"RainyMood",
 				"RunPee",
 				"StumbleUpon",
@@ -814,6 +815,32 @@ public class ResultProcessor {
 				"WhatShouldIReadNext",
 				"WillMyPhoneWork",
 				"ZeroDollarMovies"};
+		String[] urls = new String[] {
+				"www.3minutejournal.com",
+				"www.accountkiller.com/en",
+				"www.airbnb.com",
+				"bugmenot.com",
+				"cloudconvert.com",
+				"www.coveredcalendar.com",
+				"www.daysold.com",
+				"dictation.io",
+				"www.duolingo.com",
+				"www.joinhoney.com/install",
+				"www.hotelwifitest.com",
+				"www.mailinator.com",
+				"www.midwaymeetup.com",
+				"ninite.com",
+				"www.pdfescape.com",
+				"www.pepfeed.com",
+				"getpocket.com",
+				"rainymood.com",
+				"runpee.com",
+				"www.stumbleupon.com",
+				"topdocumentaryfilms.com",
+				"usersearch.org",
+				"www.whatshouldireadnext.com/search",
+				"willmyphonework.net",
+				"zerodollarmovies.com"};
 //		writeTimesAndDomsToFile(rp.webpages, 30);
 //		rp.generateStepSizeResults(rp.webpages);
 //		processAllMutants(rp.webpages);
@@ -826,15 +853,18 @@ public class ResultProcessor {
 
 
 		for (File f : files) {
-
+			if (webpages[files.indexOf(f)].equals("Pdf-Escape")) {
+				System.out.println("BOOO");
+			}
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
-			String jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)]);
+
 //			System.out.println(mostRecentRun);
 			String[] splits = f.toString().split("/");
 			String webpage = splits[splits.length-1];
 			timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
 
 			int errorCount = getErrorCount(mostRecentRun);
+			String jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
 			String distinctFailures = getActualFaults(mostRecentRun);
 			totalFailures += Integer.valueOf(distinctFailures);
 			if (errorCount != -1) {
@@ -907,35 +937,32 @@ public class ResultProcessor {
 	private static void writeJekyllFile(String jekyllCode, String webpage) {
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage) throws IOException {
+	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
 //		System.out.println(webpage);
 		String jekyllCode = "";
-		String current = new java.io.File( "." ).getCanonicalPath();
-		System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+		try {
 
-		WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
-		int numElements = mutator.getElementCount(faultExamples + webpage);
-		int numDecs = mutator.getDeclarationCount();
+			String current = new java.io.File(".").getCanonicalPath();
+			System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
 
-		jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: \n---\n";
-		jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
+			WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
+			int numElements = mutator.getElementCount(faultExamples + webpage);
+			int numDecs = mutator.getDeclarationCount();
 
-		File[] files = mostRecentRun.listFiles(new FileFilter() {
-			public boolean accept(File file) {
-				return file.isDirectory();
+			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
+			jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
+
+			String[] classifications = getClassifications(mostRecentRun, totalReports);
+			String[] categories = getCategories(mostRecentRun, totalReports);
+			String[] reasons = getReasons(mostRecentRun, totalReports);
+			for (int i = 1; i <= totalReports; i++) {
+				File ssFile = new File(mostRecentRun + "/fault" + i);
+				String imageName = ssFile.listFiles()[0].getName();
+				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
+						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
 			}
-		});
-//		System.out.println(files.length);
-		String[] classifications = getClassifications(mostRecentRun, files.length);
-		String[] categories = getCategories(mostRecentRun, files.length);
-		String[] reasons = getReasons(mostRecentRun, files.length);
-		for (int i = 0; i < files.length; i++) {
-			File ssFile = files[i].listFiles()[0];
-
-//			String[] splits = ssFile.getAbsolutePath().split("/");
-//			String fileName = splits[splits.length-1];
-			jekyllCode += "| " + Integer.valueOf(i+1) + " | " + categories[i] + " | [Click]({{ site.baseurl }}/assets/images/" +webpage + "/fault" + Integer.valueOf(i+1) + "/" + ssFile.getName() +
-			") | " + classifications[i] + " | " + reasons[i] + " |\n";
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return jekyllCode;
 	}

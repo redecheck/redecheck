@@ -7,14 +7,14 @@ Covered-Calendar
 Days-Old
 Dictation
 Duolingo
-GetPocket
 Honey
 HotelWifiTest
 Mailinator
 MidwayMeetup
-Ninite-new
+Ninite
 Pdf-Escape
 PepFeed
+GetPocket
 RainyMood
 RunPee
 StumbleUpon
