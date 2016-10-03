@@ -10,14 +10,14 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "26r9rlp7u4",
+        "cacheKey" : "1w29y5avu1",
         "caption" : "melted",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=melted&cache_key=26r9rlp7u4",
-        "displayedObservations" : 54,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=melted&cache_key=1w29y5avu1",
+        "displayedObservations" : "1500",
         "environment" : "",
         "object" : "melted",
-        "totalObservations" : 54,
-        "variables" : 3
+        "totalObservations" : "1500",
+        "variables" : "3"
     },
     "relative_order" : 3,
     "source_on_save" : false,

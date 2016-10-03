@@ -1,15 +1,9 @@
 package twalsh.redecheck;
 
-import com.google.common.math.DoubleMath;
-import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.math3.geometry.spherical.oned.ArcsSet;
-import org.apache.commons.math3.linear.Array2DRowFieldMatrix;
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import twalsh.mutation.WebpageMutator;
+import org.apache.commons.math3.distribution.IntegerDistribution;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -27,6 +21,7 @@ public class ResultProcessor {
 	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck.github.io/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
 	ArrayList<File> nonDetected;
@@ -823,26 +818,36 @@ public class ResultProcessor {
 		String timeData = "";
 		String multiTimeData = "";
 		String subjectData = "";
+		int totalFailures = 0;
+		int totalDistinctRanges = 0;
+
+
 		for (File f : files) {
 
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
+			String jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)]);
 //			System.out.println(mostRecentRun);
 			String[] splits = f.toString().split("/");
 			String webpage = splits[splits.length-1];
 			timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
 
 			int errorCount = getErrorCount(mostRecentRun);
-			String actualFaultCount = getActualFaults(mostRecentRun);
+			String distinctFailures = getActualFaults(mostRecentRun);
+			totalFailures += Integer.valueOf(distinctFailures);
 			if (errorCount != -1) {
 				ArrayList<Integer> tpIndexes = new ArrayList<>();
 				String classificationString = getClassification(mostRecentRun, tpIndexes);
-				int disFailCount = getFailuresFromFile(mostRecentRun, tpIndexes);
-				System.out.println(webpage + classificationString + " & " + actualFaultCount + " & " + disFailCount + " \\\\");
+//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
+				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
+				totalDistinctRanges += totalRanges;
+//				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 			}
 
-			for (int i = 1; i <= 30; i++) {
-				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-			}
+
+
+//			for (int i = 1; i <= 30; i++) {
+//				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+//			}
 
 
 //			File fl = new File(dir);
@@ -870,8 +875,12 @@ public class ResultProcessor {
 //					System.out.println(i + " faults were reported " +faultCounts.get(i).size() + " times");
 //				}
 //			}
-//			System.out.println();
+//			System.out.println(jekyllCode);
+			writeToFile(jekyllCode, githubio + "_posts/","2016-09-26-"+webpage+".markdown");
+
 		}
+//		System.out.println("\\midrule");
+//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
 //		for (String wp : webpages) {
 //			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
 //			try {
@@ -888,7 +897,103 @@ public class ResultProcessor {
 //		rp.writeRQ1and2Data(files);
 	}
 
-	private static int getFailuresFromFile(File f, ArrayList<Integer> tpIndexes) {
+	private static void writeJekyllFile(String jekyllCode, String webpage) {
+	}
+
+	private static String addInScreenshotTable(File mostRecentRun, String webpage) {
+//		System.out.println(webpage);
+		String jekyllCode = "";
+		jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: 0\ndecs: 0\nfullurl: \n---\n";
+		jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
+
+		File[] files = mostRecentRun.listFiles(new FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		});
+//		System.out.println(files.length);
+		String[] classifications = getClassifications(mostRecentRun, files.length);
+		String[] categories = getCategories(mostRecentRun, files.length);
+		String[] reasons = getReasons(mostRecentRun, files.length);
+		for (int i = 0; i < files.length; i++) {
+			File ssFile = files[i].listFiles()[0];
+
+//			String[] splits = ssFile.getAbsolutePath().split("/");
+//			String fileName = splits[splits.length-1];
+			jekyllCode += "| " + Integer.valueOf(i+1) + " | " + categories[i] + " | [Click]({{ site.baseurl }}/assets/images/" +webpage + "/fault" + Integer.valueOf(i+1) + "/" + ssFile.getName() +
+			") | " + classifications[i] + " | " + reasons[i] + " |\n";
+		}
+		return jekyllCode;
+	}
+
+	private static String[] getReasons(File f, int count) {
+		String[] results = new String[count];
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/reasons.txt"));
+			String line = br.readLine();
+			int counter = 0;
+			while (line != null) {
+				results[counter] = line;
+				counter++;
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+
+		}
+		return results;
+	}
+
+	private static String[] getCategories(File f, int count) {
+		String[] results = new String[count];
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/error-types.txt"));
+			String line = br.readLine();
+			int counter = 0;
+			while (line != null) {
+				if (line.equals("VO")) {
+					results[counter] = "Viewport Overflow";
+				} else if (line.equals("OF")) {
+					results[counter] = "Element Overflow";
+				} else if (line.equals("OL")) {
+					results[counter] = "Overlap";
+				} else if (line.equals("W")) {
+					results[counter] = "Wrapping";
+				} else if (line.equals("SR")) {
+					results[counter] = "Small-Range";
+				}
+				counter++;
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+
+		}
+		return results;
+	}
+
+	private static String[] getClassifications(File f, int count) {
+		String[] results = new String[count];
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/classification.txt"));
+			String line = br.readLine();
+			int counter = 0;
+			while (line != null) {
+				if (line.equals("1")) {
+					results[counter] = "TP";
+				} else if (line.equals("0")) {
+					results[counter] = "NOI";
+				} else if (line.equals("-1")) {
+					results[counter] = "FP";
+				}
+				counter++;
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+
+		}
+		return results;
+	}
+
+	private static int getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
 		HashSet<String> errorStrings = new HashSet<>();
 
 		try {
@@ -941,9 +1046,14 @@ public class ResultProcessor {
 						System.out.println("Issue with " + line);
 					}
 				}
-
-				if (tpIndexes.contains(errorIndex)) {
-					errorStrings.add(min+" - " + max);
+				if (b) {
+					if (tpIndexes.contains(errorIndex)) {
+						errorStrings.add(min + " - " + max);
+					}
+				} else {
+					if (min != 0 && max != 0) {
+						errorStrings.add(min + " - " + max);
+					}
 				}
 
 				if (line.equals("")) {
@@ -1021,21 +1131,21 @@ public class ResultProcessor {
 		HashMap<Integer, Integer> iCounts = counts.get(sr);
 		String mCount, nmCount, fpCount;
 		if (iCounts.get(1) == 0) {
-			mCount = "-";
+			mCount = "\\ZERO";
 		} else {
 			mCount = String.valueOf(iCounts.get(1));
 		}
 		if (iCounts.get(0) == 0) {
-			nmCount = "-";
+			nmCount = "\\ZERO";
 		} else {
 			nmCount = String.valueOf(iCounts.get(0));
 		}
 		if (iCounts.get(-1) == 0) {
-			fpCount = "-";
+			fpCount = "\\ZERO";
 		} else {
 			fpCount = String.valueOf(iCounts.get(-1));
 		}
-		return " & " + mCount + " & " + nmCount + " & " + fpCount;
+		return " & " + mCount + " & " + fpCount + " & " + nmCount;
 	}
 
 	private static void updateCounts(HashMap<String, HashMap<Integer, Integer>> counts, String line, String line2) {

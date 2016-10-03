@@ -1,0 +1,6 @@
+/HTML/BODY/DIV[4]/DIV[3] overflowed the viewport window between 400 and 480
+
+/HTML/BODY/DIV[4]/DIV[3] OVERFLOWED ITS PARENT BETWEEN 578 AND 638
+	/HTML/BODY/DIV[4] , /HTML/BODY/DIV[4]/DIV[3] , SIBLING , 578 , 638 ,  {rightAlignoverlapping}
+	null
+
