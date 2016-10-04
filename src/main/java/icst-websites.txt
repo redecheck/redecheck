@@ -14,7 +14,7 @@ MidwayMeetup
 Ninite
 Pdf-Escape
 PepFeed
-GetPocket
+Pocket
 RainyMood
 RunPee
 StumbleUpon

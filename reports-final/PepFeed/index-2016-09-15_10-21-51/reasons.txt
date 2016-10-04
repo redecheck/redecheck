@@ -1,0 +1,54 @@
+"Amazon.com" link partially obscured
+No content obscured by viewport overflow
+No content obscured by viewport overflow
+No content obscured by viewport overflow
+No visual overlap
+No visual overlap
+No visual overflow
+Image and text overlapping
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overflow
+No visual overlap
+No visual overlap
+Image and text overlapping
+Image and text overlapping
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+Image and text overlapping
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No visual overlap
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+No significant layout change
+Signficant layout change on either side
+No significant layout change
+Signficant layout change on either side
+No significant layout change
+Element has not wrapped

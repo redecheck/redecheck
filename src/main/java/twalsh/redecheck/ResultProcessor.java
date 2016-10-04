@@ -806,7 +806,7 @@ public class ResultProcessor {
 				"Ninite",
 				"Pdf-Escape",
 				"PepFeed",
-				"GetPocket",
+				"Pocket",
 				"RainyMood",
 				"RunPee",
 				"StumbleUpon",
@@ -853,12 +853,11 @@ public class ResultProcessor {
 
 
 		for (File f : files) {
-			if (webpages[files.indexOf(f)].equals("Pdf-Escape")) {
-				System.out.println("BOOO");
-			}
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
-
-//			System.out.println(mostRecentRun);
+			if (mostRecentRun == null) {
+				System.out.println("Boo");
+			}
+			System.out.println(mostRecentRun);
 			String[] splits = f.toString().split("/");
 			String webpage = splits[splits.length-1];
 			timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
@@ -979,7 +978,7 @@ public class ResultProcessor {
 				line = br.readLine();
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return results;
 	}
