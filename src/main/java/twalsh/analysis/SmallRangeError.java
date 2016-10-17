@@ -6,6 +6,7 @@ import twalsh.layout.Element;
 import twalsh.layout.LayoutFactory;
 import twalsh.redecheck.RLGThread;
 import twalsh.rlg.AlignmentConstraint;
+import twalsh.rlg.Node;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by thomaswalsh on 31/05/2016.
@@ -126,5 +128,13 @@ public class SmallRangeError extends ResponsiveLayoutError {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    @Override
+    public HashSet<Node> getNodes() {
+        HashSet<Node> nodes = new HashSet<>();
+        nodes.add(ac.getNode1());
+        nodes.add(ac.getNode2());
+        return nodes;
     }
 }

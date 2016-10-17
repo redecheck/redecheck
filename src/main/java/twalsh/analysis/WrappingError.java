@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by thomaswalsh on 10/06/2016.
@@ -85,5 +86,13 @@ public class WrappingError extends ResponsiveLayoutError {
         } catch (Exception e ) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public HashSet<Node> getNodes() {
+        HashSet<Node> nodes = new HashSet<>();
+        nodes.add(wrapped);
+        nodes.addAll(row);
+        return nodes;
     }
 }

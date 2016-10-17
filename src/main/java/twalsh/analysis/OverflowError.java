@@ -15,13 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by thomaswalsh on 31/05/2016.
  */
 public class OverflowError extends ResponsiveLayoutError {
     AlignmentConstraint ac1, ac2, ofCon, match;
-    HashMap<Node, ArrayList<AlignmentConstraint>> map;
+//    HashMap<Node, ArrayList<AlignmentConstraint>> map;
 
 
 
@@ -30,16 +31,16 @@ public class OverflowError extends ResponsiveLayoutError {
     ArrayList<Node> newParents;
 
 
-    public HashMap<Node, ArrayList<AlignmentConstraint>> getMap() {
-        return map;
-    }
+//    public HashMap<Node, ArrayList<AlignmentConstraint>> getMap() {
+//        return map;
+//    }
 
-    public OverflowError(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
-        this.map = m;
-        intendedParent = ip;
-        overflowed = n;
-//        System.out.println(n);
-    }
+//    public OverflowError(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
+//        this.map = m;
+//        intendedParent = ip;
+//        overflowed = n;
+////        System.out.println(n);
+//    }
 
     public OverflowError(Node o, AlignmentConstraint ac) {
         overflowed = o;
@@ -48,26 +49,26 @@ public class OverflowError extends ResponsiveLayoutError {
     }
 
     public String toString() {
-        if (ofCon != null) {
+//        if (ofCon != null) {
             return overflowed.getXpath() + " OVERFLOWED ITS PARENT BETWEEN " + ofCon.getMin() + " AND " + ofCon.getMax() + "\n\t" + ofCon + "\n\t" + match;
-        } else {
-            String result = "OVERFLOWING ELEMENT ERROR: ";
-            result += "\n" + intendedParent.getXpath() + " was the intended parent of " + overflowed.getXpath();
-            for (AlignmentConstraint ac : map.get(intendedParent)) {
-                result += "\n\t" + ac.getMin() + " -> " + ac.getMax();
-            }
-
-            for (Node n : map.keySet()) {
-                if (n != intendedParent) {
-                    result+= "\nOverflowed into: " + n.getXpath();
-                    for (AlignmentConstraint ac : map.get(n)) {
-                        result += "\n\t" + ac.getMin() + " -> " + ac.getMax();
-                    }
-                }
-
-            }
-            return result;
-        }
+//        } else {
+//            String result = "OVERFLOWING ELEMENT ERROR: ";
+//            result += "\n" + intendedParent.getXpath() + " was the intended parent of " + overflowed.getXpath();
+//            for (AlignmentConstraint ac : map.get(intendedParent)) {
+//                result += "\n\t" + ac.getMin() + " -> " + ac.getMax();
+//            }
+//
+//            for (Node n : map.keySet()) {
+//                if (n != intendedParent) {
+//                    result+= "\nOverflowed into: " + n.getXpath();
+//                    for (AlignmentConstraint ac : map.get(n)) {
+//                        result += "\n\t" + ac.getMin() + " -> " + ac.getMax();
+//                    }
+//                }
+//
+//            }
+//            return result;
+//        }
     }
 
     @Override
@@ -143,6 +144,14 @@ public class OverflowError extends ResponsiveLayoutError {
             e.printStackTrace();
         }
 //
+    }
+
+    @Override
+    public HashSet<Node> getNodes() {
+        HashSet<Node> nodes = new HashSet<>();
+        nodes.add(ofCon.getNode1());
+        nodes.add(ofCon.getNode2());
+        return nodes;
     }
 
     public Node getOverflowed() {

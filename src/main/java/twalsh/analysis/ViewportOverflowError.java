@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by thomaswalsh on 19/08/2016.
@@ -77,5 +78,12 @@ public class ViewportOverflowError extends ResponsiveLayoutError {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public HashSet<Node> getNodes() {
+        HashSet<Node> nodes = new HashSet<>();
+        nodes.add(node);
+        return nodes;
     }
 }
