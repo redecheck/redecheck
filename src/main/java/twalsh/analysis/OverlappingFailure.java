@@ -1,7 +1,9 @@
 package twalsh.analysis;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import twalsh.layout.Element;
 import twalsh.layout.LayoutFactory;
 import twalsh.redecheck.RLGThread;
@@ -19,14 +21,14 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 16/06/2016.
  */
-public class OverlappingError extends ResponsiveLayoutError {
+public class OverlappingFailure extends ResponsiveLayoutFailure {
     public AlignmentConstraint getConstraint() {
         return constraint;
     }
 
     AlignmentConstraint constraint;
 
-    public OverlappingError(AlignmentConstraint con) {
+    public OverlappingFailure(AlignmentConstraint con) {
         constraint = con;
     }
 
@@ -51,6 +53,9 @@ public class OverlappingError extends ResponsiveLayoutError {
         LayoutFactory lf = lfs.get(captureWidth);
         Element e1 = lf.getElementMap().get(constraint.getNode1().getXpath());
         Element e2 = lf.getElementMap().get(constraint.getNode2().getXpath());
+
+        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
+//        System.out.println(we1.getRect());
 
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);

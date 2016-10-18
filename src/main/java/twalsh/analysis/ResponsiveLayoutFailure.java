@@ -11,7 +11,7 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 31/05/2016.
  */
-public abstract class ResponsiveLayoutError {
+public abstract class ResponsiveLayoutFailure {
     public abstract void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp);
 
 

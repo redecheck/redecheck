@@ -20,9 +20,9 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 31/05/2016.
  */
-public class OverflowError extends ResponsiveLayoutError {
+public class OverflowFailure extends ResponsiveLayoutFailure {
     AlignmentConstraint ac1, ac2, ofCon, match;
-//    HashMap<Node, ArrayList<AlignmentConstraint>> map;
+    HashMap<Node, ArrayList<AlignmentConstraint>> map;
 
 
 
@@ -31,18 +31,18 @@ public class OverflowError extends ResponsiveLayoutError {
     ArrayList<Node> newParents;
 
 
-//    public HashMap<Node, ArrayList<AlignmentConstraint>> getMap() {
-//        return map;
-//    }
+    public HashMap<Node, ArrayList<AlignmentConstraint>> getMap() {
+        return map;
+    }
 
-//    public OverflowError(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
-//        this.map = m;
-//        intendedParent = ip;
-//        overflowed = n;
-////        System.out.println(n);
-//    }
+    public OverflowFailure(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
+        this.map = m;
+        intendedParent = ip;
+        overflowed = n;
+//        System.out.println(n);
+    }
 
-    public OverflowError(Node o, AlignmentConstraint ac) {
+    public OverflowFailure(Node o, AlignmentConstraint ac) {
         overflowed = o;
         ofCon = ac;
 

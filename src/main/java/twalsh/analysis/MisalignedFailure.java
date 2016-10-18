@@ -20,7 +20,7 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 14/06/2016.
  */
-public class MisalignedError extends ResponsiveLayoutError {
+public class MisalignedFailure extends ResponsiveLayoutFailure {
     HashMap<String, ArrayList<AlignmentConstraint>> alignments;
     String rangeKey;
             Node buggy;
@@ -30,13 +30,13 @@ public class MisalignedError extends ResponsiveLayoutError {
     int max;
 
 
-    public MisalignedError(HashMap<String, ArrayList<AlignmentConstraint>> aligned, String key) {
+    public MisalignedFailure(HashMap<String, ArrayList<AlignmentConstraint>> aligned, String key) {
         this.alignments = aligned;
         notBuggy = new ArrayList<>();
         this.rangeKey = key;
     }
 
-    public MisalignedError(HashSet<Node> al, HashSet<Node> notAligned, String key, int min, int max) {
+    public MisalignedFailure(HashSet<Node> al, HashSet<Node> notAligned, String key, int min, int max) {
         this.aligned = al;
         this.notAligned = notAligned;
         this.rangeKey = key;
@@ -105,6 +105,11 @@ public class MisalignedError extends ResponsiveLayoutError {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public HashSet<Node> getNodes() {
+        return null;
     }
 
 //    @Override

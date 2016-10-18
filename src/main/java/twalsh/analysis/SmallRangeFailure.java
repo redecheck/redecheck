@@ -19,10 +19,10 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 31/05/2016.
  */
-public class SmallRangeError extends ResponsiveLayoutError {
+public class SmallRangeFailure extends ResponsiveLayoutFailure {
     AlignmentConstraint ac, prev, next;
 
-    public SmallRangeError(AlignmentConstraint ac, AlignmentConstraint prev, AlignmentConstraint next) {
+    public SmallRangeFailure(AlignmentConstraint ac, AlignmentConstraint prev, AlignmentConstraint next) {
         this.ac = ac;
         this.prev = prev;
         this.next = next;

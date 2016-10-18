@@ -1,33 +1,28 @@
 package twalsh.analysis;
 
-import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.internal.WrapsDriver;
+import twalsh.clustering.FailureReportClusterBot;
 import twalsh.layout.Element;
 import twalsh.layout.Layout;
 import twalsh.layout.LayoutFactory;
-import twalsh.layout.Sibling;
-import twalsh.redecheck.RLGThread;
 import twalsh.rlg.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.lang.Math.abs;
-import static org.apache.commons.math3.util.CombinatoricsUtils.factorial;
 
 /**
  * Created by thomaswalsh on 20/05/2016.
  */
 public class RLGAnalyser {
     ResponsiveLayoutGraph rlg;
-    ArrayList<ResponsiveLayoutError> errors;
+    ArrayList<ResponsiveLayoutFailure> errors;
     WebDriver driver;
     String url;
     ArrayList<Integer> bpoints;
@@ -47,7 +42,7 @@ public class RLGAnalyser {
         this.vmax = vmax;
     }
 
-    public ArrayList<ResponsiveLayoutError> analyse() {
+    public ArrayList<ResponsiveLayoutFailure> analyse() {
         errors = new ArrayList<>();
 
         checkForViewportOverflows();
@@ -55,6 +50,7 @@ public class RLGAnalyser {
         checkForSmallRanges();
         checkForWrappingElements();
         filterOutDuplicateReports();
+        FailureReportClusterBot clusterbot = new FailureReportClusterBot(errors);
         return errors;
     }
 
@@ -64,18 +60,18 @@ public class RLGAnalyser {
 
 
 
-//        ArrayList<ResponsiveLayoutError> cloned0 = (ArrayList<ResponsiveLayoutError>) errors.clone();
+//        ArrayList<ResponsiveLayoutFailure> cloned0 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 //
-//        for (ResponsiveLayoutError rle : cloned0) {
-//            if (rle instanceof SmallRangeError) {
-//                for (ResponsiveLayoutError rle2 : cloned0) {
-//                    if (rle2 instanceof OverlappingError) {
-//                        if (((SmallRangeError) rle).ac == ((OverlappingError) rle2).constraint) {
+//        for (ResponsiveLayoutFailure rle : cloned0) {
+//            if (rle instanceof SmallRangeFailure) {
+//                for (ResponsiveLayoutFailure rle2 : cloned0) {
+//                    if (rle2 instanceof OverlappingFailure) {
+//                        if (((SmallRangeFailure) rle).ac == ((OverlappingFailure) rle2).constraint) {
 //                            errors.remove(rle);
 //                        }
 //                    }
-//                    if (rle2 instanceof OverflowError) {
-//                        if (((SmallRangeError) rle).ac == ((OverflowError) rle2).getOfCon()) {
+//                    if (rle2 instanceof OverflowFailure) {
+//                        if (((SmallRangeFailure) rle).ac == ((OverflowFailure) rle2).getOfCon()) {
 //                            errors.remove(rle);
 //                        }
 //                    }
@@ -83,11 +79,11 @@ public class RLGAnalyser {
 //            }
 //        }
 
-        ArrayList<ResponsiveLayoutError> cloned1 = (ArrayList<ResponsiveLayoutError>) errors.clone();
+        ArrayList<ResponsiveLayoutFailure> cloned1 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 
-        for (ResponsiveLayoutError rle : cloned1) {
-            if (rle instanceof OverlappingError) {
-                AlignmentConstraint ac = ((OverlappingError) rle).getConstraint();
+        for (ResponsiveLayoutFailure rle : cloned1) {
+            if (rle instanceof OverlappingFailure) {
+                AlignmentConstraint ac = ((OverlappingFailure) rle).getConstraint();
                 int chosenWidth = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
                 LayoutFactory lf = layouts.get(chosenWidth);
                 Layout l = lf.layout;
@@ -107,13 +103,13 @@ public class RLGAnalyser {
             }
         }
 
-        ArrayList<ResponsiveLayoutError> cloned2 = (ArrayList<ResponsiveLayoutError>) errors.clone();
-        for (ResponsiveLayoutError rle : cloned2) {
-            if (rle instanceof OverflowError) {
+        ArrayList<ResponsiveLayoutFailure> cloned2 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
+        for (ResponsiveLayoutFailure rle : cloned2) {
+            if (rle instanceof OverflowFailure) {
 
-                AlignmentConstraint ac = ((OverflowError) rle).getOfCon();
-//                AlignmentConstraint m = ((OverflowError) rle).getMatch();
-                Node overflowed = ((OverflowError) rle).getOverflowed();
+                AlignmentConstraint ac = ((OverflowFailure) rle).getOfCon();
+//                AlignmentConstraint m = ((OverflowFailure) rle).getMatch();
+                Node overflowed = ((OverflowFailure) rle).getOverflowed();
                 Node parent = null;
                 if (ac.getNode1() == overflowed) {
                     parent = ac.getNode2();
@@ -137,7 +133,7 @@ public class RLGAnalyser {
 //                    System.out.println("One pixel overflow");
                     errors.remove(rle);
                 }
-//                else if (parentAlsoOverflowed(((OverflowError) rle).getOverflowed(), cloned2)) {
+//                else if (parentAlsoOverflowed(((OverflowFailure) rle).getOverflowed(), cloned2)) {
 ////                    System.out.println("REMOVING " + rle+ " BECAUSE OF PARENT OVERFLOW");
 //                    errors.remove(rle);
 //                }
@@ -161,7 +157,7 @@ public class RLGAnalyser {
 //                    String key = isVisible(n, vmin, vmax);
                     int repMin = n.getVisibilityConstraints().get(0).appear;
                     int repMax = n.getVisibilityConstraints().get(0).disappear;
-                    ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
                     errors.add(voe);
                 } else {
                     int gmin = vmin;
@@ -173,7 +169,7 @@ public class RLGAnalyser {
                             if (!key.equals("")) {
                                 int repMin = getNumberFromKey(key, 0);
                                 int repMax = getNumberFromKey(key, 1);
-                                ViewportOverflowError voe = new ViewportOverflowError(n, repMin, repMax);
+                                ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
                                 errors.add(voe);
                             }
 
@@ -182,7 +178,7 @@ public class RLGAnalyser {
                         gmin = (int) e.getValue() + 1;
                     }
                     if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
-                        ViewportOverflowError voe = new ViewportOverflowError(n, gmin, vmax);
+                        ViewportOverflowFailure voe = new ViewportOverflowFailure(n, gmin, vmax);
                         errors.add(voe);
                     }
                 }
@@ -218,10 +214,10 @@ public class RLGAnalyser {
                     HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
                     HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax()+1);
                     if (n1Ancestry.contains(ac.getNode2())) {
-                        OverflowError ofe = new OverflowError(ac.getNode1(), ac);
+                        OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
                         errors.add(ofe);
                     } else if (n2Ancestry.contains(ac.getNode1())) {
-                        OverflowError ofe = new OverflowError(ac.getNode2(), ac);
+                        OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
                         errors.add(ofe);
                     } else {
                         AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
@@ -233,7 +229,7 @@ public class RLGAnalyser {
 //                        if (prev != null && prev.getType() == Type.SIBLING) {
 //                            if (prev.getAttributes()[10] == false) {
 //                                olPrev = true;
-////                                OverlappingError oe = new OverlappingError(ac);
+////                                OverlappingFailure oe = new OverlappingFailure(ac);
 ////                                errors.add(oe);
 //                            }
 //                        }
@@ -243,18 +239,18 @@ public class RLGAnalyser {
                         } else if (prev != null && prev.getType() == Type.SIBLING) {
                             if (!prev.getAttributes()[10]) {
                                 olPrev = false;
-//                                OverlappingError oe = new OverlappingError(ac);
+//                                OverlappingFailure oe = new OverlappingFailure(ac);
 //                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
                             if (!next.getAttributes()[10]) {
                                 olNext = false;
-//                                OverlappingError oe = new OverlappingError(ac);
+//                                OverlappingFailure oe = new OverlappingFailure(ac);
 //                                errors.add(oe);
                             }
                         }
                         if (!olPrev || !olNext) {
-                            OverlappingError oe = new OverlappingError(ac);
+                            OverlappingFailure oe = new OverlappingFailure(ac);
                             errors.add(oe);
                         }
                     }
@@ -359,7 +355,7 @@ public class RLGAnalyser {
 //                                if (percent < 0.9) {
 //                                if (!checkForRelatedOverflowErrors(ac)) {
 
-                                    OverlappingError oe = new OverlappingError(ac);
+                                    OverlappingFailure oe = new OverlappingFailure(ac);
 //                                    System.out.println(oe);
                                     errors.add(oe);
 //                                }
@@ -380,11 +376,11 @@ public class RLGAnalyser {
         Node ac1 = ac.getNode1();
         Node ac2 = ac.getNode2();
 
-        for (ResponsiveLayoutError e : errors) {
-            if (e instanceof OverflowError) {
-                Node overflowed = ((OverflowError) e).getOverflowed();
+        for (ResponsiveLayoutFailure e : errors) {
+            if (e instanceof OverflowFailure) {
+                Node overflowed = ((OverflowFailure) e).getOverflowed();
 
-//                for (Node intended : ((OverflowError) e).getMap().keySet()) {
+//                for (Node intended : ((OverflowFailure) e).getMap().keySet()) {
                     if ((ac1.getXpath().equals(overflowed.getXpath()) || ac2.getXpath().equals(overflowed.getXpath()))) {
 //                        System.out.println("Wanted to remove " + ac + " because of " + overflowed.getXpath());
 //                        System.out.println(overflowed.getXpath());
@@ -404,7 +400,7 @@ public class RLGAnalyser {
                 AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, true);
                 if (prev != null && next != null) {
 //                if (ac.getMin() != vmin && ac.getMax() != vmax) {
-                    SmallRangeError sre = new SmallRangeError(ac, prev, next);
+                    SmallRangeFailure sre = new SmallRangeFailure(ac, prev, next);
                     errors.add(sre);
                 }
             }
@@ -517,7 +513,7 @@ public class RLGAnalyser {
 //
                                     if (diffR > 1 || diffB > 1) {
 //                                        if (checkNodeOverlappingIntendedParent(ol, n, intendedParent)) {
-                                            OverflowError oe = new OverflowError(grouped, intendedParent, n);
+                                            OverflowFailure oe = new OverflowFailure(grouped, intendedParent, n);
                                             errors.add(oe);
 //                                            System.out.println();
 //                                        }
@@ -536,7 +532,7 @@ public class RLGAnalyser {
                     if (!onePxOverflow) {
                         ArrayList<AlignmentConstraint> ol = getOverlappingConstraints(n);
                         if (checkNodeOverlappingIntendedParent(ol, n, intendedParent)) {
-                            OverflowError oe = new OverflowError(grouped, intendedParent, n);
+                            OverflowFailure oe = new OverflowFailure(grouped, intendedParent, n);
                             errors.add(oe);
                         }
                     }
@@ -555,18 +551,18 @@ public class RLGAnalyser {
         return (min+max)/2;
     }
 
-    private boolean parentAlsoOverflowed(Node overflowed, ArrayList<ResponsiveLayoutError> cloned) {
+    private boolean parentAlsoOverflowed(Node overflowed, ArrayList<ResponsiveLayoutFailure> cloned) {
         String overflowedXP = overflowed.getXpath();
 
-        for (ResponsiveLayoutError e : cloned) {
-            if (e instanceof OverflowError) {
-                String comparisonXP = ((OverflowError) e).getOverflowed().getXpath();
+        for (ResponsiveLayoutFailure e : cloned) {
+            if (e instanceof OverflowFailure) {
+                String comparisonXP = ((OverflowFailure) e).getOverflowed().getXpath();
                 if (overflowedXP.contains(comparisonXP) && !overflowedXP.equals(comparisonXP)) {
 //                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
                     return true;
                 }
-            } else if (e instanceof ViewportOverflowError) {
-                String comparisonXP = ((ViewportOverflowError) e).getNode().getXpath();
+            } else if (e instanceof ViewportOverflowFailure) {
+                String comparisonXP = ((ViewportOverflowFailure) e).getNode().getXpath();
                 if (overflowedXP.contains(comparisonXP) || overflowedXP.equals(comparisonXP)) {
 //                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
                     return true;
@@ -871,7 +867,7 @@ public class RLGAnalyser {
                             if (nonWrappedRow != null) {
                                 if (elementVisible(notInRow, key)) {
                                     if (elementStillWithinParent(notInRow, n, key)) {
-                                        WrappingError we = new WrappingError(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
+                                        WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
                                         errors.add(we);
                                     }
                                 }
@@ -1071,7 +1067,7 @@ public class RLGAnalyser {
                         notAligned.remove(n);
                     }
                     if (alNodes1.size() > notAligned.size() && alNodes3.size() < totalNodes.size()) {
-                        MisalignedError me = new MisalignedError(alNodes1, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
+                        MisalignedFailure me = new MisalignedFailure(alNodes1, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
                         errors.add(me);
                     }
                 } else if ((alNodes2.size() < totalNodes.size()) && (alNodes2.size() >= 2)) {
@@ -1079,7 +1075,7 @@ public class RLGAnalyser {
                         notAligned.remove(n);
                     }
                     if (alNodes2.size() > notAligned.size() && alNodes3.size() < totalNodes.size() && alNodes1.size() < totalNodes.size()) {
-                        MisalignedError me = new MisalignedError(alNodes2, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
+                        MisalignedFailure me = new MisalignedFailure(alNodes2, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
                         errors.add(me);
                     }
                 }
@@ -1250,7 +1246,7 @@ public class RLGAnalyser {
         return children;
     }
 
-    public void writeReport(String url, ArrayList<ResponsiveLayoutError> errors, String ts) {
+    public void writeReport(String url, ArrayList<ResponsiveLayoutFailure> errors, String ts) {
         PrintWriter output = null;
         PrintWriter output2 = null;
         PrintWriter output3 = null;
@@ -1273,7 +1269,7 @@ public class RLGAnalyser {
             output3 = new PrintWriter(typeFile);
             if (errors.size() > 0) {
                 output2.append(Integer.toString(errors.size()));
-                for (ResponsiveLayoutError rle : errors) {
+                for (ResponsiveLayoutFailure rle : errors) {
                     output.append(rle.toString() + "\n\n");
                     output3.append(errorToKey(rle) + "\n");
                 }
@@ -1291,18 +1287,18 @@ public class RLGAnalyser {
         }
     }
 
-    private String errorToKey(ResponsiveLayoutError rle) {
-        if (rle instanceof SmallRangeError) {
+    private String errorToKey(ResponsiveLayoutFailure rle) {
+        if (rle instanceof SmallRangeFailure) {
             return "SR";
-        } else if (rle instanceof ViewportOverflowError) {
+        } else if (rle instanceof ViewportOverflowFailure) {
             return "VO";
-        } else if (rle instanceof OverflowError) {
+        } else if (rle instanceof OverflowFailure) {
             return "OF";
-        } else if (rle instanceof OverlappingError) {
+        } else if (rle instanceof OverlappingFailure) {
             return "OL";
-        } else if (rle instanceof WrappingError) {
+        } else if (rle instanceof WrappingFailure) {
             return "W";
-        } else if (rle instanceof MisalignedError) {
+        } else if (rle instanceof MisalignedFailure) {
             return "M";
         }
         return "NULL";

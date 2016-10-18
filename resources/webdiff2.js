@@ -96,6 +96,7 @@ function getElementAbsolutePos(element) {
 		if (element.getBoundingClientRect) {
 			// var viewportElement = document.documentElement;
  	        var box = element.getBoundingClientRect();
+
 		    // var scrollLeft = viewportElement.scrollLeft;
  		   //  var scrollTop = viewportElement.scrollTop;
 
@@ -217,6 +218,8 @@ function getDOMCoords(node){
 		var pos = getElementAbsolutePos(node);
 		//var x = Math.round(pos.x);
 		//var y = Math.round(pos.y);
+		// var boxes = node.getClientRects();
+		// console.log(boxes.length);
 		var x = pos.x;
 		var y = pos.y;
 		var x2 = pos.x2;
@@ -225,6 +228,27 @@ function getDOMCoords(node){
 		return "["+[x, y, x2, y2]+"]";
 	}catch(e){
 	        return "["+[-1,-1,-1,-1]+"]";
+	}
+}
+
+function getContentRectangle(node){
+	try{
+		var pos = getElementAbsolutePos(node);
+		var cs = getComputedStyle(element);
+
+		var paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+		var paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingButtom);
+
+		var borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+		var borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+		// Element width and height minus padding and border
+		elementWidth = element.offsetWidth - paddingX - borderX;
+		elementHeight = element.offsetHeight - paddingY - borderY;
+
+
+	} catch(e){
+		return "["+[-1,-1,-1,-1]+"]";
 	}
 }
 

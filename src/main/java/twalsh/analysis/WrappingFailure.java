@@ -19,13 +19,13 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 10/06/2016.
  */
-public class WrappingError extends ResponsiveLayoutError {
+public class WrappingFailure extends ResponsiveLayoutFailure {
     Node wrapped;
     ArrayList<Node> row;
     String range;
     int min, max;
 
-    public WrappingError(Node n, ArrayList<Node> r, int min, int max) {
+    public WrappingFailure(Node n, ArrayList<Node> r, int min, int max) {
         this.wrapped = n;
         this.row = r;
         this.range = min + " -> " + max;

@@ -6,10 +6,12 @@ import edu.gatech.xpert.dom.DomNode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import twalsh.analysis.RLGAnalyser;
-import twalsh.analysis.ResponsiveLayoutError;
+import twalsh.analysis.ResponsiveLayoutFailure;
 import twalsh.layout.LayoutFactory;
 import twalsh.rlg.ResponsiveLayoutGraph;
 import twalsh.utils.StopwatchFactory;
@@ -104,16 +106,10 @@ public class RLGThread implements Runnable {
             }
 
             this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
-//            this.swf.getProcess().stop();
             this.swf.getRlg().stop();
-//            System.out.println(this.swf.getRlg());
             this.swf.getDetect().start();
-//            System.out.println("LOOKING FOR FAULTS");
-
-//            System.out.println(rlg.getNodes().get("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI"));
-//            System.out.println(rlg.getNodes().get("/HTML/BODY/MAIN/DIV/DIV/DIV[3]"));
             RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
-            ArrayList<ResponsiveLayoutError> errors = analyser.analyse();
+            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
             this.swf.getDetect().stop();
 //            System.out.println(this.swf.getDetect());
 
@@ -121,7 +117,7 @@ public class RLGThread implements Runnable {
 //            System.out.println("GATHERING SCREENSHOT EXAMPLES FOR FAULTS");
             HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
             if (errors.size() > 0) {
-                for (ResponsiveLayoutError error : errors) {
+                for (ResponsiveLayoutFailure error : errors) {
 //                    System.out.println(error + "\n");
                     error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
@@ -131,6 +127,12 @@ public class RLGThread implements Runnable {
             analyser.writeReport(shortUrl, errors, ts);
 //            System.out.println(errors.size() + " ERRORS FOUND");
             this.swf.getReport().stop();
+
+            LogEntries logs = webDriver.manage().logs().get("browser");
+            for (LogEntry entry : logs) {
+                System.out.println(entry.getMessage());
+                //do something useful with the data
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

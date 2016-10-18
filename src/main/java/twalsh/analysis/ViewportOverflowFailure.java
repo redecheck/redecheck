@@ -18,7 +18,7 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 19/08/2016.
  */
-public class ViewportOverflowError extends ResponsiveLayoutError {
+public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
     Node node;
     int min, max;
 
@@ -34,7 +34,7 @@ public class ViewportOverflowError extends ResponsiveLayoutError {
         return max;
     }
 
-    public ViewportOverflowError(Node n, int i, int key) {
+    public ViewportOverflowFailure(Node n, int i, int key) {
         node = n;
         min = i;
         max = key;
