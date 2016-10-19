@@ -234,17 +234,18 @@ function getDOMCoords(node){
 function getContentRectangle(node){
 	try{
 		var pos = getElementAbsolutePos(node);
-		var cs = getComputedStyle(element);
+		var win = document.defaultView || window, style, styleNode = [];
+		var cs = win.getComputedStyle(node, null);
 
-		var paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-		var paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingButtom);
-
-		var borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
-		var borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+		// var paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+		// var paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingButtom);
+        //
+		// var borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+		// var borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
 		// Element width and height minus padding and border
-		elementWidth = element.offsetWidth - paddingX - borderX;
-		elementHeight = element.offsetHeight - paddingY - borderY;
+		// elementWidth = element.offsetWidth - paddingX - borderX;
+		// elementHeight = element.offsetHeight - paddingY - borderY;
 		var contentX = pos.x + parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth);
 		var contentY = pos.y + parseFloat(cs.paddingTop) + parseFloat(cs.borderTopWidth);
 		var contentX2 = pos.x2 - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth);

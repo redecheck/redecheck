@@ -56,9 +56,12 @@ public class LayoutFactory {
                 Element e = getElementFromDomData(nodeData);
                 if (e != null) {
                     try {
-                        int[] coords = e.getCoordsArray();
+                        int[] coords = e.getBoundingCoords();
                         if (coords != null && coords[2] >=0) {
                             Rectangle r = new Rectangle(coords[0], coords[1], coords[2], coords[3]);
+                            int[] contentCoords = getCoords(nodeData, false);
+//                            System.out.println(contentCoords[0]);
+                            e.setContentCoords(contentCoords);
                             rectangles.put(numElements, r);
                             rtree.add(r, numElements);
                             xpaths.put(numElements, e.getXpath());
@@ -118,7 +121,6 @@ public class LayoutFactory {
 
     public Element getElementFromDomData(JSONObject obj) throws JSONException {
         int[] coords = getCoords(obj, true);
-        int[] contentCoords = getCoords(obj, false);
         if (!Arrays.equals(new int[]{0,0,0,0}, coords)) {
             try {
                 String xpath = obj.getString("xpath");
@@ -183,8 +185,6 @@ public class LayoutFactory {
                 return coords;
             } else {
                 JSONArray data = ob.getJSONArray("contentCoords");
-//                Double height = data.getDouble(3) - data.getDouble(1);
-//                Double width = data.getDouble(2) - data.getDouble(0);
                 int[] coords = {data.getInt(0), data.getInt(1), data.getInt(2), data.getInt(3)};
                 return coords;
             }

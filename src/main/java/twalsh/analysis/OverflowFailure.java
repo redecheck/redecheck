@@ -102,19 +102,19 @@ public class OverflowFailure extends ResponsiveLayoutFailure {
                 Graphics2D g2d = img.createGraphics();
                 g2d.setColor(Color.RED);
 //                g2d.setStroke(new BasicStroke(5));
-                int[] coords1 = e1.getCoordsArray();
+                int[] coords1 = e1.getBoundingCoords();
                 g2d.drawRect(coords1[0], coords1[1], coords1[2] - coords1[0], coords1[3] - coords1[1]);
 
                 g2d.setColor(Color.CYAN);
 //                g2d.setStroke(new BasicStroke(3));
-                int[] coords2 = e2.getCoordsArray();
+                int[] coords2 = e2.getBoundingCoords();
                 g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
 
 //                if (e1 != ip) {
 ////                    System.out.println(e2.getXpath() + );
 //                    g2d.setColor(Color.GREEN);
 //                    g2d.setStroke(new BasicStroke(2));
-//                    int[] coords3 = ip.getCoordsArray();
+//                    int[] coords3 = ip.getBoundingCoords();
 //                    g2d.drawRect(coords3[0], coords3[1], coords3[2] - coords3[0], coords3[3] - coords3[1]);
 //                }
 

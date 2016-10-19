@@ -10,6 +10,15 @@ import java.util.HashMap;
 public class Element {
     String xpath;
     int x1, x2, y1, y2;
+
+    int[] boundingCoords;
+
+
+    public int[] getContentCoords() {
+        return contentCoords;
+    }
+
+    int[] contentCoords;
     Element parent;
     ArrayList<Element> children;
     HashMap<String, String> styles;
@@ -23,7 +32,7 @@ public class Element {
         return xpath;
     }
 
-    public int[] getCoordsArray() {
+    public int[] getBoundingCoordinates() {
         return new int[] {x1, y1, x2, y2};
     }
 
@@ -37,6 +46,7 @@ public class Element {
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
+        boundingCoords = new int[] {x1,y1,x2,y2};
         this.rectangle = new Rectangle(x1, y1, x2-x1, y2 - y1);
     }
 
@@ -62,5 +72,18 @@ public class Element {
 
     public void setY2(int y2) {
         this.y2 = y2;
+    }
+
+    public int[] getBoundingCoords() {
+        return boundingCoords;
+    }
+
+    public void setContentCoords(int[] contentCoords) {
+        this.contentCoords = contentCoords;
+        updateContentRectangle();
+    }
+
+    private void updateContentRectangle() {
+        this.rectangle = new Rectangle(contentCoords[0], contentCoords[1], contentCoords[2]-contentCoords[0], contentCoords[3] - contentCoords[1]);
     }
 }

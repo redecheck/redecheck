@@ -130,7 +130,7 @@ public class RLGThread implements Runnable {
 
 //            LogEntries logs = webDriver.manage().logs().get("browser");
 //            for (LogEntry entry : logs) {
-//                System.out.println(entry.getMessage());
+//                System.out.println(entry);
 //                //do something useful with the data
 //            }
 

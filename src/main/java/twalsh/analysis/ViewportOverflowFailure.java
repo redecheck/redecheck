@@ -60,11 +60,11 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
             g2d.setColor(Color.RED);
             g2d.setStroke(new BasicStroke(2));
 
-            int[] coords = e1.getCoordsArray();
+            int[] coords = e1.getBoundingCoords();
             g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
 
             g2d.setColor(Color.GREEN);
-            int[] coords2 = body.getCoordsArray();
+            int[] coords2 = body.getBoundingCoords();
             g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
 
             g2d.dispose();

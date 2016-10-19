@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -54,17 +55,19 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         Element e1 = lf.getElementMap().get(constraint.getNode1().getXpath());
         Element e2 = lf.getElementMap().get(constraint.getNode2().getXpath());
 
-        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
+        System.out.println(Arrays.toString(e1.getContentCoords()));
+
+//        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
 //        System.out.println(we1.getRect());
 
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);
 //        g2d.setStroke(new BasicStroke(5));
-        int[] coords1 = e1.getCoordsArray();
+        int[] coords1 = e1.getBoundingCoords();
         g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 
         g2d.setColor(Color.CYAN);
-        int[] coords2 = e2.getCoordsArray();
+        int[] coords2 = e2.getBoundingCoords();
         g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
         g2d.dispose();
         try {

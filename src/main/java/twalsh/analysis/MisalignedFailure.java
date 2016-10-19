@@ -83,14 +83,14 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
 //        g2d.setStroke(new BasicStroke(5));
         for (Node n : aligned) {
             Element e1 = lf.getElementMap().get(n.getXpath());
-            int[] coords1 = e1.getCoordsArray();
+            int[] coords1 = e1.getBoundingCoords();
             g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
         }
 
         g2d.setColor(Color.RED);
         for (Node n2 : notAligned) {
             Element e2 = lf.getElementMap().get(n2.getXpath());
-            int[] coords2 = e2.getCoordsArray();
+            int[] coords2 = e2.getBoundingCoords();
             g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
         }
 
@@ -148,14 +148,14 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
 //                Graphics2D g2d = img.createGraphics();
 //                g2d.setColor(Color.RED);
 //                g2d.setStroke(new BasicStroke(5));
-//                int[] coords1 = e1.getCoordsArray();
+//                int[] coords1 = e1.getBoundingCoords();
 //                g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 //
 //                g2d.setColor(Color.CYAN);
 //                for (Node n : nodeCounts.keySet()) {
 //                    if (!n.getXpath().equals(buggy.getXpath())) {
 //                        Element e2 = lf.getElementMap().get(n.getXpath());
-//                        int[] coords2 = e2.getCoordsArray();
+//                        int[] coords2 = e2.getBoundingCoords();
 //                        g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
 //                    }
 //                }

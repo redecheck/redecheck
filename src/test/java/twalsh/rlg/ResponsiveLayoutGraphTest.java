@@ -207,7 +207,7 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void setUpVisCons() {
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("ANode");
         // AGNode agn = new AGNode(el);
         HashMap<String, Element> nodes = new HashMap<>();
@@ -221,7 +221,7 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void nodeMatchWithMatch() {
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("matchable");
        // AGNode agn = new AGNode(el);
 
@@ -240,12 +240,12 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void nodeMatchWithNoMatch() {
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("first");
         // AGNode agn = new AGNode(el);
 
         Element el2 = mock(Element.class);
-        when(el2.getCoordsArray()).thenReturn(new int[4]);
+        when(el2.getBoundingCoords()).thenReturn(new int[4]);
         when(el2.getXpath()).thenReturn("second");
         // AGNode el2 = new AGNode(el2);
 
@@ -275,7 +275,7 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void testUpdateRemainingNodes() throws Exception {
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("first");
         LayoutFactory lf = spy(new LayoutFactory("[]"));
 
@@ -294,7 +294,7 @@ public class ResponsiveLayoutGraphTest {
     @Test
     public void testUpdateAppearingNode() throws Exception {
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("newOne");
         LayoutFactory lf = spy(new LayoutFactory("[]"));
         HashMap<String, Element> tempToMatch = new HashMap<>();
@@ -330,7 +330,7 @@ public class ResponsiveLayoutGraphTest {
         map.put(n3.getXpath(), vc);
 
         Element el = mock(Element.class);
-        when(el.getCoordsArray()).thenReturn(new int[4]);
+        when(el.getBoundingCoords()).thenReturn(new int[4]);
         when(el.getXpath()).thenReturn("first");
         LayoutFactory lf = spy(new LayoutFactory("[]"));
         HashMap<String, Element> prevToMatch = new HashMap<>();
@@ -349,13 +349,13 @@ public class ResponsiveLayoutGraphTest {
     public void setUpAlignmentCons() {
         HashMap<String, AlignmentConstraint> alCons = new HashMap<>();
         Element el1 = mock(Element.class);
-        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
         when(el1.getXpath()).thenReturn("first");
         Element el2 = mock(Element.class);
-        when(el2.getCoordsArray()).thenReturn(new int[]{25, 25, 75, 75});
+        when(el2.getBoundingCoords()).thenReturn(new int[]{25, 25, 75, 75});
         when(el2.getXpath()).thenReturn("second");
         Element el3 = mock(Element.class);
-        when(el3.getCoordsArray()).thenReturn(new int[]{75, 75, 90, 90});
+        when(el3.getBoundingCoords()).thenReturn(new int[]{75, 75, 90, 90});
         when(el3.getXpath()).thenReturn("third");
 
         Node n1 = new Node(el1.getXpath());
@@ -613,12 +613,12 @@ public class ResponsiveLayoutGraphTest {
 ////    @Test
 ////    public void testGenerateEdgeMap() {
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el1.getXpath()).thenReturn("first");
 ////        when(el1.getTagName()).thenReturn("BODY");
 //       // AGNode el1 = new AGNode(el1);
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[]{25, 25, 75, 75});
+////        when(el2.getBoundingCoords()).thenReturn(new int[]{25, 25, 75, 75});
 ////        when(el2.getXpath()).thenReturn("second");
 //       // AGNode el2 = new AGNode(el2);
 ////
@@ -675,12 +675,12 @@ public class ResponsiveLayoutGraphTest {
 //    @Test
 //    public void testPopulateWidthArrays() throws Exception {
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("parent");
 //        when(el1.getTagName()).thenReturn("BODY");
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {25,10,75,90});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {25,10,75,90});
 //        when(el2.getXpath()).thenReturn("node");
 //        when(el2.getTagName()).thenReturn("DIV");
 //        el1.addChild(el2);
@@ -799,13 +799,13 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //        AGNode el2 = spy(new AGNode(el1));
@@ -838,13 +838,13 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //        AGNode el2 = spy(new AGNode(el1));
@@ -878,13 +878,13 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //        AGNode el2 = spy(new AGNode(el1));
@@ -916,7 +916,7 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
@@ -943,7 +943,7 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("parent");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
@@ -970,12 +970,12 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //
@@ -1006,13 +1006,13 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //        AGNode el2 = spy(new AGNode(el1));
@@ -1045,13 +1045,13 @@ public class ResponsiveLayoutGraphTest {
 //
 //        // Mock Dom and AG
 //        Element el1 = mock(Element.class);
-//        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el1.getXpath()).thenReturn("node");
 //        when(el1.getTagName()).thenReturn("BODY");
 //        AGNode el1 = spy(new AGNode(el1));
 //
 //        Element el2 = mock(Element.class);
-//        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+//        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 //        when(el2.getXpath()).thenReturn("parent");
 //        when(el2.getTagName()).thenReturn("BODY");
 //        AGNode el2 = spy(new AGNode(el1));
@@ -1086,14 +1086,14 @@ public class ResponsiveLayoutGraphTest {
 ////        // Mock Dom and AG
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {10,0,90,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {10,0,90,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        doReturn("BODY").when(el1).getTagName();
 ////        doReturn(80).when(rlg).getWidthOfElement(el1);
 //       // AGNode el1 = spy(new AGNode(el1));
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        doReturn("BODY").when(el2).getTagName();
 ////        doReturn(100).when(rlg).getWidthOfElement(el2);
@@ -1130,14 +1130,14 @@ public class ResponsiveLayoutGraphTest {
 ////        // Mock Dom and AG
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        doReturn("BODY").when(el1).getTagName();
 ////        doReturn(50).when(rlg).getWidthOfElement(el1);
 //       // AGNode el1 = spy(new AGNode(el1));
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        doReturn("BODY").when(el2).getTagName();
 ////        doReturn(100).when(rlg).getWidthOfElement(el2);
@@ -1172,25 +1172,25 @@ public class ResponsiveLayoutGraphTest {
 ////
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {10,0,90,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {10,0,90,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        when(el1.getTagName()).thenReturn("DIV");
 //////        doReturn(80).when(rlg).getWidthOfElement(el1);
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        when(el2.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(rlg).getWidthOfElement(el2);
 ////
 ////        Element el3 = mock(Element.class);
-////        when(el3.getCoordsArray()).thenReturn(new int[] {25,0,75,100});
+////        when(el3.getBoundingCoords()).thenReturn(new int[] {25,0,75,100});
 ////        when(el3.getXpath()).thenReturn("node");
 ////        when(el3.getTagName()).thenReturn("DIV");
 //////        doReturn(50).when(rlg).getWidthOfElement(el3);
 ////
 ////        Element el4 = mock(Element.class);
-////        when(el4.getCoordsArray()).thenReturn(new int[] {0,0,90,100});
+////        when(el4.getBoundingCoords()).thenReturn(new int[] {0,0,90,100});
 ////        when(el4.getXpath()).thenReturn("parent");
 ////        when(el4.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(rlg).getWidthOfElement(el4);
@@ -1228,28 +1228,28 @@ public class ResponsiveLayoutGraphTest {
 ////
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {10,0,90,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {10,0,90,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        when(el1.getTagName()).thenReturn("BODY");
 //////        doReturn(80).when(el1).getWidth();
 //       AGNode el1 = spy(new AGNode(el1));
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        when(el2.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(el2).getWidth();
 //       AGNode el2 = spy(new AGNode(el2));
 ////
 ////        Element el3 = mock(Element.class);
-////        when(el3.getCoordsArray()).thenReturn(new int[] {10,0,90,100});
+////        when(el3.getBoundingCoords()).thenReturn(new int[] {10,0,90,100});
 ////        when(el3.getXpath()).thenReturn("node");
 ////        when(el3.getTagName()).thenReturn("BODY");
 //////        doReturn(80).when(el3).getWidth();
 //       AGNode agn3 = spy(new AGNode(el3));
 ////
 ////        Element el4 = mock(Element.class);
-////        when(el4.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el4.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el4.getXpath()).thenReturn("parent");
 ////        when(el4.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(el4).getWidth();
@@ -1288,28 +1288,28 @@ public class ResponsiveLayoutGraphTest {
 ////
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {25,0,75,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {25,0,75,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        when(el1.getTagName()).thenReturn("BODY");
 //////        doReturn(50).when(el1).getWidth();
 //       AGNode el1 = spy(new AGNode(el1));
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {25,0,75,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {25,0,75,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        when(el2.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(el2).getWidth();
 //       AGNode el2 = spy(new AGNode(el2));
 ////
 ////        Element el3 = mock(Element.class);
-////        when(el3.getCoordsArray()).thenReturn(new int[] {25,0,75,100});
+////        when(el3.getBoundingCoords()).thenReturn(new int[] {25,0,75,100});
 ////        when(el3.getXpath()).thenReturn("node");
 ////        when(el3.getTagName()).thenReturn("BODY");
 //////        doReturn(50).when(el3).getWidth();
 //       AGNode agn3 = spy(new AGNode(el3));
 ////
 ////        Element el4 = mock(Element.class);
-////        when(el4.getCoordsArray()).thenReturn(new int[] {25,0,75,100});
+////        when(el4.getBoundingCoords()).thenReturn(new int[] {25,0,75,100});
 ////        when(el4.getXpath()).thenReturn("parent");
 ////        when(el4.getTagName()).thenReturn("BODY");
 //////        doReturn(100).when(el4).getWidth();
@@ -1349,12 +1349,12 @@ public class ResponsiveLayoutGraphTest {
 ////
 ////        // Mock Dom and AG
 ////        Element el1 = mock(Element.class);
-////        when(el1.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el1.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el1.getXpath()).thenReturn("node");
 ////        doReturn("BODY").when(el1).getTagName();
 ////
 ////        Element el2 = mock(Element.class);
-////        when(el2.getCoordsArray()).thenReturn(new int[] {0,0,100,100});
+////        when(el2.getBoundingCoords()).thenReturn(new int[] {0,0,100,100});
 ////        when(el2.getXpath()).thenReturn("parent");
 ////        doReturn("BODY").when(el2).getTagName();
 ////

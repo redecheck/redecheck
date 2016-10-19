@@ -2,7 +2,6 @@ package twalsh.analysis;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.internal.runners.statements.Fail;
 import org.openqa.selenium.WebDriver;
 import twalsh.clustering.FailureReportClusterBot;
 import twalsh.layout.Element;
@@ -90,8 +89,8 @@ public class RLGAnalyser {
                 HashMap<String, Element> elements = l.getElements();
                 Element e1 = elements.get(ac.getNode1().getXpath());
                 Element e2 = elements.get(ac.getNode2().getXpath());
-                int[] c1 = e1.getCoordsArray();
-                int[] c2 = e2.getCoordsArray();
+                int[] c1 = e1.getBoundingCoords();
+                int[] c2 = e2.getBoundingCoords();
 
                 Rectangle r1 = new Rectangle(c1[0], c1[1], c1[2] - c1[0], c1[3] - c1[1]);
                 Rectangle r2 = new Rectangle(c2[0], c2[1], c2[2] - c2[0], c2[3] - c2[1]);
@@ -124,10 +123,10 @@ public class RLGAnalyser {
 
                 Element ip = elements.get(parent.getXpath());
 
-                int diffR = e.getCoordsArray()[2] - ip.getCoordsArray()[2];
-                int diffB = e.getCoordsArray()[3] - ip.getCoordsArray()[3];
-                int diffL = ip.getCoordsArray()[0]-e.getCoordsArray()[0];
-                int diffT = ip.getCoordsArray()[1]-e.getCoordsArray()[1];
+                int diffR = e.getBoundingCoords()[2] - ip.getBoundingCoords()[2];
+                int diffB = e.getBoundingCoords()[3] - ip.getBoundingCoords()[3];
+                int diffL = ip.getBoundingCoords()[0]-e.getBoundingCoords()[0];
+                int diffT = ip.getBoundingCoords()[1]-e.getBoundingCoords()[1];
 
                 if (diffR == 1 || diffB == 1 || diffL == 1 || diffT == 1) {
 //                    System.out.println("One pixel overflow");
@@ -250,6 +249,7 @@ public class RLGAnalyser {
                             }
                         }
                         if (!olPrev || !olNext) {
+                            checkForActualContentOverlap(ac);
                             OverlappingFailure oe = new OverlappingFailure(ac);
                             errors.add(oe);
                         }
@@ -257,6 +257,14 @@ public class RLGAnalyser {
                 }
             }
         }
+    }
+
+    private void checkForActualContentOverlap(AlignmentConstraint ac) {
+        int widthToCheck = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
+        LayoutFactory lf = layouts.get(widthToCheck);
+
+        Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
+
     }
 
     private HashSet<Node> getAncestry(Node node1, int i) {
@@ -317,8 +325,8 @@ public class RLGAnalyser {
 //                            HashMap<String, Element> elements = l.getElements();
 //                            Element e1 = elements.get(ac.getNode1().getXpath());
 //                            Element e2 = elements.get(ac.getNode2().getXpath());
-//                            int[] c1 = e1.getCoordsArray();
-//                            int[] c2 = e2.getCoordsArray();
+//                            int[] c1 = e1.getBoundingCoords();
+//                            int[] c2 = e2.getBoundingCoords();
 //
 //                            Rectangle r1 = new Rectangle(c1[0], c1[1], c1[2] - c1[0], c1[3] - c1[1]);
 //                            Rectangle r2 = new Rectangle(c2[0], c2[1], c2[2] - c2[0], c2[3] - c2[1]);
@@ -504,10 +512,10 @@ public class RLGAnalyser {
                                     Element e1 = elements.get(n.getXpath());
                                     Element ip = elements.get(intendedParent.getXpath());
 
-                                    int diffR = ip.getCoordsArray()[2]-e1.getCoordsArray()[2];
-                                    int diffB = ip.getCoordsArray()[3]-e1.getCoordsArray()[3];
-                                    int diffL = e1.getCoordsArray()[0]-ip.getCoordsArray()[0];
-                                    int diffT = e1.getCoordsArray()[1]-ip.getCoordsArray()[1];
+                                    int diffR = ip.getBoundingCoords()[2]-e1.getBoundingCoords()[2];
+                                    int diffB = ip.getBoundingCoords()[3]-e1.getBoundingCoords()[3];
+                                    int diffL = e1.getBoundingCoords()[0]-ip.getBoundingCoords()[0];
+                                    int diffT = e1.getBoundingCoords()[1]-ip.getBoundingCoords()[1];
 
 
 //

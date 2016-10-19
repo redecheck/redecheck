@@ -53,11 +53,11 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);
 //        g2d.setStroke(new BasicStroke(5));
-        int[] coords1 = e1.getCoordsArray();
+        int[] coords1 = e1.getBoundingCoords();
         g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 
         g2d.setColor(Color.CYAN);
-        int[] coords2 = e2.getCoordsArray();
+        int[] coords2 = e2.getBoundingCoords();
         g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
         g2d.dispose();
         try {
@@ -81,11 +81,11 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 //        g2d = img.createGraphics();
 //        g2d.setColor(Color.RED);
 //        g2d.setStroke(new BasicStroke(5));
-//        coords1 = e1.getCoordsArray();
+//        coords1 = e1.getBoundingCoords();
 //        g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 //
 //        g2d.setColor(Color.CYAN);
-//        coords2 = e2.getCoordsArray();
+//        coords2 = e2.getBoundingCoords();
 //        g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
 //        g2d.dispose();
 //        try {
@@ -110,11 +110,11 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 //        g2d = img.createGraphics();
 //        g2d.setColor(Color.RED);
 //        g2d.setStroke(new BasicStroke(5));
-//        coords1 = e1.getCoordsArray();
+//        coords1 = e1.getBoundingCoords();
 //        g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 //
 //        g2d.setColor(Color.CYAN);
-//        coords2 = e2.getCoordsArray();
+//        coords2 = e2.getBoundingCoords();
 //        g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
 //        g2d.dispose();
 //        try {
