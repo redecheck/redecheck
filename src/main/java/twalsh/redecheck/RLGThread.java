@@ -128,11 +128,11 @@ public class RLGThread implements Runnable {
 //            System.out.println(errors.size() + " ERRORS FOUND");
             this.swf.getReport().stop();
 
-            LogEntries logs = webDriver.manage().logs().get("browser");
-            for (LogEntry entry : logs) {
-                System.out.println(entry.getMessage());
-                //do something useful with the data
-            }
+//            LogEntries logs = webDriver.manage().logs().get("browser");
+//            for (LogEntry entry : logs) {
+//                System.out.println(entry.getMessage());
+//                //do something useful with the data
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();

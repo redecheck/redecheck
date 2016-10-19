@@ -2,7 +2,6 @@ package twalsh.layout;
 
 import com.infomatiq.jsi.Rectangle;
 import com.infomatiq.jsi.rtree.RTree;
-import edu.gatech.xpert.dom.DomNode;
 import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,18 +39,8 @@ public class LayoutFactory {
         buildRTree(dom);
         resizeBodyElement();
         layout = new Layout(rtree, rectangles, xpaths, elements);
-
-//        Element e1 = this.getElementMap().get("/HTML/BODY/DIV[2]/DIV[2]");
-//        Element e2 = this.getElementMap().get("/HTML/BODY/DIV[2]/DIV[2]/DIV[2]/FORM/DIV/INPUT");
-//        Element ip = this.getElementMap().get("/HTML/BODY/DIV[2]/DIV[2]/DIV[2]/FORM/DIV");
-//        Element bodydiv = this.getElementMap().get("/HTML/BODY/DIV[2]");
-//
-//        System.out.println(e1 + "   " + e1.getParent().getXpath());
-//        System.out.println(e2 + "   " + e2.getParent().getXpath());
-//        System.out.println(ip + "   " + ip.getParent().getXpath());
-//        System.out.println(bodydiv + "   " + bodydiv.getParent().getXpath());
     }
-
+    
     public void buildRTree(String dom) {
         rtree = new RTree();
         rtree.init(null);
@@ -77,19 +66,6 @@ public class LayoutFactory {
                             if (e.getXpath().equals("/HTML/BODY")) {
                                 bodyID = numElements;
                             }
-//                            if (e.getXpath().equals("/HTML/BODY/HEADER/DIV/DIV")) {
-//                                System.out.println("P " + r);
-//                                r1 = r;
-//                            }
-//                            if (e.getXpath().equals("/HTML/BODY/HEADER/DIV/DIV/DIV")) {
-//                                System.out.println("C " + r);
-//                                r2 = r;
-//                            }
-//                            if (e.getXpath().equals("/HTML/BODY/DIV/DIV[2]")) {
-//                                System.out.println("P " + r);
-//                                r3 = r;
-//                            }
-
                             numElements++;
                         }
                     } catch (Exception ex ) {
@@ -141,7 +117,8 @@ public class LayoutFactory {
     }
 
     public Element getElementFromDomData(JSONObject obj) throws JSONException {
-        int[] coords = getCoords(obj);
+        int[] coords = getCoords(obj, true);
+        int[] contentCoords = getCoords(obj, false);
         if (!Arrays.equals(new int[]{0,0,0,0}, coords)) {
             try {
                 String xpath = obj.getString("xpath");
@@ -187,18 +164,8 @@ public class LayoutFactory {
     }
 
     private boolean childOfNoSizeElement(String xpath) {
-//        if (!tag.equals("DIV")) {
-//            for (String ns : noSizeElements) {
-//                if (xpath.contains(ns)) {
-////                System.out.println(xpath + " was child of " + ns);
-//                    return true;
-//                }
-//            }
-//        }
-//        String tag = parseTagName(xpath);
         for (String ns : nonVisibleElements) {
             if (xpath.contains(ns)) {
-//                System.out.println(xpath + " was child of " + ns);
                 return true;
             }
         }
@@ -206,25 +173,21 @@ public class LayoutFactory {
         return false;
     }
 
-    public static int[] getCoords(JSONObject ob) {
+    public static int[] getCoords(JSONObject ob, boolean b) {
         try {
-            JSONArray data = ob.getJSONArray("coord");
-            Double height = data.getDouble(3)-data.getDouble(1);
-            Double width = data.getDouble(2)-data.getDouble(0);
-//            if (ob.getString("xpath").equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL/LI[9]/LABEL/INPUT")) {
-//                System.out.println("L/I: " + data + " " + width + "x"+ height);
-//            }
-//            if (ob.getString("xpath").equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL/LI[9]/LABEL")) {
-//                System.out.println("L: " + data + " " + width + "x"+ height);
-//            }
-//            if (ob.getString("xpath").equals("/HTML/BODY/DIV/FORM/DIV[2]")) {
-//                System.out.println("D: " + data + " " + width + "x"+ height);
-//            }
-
-            int[] coords = { data.getInt(0), data.getInt(1), data.getInt(2), data.getInt(3) };
-
-//            System.out.println("INTS: " + Arrays.toString(coords));
-            return coords;
+            if (b) {
+                JSONArray data = ob.getJSONArray("coord");
+                Double height = data.getDouble(3) - data.getDouble(1);
+                Double width = data.getDouble(2) - data.getDouble(0);
+                int[] coords = {data.getInt(0), data.getInt(1), data.getInt(2), data.getInt(3)};
+                return coords;
+            } else {
+                JSONArray data = ob.getJSONArray("contentCoords");
+//                Double height = data.getDouble(3) - data.getDouble(1);
+//                Double width = data.getDouble(2) - data.getDouble(0);
+                int[] coords = {data.getInt(0), data.getInt(1), data.getInt(2), data.getInt(3)};
+                return coords;
+            }
         } catch (Exception e) {
             System.out.println("Error while layout coordinates");
             e.printStackTrace();

@@ -1,5 +1,0 @@
-No visual overflow of content
-No visual overlap
-Social media widgets overlapping black shadow
-"Find Forum User" wraps from navigation list
-"Find Forum User" wraps from navigation list

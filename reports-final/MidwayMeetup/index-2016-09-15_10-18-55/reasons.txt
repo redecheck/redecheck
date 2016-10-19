@@ -1,6 +1,0 @@
-No content obscured by viewport overflow
-"Where is Everyone?" form overlapping with main map container
-No visual overflow
-No visual overlap
-No visual overflow
-Button clearly obscured by overlap with other form

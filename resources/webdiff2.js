@@ -245,8 +245,11 @@ function getContentRectangle(node){
 		// Element width and height minus padding and border
 		elementWidth = element.offsetWidth - paddingX - borderX;
 		elementHeight = element.offsetHeight - paddingY - borderY;
-
-
+		var contentX = pos.x + parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth);
+		var contentY = pos.y + parseFloat(cs.paddingTop) + parseFloat(cs.borderTopWidth);
+		var contentX2 = pos.x2 - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth);
+		var contentY2 = pos.y2 - parseFloat(cs.paddingBottom) - parseFloat(cs.borderBottomWidth);
+		return "["+[contentX, contentY, contentX2, contentY2]+"]";
 	} catch(e){
 		return "["+[-1,-1,-1,-1]+"]";
 	}
@@ -447,7 +450,8 @@ while(nodes.length > 0){
 			  c('xpath', n, getXPath, true),
 			  c('visible', n, isVisible),
 			  c('overflow', n, getOverflow),
-			  c('coord', n, getDOMCoords)];
+			  c('coord', n, getDOMCoords),
+			  c('contentCoords', n, getContentRectangle)];
 
 
 		  //filter out & add to data
