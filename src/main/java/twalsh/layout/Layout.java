@@ -136,39 +136,7 @@ public class Layout {
             }
         }
 
-        for (Relationship r : relationships.values()) {
-//            if (r.getNode1().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV[3]") && r.getNode2().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI")) {
-//                System.out.println(r);
-//            }
-//            if (r.getNode2().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV[3]") && r.getNode1().getXpath().equals("/HTML/BODY/MAIN/DIV/DIV/DIV/UL/LI")) {
-//                System.out.println(r);
-//            }
-            if (r instanceof Sibling) {
-//                if ( (r.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) || (r.getNode1().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV"))) {
-//                    System.out.println(r);
-//                }
-//                if ( (r.getNode1().getXpath().equals("/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI")) && (r.getNode2().getXpath().equals("/HTML/BODY/HEADER/DIV/DIV[2]/NAV/DIV/UL/LI[4]"))) {
-//                    System.out.println(r);
-//                }
-            } else {
-                // It's a parent-child, this is for debugging things
-//                if (r.getNode2().getXpath().equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL/LI[9]/LABEL/INPUT")) {
-//                    System.out.println(r);
-//                }
-//                if (r.getNode2().getXpath().equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL/LI[9]/LABEL")) {
-//                    System.out.println(r);
-//                }
-//                if (r.getNode2().getXpath().equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL/LI[9]")) {
-//                    System.out.println(r);
-//                }
-//                if (r.getNode2().getXpath().equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]/UL")) {
-//                    System.out.println(r);
-//                }
-//                if (r.getNode2().getXpath().equals("/HTML/BODY/DIV/FORM/DIV[2]/UL/LI[3]")) {
-//                    System.out.println(r);
-//                }
-            }
-        }
+//
     }
 
     private boolean flippedParent(ParentChild pc) {

@@ -54,8 +54,8 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         LayoutFactory lf = lfs.get(captureWidth);
         Element e1 = lf.getElementMap().get(constraint.getNode1().getXpath());
         Element e2 = lf.getElementMap().get(constraint.getNode2().getXpath());
-
-        System.out.println(Arrays.toString(e1.getContentCoords()));
+        System.out.println(constraint);
+        System.out.println(checkSeriousness(e1, e2, webDriver));
 
 //        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
 //        System.out.println(we1.getRect());
@@ -81,6 +81,32 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean checkSeriousness(Element e1, Element e2, WebDriver webDriver) {
+        Rectangle mbb1 = e1.getRectangle();
+        Rectangle mbb2 = e2.getRectangle();
+        Rectangle conbb1 = e1.getContentRectangle();
+        Rectangle conbb2 = e2.getContentRectangle();
+
+        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
+        WebElement we2 = webDriver.findElement(By.xpath(constraint.getNode2().getXpath()));
+        String position1 = we1.getCssValue("position");
+        String position2 = we2.getCssValue("position");
+        String float1 = we1.getCssValue("float");
+        String float2 = we2.getCssValue("float");
+        System.out.println(float1);
+        System.out.println(float2);
+        if (conbb1.intersects(conbb2)) {
+            if (position1.equals("absolute") || position2.equals("absolute")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
     @Override

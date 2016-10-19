@@ -22,7 +22,8 @@ public class Element {
     Element parent;
     ArrayList<Element> children;
     HashMap<String, String> styles;
-    Rectangle rectangle;
+    Rectangle boundingRectangle;
+    Rectangle contentRectangle;
 
     public HashMap<String, String> getStyles() {
         return styles;
@@ -37,7 +38,7 @@ public class Element {
     }
 
     public Rectangle getRectangle() {
-        return rectangle;
+        return boundingRectangle;
     }
 
     public Element(String x, int x1, int y1, int x2, int y2) {
@@ -47,7 +48,7 @@ public class Element {
         this.y1 = y1;
         this.y2 = y2;
         boundingCoords = new int[] {x1,y1,x2,y2};
-        this.rectangle = new Rectangle(x1, y1, x2-x1, y2 - y1);
+        this.boundingRectangle = new Rectangle(x1, y1, x2-x1, y2 - y1);
     }
 
     public void setParent(Element p) {
@@ -84,6 +85,10 @@ public class Element {
     }
 
     private void updateContentRectangle() {
-        this.rectangle = new Rectangle(contentCoords[0], contentCoords[1], contentCoords[2]-contentCoords[0], contentCoords[3] - contentCoords[1]);
+        this.contentRectangle = new Rectangle(contentCoords[0], contentCoords[1], contentCoords[2]-contentCoords[0], contentCoords[3] - contentCoords[1]);
+    }
+
+    public Rectangle getContentRectangle() {
+        return this.contentRectangle;
     }
 }
