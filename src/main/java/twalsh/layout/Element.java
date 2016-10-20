@@ -91,4 +91,9 @@ public class Element {
     public Rectangle getContentRectangle() {
         return this.contentRectangle;
     }
+
+
+    public void setStyles(HashMap<String,String> styles) {
+        this.styles = styles;
+    }
 }

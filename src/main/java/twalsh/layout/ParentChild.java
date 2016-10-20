@@ -113,13 +113,6 @@ public class ParentChild extends Relationship {
         int dH = 3;
 //        int dH = ch / 3;
 
-//        if (child.getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) {
-////            System.out.println(dW);
-////                        System.out.println(parent.getRectangle());
-////            System.out.println(child.getRectangle());
-//            System.out.println(px + " " + cx);
-//            System.out.println();
-//        }
 
         if (equals(px, cx, dW_delta)
                 && equals(child.x1, parent.x1, dW_delta)
@@ -128,6 +121,13 @@ public class ParentChild extends Relationship {
         } else {
             if (equals(px, cx, dW)) {
                 setCentreJust(true);
+                String mLeft = child.styles.get("margin-left");
+                String mRight = child.styles.get("margin-right");
+                if (mLeft.equals("0px") && mRight.equals("0px")) {
+                    System.out.println(child.getXpath() + " was intentionally centralized");
+                } else {
+                    System.out.println(child.getXpath() + " was coincidentally centralized");
+                }
             } else if (equals(child.x1, parent.x1, dW)) {
                 setLeftJust(true);
             } else if (equals(child.x2, parent.x2, dW)) {

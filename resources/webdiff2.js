@@ -380,10 +380,7 @@ function getAllStyles(elem) {
 	if (win.getComputedStyle) { /* Modern browsers */
 		style = win.getComputedStyle(elem, null);
 		for (var i=0; i<style.length; i++) {
-			//if (style[i] != "font-family") {
-			if (style[i].indexOf("padding") != -1) {
-				styles += "'" + style[i] + "':'" + style.getPropertyValue(style[i]).replace(",", "") + "',";
-			}
+			styles += "'" + style[i] + "':'" + style.getPropertyValue(style[i]).replace(",", "") + "',";
 		}
 		if(styles.charAt(styles.length-1) == ','){
 			return styles.substr(0, styles.length-1)+'}';
@@ -452,7 +449,8 @@ while(nodes.length > 0){
 			  c('visible', n, isVisible),
 			  c('overflow', n, getOverflow),
 			  c('coord', n, getDOMCoords),
-			  c('contentCoords', n, getContentRectangle)];
+			  c('contentCoords', n, getContentRectangle),
+			  c('styles', n, getAllStyles)];
 
 
 		  //filter out & add to data

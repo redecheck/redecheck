@@ -54,8 +54,8 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         LayoutFactory lf = lfs.get(captureWidth);
         Element e1 = lf.getElementMap().get(constraint.getNode1().getXpath());
         Element e2 = lf.getElementMap().get(constraint.getNode2().getXpath());
-        System.out.println(constraint);
-        System.out.println(checkSeriousness(e1, e2, webDriver));
+//        System.out.println(constraint);
+//        System.out.println(checkSeriousness(e1, e2, webDriver));
 
 //        WebElement we1 = webDriver.findElement(By.xpath(constraint.getNode1().getXpath()));
 //        System.out.println(we1.getRect());
@@ -84,8 +84,6 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
     }
 
     private boolean checkSeriousness(Element e1, Element e2, WebDriver webDriver) {
-        Rectangle mbb1 = e1.getRectangle();
-        Rectangle mbb2 = e2.getRectangle();
         Rectangle conbb1 = e1.getContentRectangle();
         Rectangle conbb2 = e2.getContentRectangle();
 

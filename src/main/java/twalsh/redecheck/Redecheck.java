@@ -159,9 +159,9 @@ public class Redecheck {
             int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
 //            writeTimes(url, thread.getSwf(), timeStamp);
-            if (timing) {
-                writeTimesSpecial(thread.swf, url, timingID);
-            }
+//            if (timing) {
+//                writeTimesSpecial(thread.swf, url, timingID);
+//            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -572,7 +572,7 @@ public class Redecheck {
 
             // Iterate through all viewport widths
             for (int w : widths) {
-//                System.out.println("\n" + w);
+                System.out.println("\n" + w);
                 // Check if DOM already saved for speed
                 domFile = new File(outFolder + "/" + w + ".js");
                 boolean consecutiveMatches = false;
