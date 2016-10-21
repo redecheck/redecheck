@@ -112,6 +112,11 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
         return null;
     }
 
+    @Override
+    public int[] getBounds() {
+        return new int[0];
+    }
+
 //    @Override
 //    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl) {
 //        int captureWidth = 0;

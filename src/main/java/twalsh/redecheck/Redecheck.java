@@ -572,12 +572,12 @@ public class Redecheck {
 
             // Iterate through all viewport widths
             for (int w : widths) {
-                System.out.println("\n" + w);
+//                System.out.println("\n" + w);
                 // Check if DOM already saved for speed
                 domFile = new File(outFolder + "/" + w + ".js");
                 boolean consecutiveMatches = false;
 
-                wdriver.manage().window().setPosition(new Point(0,0));
+//                wdriver.manage().window().setPosition(new Point(0,0));
 
                 // Resize the browser window
                 wdriver.manage().window().setSize(new Dimension(w, 1000));

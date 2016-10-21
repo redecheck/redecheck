@@ -86,4 +86,11 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
         nodes.add(node);
         return nodes;
     }
+
+    @Override
+    public int[] getBounds() {
+        return new int[] {min, max};
+    }
+
+
 }

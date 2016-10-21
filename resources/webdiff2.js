@@ -449,8 +449,10 @@ while(nodes.length > 0){
 			  c('visible', n, isVisible),
 			  c('overflow', n, getOverflow),
 			  c('coord', n, getDOMCoords),
-			  c('contentCoords', n, getContentRectangle),
-			  c('styles', n, getAllStyles)];
+			  c('contentCoords', n, getContentRectangle)
+			  // ,
+			  // c('styles', n, getAllStyles)
+		  ];
 
 
 		  //filter out & add to data

@@ -154,6 +154,11 @@ public class OverflowFailure extends ResponsiveLayoutFailure {
         return nodes;
     }
 
+    @Override
+    public int[] getBounds() {
+        return new int[] {ofCon.getMin(), ofCon.getMax()};
+    }
+
     public Node getOverflowed() {
         return overflowed;
     }

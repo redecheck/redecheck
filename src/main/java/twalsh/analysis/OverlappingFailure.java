@@ -114,4 +114,9 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         nodes.add(constraint.getNode2());
         return nodes;
     }
+
+    @Override
+    public int[] getBounds() {
+        return new int[] {constraint.getMin(), constraint.getMax()};
+    }
 }

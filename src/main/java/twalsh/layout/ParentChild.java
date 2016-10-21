@@ -121,13 +121,16 @@ public class ParentChild extends Relationship {
         } else {
             if (equals(px, cx, dW)) {
                 setCentreJust(true);
-                String mLeft = child.styles.get("margin-left");
-                String mRight = child.styles.get("margin-right");
-                if (mLeft.equals("0px") && mRight.equals("0px")) {
-                    System.out.println(child.getXpath() + " was intentionally centralized");
-                } else {
-                    System.out.println(child.getXpath() + " was coincidentally centralized");
-                }
+//                String mLeft = child.styles.get("margin-left");
+//                String mRight = child.styles.get("margin-right");
+//                if (child.getXpath().equals("/HTML/BODY/DIV[3]/DIV/DIV[2]/DIV/DIV/DIV/DIV[9]")) {
+//                    System.out.println(mLeft + " " + mRight);
+//                }
+//                if (mLeft.equals("0px") && mRight.equals("0px")) {
+////                    System.out.println(child.getXpath() + " was intentionally centralized");
+//                } else {
+//                    System.out.println(child.getXpath() + " was coincidentally centralized");
+//                }
             } else if (equals(child.x1, parent.x1, dW)) {
                 setLeftJust(true);
             } else if (equals(child.x2, parent.x2, dW)) {

@@ -27,4 +27,16 @@ public class Cluster {
     public void setFailures(ArrayList<ResponsiveLayoutFailure> failures) {
         this.failures = failures;
     }
+
+    public String toString() {
+        String result = "CLUSTER OF " + failures.size() + " FAILURES";
+        for (ResponsiveLayoutFailure rlf : failures) {
+            result += "\n\t" + rlf;
+        }
+        return result;
+    }
+
+    public void add(ResponsiveLayoutFailure rlf) {
+        this.failures.add(rlf);
+    }
 }

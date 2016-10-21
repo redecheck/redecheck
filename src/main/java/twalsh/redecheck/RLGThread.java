@@ -105,16 +105,16 @@ public class RLGThread implements Runnable {
                 oracleLFs.add(lf);
             }
 
-//            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
-//            this.swf.getRlg().stop();
-//            this.swf.getDetect().start();
-//            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
-//            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
-//            this.swf.getDetect().stop();
-////            System.out.println(this.swf.getDetect());
-//
-//            this.swf.getReport().start();
-////            System.out.println("GATHERING SCREENSHOT EXAMPLES FOR FAULTS");
+            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
+            this.swf.getRlg().stop();
+            this.swf.getDetect().start();
+            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
+            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
+            this.swf.getDetect().stop();
+//            System.out.println(this.swf.getDetect());
+
+            this.swf.getReport().start();
+//            System.out.println("GATHERING SCREENSHOT EXAMPLES FOR FAULTS");
 //            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
 //            if (errors.size() > 0) {
 //                for (ResponsiveLayoutFailure error : errors) {
@@ -125,8 +125,8 @@ public class RLGThread implements Runnable {
 ////                System.out.println("No layout errors found!");
 //            }
 //            analyser.writeReport(shortUrl, errors, ts);
-////            System.out.println(errors.size() + " ERRORS FOUND");
-//            this.swf.getReport().stop();
+//            System.out.println(errors.size() + " ERRORS FOUND");
+            this.swf.getReport().stop();
 
 //            LogEntries logs = webDriver.manage().logs().get("browser");
 //            for (LogEntry entry : logs) {

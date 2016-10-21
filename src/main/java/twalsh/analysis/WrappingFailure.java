@@ -95,4 +95,9 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
         nodes.addAll(row);
         return nodes;
     }
+
+    @Override
+    public int[] getBounds() {
+        return new int[] {min, max};
+    }
 }

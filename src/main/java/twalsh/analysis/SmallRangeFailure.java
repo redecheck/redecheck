@@ -137,4 +137,9 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
         nodes.add(ac.getNode2());
         return nodes;
     }
+
+    @Override
+    public int[] getBounds() {
+        return new int[] {ac.getMin(), ac.getMax()};
+    }
 }

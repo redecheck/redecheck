@@ -17,4 +17,5 @@ public abstract class ResponsiveLayoutFailure {
 
     public abstract HashSet<Node> getNodes();
 
+    public abstract int[] getBounds();
 }
