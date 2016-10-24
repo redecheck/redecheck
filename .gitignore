@@ -1,6 +1,6 @@
 .DS_Store
 .vagrant
-/target/
+/target/*
 /output/
 /resources/phantomjs
 /.settings/

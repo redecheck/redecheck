@@ -249,7 +249,7 @@ public class RLGAnalyser {
                             }
                         }
                         if (!olPrev || !olNext) {
-                            checkForActualContentOverlap(ac);
+//                            checkForActualContentOverlap(ac);
                             OverlappingFailure oe = new OverlappingFailure(ac);
                             errors.add(oe);
                         }
@@ -259,17 +259,16 @@ public class RLGAnalyser {
         }
     }
 
-    private void checkForActualContentOverlap(AlignmentConstraint ac) {
-        int widthToCheck = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
-        LayoutFactory lf = layouts.get(widthToCheck);
-
-        Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
-
-    }
+//    private void checkForActualContentOverlap(AlignmentConstraint ac) {
+//        int widthToCheck = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
+//        LayoutFactory lf = layouts.get(widthToCheck);
+//
+//        Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
+//
+//    }
 
     private HashSet<Node> getAncestry(Node node1, int i) {
         HashSet<Node> ancestors = new HashSet<>();
-//        System.out.println("GETTING ANCESTORS FOR " + node1.getXpath());
         ArrayList<Node> workList = new ArrayList<>();
         workList.add(node1);
         ArrayList<Node> analysed = new ArrayList<>();
@@ -675,10 +674,7 @@ public class RLGAnalyser {
                         }
                     }
                 }
-//
-//                if (n.getXpath().equals("/HTML/BODY/DIV[2]/DIV[3]/UL")) {
-//                    System.out.println("BOO");
-//                }
+
                 ArrayList<String> keys = extractRanges(values);
                 ArrayList<String> pcKeys = extractRanges(pcValues);
 
