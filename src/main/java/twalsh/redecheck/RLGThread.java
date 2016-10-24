@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import twalsh.analysis.RLGAnalyser;
@@ -90,6 +91,10 @@ public class RLGThread implements Runnable {
                 String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
                 dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
                 webDriver = Redecheck.getNewDriver(dCaps);
+            } else if (browser.equals("opera")) {
+                DesiredCapabilities capabilities = DesiredCapabilities.operaBlink();
+                capabilities.setJavascriptEnabled(true);
+                webDriver = new OperaDriver(capabilities);
             }
             webDriver.get("file://" +fullUrl);
 //            System.out.println(fullUrl);

@@ -94,6 +94,7 @@ public class Redecheck {
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         System.setProperty("webdriver.chrome.driver", current + "/../../../../Downloads/chromedriver");
+        System.setProperty("webdriver.opera.driver", current + "/../../../../Downloads/operadriver");
         CommandLineParser clp = new CommandLineParser();
         clArgs = args;
         new JCommander(clp, clArgs);
