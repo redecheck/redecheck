@@ -51,7 +51,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>twalsh.redecheck.Redecheck</mainClass>
+                            <mainClass>shef.redecheck.Redecheck</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
