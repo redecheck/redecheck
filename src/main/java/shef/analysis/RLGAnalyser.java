@@ -1,5 +1,6 @@
 package shef.analysis;
 
+import com.google.common.collect.HashBasedTable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -45,9 +46,9 @@ public class RLGAnalyser {
     public ArrayList<ResponsiveLayoutFailure> analyse() {
         errors = new ArrayList<>();
 
-        checkForViewportOverflows();
-        detectOverflowOrOverlap();
-        checkForSmallRanges();
+        checkForViewportOverflows(rlg.getNodes());
+        detectOverflowOrOverlap(rlg.getAlignmentConstraints());
+        checkForSmallRanges(rlg.getAlignmentConstraints());
         checkForWrappingElements();
         filterOutDuplicateReports();
         FailureReportClusterBot clusterbot = new FailureReportClusterBot(errors);
@@ -55,29 +56,10 @@ public class RLGAnalyser {
     }
 
 
-
+    /**
+     * This method filters out repeated reports to make the final outputted reports more useful
+     */
     private void filterOutDuplicateReports() {
-
-
-
-//        ArrayList<ResponsiveLayoutFailure> cloned0 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
-//
-//        for (ResponsiveLayoutFailure rle : cloned0) {
-//            if (rle instanceof SmallRangeFailure) {
-//                for (ResponsiveLayoutFailure rle2 : cloned0) {
-//                    if (rle2 instanceof OverlappingFailure) {
-//                        if (((SmallRangeFailure) rle).ac == ((OverlappingFailure) rle2).constraint) {
-//                            errors.remove(rle);
-//                        }
-//                    }
-//                    if (rle2 instanceof OverflowFailure) {
-//                        if (((SmallRangeFailure) rle).ac == ((OverflowFailure) rle2).getOfCon()) {
-//                            errors.remove(rle);
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
         ArrayList<ResponsiveLayoutFailure> cloned1 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 
@@ -141,42 +123,61 @@ public class RLGAnalyser {
         }
     }
 
-    private void checkForViewportOverflows() {
-        for (Node n : rlg.getNodes().values()) {
+    /**
+     * This method analyses a set of RLG nodes to determine whether any of them overflow the viewport
+     * @param nodes The set of nodes to analyse
+     */
+    private void checkForViewportOverflows(HashMap<String, Node> nodes) {
+
+        // Iterate through all the nodes
+        for (Node n : nodes.values()) {
+            // Don't analyse the BODY tag, as it's the root and therefore has no parent
             if (!n.getXpath().equals("/HTML/BODY")) {
+
+                // Get all the constraints in which the node, n, is the child
                 ArrayList<AlignmentConstraint> pCons = n.getParentConstraints();
+
+                // Iterate through and order the constraints in ascending order of bounds
                 TreeMap<Integer, Integer> conBounds = new TreeMap<>();
                 for (AlignmentConstraint pc : pCons) {
                     conBounds.put(pc.getMin(), pc.getMax());
                 }
-//                 if (n.getXpath().equals("/HTML/BODY/MAIN/DIV[6]/UL/LI/DIV")) {
-//                     System.out.println("BOO");
-//                 }
-                //            System.out.println(n.getXpath());
+
+
                 if (pCons.size() == 0) {
-//                    String key = isVisible(n, vmin, vmax);
+                    /* If no constraints found, it is assumed the node is ALWAYS overflowing the viewport, so reports an
+                    error as such
+                     */
                     int repMin = n.getVisibilityConstraints().get(0).appear;
                     int repMax = n.getVisibilityConstraints().get(0).disappear;
                     ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
                     errors.add(voe);
                 } else {
+                    // Initialises the min value of the gap
                     int gmin = vmin;
                     for (Map.Entry e : conBounds.entrySet()) {
+                        // Updates the max bound of the gap
                         int gmax = (int) e.getKey() - 1;
-                        // System.out.println(gmin + " " + gmax);
+
+                        // If the gap is genuine
                         if (gmin < gmax) {
+                            // Looks to see if the node, n, is visible in the gap
                             String key = isVisible(n, gmin, gmax);
                             if (!key.equals("")) {
+                                // If so, create a viewport overflow failure for the range at which n is visible
                                 int repMin = getNumberFromKey(key, 0);
                                 int repMax = getNumberFromKey(key, 1);
                                 ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
                                 errors.add(voe);
                             }
-
-                            //
                         }
+                        // Update the value of the gap minimum
                         gmin = (int) e.getValue() + 1;
                     }
+
+                    /* Check whether the last constraint end at the final width at which n is visible.
+                        If not, report a viewport overflow failure.
+                     */
                     if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
                         ViewportOverflowFailure voe = new ViewportOverflowFailure(n, gmin, vmax);
                         errors.add(voe);
@@ -186,71 +187,86 @@ public class RLGAnalyser {
         }
     }
 
+    /**
+     * This method investigates whether a node, n, is visible at any viewport widths within a range
+     * @param n the node being investigated
+     * @param gmin the lower bound of the range
+     * @param gmax the upper bound of the range
+     * @return
+     */
     private String isVisible(Node n, int gmin, int gmax) {
+        // Get the visibility constraints of n
         ArrayList<VisibilityConstraint> vcons = n.getVisibilityConstraints();
+
+        // Iterate through each one
         for (VisibilityConstraint vc : vcons) {
             int visMin = vc.appear;
             int visMax = vc.disappear;
+
+            // Check if the constraint intersects the range
             if (gmax >= visMin && gmax <= visMax) {
+                // If so, return the range of widths within the range at which n is visible
                 if (visMin <= gmin) {
                     return gmin+":"+gmax;
                 } else {
                     return visMin + ":" + gmax;
                 }
-//                System.out.println();
             }
-
         }
         return "";
     }
 
-    private void detectOverflowOrOverlap() {
-        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
+    /**
+     * This method examines the alignment constraints from the RLG under test to see if any overlapping or overflowing elements
+     * have been found
+     * @param alignmentConstraints the set of constraints to analyse
+     */
+    private void detectOverflowOrOverlap(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
+
+        // Iterate through all constraints
+        for (AlignmentConstraint ac : alignmentConstraints.values()) {
+            // We only need to look at the sibling ones
             if (ac.getType() == Type.SIBLING) {
+                // Only continue analysis if the "overlapping" attribute label is true
                 if (ac.getAttributes()[10]) {
-//                    System.out.println(ac);
 
-
+                    // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
                     HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
                     HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax()+1);
+
+                    // If node2 in ancestry of node1, it's an overflow
                     if (n1Ancestry.contains(ac.getNode2())) {
                         OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
                         errors.add(ofe);
+                    // If node1 in ancestry of node2, it's an overflow
                     } else if (n2Ancestry.contains(ac.getNode1())) {
                         OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
                         errors.add(ofe);
                     } else {
+                        // Else, it's just an overlap, so begin by obtaining the preceding and succeeding constraints
                         AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
                         AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
-//                        if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/HEADER/DIV/FORM/BUTTON")) {
-//                            System.out.println();
-//                        }
                         boolean olPrev=true,olNext=true;
-//                        if (prev != null && prev.getType() == Type.SIBLING) {
-//                            if (prev.getAttributes()[10] == false) {
-//                                olPrev = true;
-////                                OverlappingFailure oe = new OverlappingFailure(ac);
-////                                errors.add(oe);
-//                            }
-//                        }
+
+                        // Now, investigate whether the two elements were NOT overlapping at either range
+                        // If no matches found, then clearly elements were NOT OVERLAPPING
                         if (prev == null && next == null) {
                             olPrev = false;
                             olNext = false;
                         } else if (prev != null && prev.getType() == Type.SIBLING) {
+                            // Check if elements overlapping in previous constraint
                             if (!prev.getAttributes()[10]) {
                                 olPrev = false;
-//                                OverlappingFailure oe = new OverlappingFailure(ac);
-//                                errors.add(oe);
                             }
                         } else if (next != null && next.getType() == Type.SIBLING) {
+                            // Check if elements overlapping in next constraint
                             if (!next.getAttributes()[10]) {
                                 olNext = false;
-//                                OverlappingFailure oe = new OverlappingFailure(ac);
-//                                errors.add(oe);
                             }
                         }
+
+                        // If elements were not overlapping either before or after, then report the failure
                         if (!olPrev || !olNext) {
-//                            checkForActualContentOverlap(ac);
                             OverlappingFailure oe = new OverlappingFailure(ac);
                             errors.add(oe);
                         }
@@ -260,32 +276,37 @@ public class RLGAnalyser {
         }
     }
 
-//    private void checkForActualContentOverlap(AlignmentConstraint ac) {
-//        int widthToCheck = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
-//        LayoutFactory lf = layouts.get(widthToCheck);
-//
-//        Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
-//
-//    }
-
+    /**
+     * This method traverses the RLG to obtain a set of ancestors for a node at a given viewport width.
+     * @param node1 the node whose ancestry we want
+     * @param i the viewport width at which to traverse
+     * @return
+     */
     private HashSet<Node> getAncestry(Node node1, int i) {
         HashSet<Node> ancestors = new HashSet<>();
+
+        // Initialise the worklist and add the initial node
         ArrayList<Node> workList = new ArrayList<>();
         workList.add(node1);
+
+        // Keeping track of the nodes we've analysed.
         ArrayList<Node> analysed = new ArrayList<>();
         try {
+            // While there's still nodes left.
             while (!workList.isEmpty()) {
+                // Take the next node from the list
                 Node n = workList.remove(0);
 
+                // Get the parent constraints for the current node
                 ArrayList<AlignmentConstraint> cons = n.getParentConstraints();
                 for (AlignmentConstraint ac : cons) {
+                    // Check if this constraint is true at the desired width
                     if (ac.getMin() <= i && ac.getMax() >= i) {
-//                        System.out.println(ac.getNode1().getXpath());
+                        // Add the parent to the list of ancestors and the worklist
                         ancestors.add(ac.getNode1());
                         if (!analysed.contains(ac.getNode1())) {
                             workList.add(ac.getNode1());
                         }
-
                     }
                 }
                 analysed.add(n);
@@ -311,74 +332,6 @@ public class RLGAnalyser {
         return toReturn;
     }
 
-    private void checkForOverlappingElements() {
-        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
-            if (ac.getType() == Type.SIBLING) {
-                if (!onePixelOverflows.contains(ac.getNode1()) && !onePixelOverflows.contains(ac.getNode2())) {
-                    if (ac.getAttributes()[10]) {
-                        try {
-//                            int captureWidth = (ac.getMin() + ac.getMax()) / 2;
-//                            HashMap<Integer, LayoutFactory> lfs = new HashMap<Integer, LayoutFactory>();
-//                            BufferedImage img = RLGThread.getScreenshot(captureWidth, -1, lfs, driver, url);
-//                            LayoutFactory lf = lfs.get(captureWidth);
-//                            Layout l = lf.layout;
-//                            HashMap<String, Element> elements = l.getElements();
-//                            Element e1 = elements.get(ac.getNode1().getXpath());
-//                            Element e2 = elements.get(ac.getNode2().getXpath());
-//                            int[] c1 = e1.getBoundingCoords();
-//                            int[] c2 = e2.getBoundingCoords();
-//
-//                            Rectangle r1 = new Rectangle(c1[0], c1[1], c1[2] - c1[0], c1[3] - c1[1]);
-//                            Rectangle r2 = new Rectangle(c2[0], c2[1], c2[2] - c2[0], c2[3] - c2[1]);
-//                            Rectangle intersection = r1.intersection(r2);
-////                        System.out.println(intersection);
-//
-//                            HashMap<Integer, Integer> colourCounts = new HashMap<>();
-//                            for (int x = intersection.x; x < intersection.x + intersection.width; x++) {
-//                                for (int y = intersection.y; y < intersection.y + intersection.height; y++) {
-//                                    try {
-//                                        int clr = img.getRGB(x, y);
-//                                        if (!colourCounts.containsKey(clr)) {
-//                                            colourCounts.put(clr, 0);
-//                                        }
-//                                        int currentCount = colourCounts.get(clr);
-//                                        colourCounts.put(clr, currentCount + 1);
-//                                    } catch (ArrayIndexOutOfBoundsException e) {
-//                                    }
-//
-//
-//                                }
-//                            }
-//                            if (colourCounts.size() > 1) {
-//                                int totalPixels = intersection.height * intersection.width;
-//                                int largest = 0;
-//                                for (Integer i : colourCounts.keySet()) {
-//                                    if (largest == 0) {
-//                                        largest = i;
-//                                    } else if (colourCounts.get(i) > colourCounts.get(largest)) {
-//                                        largest = i;
-//                                    }
-//                                }
-//                                float percent = (float) colourCounts.get(largest) / totalPixels;
-//                                if (percent < 0.9) {
-//                                if (!checkForRelatedOverflowErrors(ac)) {
-
-                                    OverlappingFailure oe = new OverlappingFailure(ac);
-//                                    System.out.println(oe);
-                                    errors.add(oe);
-//                                }
-
-//                                }
-//                                }
-//                            }
-                        } catch (Exception e) {
-                            System.out.println("ERROR WITH " + ac);
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private boolean checkForRelatedOverflowErrors(AlignmentConstraint ac) {
         Node ac1 = ac.getNode1();
@@ -401,13 +354,20 @@ public class RLGAnalyser {
         return false;
     }
 
-    private void checkForSmallRanges() {
-        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
+    /**
+     * This method analyses the constraints to see if any represent potential small-range layout failures
+     * @param alignmentConstraints the set of constraints to analyse
+     */
+    private void checkForSmallRanges(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
+        for (AlignmentConstraint ac : alignmentConstraints.values()) {
+            // See if the bounds width is less than the threshold, in this case, 5 pixels
             if ( (ac.getMax() - ac.getMin()) < 5 ) {
+                // Obtain the previous and following constraints
                 AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, true);
                 AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, true);
+
+                // If matches were found for both, report the constraint as a small-range failure
                 if (prev != null && next != null) {
-//                if (ac.getMin() != vmin && ac.getMax() != vmax) {
                     SmallRangeFailure sre = new SmallRangeFailure(ac, prev, next);
                     errors.add(sre);
                 }
@@ -415,6 +375,13 @@ public class RLGAnalyser {
         }
     }
 
+    /**
+     * This method searches for the constraint either immediately before or after a given constraint
+     * @param ac the constraint we're investigating
+     * @param i whether we want the preceding (true) or following (false) constraint
+     * @param matchType whether we care about matching the type as well as the nodes
+     * @return the matched constraint, if one was found
+     */
     private AlignmentConstraint getPreviousOrNextConstraint(AlignmentConstraint ac, boolean i, boolean matchType) {
         String ac1xp = ac.getNode1().getXpath();
         String ac2xp = ac.getNode2().getXpath();
@@ -451,111 +418,22 @@ public class RLGAnalyser {
         return null;
     }
 
-    private void checkForOverflowingElements() {
-
-        for (Node n : rlg.getNodes().values()) {
-            ArrayList<AlignmentConstraint> pCons = n.getParentConstraints();
-            if (pCons.size() > 1) {
-                // Check the parent nodes are the same for each one.
-                HashMap<Node, ArrayList<AlignmentConstraint>> grouped = new HashMap<>();
-                for (int i = 0; i < pCons.size(); i++) {
-                    AlignmentConstraint nextCon = pCons.get(i);
-                    if (!grouped.containsKey(nextCon.getNode1())) {
-                        grouped.put(nextCon.getNode1(), new ArrayList<AlignmentConstraint>());
-                    }
-                    grouped.get(nextCon.getNode1()).add(nextCon);
-                }
-                if (grouped.size() > 1) {
-                    String ipXPath = "";
-                    Node intendedParent = null;
-
-                    // Work out the intended parent based upon the length's of the node's XPath expressions
-                    for (Node nn : grouped.keySet()) {
-                        int countNN = StringUtils.countMatches(nn.getXpath(), "/");
-                        int countIP = StringUtils.countMatches(ipXPath, "/");
-                        if ((grouped.get(nn).get(0).getNode2().getXpath()).contains(nn.getXpath()) && ((countNN > countIP) )) {
-//                                || ipXPath.equals(""))) {
-                            if (nn.getXpath().length() > ipXPath.length()) {
-                                intendedParent = nn;
-                                ipXPath = nn.getXpath();
-                            }
-                        }
-                    }
-
-                    if (intendedParent == null) {
-//                        System.out.println();
-                        intendedParent = pCons.get(0).getNode1();
-                        ipXPath = intendedParent.getXpath();
-                    }
-
-//                    ArrayList<AlignmentConstraint> ol = getOverlappingConstraints(n);
-                    boolean onePxOverflow = false;
-
-                    for (Node nn : grouped.keySet()) {
-                        try {
-                            if (!nn.getXpath().equals(intendedParent.getXpath())) {
-
-                                // CHECK HERE FOR OVERLAPPING PREVIOUS PARENT!!!
-
-                                AlignmentConstraint ac = grouped.get(nn).get(0);
-
-                                // Check if intended parent is visible
-                                if (intendedParentVisible(intendedParent, grouped.get(nn).get(0))) {
-                                    int captureWidth =  (ac.getMin() + ac.getMax()) / 2;
-//                                    HashMap<Integer, LayoutFactory> lfs = new HashMap<Integer, LayoutFactory>();
-
-//                                    BufferedImage img = RLGThread.getScreenshot(captureWidth, -1, lfs, driver, url);
-                                    int chosenWidth = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
-                                    LayoutFactory lf = layouts.get(chosenWidth);
-                                    Layout l = lf.layout;
-                                    HashMap<String, Element> elements = l.getElements();
-                                    Element e1 = elements.get(n.getXpath());
-                                    Element ip = elements.get(intendedParent.getXpath());
-
-                                    int diffR = ip.getBoundingCoords()[2]-e1.getBoundingCoords()[2];
-                                    int diffB = ip.getBoundingCoords()[3]-e1.getBoundingCoords()[3];
-                                    int diffL = e1.getBoundingCoords()[0]-ip.getBoundingCoords()[0];
-                                    int diffT = e1.getBoundingCoords()[1]-ip.getBoundingCoords()[1];
-
-
-//
-                                    if (diffR > 1 || diffB > 1) {
-//                                        if (checkNodeOverlappingIntendedParent(ol, n, intendedParent)) {
-                                            OverflowFailure oe = new OverflowFailure(grouped, intendedParent, n);
-                                            errors.add(oe);
-//                                            System.out.println();
-//                                        }
-                                    } else {
-                                        System.out.println(n + "overflowed by one");
-                                        onePixelOverflows.add(n);
-                                    }
-
-                                }
-                            }
-                        } catch (NullPointerException npe) {
-                            npe.printStackTrace();
-                        }
-                    }
-
-                    if (!onePxOverflow) {
-                        ArrayList<AlignmentConstraint> ol = getOverlappingConstraints(n);
-                        if (checkNodeOverlappingIntendedParent(ol, n, intendedParent)) {
-                            OverflowFailure oe = new OverflowFailure(grouped, intendedParent, n);
-                            errors.add(oe);
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
+    /**
+     * This method returns a width for which the layout has been extracted, between two values
+     * @param min  the minimum value
+     * @param max  the maximum value
+     * @param layouts the map of layouts already extracted
+     * @return
+     */
     private int getWidthWithinRange(int min, int max, HashMap<Integer, LayoutFactory> layouts) {
+        // Iterate through all layouts
         for (Integer i : layouts.keySet()) {
+            // If the width is within the range, return it
             if (i >= min && i <= max) {
                 return i;
             }
         }
+        // Return the midpoint of the range as a last resort
         return (min+max)/2;
     }
 
@@ -579,83 +457,6 @@ public class RLGAnalyser {
         }
         return false;
     }
-
-    private boolean checkNodeOverlappingIntendedParent(ArrayList<AlignmentConstraint> ol, Node n, Node ip) {
-        for (AlignmentConstraint ac : ol) {
-            Node overlappingNode = null;
-            if (ac.getNode1() == n && ac.getNode2() == ip) {
-                System.out.print(ac);
-                return true;
-            } else if (ac.getNode2() == n && ac.getNode1() == ip) {
-                System.out.print(ac);
-                return true;
-            }
-
-//            ArrayList<AlignmentConstraint> pCons = overlappingNode.getParentConstraints();
-//            for (AlignmentConstraint pc : pCons) {
-//                if ((pc.getMin() <= ac.getMax()) && (ac.getMin() <= pc.getMax())) {
-//                    if (pc.getNode1().getXpath().equals(newP.getXpath())) {
-//                        System.out.println(ac);
-//                        System.out.println(pc);
-//                        return true;
-//                    }
-//                }
-//            }
-
-        }
-        return false;
-    }
-
-    private boolean checkOverlapChildOfNewParent(ArrayList<AlignmentConstraint> ol, Node n, Node newP) {
-        for (AlignmentConstraint ac : ol) {
-            Node overlappingNode = null;
-            if (ac.getNode1() == n) {
-                overlappingNode = ac.getNode2();
-            } else {
-                overlappingNode = ac.getNode1();
-            }
-
-            ArrayList<AlignmentConstraint> pCons = overlappingNode.getParentConstraints();
-            for (AlignmentConstraint pc : pCons) {
-                if ((pc.getMin() <= ac.getMax()) && (ac.getMin() <= pc.getMax())) {
-                    if (pc.getNode1().getXpath().equals(newP.getXpath())) {
-                        System.out.println(ac);
-                        System.out.println(pc);
-                        return true;
-                    }
-                }
-            }
-            System.out.println();
-
-        }
-        return false;
-    }
-
-    private ArrayList<AlignmentConstraint> getOverlappingConstraints(Node n) {
-        String target = n.getXpath();
-        ArrayList<AlignmentConstraint> cons = new ArrayList<>();
-        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
-            if (ac.getType() == Type.SIBLING) {
-                String n1x = ac.getNode1().getXpath();
-                String n2x = ac.getNode2().getXpath();
-                if (n1x.equals(target) || n2x.equals(target)) {
-                    if (ac.getAttributes()[10]) {
-                        cons.add(ac);
-                    }
-                }
-            }
-        }
-        return cons;
-    }
-
-    private boolean intendedParentVisible(Node intendedParent, AlignmentConstraint ac) {
-        int ipMin = intendedParent.getVisibilityConstraints().get(0).appear;
-        int ipMax = intendedParent.getVisibilityConstraints().get(0).disappear;
-        Rectangle r1 = new Rectangle(ipMin, 0, ipMax-ipMin, 10);
-        Rectangle r2 = new Rectangle(ac.getMin(), 0, ac.getMax()-ac.getMin(), 10);
-        return (r1.intersects(r2));
-    }
-
 
     private void checkForWrappingElements() {
         for (Node n : rlg.getNodes().values()) {

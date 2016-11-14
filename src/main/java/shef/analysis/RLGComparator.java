@@ -27,9 +27,9 @@ public class RLGComparator {
     }
 
     // Instance variables
-    ResponsiveLayoutGraph rlg1,rlg2;
+    public ResponsiveLayoutGraph rlg1,rlg2;
     public HashMap<Node, Node> matchedNodes;
-    Cloner cloner;
+    public Cloner cloner;
     public ArrayList<String> issues;
     public static ArrayList<Error> errors;
     public static ArrayList<String> unmatched;
@@ -39,7 +39,7 @@ public class RLGComparator {
     static String dataDirectory = "/Users/thomaswalsh/Documents/Workspace/redecheck-journal-paper-data/";
 
     // public static ArrayList<WidthError> wcErrors;
-    int[] defaultWidths;
+    public int[] defaultWidths;
     TreeSet<Integer> widthsWithMutant;
     /**
      * Constructor for the RLGComparator object
