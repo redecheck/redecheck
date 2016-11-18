@@ -96,4 +96,12 @@ public class Element {
     public void setStyles(HashMap<String,String> styles) {
         this.styles = styles;
     }
+
+    public int getY1() {
+        return y1;
+    }
+
+    public int getY2() {
+        return y2;
+    }
 }
