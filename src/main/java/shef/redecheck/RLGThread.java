@@ -94,7 +94,7 @@ public class RLGThread implements Runnable {
                 capabilities.setJavascriptEnabled(true);
                 webDriver = new OperaDriver(capabilities);
             }
-            webDriver.get("file://" +fullUrl);
+            webDriver.get(fullUrl);
 //            System.out.println(fullUrl);
 
 //            this.swf.getSetup().stop();

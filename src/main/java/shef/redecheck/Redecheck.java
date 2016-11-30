@@ -51,14 +51,14 @@ public class Redecheck {
     String[] clArgs;
     public String current;
     public String preamble;
-    public int startWidth;
-    public int finalWidth;
-    public int stepSize;
-    public String sampleTechnique;
-    public boolean binarySearch;
+    public int startWidth = 400;
+    public int finalWidth = 1400;
+    public int stepSize = 60;
+    public String sampleTechnique = "uniformBP";
+    public boolean binarySearch = true;
     public boolean timing;
     public int timingID;
-    public String browser;
+    public String browser = "phantom";
     public String mutantID;
     public boolean screenshot;
     public boolean tool;
@@ -105,7 +105,9 @@ public class Redecheck {
         screenshot = clp.screenshot;
         tool = clp.tool;
         xpert = clp.xpert;
-        browser = clp.browser;
+        if (clp.browser != null) {
+            browser = clp.browser;
+        }
         timing = clp.timing;
         timingID = clp.timingID;
         url = clp.url;
@@ -143,7 +145,13 @@ public class Redecheck {
             Format formatter = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
             String timeStamp = formatter.format(date);
             scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
-            String fullUrl = preamble + url + "/index.html";
+            String fullUrl;
+            if (preamble != null) {
+                fullUrl = "file://" + preamble + url + "/index.html";
+            } else {
+                fullUrl = url;
+            }
+            System.out.println(fullUrl);
             RLGThread thread = new RLGThread(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
             Thread t = new Thread(thread);
             t.start();

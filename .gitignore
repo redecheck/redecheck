@@ -2,7 +2,6 @@
 .vagrant
 /target/*
 /output/
-/resources/phantomjs
 /.settings/
 /.idea/
 /screenshots/
@@ -13,3 +12,4 @@ phantomjsdriver.log
 Redecheck.iml
 .Rproj.user
 *.class
+/target/
