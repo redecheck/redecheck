@@ -19,19 +19,19 @@ public class CommandLineParser {
     public String test;
 
     @Parameter(names = "--step", description = "Step size")
-    public int ss;
+    public int ss = 60;
 
     @Parameter(names = "--start", description = "Start width for sampling")
-    public int startWidth;
+    public int startWidth = 400;
 
     @Parameter(names = "--end", description = "End width for sampling")
-    public int endWidth;
+    public int endWidth = 1400;
 
     @Parameter(names = "--sampling", description = "Sampling technique")
-    public String sampling;
+    public String sampling = "uniformBP";
 
     @Parameter(names = "--binary", description = "Use binary search or not")
-    public boolean binary;
+    public boolean binary = true;
 
     @Parameter(names = "--preamble", description = "Preamble for the two URL parameters")
     public String preamble;
@@ -55,7 +55,7 @@ public class CommandLineParser {
     public int timingID;
 
     @Parameter(names = "--browser", description = "The browser to use for the test run")
-    public String browser;
+    public String browser = "firefox";
 
     @Parameter(names = "--url", description = "The URL to check for faults.")
     public String url;

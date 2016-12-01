@@ -67,22 +67,17 @@ public class RLGThread implements Runnable {
     }
 
     public void run() {
-//        System.out.println("EXTRACTING RESPONSIVE LAYOUT GRAPH");
-//        this.swf.getTotal().start();
         try {
-//            this.swf.getSetup().start();
             this.swf.getRlg().start();
             if (browser.equals("chrome")) {
-//                System.out.println("USING CHROME");
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
-//                System.out.println("USING FIREFOX");
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
+//                capabilities.setVersion("47.0.1");
                 webDriver = new FirefoxDriver(capabilities);
-            } else if (browser.equals("phantom")) {
-//                System.out.println("USING PHANTOMJS");
+            } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
                 dCaps.setJavascriptEnabled(true);
                 dCaps.setCapability("takesScreenshot", true);
@@ -94,7 +89,11 @@ public class RLGThread implements Runnable {
                 capabilities.setJavascriptEnabled(true);
                 webDriver = new OperaDriver(capabilities);
             }
-            webDriver.get(fullUrl);
+            if (fullUrl.contains("www.") == false) {
+            	webDriver.get("file://" + fullUrl);
+            } else {
+            	webDriver.get(fullUrl);
+            }
 //            System.out.println(fullUrl);
 
 //            this.swf.getSetup().stop();

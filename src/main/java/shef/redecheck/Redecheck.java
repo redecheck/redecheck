@@ -51,9 +51,9 @@ public class Redecheck {
     String[] clArgs;
     public String current;
     public String preamble;
-    public int startWidth = 400;
-    public int finalWidth = 1400;
-    public int stepSize = 60;
+    public int startWidth;
+    public int finalWidth;
+    public int stepSize;
     public String sampleTechnique = "uniformBP";
     public boolean binarySearch = true;
     public boolean timing;
@@ -77,28 +77,33 @@ public class Redecheck {
     public static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
-    static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
-    static String reportDirectory = "/Users/thomaswalsh/Documents/PhD/Redecheck/reports/";
-    static String timesDirectory = "/Users/thomaswalsh/Documents/PhD/Redecheck/times/";
-    static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/redecheck-journal-paper-data/";
+    static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
+    static String reportDirectory = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/reports/";
+    static String timesDirectory = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/times/";
+    static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
     static int[] manualWidths = {480, 600, 640, 768, 1024, 1280};
     static int sleep = 50;
+    public CommandLineParser clp = new CommandLineParser();
 
 
     public Redecheck(String[] args) throws IOException, InterruptedException {
         current = new java.io.File( "." ).getCanonicalPath();
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
-        System.setProperty("webdriver.chrome.driver", current + "/../../../../Downloads/chromedriver");
-        System.setProperty("webdriver.opera.driver", current + "/../../../../Downloads/operadriver");
-        CommandLineParser clp = new CommandLineParser();
+        System.setProperty("webdriver.chrome.driver", current + "/../resources/chromedriver");
+        System.setProperty("webdriver.opera.driver", current + "/../resources/operadriver");
+        System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
+        
         clArgs = args;
         new JCommander(clp, clArgs);
         oracle = clp.oracle;
         test = clp.test;
         preamble = clp.preamble;
+        
         startWidth = clp.startWidth;
         finalWidth = clp.endWidth;
-        stepSize = clp.ss;
+        if (clp.ss != -1) {
+        	stepSize = clp.ss;
+        }
         sampleTechnique = clp.sampling;
         binarySearch = clp.binary;
         mutantID = clp.mutantID;
