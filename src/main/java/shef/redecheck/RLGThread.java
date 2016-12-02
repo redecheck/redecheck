@@ -6,7 +6,9 @@ import edu.gatech.xpert.dom.DomNode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.MarionetteDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGAnalyser;
@@ -76,14 +78,15 @@ public class RLGThread implements Runnable {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
 //                capabilities.setVersion("47.0.1");
-                webDriver = new FirefoxDriver(capabilities);
+                webDriver = new MarionetteDriver();
             } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
                 dCaps.setJavascriptEnabled(true);
                 dCaps.setCapability("takesScreenshot", true);
+                dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
                 String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
                 dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-                webDriver = Redecheck.getNewDriver(dCaps);
+                webDriver = new PhantomJSDriver(dCaps);
             } else if (browser.equals("opera")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.operaBlink();
                 capabilities.setJavascriptEnabled(true);
@@ -113,28 +116,16 @@ public class RLGThread implements Runnable {
             RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
             ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
             this.swf.getDetect().stop();
-//            System.out.println(this.swf.getDetect());
 
             this.swf.getReport().start();
-//            System.out.println("GATHERING SCREENSHOT EXAMPLES FOR FAULTS");
-//            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
-//            if (errors.size() > 0) {
-//                for (ResponsiveLayoutFailure error : errors) {
-////                    System.out.println(error + "\n");
-//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
-//                }
-//            } else {
-////                System.out.println("No layout errors found!");
-//            }
-//            analyser.writeReport(shortUrl, errors, ts);
-//            System.out.println(errors.size() + " ERRORS FOUND");
+            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
+            if (errors.size() > 0) {
+                for (ResponsiveLayoutFailure error : errors) {
+                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                }
+            }
+            analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
-
-//            LogEntries logs = webDriver.manage().logs().get("browser");
-//            for (LogEntry entry : logs) {
-//                System.out.println(entry);
-//                //do something useful with the data
-//            }
 
         } catch (Exception e) {
             e.printStackTrace();

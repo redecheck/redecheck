@@ -51,7 +51,7 @@ public class RLGAnalyser {
         checkForSmallRanges(rlg.getAlignmentConstraints());
         checkForWrappingElements();
         filterOutDuplicateReports();
-        FailureReportClusterBot clusterbot = new FailureReportClusterBot(errors);
+//        FailureReportClusterBot clusterbot = new FailureReportClusterBot(errors);
         return errors;
     }
 
@@ -1057,11 +1057,17 @@ public class RLGAnalyser {
         PrintWriter output2 = null;
         PrintWriter output3 = null;
         try {
-            String[] splits = url.split("/");
-            String webpage = splits[0];
-            String mutant = "index";
-//                    splits[1];
-            File outputFile = new File("../reports/"  + webpage + "/" + mutant + "-"+ts);
+        	File outputFile;
+        	if (!url.contains("www")) {
+	            String[] splits = url.split("/");
+	            String webpage = splits[0];
+	            String mutant = "index";
+	            outputFile = new File("../reports/"  + webpage + "/" + mutant + "-"+ts);
+        	} else {
+        		String[] splits = url.split("www.");
+        		outputFile = new File("../reports/" + splits[1] + "/" + ts);
+        	}
+            System.out.println(outputFile.getAbsolutePath());
             FileUtils.forceMkdir(outputFile);
             File dir = new File(outputFile+"/fault-report.txt");
             File countDir = new File(outputFile + "/error-count.txt");

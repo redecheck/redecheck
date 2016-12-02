@@ -88,7 +88,7 @@ public class Redecheck {
 
     public Redecheck(String[] args) throws IOException, InterruptedException {
         current = new java.io.File( "." ).getCanonicalPath();
-        System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
+//        System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         System.setProperty("webdriver.chrome.driver", current + "/../resources/chromedriver");
         System.setProperty("webdriver.opera.driver", current + "/../resources/operadriver");
         System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
