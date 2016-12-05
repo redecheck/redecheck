@@ -1,45 +1,32 @@
 package shef.redecheck;
 
 
+import com.beust.jcommander.JCommander;
+import cz.vutbr.web.css.*;
+import edu.gatech.xpert.dom.DomNode;
+import edu.gatech.xpert.dom.JsonDomParser;
 import edu2.gatech.xpert.dom.layout.AGDiff;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-
-import java.io.*;
-
-import org.apache.commons.io.FileUtils;
-
-import java.net.URL;
-import java.net.URLConnection;
-
-import com.beust.jcommander.JCommander;
-
-import cz.vutbr.web.css.CSSException;
-import cz.vutbr.web.css.CSSFactory;
-import cz.vutbr.web.css.MediaExpression;
-import cz.vutbr.web.css.MediaQuery;
-import cz.vutbr.web.css.RuleBlock;
-import cz.vutbr.web.css.RuleMedia;
-import cz.vutbr.web.css.StyleSheet;
-
 import org.openqa.selenium.remote.DesiredCapabilities;
-
+import shef.layout.LayoutFactory;
 import shef.mutation.CSSMutator;
 import shef.mutation.ResultClassifier;
-import shef.layout.LayoutFactory;
-import edu.gatech.xpert.dom.JsonDomParser;
-import edu.gatech.xpert.dom.DomNode;
 import shef.rlg.ResponsiveLayoutGraph;
 import shef.utils.StopwatchFactory;
 
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +75,7 @@ public class Redecheck {
 
     public Redecheck(String[] args) throws IOException, InterruptedException {
         current = new java.io.File( "." ).getCanonicalPath();
-//        System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
+        System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         System.setProperty("webdriver.chrome.driver", current + "/../resources/chromedriver");
         System.setProperty("webdriver.opera.driver", current + "/../resources/operadriver");
         System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
