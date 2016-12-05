@@ -78,7 +78,7 @@ public class RLGThread implements Runnable {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
 //                capabilities.setVersion("47.0.1");
-                webDriver = new MarionetteDriver();
+                webDriver = new FirefoxDriver();
             } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
                 dCaps.setJavascriptEnabled(true);
@@ -130,9 +130,10 @@ public class RLGThread implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
+        if (webDriver != null) {
             webDriver.quit();
         }
+
 //        if (this.swf != null) {
 //            this.swf.getTotal().stop();
 //        }
