@@ -2,13 +2,11 @@ package shef.analysis;
 
 import com.google.common.collect.HashBasedTable;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
-import shef.clustering.FailureReportClusterBot;
 import shef.layout.Element;
 import shef.layout.Layout;
 import shef.layout.LayoutFactory;
-import shef.reporting.failures.*;
+import shef.reporting.inconsistencies.*;
 import shef.rlg.*;
 
 import java.awt.*;
@@ -355,7 +353,7 @@ public class RLGAnalyser {
     }
 
     /**
-     * This method analyses the constraints to see if any represent potential small-range layout failures
+     * This method analyses the constraints to see if any represent potential small-range layout inconsistencies
      * @param alignmentConstraints the set of constraints to analyse
      */
     private void checkForSmallRanges(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {

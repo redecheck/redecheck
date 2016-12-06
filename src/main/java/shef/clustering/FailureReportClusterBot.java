@@ -1,6 +1,6 @@
 package shef.clustering;
 
-import shef.reporting.failures.ResponsiveLayoutFailure;
+import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.rlg.Node;
 
 import java.awt.*;

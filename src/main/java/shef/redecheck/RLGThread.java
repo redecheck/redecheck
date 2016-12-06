@@ -6,13 +6,12 @@ import edu.gatech.xpert.dom.DomNode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.MarionetteDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGAnalyser;
-import shef.reporting.failures.ResponsiveLayoutFailure;
+import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.layout.LayoutFactory;
 import shef.rlg.ResponsiveLayoutGraph;
 import shef.utils.StopwatchFactory;
@@ -92,11 +91,12 @@ public class RLGThread implements Runnable {
                 capabilities.setJavascriptEnabled(true);
                 webDriver = new OperaDriver(capabilities);
             }
-            if (fullUrl.contains("www.") == false) {
-            	webDriver.get("file://" + fullUrl);
-            } else {
+//            if (fullUrl.contains("www.") == false) {
+//                System.out.println("file://" + fullUrl);
+//            	webDriver.get("file://" + fullUrl);
+//            } else {
             	webDriver.get(fullUrl);
-            }
+//            }
 //            System.out.println(fullUrl);
 
 //            this.swf.getSetup().stop();

@@ -104,9 +104,9 @@ public class Layout {
             Element p = elements.get(xpaths.get(pId));
             Element c = elements.get(xpaths.get(x));
             if (p != null & c != null) {
-                if (p.getXpath().equals("/HTML/BODY/SECTION[5]/DIV/DIV/DIV")) {
-                    System.out.println("DIV contains " + c);
-                }
+//                if (p.getXpath().equals("/HTML/BODY/SECTION[5]/DIV/DIV/DIV")) {
+//                    System.out.println("DIV contains " + c);
+//                }
 //                if (p.getXpath().equals("/HTML/BODY/DIV[2]")) {
 //                    System.out.println("body/div[2] contains " + c);
 //                }

@@ -617,18 +617,18 @@ public class Redecheck {
 //        }
     }
 
-    public static String extractDOM(PhantomJSDriver pjsdriver, String script, StopWatch sw) throws IOException {
-
-//        if (!sw.isStarted()) {
-//            sw.start();
-//        } else if (sw.isSuspended()) {
-//            sw.resume();
-//        }
-
-        String result =  (String) pjsdriver.executeScript(script);
-//        sw.suspend();
-        return result;
-    }
+//    public static String extractDOM(PhantomJSDriver pjsdriver, String script, StopWatch sw) throws IOException {
+//
+////        if (!sw.isStarted()) {
+////            sw.start();
+////        } else if (sw.isSuspended()) {
+////            sw.resume();
+////        }
+//
+//        String result =  (String) pjsdriver.executeScript(script);
+////        sw.suspend();
+//        return result;
+//    }
 
     public static String extractDOM(WebDriver cdriver, String script, StopWatch sw) throws IOException {
 

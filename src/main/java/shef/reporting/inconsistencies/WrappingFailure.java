@@ -1,4 +1,4 @@
-package shef.reporting.failures;
+package shef.reporting.inconsistencies;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
@@ -74,10 +74,19 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
             }
             g2d.dispose();
             try {
-                String[] splits = url.split("/");
-                String webpage = splits[0];
-                String mutant = "index-" + timeStamp;
-                File output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault"+ errorID +"/");
+                File output;
+                if (!url.contains("www.")) {
+                    String[] splits = url.split("/");
+                    String webpage = splits[0];
+                    String mutant = "index-" + timeStamp;
+                    //                    splits[1];
+                    output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+                } else {
+                    String[] splits = url.split("www.");
+                    String webpage = splits[1];
+                    String mutant = "index-" + timeStamp;
+                    output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+                }
                 FileUtils.forceMkdir(output);
                 ImageIO.write(img, "png", new File(output + "/wrappingWidth" + captureWidth + ".png"));
             } catch (IOException e) {

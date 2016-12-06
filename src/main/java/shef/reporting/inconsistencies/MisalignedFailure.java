@@ -1,4 +1,4 @@
-package shef.reporting.failures;
+package shef.reporting.inconsistencies;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;

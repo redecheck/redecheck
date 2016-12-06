@@ -1,4 +1,4 @@
-package shef.reporting.failures;
+package shef.reporting.inconsistencies;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -70,11 +70,19 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
         g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
         g2d.dispose();
         try {
-            String[] splits = url.split("/");
-            String webpage = splits[0];
-            String mutant = "index-" + timeStamp;
-//                    splits[1];
-            File output = new File(new java.io.File( "." ).getCanonicalPath() + "/../reports/"  + webpage + "/" + mutant + "/fault" + errorID + "/");
+            File output;
+            if (!url.contains("www.")) {
+                String[] splits = url.split("/");
+                String webpage = splits[0];
+                String mutant = "index-" + timeStamp;
+                //                    splits[1];
+                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } else {
+                String[] splits = url.split("www.");
+                String webpage = splits[1];
+                String mutant = "index-" + timeStamp;
+                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            }
             FileUtils.forceMkdir(output);
             ImageIO.write(img, "png", new File(output+"/overlapWidth" + captureWidth + ".png"));
         } catch (IOException e) {

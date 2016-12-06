@@ -1,4 +1,4 @@
-package shef.reporting.failures;
+package shef.reporting.inconsistencies;
 
 import org.openqa.selenium.WebDriver;
 import shef.rlg.Node;
