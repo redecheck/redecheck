@@ -84,7 +84,7 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
                 } else {
                     String[] splits = url.split("www.");
                     String webpage = splits[1];
-                    String mutant = "index-" + timeStamp;
+                    String mutant = timeStamp;
                     output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
                 }
                 FileUtils.forceMkdir(output);

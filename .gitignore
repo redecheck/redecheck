@@ -12,4 +12,4 @@ phantomjsdriver.log
 Redecheck.iml
 .Rproj.user
 *.class
-/target/
+/target/classes
