@@ -2,7 +2,6 @@ package shef.redecheck;
 
 
 import com.beust.jcommander.JCommander;
-import cz.vutbr.web.css.*;
 import edu.gatech.xpert.dom.DomNode;
 import edu.gatech.xpert.dom.JsonDomParser;
 import edu2.gatech.xpert.dom.layout.AGDiff;
@@ -15,20 +14,15 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.layout.LayoutFactory;
-import shef.mutation.CSSMutator;
 import shef.mutation.ResultClassifier;
 import shef.rlg.ResponsiveLayoutGraph;
 import shef.utils.StopwatchFactory;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Redecheck {
     // Instance variables
@@ -144,7 +138,7 @@ public class Redecheck {
                 fullUrl = url;
             }
             System.out.println(fullUrl);
-            RLGThread thread = new RLGThread(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
+            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
             Thread t = new Thread(thread);
             t.start();
             while(t.isAlive()){}
@@ -168,15 +162,7 @@ public class Redecheck {
 
 
 
-    /**
-     * Main method to handle execution of the whole tool
-     * @param args
-     * @throws InterruptedException
-     * @throws IOException
-     */
-    public static void main(String[] args) throws InterruptedException, IOException {
-        Redecheck redecheck = new Redecheck(args);
-    }
+
 
     /**
      * Samples each webpage and constructs an RLG for each, then compares the two, writing the model differences to a file.
@@ -189,8 +175,8 @@ public class Redecheck {
         String timeStamp = formatter.format(date);
         String oracleUrl = preamble + oracle + ".html";
         String testUrl = preamble + test + ".html";
-        RLGThread rlg1 = new RLGThread(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
-//        RLGThread rlg2 = new RLGThread(current, testUrl, test, testDoms, tFactories, "phantom");
+        RLGExtractor rlg1 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
+//        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, "phantom");
         Thread t1 = new Thread(rlg1);
 //        Thread t2 = new Thread(rlg2);
 
@@ -403,111 +389,7 @@ public class Redecheck {
 //        writeToFile(testUrl, domDiffResult, "dom-diff-result", dataDirectory);
     }
 
-    public static int[] getSampleWidths(String technique, String shortUrl, WebDriver drive, int startWidth, int finalWidth, int stepSize, String preamble, ArrayList<Integer> breakpoints) {
-        int[] widths = null;
-        ArrayList<Integer> widthsAL = new ArrayList<Integer>();
-        if (technique.equals("uniform")) {
-//            System.out.println("Using uniform sampling");
-            int currentWidth = startWidth;
 
-            widthsAL.add(startWidth);
-
-            while (currentWidth + stepSize <= finalWidth) {
-                currentWidth = currentWidth + stepSize;
-                widthsAL.add(currentWidth);
-            }
-
-            // Adds the upper bound to the sample width set, if it's not already there
-            if (!Integer.toString(widthsAL.get(widthsAL.size()-1)).equals(Integer.toString(finalWidth))) {
-                widthsAL.add(finalWidth);
-            }
-
-            // Copy the contents of the arraylist into an array
-            widths = new int[widthsAL.size()];
-
-            int counter = 0;
-            for (Integer i : widthsAL) {
-                widths[counter] = i;
-                counter++;
-            }
-        } else if (technique.equals("exhaustive")) {
-//            System.out.println("Using exhaustive sampling");
-//            widths = allWidths;
-        } else if (technique.equals("random")) {
-
-        } else if (technique.equals("breakpoint")) {
-//            System.out.println("Using breakpoint sampling");
-//            String url = preamble + oracle + ".html";
-            ArrayList<String> cssFiles = initialiseFiles(shortUrl, drive);
-            ArrayList<RuleMedia> mqSet = getMediaQueries(shortUrl, cssFiles, preamble);
-            widths = getBreakpoints(mqSet);
-
-            widthsAL.add(startWidth);
-            for (int i : widths) {
-                if ( (i >= startWidth) && (i <= finalWidth) ) {
-                    widthsAL.add(i);
-                }
-            }
-            widthsAL.add(finalWidth);
-
-            widths = new int[widthsAL.size()];
-
-            int counter = 0;
-            for (Integer i : widthsAL) {
-                widths[counter] = i;
-                counter++;
-            }
-        } else if (technique.equals("uniformBP")) {
-//            System.out.println("Using uniform & breakpoint sampling");
-            TreeSet<Integer> widthsTS = new TreeSet<Integer>();
-            int currentWidth = startWidth;
-
-            widthsTS.add(startWidth);
-
-            while (currentWidth + stepSize <= finalWidth) {
-                currentWidth = currentWidth + stepSize;
-                widthsTS.add(currentWidth);
-            }
-            widthsTS.add(finalWidth);
-
-//            String url = preamble + oracle + ".html";
-            ArrayList<String> cssFiles = initialiseFiles(shortUrl, drive);
-//            System.out.println("Got " + cssFiles.size() + " files");
-            ArrayList<RuleMedia> mqSet = getMediaQueries(shortUrl, cssFiles, preamble);
-//            System.out.println("Got " + mqSet.size() + " MQ's");
-            int[] widthsBP = getBreakpoints(mqSet);
-            for (int w : widthsBP) {
-                if ( (w >= startWidth) && (w <= finalWidth) ) {
-//                    System.out.println("Added " + w);
-                    widthsTS.add(w);
-                    breakpoints.add(w);
-                } else {
-//                    System.out.println("Didn't add " + w);
-                }
-            }
-//            System.out.println(widthsTS);
-            widths = new int[widthsTS.size()];
-            Iterator iter = widthsTS.iterator();
-            int counter = 0;
-            while(iter.hasNext()) {
-                try {
-                    int i = (int) iter.next();
-                    widths[counter] = i;
-                    counter++;
-                } catch (Exception e) {
-
-                }
-            }
-        }
-
-
-        // Return the array of widths
-        if (widths != null) {
-            return widths;
-        } else {
-            return new int[]{};
-        }
-    }
 
     public static void gatherAllDoms(HashMap<Integer, DomNode> oDoms, HashMap<Integer, DomNode> tDoms,HashMap<Integer, String> oDomsS, HashMap<Integer, String> tDomsS, int[] widths, String oracle, String test) {
         System.out.println("GATHERING ALL DOMS");
@@ -540,14 +422,6 @@ public class Redecheck {
      */
     public static void capturePageModel(String url, int[] widths, HashMap<Integer, DomNode> doms, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories) {
         // Create a parser for the DOM strings
-//        if (!swf.getCapture().isStarted()) {
-//            swf.getCapture().start();
-//        } else if (swf.getCapture().isSuspended()) {
-//            swf.getCapture().resume();
-//        }
-//        if (swf.getProcess().isStarted()) {
-//            swf.getProcess().suspend();
-//        }
         JsonDomParser parser = new JsonDomParser();
         File domFile=null;
         try {
@@ -561,19 +435,11 @@ public class Redecheck {
                 FileUtils.forceMkdir(dir);
             }
 
-//            Toolkit toolkit = Toolkit.getDefaultToolkit();
-//            int Width = (int) toolkit.getScreenSize().getWidth();
-//            int Height = (int) toolkit.getScreenSize().getHeight();
-//            System.out.print (Width + " x " + Height);
-
             // Iterate through all viewport widths
             for (int w : widths) {
-//                System.out.println("\n" + w);
                 // Check if DOM already saved for speed
                 domFile = new File(outFolder + "/" + w + ".js");
                 boolean consecutiveMatches = false;
-
-//                wdriver.manage().window().setPosition(new Point(0,0));
 
                 // Resize the browser window
                 wdriver.manage().window().setSize(new Dimension(w, 1000));
@@ -582,14 +448,7 @@ public class Redecheck {
 
                 while (!consecutiveMatches) {
                     // Extract the DOM and save it to the HashMap.
-//                    if (!swf.getSleep().isStarted()) {
-//                        swf.getSleep().start();
-//                    } else {
-//                        swf.getSleep().resume();
-//                    }
                     Thread.sleep(sleep);
-//                    swf.getSleep().suspend();
-
                     String extractedDom = extractDOM(wdriver, scriptToExtract, swf.getExtract());
 
                     if (previous.equals(extractedDom)) {
@@ -616,19 +475,6 @@ public class Redecheck {
 //            swf.getProcess().resume();
 //        }
     }
-
-//    public static String extractDOM(PhantomJSDriver pjsdriver, String script, StopWatch sw) throws IOException {
-//
-////        if (!sw.isStarted()) {
-////            sw.start();
-////        } else if (sw.isSuspended()) {
-////            sw.resume();
-////        }
-//
-//        String result =  (String) pjsdriver.executeScript(script);
-////        sw.suspend();
-//        return result;
-//    }
 
     public static String extractDOM(WebDriver cdriver, String script, StopWatch sw) throws IOException {
 
@@ -693,14 +539,14 @@ public class Redecheck {
 //        }
 //    }
 
-//    public static BufferedImage getScreenshot(String url, int w, int sleep, PhantomJSDriver d, int errorID) {
+//    public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
 //        try {
 //            d.manage().window().setSize(new Dimension(w, 1000));
 //            Thread.sleep(sleep);
 //
 //            File scrFile = d.getScreenshotAs(OutputType.FILE);
 //
-//            String ssDir = redecheck + "reports/" + mutantID + "/";
+//            String ssDir = redecheck + "reports/" + url + "/";
 //            String ssFile = "error"+errorID + "atWidth" + w;
 //            try {
 //                FileUtils.forceMkdir(new File(ssFile));
@@ -728,145 +574,7 @@ public class Redecheck {
     }
 
 
-    public static int[] getBreakpoints(ArrayList<RuleMedia> mqueries) {
-    	Pattern p = Pattern.compile("\\(([A-Za-z]*-width:[ ]+)([0-9]*[.]+[0-9]*)(em|px)\\)");
-		TreeSet<Integer> bps = new TreeSet<Integer>();
-		for (RuleMedia rm : mqueries) {
-			List<MediaQuery> mqs = rm.getMediaQueries();
-				for (MediaQuery mq : mqs) {
-					for (MediaExpression me : mq.asList()) {
-						try {
-							if (me.toString().contains("width")) {
-								String s = me.toString().trim();
-								Matcher m = p.matcher(s);
-								m.matches();
-								double bp = Double.valueOf(m.group(2));
-                                int bpFinal = 0;
-                                if (m.group(3).equals("em")) {
-                                    bpFinal = (int) (bp * 16);
-                                } else if (m.group(3).equals("px")) {
-                                    bpFinal = (int) bp;
-                                }
-                                if (bpFinal != 0) {
-                                    bps.add(bpFinal);
-                                    if (me.toString().contains("min")) {
-                                        bps.add(bpFinal-1);
-                                    } else if (me.toString().contains("max")) {
-                                        bps.add(bpFinal+1);
-                                    }
-                                }
-							}
-						} catch (Exception e) {
-						}
-					}
-				}
-		}
-		int[] extras = new int[bps.size()];
-		Iterator iter = bps.iterator();
-		int counter = 0;
-		while(iter.hasNext()) {
-			try {
-				int i = (int) iter.next();
-				extras[counter] = i;
-				counter++;
-			} catch (Exception e) {
 
-			}
-		}
-		return extras;
-
-	}
-
-    @SuppressWarnings("unchecked")
-	public static ArrayList<String> initialiseFiles(String url, WebDriver driver) {
-//		JavascriptExecutor js = (JavascriptExecutor) driver;
-		String script;
-		try {
-			script = Utils.readFile(new java.io.File( "." ).getCanonicalPath() +"/../resources/getCssFiles.js");
-			return (ArrayList<String>) ((JavascriptExecutor) driver).executeScript(script);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<String>();
-	}
-
-    @SuppressWarnings({ "unused", "rawtypes" })
-    public static ArrayList<RuleMedia> getMediaQueries(String base, ArrayList<String> cssFiles, String preamble) {
-        ArrayList<RuleMedia> mqCandidates = new ArrayList<RuleMedia>();
-    	URL cssUrl = null;
-        URLConnection conn;
-        String[] cssContent = new String[cssFiles.size()];
-        int counter = 0;
-
-        for (String cssFile : cssFiles) {
-//            System.out.println(cssFile);
-            String contents = "";
-            try {
-                if (cssFile.contains("http")) {
-                    cssUrl = new URL(cssFile);
-                } else if (cssFile.substring(0, 2).equals("//")) {
-                    cssUrl = new URL("http:" + cssFile);
-                } else {
-//                    System.out.println("LOCAL");
-                    cssUrl = new URL(("file://" + preamble + base + "/" + cssFile.replace("./", "")));
-//                    cssUrl = new URL(("file://" + preamble + base.split("/")[0] + "/" + base.split("/")[1] + "/" + cssFile.replace("./", "")));
-                }
-//                System.out.println(cssUrl);
-
-                conn = cssUrl.openConnection();
-
-                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-//                long start = System.nanoTime();
-                String inputLine;
-                while ((inputLine = input.readLine()) != null) {
-                    contents += inputLine;
-                }
-//                long end = System.nanoTime();
-//                double duration = ((end - start) / 1000000000.0);
-//                System.out.println(duration);
-                contents += "\n\n";
-                cssContent[counter] = contents;
-
-
-            } catch (Exception e) {
-//                e.printStackTrace();
-//                System.out.println("Problem loading or layout the CSS file " + cssUrl.toString());
-            }
-            counter++;
-        }
-
-        StyleSheet ss = null;
-        for (int i = 0; i < cssContent.length; i++) {
-            String s = cssContent[i];
-//            System.out.println(s);
-            try {
-                String prettified = s;
-//                        CSSMutator.prettifyCss(s);
-                StyleSheet temp = CSSFactory.parse(prettified);
-//                System.out.println(temp);
-                for (RuleBlock rb : temp.asList()) {
-                    if (rb instanceof RuleMedia) {
-                        RuleMedia rm = (RuleMedia) rb;
-                        if (CSSMutator.hasNumericQuery(rm)) {
-
-                            if (rm.asList().size() > 0) {
-                                mqCandidates.add(rm);
-                            }
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (CSSException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                System.out.println("Null pointer for some reason on " + i);
-            }
-        }
-        return mqCandidates;
-    }
 
     public static void writeToFile(String testUrl, String content, String fileName, String directory) {
 //        System.out.println(fileName);
@@ -960,5 +668,15 @@ public class Redecheck {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Main method to handle execution of the whole tool
+     * @param args
+     * @throws InterruptedException
+     * @throws IOException
+     */
+    public static void main(String[] args) throws InterruptedException, IOException {
+        Redecheck redecheck = new Redecheck(args);
     }
 }

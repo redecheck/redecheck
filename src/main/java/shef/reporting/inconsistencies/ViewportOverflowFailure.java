@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGThread;
+import shef.redecheck.RLGExtractor;
 import shef.rlg.Node;
 
 import javax.imageio.ImageIO;
@@ -51,7 +51,7 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
             BufferedImage img;
-            img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+            img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
             LayoutFactory lf = lfs.get(captureWidth);
             Element e1 = lf.getElementMap().get(node.getXpath());
             Element body = lf.getElementMap().get("/HTML/BODY");

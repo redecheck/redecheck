@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGThread;
+import shef.redecheck.RLGExtractor;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -84,7 +84,7 @@ public class OverflowFailure extends ResponsiveLayoutFailure {
 //                if (imageMap.containsKey(captureWidth)) {
 //                    img = imageMap.get(captureWidth);
 //                } else {
-                    img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+                    img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 //                    imageMap.put(captureWidth, img);
 //                }
                 LayoutFactory lf = lfs.get(captureWidth);

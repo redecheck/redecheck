@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGThread;
+import shef.redecheck.RLGExtractor;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -73,7 +73,7 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
 //        if (imageMap.containsKey(captureWidth)) {
 //            img = imageMap.get(captureWidth);
 //        } else {
-            img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+            img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 //            imageMap.put(captureWidth, img);
 //        }
         LayoutFactory lf = lfs.get(captureWidth);
@@ -146,7 +146,7 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
 //                }
 //
 //                HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
-//                BufferedImage img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+//                BufferedImage img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 //                LayoutFactory lf = lfs.get(captureWidth);
 //                Element e1 = lf.getElementMap().get(buggy.getXpath());
 //
