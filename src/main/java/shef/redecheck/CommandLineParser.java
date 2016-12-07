@@ -57,6 +57,9 @@ public class CommandLineParser {
     @Parameter(names = "--browser", description = "The browser to use for the test run")
     public String browser = "phantom";
 
+    @Parameter(names = "--baselines", description = "Whether to run the baseline approaches")
+    public boolean baselines;
+
     @Parameter(names = "--url", description = "The URL to check for faults.")
     public String url;
 

@@ -5,6 +5,7 @@ package shef.redecheck;
 import cz.vutbr.web.css.*;
 import edu.gatech.xpert.dom.DomNode;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -47,7 +48,7 @@ public class RLGExtractor implements Runnable {
     private HashMap<Integer, DomNode> doms;
     private HashMap<Integer, LayoutFactory> lFactories;
     private String sampleTechnique;
-    private boolean binarySearch;
+    private boolean binarySearch, baselines;
     private int startW, endW, stepSize;
     private String preamble;
     private int sleep;
@@ -57,10 +58,11 @@ public class RLGExtractor implements Runnable {
     private ArrayList<Integer> breakpoints;
     private String ts;
     final int[] SPOT_CHECK_WIDTHS = new int[] {480, 600, 640, 768, 1024, 1280};
+    int[] allWidths;
 
 
 
-    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, HashMap<Integer, LayoutFactory> facts, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp) throws IOException{
+    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, HashMap<Integer, LayoutFactory> facts, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp, boolean baselines) throws IOException{
         this.current = current;
         this.fullUrl = fullUrl;
         this.shortUrl = shortUrl;
@@ -77,6 +79,7 @@ public class RLGExtractor implements Runnable {
         this.sleep = sleep;
         breakpoints = new ArrayList<>();
         ts = timeStamp;
+        this.baselines = baselines;
     }
 
     public void run() {
@@ -131,30 +134,52 @@ public class RLGExtractor implements Runnable {
 
             this.swf.getReport().start();
             HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
-//            if (errors.size() > 0) {
-//                for (ResponsiveLayoutFailure error : errors) {
-//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
-//                }
-//            }
-//            analyser.writeReport(shortUrl, errors, ts);
+            if (errors.size() > 0) {
+                for (ResponsiveLayoutFailure error : errors) {
+                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                }
+            }
+            analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
 
-            // BASELINE ONE SCREENSHOT CAPTURE
-            File outputDir;
-            if (!shortUrl.contains("www")) {
-                String[] splits = shortUrl.split("/");
-                String webpage = splits[0];
-                String mutant = "index";
-                outputDir = new File(Redecheck.redecheck + "/spotcheck/"  + webpage + "/");
-            } else {
-                String[] splits = shortUrl.split("www.");
-                outputDir = new File(Redecheck.redecheck + "/spotcheck/" + splits[1] + "/");
-            }
-            FileUtils.forceMkdir(outputDir);
-            for (int scw : SPOT_CHECK_WIDTHS) {
-                BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
-                File outputfile = new File(outputDir + "/" + scw + ".png");
-                ImageIO.write(ss, "png", outputfile);
+            // BASELINE SCREENSHOT CAPTURE
+            if (baselines) {
+                File spotcheckDir, exhaustiveDir;
+                if (!shortUrl.contains("www")) {
+                    String[] splits = shortUrl.split("/");
+                    String webpage = splits[0];
+                    String mutant = "index";
+                    spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/spotcheck/");
+                    exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/exhaustive/");
+                } else {
+                    String[] splits = shortUrl.split("www.");
+                    spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
+                    exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
+                }
+                FileUtils.forceMkdir(spotcheckDir);
+                FileUtils.forceMkdir(exhaustiveDir);
+                for (int scw : SPOT_CHECK_WIDTHS) {
+                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
+                    File outputfile = new File(spotcheckDir + "/" + scw + ".png");
+                    ImageIO.write(ss, "png", outputfile);
+                }
+                allWidths = new int[(endW - startW) + 1];
+                for (int i = 0; i < allWidths.length; i++) {
+                    allWidths[i] = i + startW;
+                }
+
+                StopWatch exhaustive = new StopWatch();
+                exhaustive.start();
+                for (int scw : allWidths) {
+                    System.out.println(scw);
+                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
+                    File outputfile = new File(exhaustiveDir + "/" + scw + ".png");
+                    ImageIO.write(ss, "png", outputfile);
+                }
+                exhaustive.stop();
+                String exhaustiveTime = Redecheck.getTimeStringFromStopwatch(exhaustive);
+                Redecheck.writeToFile(fullUrl, exhaustiveTime, "exhaustive-time", Redecheck.timesDirectory);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

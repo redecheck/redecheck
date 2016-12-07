@@ -146,10 +146,10 @@ public class RLGAnalyser {
                     /* If no constraints found, it is assumed the node is ALWAYS overflowing the viewport, so reports an
                     error as such
                      */
-                    int repMin = n.getVisibilityConstraints().get(0).appear;
-                    int repMax = n.getVisibilityConstraints().get(0).disappear;
-                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
-                    errors.add(voe);
+//                    int repMin = n.getVisibilityConstraints().get(0).appear;
+//                    int repMax = n.getVisibilityConstraints().get(0).disappear;
+//                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
+//                    errors.add(voe);
                 } else {
                     // Initialises the min value of the gap
                     int gmin = vmin;

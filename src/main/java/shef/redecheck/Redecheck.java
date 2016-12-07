@@ -42,6 +42,7 @@ public class Redecheck {
     public String browser = "phantom";
     public String mutantID;
     public boolean screenshot;
+    public boolean baselines;
     public boolean tool;
     public boolean xpert;
     public int[] widthsToCheck;
@@ -89,6 +90,7 @@ public class Redecheck {
         binarySearch = clp.binary;
         mutantID = clp.mutantID;
         screenshot = clp.screenshot;
+        baselines = clp.baselines;
         tool = clp.tool;
         xpert = clp.xpert;
         if (clp.browser != null) {
@@ -138,7 +140,7 @@ public class Redecheck {
                 fullUrl = url;
             }
             System.out.println(fullUrl);
-            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
+            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
             Thread t = new Thread(thread);
             t.start();
             while(t.isAlive()){}
@@ -148,7 +150,7 @@ public class Redecheck {
             int numVCs = rlg.getVisCons().size();
             int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
-//            writeTimes(url, thread.getSwf(), timeStamp);
+            writeTimes(url, thread.getSwf(), timeStamp);
 //            if (timing) {
 //                writeTimesSpecial(thread.swf, url, timingID);
 //            }
@@ -175,7 +177,7 @@ public class Redecheck {
         String timeStamp = formatter.format(date);
         String oracleUrl = preamble + oracle + ".html";
         String testUrl = preamble + test + ".html";
-        RLGExtractor rlg1 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp);
+        RLGExtractor rlg1 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
 //        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, "phantom");
         Thread t1 = new Thread(rlg1);
 //        Thread t2 = new Thread(rlg2);
@@ -295,7 +297,7 @@ public class Redecheck {
         }
     }
 
-    private static String getTimeStringFromStopwatch(StopWatch sw) {
+    public static String getTimeStringFromStopwatch(StopWatch sw) {
 //        System.out.println(sw.getTime());
 //        String[] splits = sw.toString().split(":");
         double time = (sw.getTime()) / 1000.0;

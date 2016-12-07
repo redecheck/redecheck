@@ -103,23 +103,23 @@ public class ResponsiveLayoutGraph {
 
             for (AlignmentConstraint ac : map.values()) {
                 if (ac.getType() == Type.SIBLING) {
-                    if (ac.getNode1().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV") || ac.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) {
+                    if (ac.getNode1().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]") || ac.getNode2().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]")) {
                         System.out.println(ac);
                     }
                 }
             }
         }
-        System.out.println("PARENT-CHILDS");
-        for (String s : this.getAlignmentConstraints().rowKeySet()) {
-            Map<int[], AlignmentConstraint> map = this.getAlignmentConstraints().row(s);
-            for (AlignmentConstraint ac : map.values()) {
-                if (ac.getType() == Type.PARENT_CHILD) {
-                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) {
-                        System.out.println(ac);
-                    }
-                }
-            }
-        }
+//        System.out.println("PARENT-CHILDS");
+//        for (String s : this.getAlignmentConstraints().rowKeySet()) {
+//            Map<int[], AlignmentConstraint> map = this.getAlignmentConstraints().row(s);
+//            for (AlignmentConstraint ac : map.values()) {
+//                if (ac.getType() == Type.PARENT_CHILD) {
+//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) {
+//                        System.out.println(ac);
+//                    }
+//                }
+//            }
+//        }
     }
 
 

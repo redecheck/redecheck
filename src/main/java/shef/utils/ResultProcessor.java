@@ -932,9 +932,6 @@ public class ResultProcessor {
 //		rp.writeRQ1and2Data(files);
 	}
 
-	private static void writeJekyllFile(String jekyllCode, String webpage) {
-	}
-
 	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
 //		System.out.println(webpage);
 		String jekyllCode = "";
