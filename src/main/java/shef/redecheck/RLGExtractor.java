@@ -106,41 +106,33 @@ public class RLGExtractor implements Runnable {
                 capabilities.setJavascriptEnabled(true);
                 webDriver = new OperaDriver(capabilities);
             }
-//            if (fullUrl.contains("www.") == false) {
-//                System.out.println("file://" + fullUrl);
-//            	webDriver.get("file://" + fullUrl);
-//            } else {
-            	webDriver.get(fullUrl);
-//            }
-//            System.out.println(fullUrl);
-
-//            this.swf.getSetup().stop();
+            webDriver.get(fullUrl);
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
             Redecheck.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
 //            swf.getProcess().start();
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
-            for (int width : sampleWidths) {
-                LayoutFactory lf = lFactories.get(width);
-                oracleLFs.add(lf);
-            }
-
-            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
-            this.swf.getRlg().stop();
-            this.swf.getDetect().start();
-            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
-            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
-            this.swf.getDetect().stop();
-
-            this.swf.getReport().start();
-            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
-            if (errors.size() > 0) {
-                for (ResponsiveLayoutFailure error : errors) {
-                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
-                }
-            }
-            analyser.writeReport(shortUrl, errors, ts);
-            this.swf.getReport().stop();
+//            for (int width : sampleWidths) {
+//                LayoutFactory lf = lFactories.get(width);
+//                oracleLFs.add(lf);
+//            }
+//
+//            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
+//            this.swf.getRlg().stop();
+//            this.swf.getDetect().start();
+//            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
+//            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
+//            this.swf.getDetect().stop();
+//
+//            this.swf.getReport().start();
+//            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
+//            if (errors.size() > 0) {
+//                for (ResponsiveLayoutFailure error : errors) {
+//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+//                }
+//            }
+//            analyser.writeReport(shortUrl, errors, ts);
+//            this.swf.getReport().stop();
 
             // BASELINE SCREENSHOT CAPTURE
             if (baselines) {
@@ -171,7 +163,6 @@ public class RLGExtractor implements Runnable {
                 StopWatch exhaustive = new StopWatch();
                 exhaustive.start();
                 for (int scw : allWidths) {
-                    System.out.println(scw);
                     BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
                     File outputfile = new File(exhaustiveDir + "/" + scw + ".png");
                     ImageIO.write(ss, "png", outputfile);

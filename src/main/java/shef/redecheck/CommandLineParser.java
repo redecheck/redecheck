@@ -60,6 +60,9 @@ public class CommandLineParser {
     @Parameter(names = "--baselines", description = "Whether to run the baseline approaches")
     public boolean baselines;
 
+    @Parameter(names = "--results", description = "Whether to process experimental results")
+    public boolean results;
+
     @Parameter(names = "--url", description = "The URL to check for faults.")
     public String url;
 

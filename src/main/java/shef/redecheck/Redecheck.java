@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.layout.LayoutFactory;
 import shef.mutation.ResultClassifier;
 import shef.rlg.ResponsiveLayoutGraph;
+import shef.utils.ResultProcessor;
 import shef.utils.StopwatchFactory;
 
 import java.io.*;
@@ -42,7 +43,7 @@ public class Redecheck {
     public String browser = "phantom";
     public String mutantID;
     public boolean screenshot;
-    public boolean baselines;
+    public boolean baselines, results;
     public boolean tool;
     public boolean xpert;
     public int[] widthsToCheck;
@@ -91,6 +92,7 @@ public class Redecheck {
         mutantID = clp.mutantID;
         screenshot = clp.screenshot;
         baselines = clp.baselines;
+        results = clp.results;
         tool = clp.tool;
         xpert = clp.xpert;
         if (clp.browser != null) {
@@ -125,6 +127,10 @@ public class Redecheck {
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
         runFaultDetector();
+
+        if (results) {
+            ResultProcessor rp = new ResultProcessor();
+        }
     }
 
     private void runFaultDetector() {
@@ -150,7 +156,7 @@ public class Redecheck {
             int numVCs = rlg.getVisCons().size();
             int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
-            writeTimes(url, thread.getSwf(), timeStamp);
+//            writeTimes(url, thread.getSwf(), timeStamp);
 //            if (timing) {
 //                writeTimesSpecial(thread.swf, url, timingID);
 //            }
@@ -584,9 +590,9 @@ public class Redecheck {
         String outFolder = "";
         try {
             String[] splits = testUrl.split("/");
-            String webpage = splits[7];
-            String mutant = splits[8];
-            outFolder = directory + webpage + "/" + mutant + "/";
+            String webpage = splits[9];
+//            String mutant = splits[10];
+            outFolder = directory + webpage + "/";
 
             File dir = new File(outFolder+fileName+".txt");
             System.out.println(dir.toString());
