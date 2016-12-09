@@ -590,7 +590,7 @@ public class Redecheck {
         String outFolder = "";
         try {
             String[] splits = testUrl.split("/");
-            String webpage = splits[9];
+            String webpage = splits[8];
 //            String mutant = splits[10];
             outFolder = directory + webpage + "/";
 

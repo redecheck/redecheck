@@ -869,7 +869,7 @@ public class ResultProcessor {
 				ArrayList<Integer> tpIndexes = new ArrayList<>();
 				String classificationString = getClassification(mostRecentRun, tpIndexes);
 //				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
+				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false).size();
 				totalDistinctRanges += totalRanges;
 //				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 			}
@@ -1029,8 +1029,8 @@ public class ResultProcessor {
 		return results;
 	}
 
-	private static int getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
-		HashSet<String> errorStrings = new HashSet<>();
+	public static HashMap<String, String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
+		HashMap<String, String> errorStrings = new HashMap<>();
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
@@ -1038,8 +1038,10 @@ public class ResultProcessor {
 			int errorIndex = 1;
 			boolean foundBounds = false;
 			String[] splits, splits2;
+			String contents = "";
 			int min = 0, max=0;
 			while(line != null) {
+//				contents += line;
 				if (line.contains("overflowed the viewport")) {
 					splits = line.split(" and ");
 					splits2 = splits[0].split("between ");
@@ -1084,11 +1086,11 @@ public class ResultProcessor {
 				}
 				if (b) {
 					if (tpIndexes.contains(errorIndex)) {
-						errorStrings.add(min + " - " + max);
+						errorStrings.put(line, min + " - " + max);
 					}
 				} else {
 					if (min != 0 && max != 0) {
-						errorStrings.add(min + " - " + max);
+						errorStrings.put(line, min + " - " + max);
 					}
 				}
 
@@ -1101,7 +1103,7 @@ public class ResultProcessor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return errorStrings.size();
+		return errorStrings;
 	}
 
 
@@ -1117,7 +1119,7 @@ public class ResultProcessor {
 		return "Null";
 	}
 
-	private static String getClassification(File f, ArrayList<Integer> tpIndexes) {
+	public static String getClassification(File f, ArrayList<Integer> tpIndexes) {
 		String result = "";
 		HashMap<String, HashMap<Integer, Integer>> counts = new HashMap<>();
 		counts.put("SR", new HashMap<Integer, Integer>());

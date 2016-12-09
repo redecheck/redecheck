@@ -19,6 +19,7 @@ import shef.mutation.CSSMutator;
 import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.layout.LayoutFactory;
 import shef.rlg.ResponsiveLayoutGraph;
+import shef.utils.ResultProcessor;
 import shef.utils.StopwatchFactory;
 
 import javax.imageio.ImageIO;
@@ -112,19 +113,19 @@ public class RLGExtractor implements Runnable {
             Redecheck.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
 //            swf.getProcess().start();
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
-//            for (int width : sampleWidths) {
-//                LayoutFactory lf = lFactories.get(width);
-//                oracleLFs.add(lf);
-//            }
-//
-//            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
-//            this.swf.getRlg().stop();
-//            this.swf.getDetect().start();
-//            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
-//            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
-//            this.swf.getDetect().stop();
-//
-//            this.swf.getReport().start();
+            for (int width : sampleWidths) {
+                LayoutFactory lf = lFactories.get(width);
+                oracleLFs.add(lf);
+            }
+
+            this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
+            this.swf.getRlg().stop();
+            this.swf.getDetect().start();
+            RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
+            ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
+            this.swf.getDetect().stop();
+
+            this.swf.getReport().start();
 //            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
 //            if (errors.size() > 0) {
 //                for (ResponsiveLayoutFailure error : errors) {
@@ -132,7 +133,7 @@ public class RLGExtractor implements Runnable {
 //                }
 //            }
 //            analyser.writeReport(shortUrl, errors, ts);
-//            this.swf.getReport().stop();
+            this.swf.getReport().stop();
 
             // BASELINE SCREENSHOT CAPTURE
             if (baselines) {
@@ -160,16 +161,41 @@ public class RLGExtractor implements Runnable {
                     allWidths[i] = i + startW;
                 }
 
-                StopWatch exhaustive = new StopWatch();
-                exhaustive.start();
-                for (int scw : allWidths) {
-                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
-                    File outputfile = new File(exhaustiveDir + "/" + scw + ".png");
-                    ImageIO.write(ss, "png", outputfile);
+                // Obtain failures from classification files
+                ResultProcessor rp = new ResultProcessor();
+                String path = new java.io.File( "." ).getCanonicalPath() + "/../reports-final/" + shortUrl;
+                File mostRecentRun = rp.lastFileModified(path);
+                System.out.println(mostRecentRun);
+
+                ArrayList<Integer> tpIndexes = new ArrayList<>();
+
+                String classificationString = rp.getClassification(mostRecentRun, tpIndexes);
+//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
+                HashMap<String, String> failures = rp.getFailuresFromFile(mostRecentRun, tpIndexes, true);
+                for (String failure : failures.keySet()) {
+                    String bounds = failures.get(failure);
+                    String[] splits = bounds.split(" - ");
+                    int fMin = Integer.parseInt(splits[0]);
+                    int fMax = Integer.parseInt(splits[1]);
+                    boolean detectedBySpotCheck = false;
+                    for (int scw : SPOT_CHECK_WIDTHS) {
+                        if ( (scw >= fMin) && (scw <= fMax) ) {
+                            detectedBySpotCheck = true;
+                        }
+                    }
+                    System.out.println(failure + " " + detectedBySpotCheck);
                 }
-                exhaustive.stop();
-                String exhaustiveTime = Redecheck.getTimeStringFromStopwatch(exhaustive);
-                Redecheck.writeToFile(fullUrl, exhaustiveTime, "exhaustive-time", Redecheck.timesDirectory);
+
+//                StopWatch exhaustive = new StopWatch();
+//                exhaustive.start();
+//                for (int scw : allWidths) {
+//                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
+//                    File outputfile = new File(exhaustiveDir + "/" + scw + ".png");
+//                    ImageIO.write(ss, "png", outputfile);
+//                }
+//                exhaustive.stop();
+//                String exhaustiveTime = Redecheck.getTimeStringFromStopwatch(exhaustive);
+//                Redecheck.writeToFile(fullUrl, exhaustiveTime, "exhaustive-time", Redecheck.timesDirectory);
 
             }
         } catch (Exception e) {
