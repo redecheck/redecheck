@@ -7,11 +7,15 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.screentaker.ViewportPastingStrategy;
+
+import javax.imageio.ImageIO;
 
 /**
  * Created by thomaswalsh on 10/08/15.
@@ -72,19 +76,28 @@ public class Utils {
     public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
         try {
             d.manage().window().setSize(new Dimension(w, 1000));
+//            System.out.println(w);
             Thread.sleep(sleep);
-            Screenshot screenshot;
+            Screenshot screenshot = null;
+            File src = null;
             if (d instanceof ChromeDriver) {
                 screenshot = new AShot().shootingStrategy(
                         new ViewportPastingStrategy(500)).takeScreenshot(d);
             } else {
                 screenshot = new AShot().takeScreenshot(d);
+//                src= ((TakesScreenshot)d). getScreenshotAs(OutputType.FILE);
             }
             String ssDir = Redecheck.redecheck + "target/";
             String ssFile = "error"+errorID + "atWidth" + w;
             try {
                 FileUtils.forceMkdir(new File(ssFile));
-                BufferedImage image = screenshot.getImage();
+                BufferedImage image;
+//                if (d instanceof ChromeDriver) {
+                    image= screenshot.getImage();
+//                } else {
+//                    System.out.println("Reading image from " + src);
+//                    image = ImageIO.read(src);
+//                }
                 return image;
 //                return image;
 //                ImageIO.write(image, "PNG", new File(ssDir + ssFile + ".png"));

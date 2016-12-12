@@ -23,6 +23,7 @@ import shef.utils.ResultProcessor;
 import shef.utils.StopwatchFactory;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,6 +32,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +61,7 @@ public class RLGExtractor implements Runnable {
     private ArrayList<Integer> breakpoints;
     private String ts;
     final int[] SPOT_CHECK_WIDTHS = new int[] {480, 600, 640, 768, 1024, 1280};
+    HashMap<String, int[]> spotCheckWidths;
     int[] allWidths;
 
 
@@ -81,6 +84,11 @@ public class RLGExtractor implements Runnable {
         breakpoints = new ArrayList<>();
         ts = timeStamp;
         this.baselines = baselines;
+        spotCheckWidths = new HashMap<>();
+        spotCheckWidths.put("kersley", new int[] {320, 480, 768, 1024});
+        spotCheckWidths.put("responsinator", new int[] {320, 375, 384, 414, 768, 1024});
+        spotCheckWidths.put("semalt", new int[] {320, 384, 600, 768, 1024});
+        spotCheckWidths.put("wasserman", new int[] {320, 375, 414, 600, 768, 1280});
     }
 
     public void run() {
@@ -108,6 +116,7 @@ public class RLGExtractor implements Runnable {
                 webDriver = new OperaDriver(capabilities);
             }
             webDriver.get(fullUrl);
+            System.out.println(fullUrl);
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
             Redecheck.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
@@ -126,13 +135,13 @@ public class RLGExtractor implements Runnable {
             this.swf.getDetect().stop();
 
             this.swf.getReport().start();
-//            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
-//            if (errors.size() > 0) {
-//                for (ResponsiveLayoutFailure error : errors) {
-//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
-//                }
-//            }
-//            analyser.writeReport(shortUrl, errors, ts);
+            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
+            if (errors.size() > 0) {
+                for (ResponsiveLayoutFailure error : errors) {
+                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                }
+            }
+            analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
 
             // BASELINE SCREENSHOT CAPTURE
@@ -149,42 +158,49 @@ public class RLGExtractor implements Runnable {
                     spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
                     exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
                 }
-                FileUtils.forceMkdir(spotcheckDir);
-                FileUtils.forceMkdir(exhaustiveDir);
-                for (int scw : SPOT_CHECK_WIDTHS) {
-                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
-                    File outputfile = new File(spotcheckDir + "/" + scw + ".png");
-                    ImageIO.write(ss, "png", outputfile);
+                for (String scTechnique : spotCheckWidths.keySet()) {
+                    File scTechFile = new File(spotcheckDir + "/" + scTechnique + "/");
+                    FileUtils.forceMkdir(scTechFile);
+                    int[] scws = spotCheckWidths.get(scTechnique);
+                    for (int scw : scws) {
+                        BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
+                        Graphics2D g2d = ss.createGraphics();
+                        g2d.setColor(Color.RED);
+                        g2d.drawRect(0,0, scw, ss.getHeight());
+                        File outputfile = new File(scTechFile + "/" + scw + ".png");
+                        ImageIO.write(ss, "png", outputfile);
+                    }
                 }
+                FileUtils.forceMkdir(exhaustiveDir);
                 allWidths = new int[(endW - startW) + 1];
                 for (int i = 0; i < allWidths.length; i++) {
                     allWidths[i] = i + startW;
                 }
 
                 // Obtain failures from classification files
-                ResultProcessor rp = new ResultProcessor();
-                String path = new java.io.File( "." ).getCanonicalPath() + "/../reports-final/" + shortUrl;
-                File mostRecentRun = rp.lastFileModified(path);
-                System.out.println(mostRecentRun);
+//                ResultProcessor rp = new ResultProcessor();
+//                String path = new java.io.File( "." ).getCanonicalPath() + "/../reports-final/" + shortUrl;
+//                File mostRecentRun = rp.lastFileModified(path);
+//                System.out.println(mostRecentRun);
+//
+//                ArrayList<Integer> tpIndexes = new ArrayList<>();
 
-                ArrayList<Integer> tpIndexes = new ArrayList<>();
-
-                String classificationString = rp.getClassification(mostRecentRun, tpIndexes);
-//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-                HashMap<String, String> failures = rp.getFailuresFromFile(mostRecentRun, tpIndexes, true);
-                for (String failure : failures.keySet()) {
-                    String bounds = failures.get(failure);
-                    String[] splits = bounds.split(" - ");
-                    int fMin = Integer.parseInt(splits[0]);
-                    int fMax = Integer.parseInt(splits[1]);
-                    boolean detectedBySpotCheck = false;
-                    for (int scw : SPOT_CHECK_WIDTHS) {
-                        if ( (scw >= fMin) && (scw <= fMax) ) {
-                            detectedBySpotCheck = true;
-                        }
-                    }
-                    System.out.println(failure + " " + detectedBySpotCheck);
-                }
+//                String classificationString = rp.getClassification(mostRecentRun, tpIndexes);
+////				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
+//                HashMap<String, String> failures = rp.getFailuresFromFile(mostRecentRun, tpIndexes, true);
+//                for (String failure : failures.keySet()) {
+//                    String bounds = failures.get(failure);
+//                    String[] splits = bounds.split(" - ");
+//                    int fMin = Integer.parseInt(splits[0]);
+//                    int fMax = Integer.parseInt(splits[1]);
+//                    boolean detectedBySpotCheck = false;
+//                    for (int scw : SPOT_CHECK_WIDTHS) {
+//                        if ( (scw >= fMin) && (scw <= fMax) ) {
+//                            detectedBySpotCheck = true;
+//                        }
+//                    }
+//                    System.out.println(failure + " " + detectedBySpotCheck);
+//                }
 
 //                StopWatch exhaustive = new StopWatch();
 //                exhaustive.start();

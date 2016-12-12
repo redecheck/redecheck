@@ -871,7 +871,7 @@ public class ResultProcessor {
 //				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
 				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false).size();
 				totalDistinctRanges += totalRanges;
-//				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 			}
 
 

@@ -249,8 +249,8 @@ public class RLGAnalyser {
                         // Now, investigate whether the two elements were NOT overlapping at either range
                         // If no matches found, then clearly elements were NOT OVERLAPPING
                         if (prev == null && next == null) {
-                            olPrev = false;
-                            olNext = false;
+//                            olPrev = false;
+//                            olNext = false;
                         } else if (prev != null && prev.getType() == Type.SIBLING) {
                             // Check if elements overlapping in previous constraint
                             if (!prev.getAttributes()[10]) {
