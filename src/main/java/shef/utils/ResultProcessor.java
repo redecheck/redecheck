@@ -20,7 +20,7 @@ public class ResultProcessor {
 //	static String preamble = "/Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
 	static String preamble = "/Users/thomaswalsh/Documents/PhD/redecheck-journal-paper-data/";
 	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
-	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
+	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
 	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/fault-examples/";
@@ -237,7 +237,7 @@ public class ResultProcessor {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			while((line = bufferedReader.readLine()) != null) {
-				files.add(new File(current + "/reports-final/" + line));
+				files.add(new File(current + "/../reports/" + line));
 			}
 
 			// Always close files.
@@ -788,6 +788,11 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
+		rp.getInconsistencyResults();
+
+	}
+
+	public void getInconsistencyResults() {
 		String[] webpages = new String[] {
 				"3-Minute-Journal",
 				"AccountKiller",
@@ -795,7 +800,7 @@ public class ResultProcessor {
 				"BugMeNot",
 				"CloudConvert",
 				"Covered-Calendar",
-				"Days-Old",
+				"DaysOld",
 				"Dictation",
 				"Duolingo",
 				"Honey",
@@ -843,7 +848,7 @@ public class ResultProcessor {
 //		writeTimesAndDomsToFile(rp.webpages, 30);
 //		rp.generateStepSizeResults(rp.webpages);
 //		processAllMutants(rp.webpages);
-		ArrayList<File> files = rp.readInSetOfMutants("/src/main/java/icst-websites.txt");
+		ArrayList<File> files = readInSetOfMutants( "/../src/main/java/icst-websites.txt");
 		String timeData = "";
 		String multiTimeData = "";
 		String subjectData = "";
@@ -854,26 +859,34 @@ public class ResultProcessor {
 		for (File f : files) {
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
 			if (mostRecentRun == null) {
-				System.out.println("Boo");
-			}
-			System.out.println(mostRecentRun);
-			String[] splits = f.toString().split("/");
-			String webpage = splits[splits.length-1];
-			timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
+				System.out.println("Boo on " + f.getAbsolutePath());
+			} else {
+//				System.out.println(mostRecentRun);
+				String[] splits = f.toString().split("/");
+				String webpage = splits[splits.length - 1];
+				timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
 
-			int errorCount = getErrorCount(mostRecentRun);
-			String jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-			String distinctFailures = getActualFaults(mostRecentRun);
-			totalFailures += Integer.valueOf(distinctFailures);
-			if (errorCount != -1) {
-				ArrayList<Integer> tpIndexes = new ArrayList<>();
-				String classificationString = getClassification(mostRecentRun, tpIndexes);
-//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false).size();
-				totalDistinctRanges += totalRanges;
-				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
-			}
-
+				int errorCount = getErrorCount(mostRecentRun);
+				String jekyllCode = null;
+				//			try {
+				//				jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
+				//			} catch (IOException e) {
+				//				e.printStackTrace();
+				//			}
+				String distinctFailures = getActualFaults(mostRecentRun);
+				try {
+					totalFailures += Integer.valueOf(distinctFailures);
+					if (errorCount != -1) {
+						ArrayList<Integer> tpIndexes = new ArrayList<>();
+						String classificationString = getClassification(mostRecentRun, tpIndexes);
+						//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
+						int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false).size();
+						totalDistinctRanges += totalRanges;
+						System.out.println(webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+					}
+				} catch (NumberFormatException nfe) {
+					System.out.println(mostRecentRun.getAbsolutePath());
+				}
 
 
 //
@@ -911,11 +924,12 @@ public class ResultProcessor {
 //				}
 //			}
 //			System.out.println(jekyllCode);
-			writeToFile(jekyllCode, githubio + "_posts/","2016-09-26-"+webpage+".markdown");
+//				writeToFile(jekyllCode, githubio + "_posts/", "2016-09-26-" + webpage + ".markdown");
+			}
 
 		}
 //		System.out.println("\\midrule");
-//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
+		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
 //		for (String wp : webpages) {
 //			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
 //			try {
@@ -1029,8 +1043,8 @@ public class ResultProcessor {
 		return results;
 	}
 
-	public static HashMap<String, String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
-		HashMap<String, String> errorStrings = new HashMap<>();
+	public static HashSet<String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
+		HashSet<String> errorStrings = new HashSet<>();
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
@@ -1086,11 +1100,11 @@ public class ResultProcessor {
 				}
 				if (b) {
 					if (tpIndexes.contains(errorIndex)) {
-						errorStrings.put(line, min + " - " + max);
+						errorStrings.add(min + " - " + max);
 					}
 				} else {
 					if (min != 0 && max != 0) {
-						errorStrings.put(line, min + " - " + max);
+						errorStrings.add(min + " - " + max);
 					}
 				}
 

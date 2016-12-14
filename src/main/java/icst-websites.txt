@@ -4,7 +4,7 @@ AirBnb
 BugMeNot
 CloudConvert
 Covered-Calendar
-Days-Old
+DaysOld
 Dictation
 Duolingo
 Honey

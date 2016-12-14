@@ -126,10 +126,13 @@ public class Redecheck {
 
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
-        runFaultDetector();
+        if (!results) {
+            runFaultDetector();
+        }
 
         if (results) {
             ResultProcessor rp = new ResultProcessor();
+            rp.getInconsistencyResults();
         }
     }
 

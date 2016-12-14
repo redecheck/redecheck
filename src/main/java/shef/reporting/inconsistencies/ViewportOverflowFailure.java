@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -61,10 +62,13 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
             g2d.setStroke(new BasicStroke(2));
 
             int[] coords = e1.getBoundingCoords();
+//            System.out.println(e1.getXpath());
+//            System.out.println(Arrays.toString(coords));
             g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
 
             g2d.setColor(Color.GREEN);
             int[] coords2 = body.getBoundingCoords();
+//            System.out.println(Arrays.toString(coords2));
             g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
 
             g2d.dispose();

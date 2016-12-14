@@ -164,11 +164,12 @@ public class RLGExtractor implements Runnable {
                     int[] scws = spotCheckWidths.get(scTechnique);
                     for (int scw : scws) {
                         BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
+                        BufferedImage dest = ss.getSubimage(0, 0, scw, ss.getHeight());
                         Graphics2D g2d = ss.createGraphics();
                         g2d.setColor(Color.RED);
                         g2d.drawRect(0,0, scw, ss.getHeight());
                         File outputfile = new File(scTechFile + "/" + scw + ".png");
-                        ImageIO.write(ss, "png", outputfile);
+                        ImageIO.write(dest, "png", outputfile);
                     }
                 }
                 FileUtils.forceMkdir(exhaustiveDir);
