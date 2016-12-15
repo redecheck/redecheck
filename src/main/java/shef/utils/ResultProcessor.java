@@ -929,6 +929,8 @@ public class ResultProcessor {
 						grouped.remove(match);
 						if (rMin < gMin) {
 							grouped.add(gMin + " - " + rMax);
+						} else {
+							grouped.add(rMin + " - " + gMax);
 						}
 //						break;
 
