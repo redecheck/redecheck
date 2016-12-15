@@ -854,6 +854,7 @@ public class ResultProcessor {
 		String subjectData = "";
 		int totalFailures = 0;
 		int totalDistinctRanges = 0;
+		int totalTestRanges = 0;
 
 
 		for (File f : files) {
@@ -879,71 +880,73 @@ public class ResultProcessor {
 					if (errorCount != -1) {
 						ArrayList<Integer> tpIndexes = new ArrayList<>();
 						String classificationString = getClassification(mostRecentRun, tpIndexes);
-						//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-						int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false).size();
+						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
+						ArrayList<String> testRanges = groupFailureRanges(ranges);
+						int totalRanges = ranges.size();
 						totalDistinctRanges += totalRanges;
-						System.out.println(webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+						int testRangeCount = testRanges.size();
+						totalTestRanges += testRangeCount;
+						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
 				}
-
-
-//
-//				Document toMutate = mutator.cloner.deepClone(mutator.page);
-
-
-//			for (int i = 1; i <= 30; i++) {
-//				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-//			}
-
-
-//			File fl = new File(dir);
-//			File[] runfiles = f.listFiles(new FileFilter() {
-//				public boolean accept(File file) {
-//					return file.isDirectory();
-//				}
-//			});
-//			System.out.println(f.getAbsolutePath() + "  " + runfiles.length);
-//			HashMap<Integer, ArrayList<File>> faultCounts = new HashMap<>();
-//			for (File ff : runfiles) {
-//				int ec = getErrorCount(ff);
-//				if (!faultCounts.containsKey(ec)) {
-//					faultCounts.put(ec, new ArrayList<File>());
-//				}
-//				faultCounts.get(ec).add(ff);
-//			}
-//			if (faultCounts.entrySet().size() > 1) {
-//				for (Integer i : faultCounts.keySet()) {
-//					if (faultCounts.get(i).size() == 1) {
-//						for (File dodgy: faultCounts.get(i)) {
-//							System.out.println(dodgy);
-//						}
-//					}
-//					System.out.println(i + " faults were reported " +faultCounts.get(i).size() + " times");
-//				}
-//			}
-//			System.out.println(jekyllCode);
-//				writeToFile(jekyllCode, githubio + "_posts/", "2016-09-26-" + webpage + ".markdown");
 			}
-
 		}
-//		System.out.println("\\midrule");
-		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-//		for (String wp : webpages) {
-//			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
-//			try {
-//				subjectData +=wp + " & "+ mutator.getStatistics(wp) +"\\\\\n";
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
+		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + "(" + totalTestRanges + ") & " + totalFailures + "\\\\");
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
 //		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
 
 //		rp.writeRQ1and2Data(files);
+	}
+
+	private ArrayList<String> groupFailureRanges(HashSet<String> ranges) {
+		ArrayList<String> grouped = new ArrayList<>();
+
+		for (String r : ranges) {
+//			System.out.println(r);
+			String[] splits = r.split(" - ");
+			int rMin = Integer.parseInt(splits[0]);
+			int rMax = Integer.parseInt(splits[1]);
+			String match = "";
+			ArrayList<String> groupedClone = (ArrayList<String>) grouped.clone();
+//			for (String g : grouped) {
+			while (groupedClone.size() > 0) {
+				String g = groupedClone.remove(0);
+//				System.out.println(g);
+				if (match.equals("")) {
+					splits = g.split(" - ");
+					int gMin = Integer.parseInt(splits[0]);
+					int gMax = Integer.parseInt(splits[1]);
+//					System.out.println("Comparing " + r + " and " + g);
+					if (rMin <= gMax && gMin <= rMax) {
+						// We've found a match
+						// x1 <= y2 && y1 <= x2
+//						System.out.println("Overlap between " + r + " and " + g);
+						match = g;
+						grouped.remove(match);
+						if (rMin < gMin) {
+							grouped.add(gMin + " - " + rMax);
+						}
+//						break;
+
+					}
+				}
+			}
+
+			if (match.equals("")) {
+//				System.out.println("Adding " + r);
+				grouped.add(r);
+			} else {
+				// Remove the original match
+//				grouped.remove(match);
+				// Add in the new value, representing the overlap between the two
+
+			}
+		}
+		return grouped;
 	}
 
 	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
