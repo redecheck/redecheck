@@ -76,7 +76,6 @@ public class Utils {
     public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
         try {
             d.manage().window().setSize(new Dimension(w, 500));
-//            System.out.println(w);
             Thread.sleep(sleep);
             Screenshot screenshot = null;
             File src = null;
@@ -85,38 +84,13 @@ public class Utils {
                         new ViewportPastingStrategy(500)).takeScreenshot(d);
             } else {
                 screenshot = new AShot().takeScreenshot(d);
-//                src= ((TakesScreenshot)d). getScreenshotAs(OutputType.FILE);
             }
-            String ssDir = Redecheck.redecheck + "target/";
-            String ssFile = "error"+errorID + "atWidth" + w;
-            try {
-                FileUtils.forceMkdir(new File(ssFile));
                 BufferedImage image;
-//                if (d instanceof ChromeDriver) {
                     image= screenshot.getImage();
-//                } else {
-//                    System.out.println("Reading image from " + src);
-//                    image = ImageIO.read(src);
-//                }
                 return image;
-//                return image;
-//                ImageIO.write(image, "PNG", new File(ssDir + ssFile + ".png"));
-//                FileUtils.copyFile(scrFile, new File(ssDir + ssFile + ".png"));
-            } catch (IOException e) {
-                System.err.println("Error saving screenshot");
-                e.printStackTrace();
-            }
-
-
-//            BufferedImage img = ImageIO.read(new File(ssDir+ssFile+".png"));
-//            FileUtils.forceDelete(new File(ssDir + ssFile + ".png"));
-//            return img;
         } catch (InterruptedException ie) {
             System.out.println("INTERRUPTED");
         }
-//        } catch (IOException e) {
-//            System.out.println("Failed to read image");
-//        }
         return null;
     }
 

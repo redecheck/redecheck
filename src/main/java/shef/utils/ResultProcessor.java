@@ -952,7 +952,6 @@ public class ResultProcessor {
 	}
 
 	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
-//		System.out.println(webpage);
 		String jekyllCode = "";
 		try {
 

@@ -160,9 +160,9 @@ public class Redecheck {
             int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
 //            writeTimes(url, thread.getSwf(), timeStamp);
-//            if (timing) {
-//                writeTimesSpecial(thread.swf, url, timingID);
-//            }
+            if (timing) {
+                writeTimesSpecial(thread.swf, url, timingID);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
