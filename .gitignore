@@ -1,7 +1,13 @@
 /target/
 /output/
 /testing/
+/times/
+/screenshots/
+/reports/
+/reports-final/
+/icst-processing/
 /resources/phantomjs
-/src/main/java/twalsh/mutation/
+/src/main/java/edu/
+/src/main/java/edu2/
 /.settings/
 /.idea/
