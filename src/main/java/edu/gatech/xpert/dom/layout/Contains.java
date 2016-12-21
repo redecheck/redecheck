@@ -25,6 +25,7 @@ public class Contains extends AGEdge {
 	}
 
 	public void populateAlignments() {
+
 		int px = (parent.x1 + parent.x2) / 2;
 		int py = (parent.y1 + parent.y2) / 2;
 		int cx = (child.x1 + child.x2) / 2;
@@ -32,11 +33,13 @@ public class Contains extends AGEdge {
 
 		int pw = parent.x2 - parent.x1;
 		int cw = child.x2 - child.x1;
-		int dW = cw / 3;
+		int dW = 3;
+//        int dW = cw / 3;
 
 		int ph = parent.y2 - parent.y1;
 		int ch = child.y2 - child.y1;
-		int dH = ch / 3;
+		int dH = 3;
+//        int dH = ch / 3;
 
 		// Ignore small children
 		if (cw < 15 && pw < 15) {
@@ -53,16 +56,16 @@ public class Contains extends AGEdge {
 					&& equals(child.x2, parent.x2, dW_delta)) {
 				sethFill(true);
 			} else {
-				if (equals(child.x1, parent.x1, dW)) {
+				if (equals(px, cx, dW)) {
+					setCentered(true);
+					setxError(calcError(px, cx, dW));
+				} else if (equals(child.x1, parent.x1, dW)) {
 					setLeftJustified(true);
 					setxError(calcError(child.x1, parent.x1, dW));
 				} else if (equals(child.x2, parent.x2, dW)) {
 					setRightJustified(true);
 					setxError(calcError(child.x2, parent.x2, dW));
-				} else if (equals(px, cx, dW)) {
-					setCentered(true);
-					setxError(calcError(px, cx, dW));
-				}	
+				}
 			}
 		}
 
@@ -73,15 +76,15 @@ public class Contains extends AGEdge {
 					&& equals(child.y2, parent.y2, dH_delta)) {
 				setvFill(true);
 			} else{
-				if (equals(child.y1, parent.y1, dH)) {
+				if (equals(py, cy, dH)) {
+					setMiddle(true);
+					setyError(calcError(py, cy, dH));
+				} else if (equals(child.y1, parent.y1, dH)) {
 					setTopAligned(true);
 					setyError(calcError(child.y1, parent.y1, dH))	;
 				} else if (equals(child.y2, parent.y2, dH)) {
 					setBottomAligned(true);
 					setyError(calcError(child.y2, parent.y2, dH));
-				} else if (equals(py, cy, dH)) {
-					setMiddle(true);
-					setyError(calcError(py, cy, dH));
 				}
 			}
 		}

@@ -9,7 +9,7 @@ public class Sibling extends AGEdge {
 	boolean topEdgeAligned, bottomEdgeAligned, leftEdgeAligned,
 			rightEdgeAligned;
 	
-	int deltaW = 5, deltaH = 5;
+	int deltaW = 3, deltaH = 3;
 
 	public Sibling(AGNode a, AGNode b) {
 		node1 = a;
@@ -18,6 +18,7 @@ public class Sibling extends AGEdge {
 	}
 
 	public void populateProperties() {
+
 		if (equals(node1.x1, node2.x1, deltaW)) {
 			setLeftEdgeAligned(true);
 		}
@@ -49,6 +50,7 @@ public class Sibling extends AGEdge {
 		if (isTopBottom(node2, node1)) {
 			setBottomTop(true);
 		}
+
 	}
 
 	@Override

@@ -1,0 +1,7 @@
+Dear NAME,
+
+My name is Thomas Walsh, a PhD student at the University of Sheffield. My research involves developing novel techniques for testing responsive web sites, with a focus on detecting faults within a website's layout. During this work, I noticed what I believe to be a layout fault in your site.
+
+DESCRIPTION AND SCREENSHOT OF FAULT SO WEBMASTER CAN REPLICATE IT ON THEIR MACHINE.
+
+MORE DETAIL ABOUT THE RESEARCH HERE TO SEE IF ANYONE IS INTERESTED?

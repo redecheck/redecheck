@@ -147,10 +147,11 @@ public class AlignmentGraphFactory {
                 if (yVal > maxY) {
                     maxY = yVal;
                 }
+                toCheck.addAll(n.getChildren());
             } catch (NullPointerException e) {
 
             }
-            toCheck.addAll(n.getChildren());
+
         }
 
         try {
@@ -166,16 +167,16 @@ public class AlignmentGraphFactory {
         if (e instanceof Sibling) {
             Sibling s = (Sibling) e;
             if (s.isTopBottom()) {
-                result = result + "below";
-            }
-            if (s.isBottomTop()) {
                 result = result + "above";
             }
+            if (s.isBottomTop()) {
+                result = result + "below";
+            }
             if (s.isRightLeft()) {
-                result = result + "leftOf";
+                result = result + "rightOf";
             }
             if (s.isLeftRight()) {
-                result = result + "rightOf";
+                result = result + "leftOf";
             }
             if (s.isTopEdgeAligned()) {
                 result = result + "topAlign";
@@ -210,16 +211,16 @@ public class AlignmentGraphFactory {
     public static String generateFlippedLabelling(Sibling s) {
         String result = "";
             if (s.isTopBottom()) {
-                result = result + "above";
-            }
-            if (s.isBottomTop()) {
                 result = result + "below";
             }
+            if (s.isBottomTop()) {
+                result = result + "above";
+            }
             if (s.isRightLeft()) {
-                result = result + "rightOf";
+                result = result + "leftOf";
             }
             if (s.isLeftRight()) {
-                result = result + "leftOf";
+                result = result + "rightOf";
             }
             if (s.isTopEdgeAligned()) {
                 result = result + "topAlign";

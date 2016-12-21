@@ -18,7 +18,7 @@ public class AlignmentGraph {
 	List<Contains> contains;
 	List<Sibling> siblings;
 
-	public static final String[] tagsIgnore = { "A", "AREA", "B", "BLOCKQUOTE",
+	public static final String[] tagsIgnore = { "AREA", "B", "BLOCKQUOTE",
 			"BR", "CANVAS", "CENTER", "CSACTIONDICT", "CSSCRIPTDICT", "CUFON",
 			"CUFONTEXT", "DD", "EM", "EMBED", "FIELDSET", "FONT", "FORM",
 			"HEAD", "HR", "I", "LABEL", "LEGEND", "LINK", "MAP", "MENUMACHINE",
@@ -45,6 +45,7 @@ public class AlignmentGraph {
 		while (!worklist.isEmpty()) {
 			DomNode node = worklist.remove(0);
 			if (isLayoutNode(node)) {
+
 				AGNode n = new AGNode(node);
 				vertices.add(n);
 				vMap.put(node.getxPath(), n);
@@ -102,39 +103,44 @@ public class AlignmentGraph {
 	}
 
 	private boolean isLayoutNode(DomNode node) {
-		// is it ignored?
-		if (isIgnored(node)) {
-			return false;
-		}
-
-		// check size
-		int[] c = node.getCoords();
-		if (c == null) {
-			return false;
-		}
-		if (c[0] < 0 || c[1] < 0 || c[2] <= 0 || c[3] <= 0) {
-			return false;
-		}
-		int t = 5; // 5 (Negligible dimensions)
-		if (c[2] - c[0] <= t || c[3] - c[1] <= t) {
-			return false;
-		}
-
-		// empty container
-		if (ArrayUtils.contains(tagsContainer, node.getTagName())) {
-			if (node.getChildren().size() == 0) {
+//		System.out.println(node.getxPath());
+		try {
+			// is it ignored?
+			if (isIgnored(node)) {
 				return false;
 			}
-			boolean hasVisibleChild = false;
-			for (DomNode child : node.getChildren()) {
-				if (child.getHash() != Long.MIN_VALUE
-						|| (child.isText() && !StringUtils.isBlank(child
-								.getText())) || (!isIgnored(child))) {
-					hasVisibleChild = true;
-				}
-			}
-			if (!hasVisibleChild)
+
+			// check size
+			int[] c = node.getCoords();
+			if (c == null) {
 				return false;
+			}
+			if (c[0] < 0 || c[1] < 0 || c[2] <= 0 || c[3] <= 0) {
+				return false;
+			}
+			int t = 5; // 5 (Negligible dimensions)
+			if (c[2] - c[0] <= t || c[3] - c[1] <= t) {
+				return false;
+			}
+
+			//		// empty container
+			//		if (ArrayUtils.contains(tagsContainer, node.getTagName())) {
+			//			if (node.getChildren().size() == 0) {
+			//				return false;
+			//			}
+			//			boolean hasVisibleChild = false;
+			//			for (DomNode child : node.getChildren()) {
+			//				if (child.getHash() != Long.MIN_VALUE
+			//						|| (child.isText() && !StringUtils.isBlank(child
+			//								.getText())) || (!isIgnored(child))) {
+			//					hasVisibleChild = true;
+			//				}
+			//			}
+			//			if (!hasVisibleChild)
+			//				return false;
+			//		}
+		} catch (Exception e) {
+//			System.out.println(node);
 		}
 
 		return true;

@@ -9,14 +9,14 @@ public abstract class AGEdge {
 	public abstract String getAttributes();
 
 	protected boolean isTopBottom(AGNode a, AGNode b) {
-		if (a.y2 < b.y1) {
+		if (a.y2 <= b.y1) {
 			return true;
 		}
 		return false;
 	}
 	
 	protected boolean isLeftRight(AGNode a, AGNode b) {
-		if(a.x2 < b.x1) {
+		if(a.x2 <= b.x1) {
 			return true;
 		}
 		return false;

@@ -2,10 +2,7 @@ package edu.gatech.xpert.dom;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +10,9 @@ import org.json.JSONObject;
 
 public class JsonDomParser {
 	public DomNode parseJsonDom(String domStr) {
+//		SpatialIndex si = new RTree();
+//		si.init(null);
+		HashMap<Integer, String> xpaths = new HashMap<>();
 		// Initialize DOM tree root
 		Map<Integer, DomNode> domMap = new HashMap<>();
 		DomNode rootNode = new DomNode("HTML", "/HTML");
@@ -23,13 +23,23 @@ public class JsonDomParser {
 			for (int i = 0; i < arrDom.length(); i++) {
 				JSONObject nodeData = arrDom.getJSONObject(i);
 				DomNode node = getDomNode(nodeData);
+
+
+//
+
 				if (node != null) {
 					// Rare case 
 					if(node.isTag() && node.getTagName().startsWith("/")) continue;
-					
+
 					domMap.put(nodeData.getInt("nodeid"), node);
-					
+
+//					int[] coords = node.getCoords();
+//					Rectangle r = new Rectangle(coords[0], coords[1], coords[2], coords[3]);
+//					si.add(r, i);
+//					xpaths.put(i, node.getxPath());
+
 					int parentId = getInt(nodeData, "pid");
+
 					if(domMap.containsKey(parentId)){
 						DomNode parent = domMap.get(parentId);
 						parent.addChild(node);
@@ -37,13 +47,69 @@ public class JsonDomParser {
 				}
 			}
 		} catch (JSONException e) {
-			System.err.println("JSON Exception while parsing : \n" + domStr);
+			System.err.println("JSON Exception while layout : \n" + domStr);
 			e.printStackTrace();
 			return null;
 		}
 
+
+
 		return rootNode;
 	}
+
+//	public RTree createRTree(String domString) {
+//
+//		RTree rt = new RTree();
+//		rt.init(null);
+//
+//		HashMap<Integer, String> xpaths = new HashMap<>();
+//
+//		// Initialize DOM tree root
+////		Map<Integer, DomNode> domMap = new HashMap<>();
+////		DomNode rootNode = new DomNode("HTML", "/HTML");
+////		domMap.put(-1, rootNode);
+//
+//		try {
+//			JSONArray arrDom = new JSONArray(domString.trim());
+//			for (int i = 0; i < arrDom.length(); i++) {
+//				JSONObject nodeData = arrDom.getJSONObject(i);
+//				DomNode node = getDomNode(nodeData);
+//
+//				if (node != null) {
+//					// Rare case
+//					if(node.isTag() && node.getTagName().startsWith("/")) continue;
+//
+//					try {
+//						int[] coords = node.getCoords();
+//						if (coords != null) {
+//							Rectangle r = new Rectangle(coords[0], coords[1], coords[2], coords[3]);
+//							rects.put(i, r);
+//							rt.add(r, i);
+//							xpaths.put(i, node.getxPath());
+//						}
+//					} catch (Exception e ) {
+//						e.printStackTrace();
+//					}
+//
+////					int parentId = getInt(nodeData, "pid");
+////
+////					if(domMap.containsKey(parentId)){
+////						DomNode parent = domMap.get(parentId);
+////						parent.addChild(node);
+////					}
+//				}
+//			}
+//		} catch (JSONException e) {
+//			System.err.println("JSON Exception while layout : \n" + domString);
+//			e.printStackTrace();
+//			return null;
+//		}
+//
+//
+//		return rt;
+//	}
+
+
 
 	private DomNode getDomNode(JSONObject nodeData) throws JSONException {
 		DomNode node = null;
