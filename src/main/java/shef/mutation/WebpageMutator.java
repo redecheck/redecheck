@@ -16,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.rits.cloning.Cloner;
 
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import shef.redecheck.Utils;
 
 public class WebpageMutator {
@@ -36,7 +37,7 @@ public class WebpageMutator {
 	
 	// Update this to the path to your project
 	String preamble = "file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/";
-	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/fault-examples/";
+	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	// Storage for mutation candidates and other things
 	HashSet<String> usedClassesHTML, usedTagsHTML, usedIdsHTML;
 	HashSet<String> usedClassesCSS, usedTagsCSS, usedIdsCSS;
@@ -80,7 +81,7 @@ public class WebpageMutator {
         usedDeclarations = 0;
 		
 		try {
-            driver = new FirefoxDriver();
+            driver = new PhantomJSDriver();
 			extractCssFiles(baseURL);
 			parseHTML(baseURL);
 			loadInCss(this.baseURL);
@@ -434,7 +435,7 @@ public class WebpageMutator {
     }
 
     public int getElementCount(String url) throws IOException {
-        int htmlLines = countLines((preamble + url+"/index.html").replace("file:", ""));
+        int htmlLines = countLines((url+"/index.html").replace("file:", ""));
         int cssLines = 0;
 //        for (String cssFile : cssFiles) {
 //            cssLines += countLines(preamble.replace("file:","") + shorthand + "/index/" + cssFile.replace("./",""));

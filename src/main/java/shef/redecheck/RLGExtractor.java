@@ -91,16 +91,21 @@ public class RLGExtractor implements Runnable {
         spotCheckWidths.put("wasserman", new int[] {320, 375, 414, 600, 768, 1280});
     }
 
+    /**
+     * Manages the whole RLG extraction process from start to finish
+     */
     public void run() {
         try {
+            // Start the timer
             this.swf.getRlg().start();
+
+            // Set up the web driver depending on the browser being used.
             if (browser.equals("chrome")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
                 capabilities.setCapability("marionette", true);
-//                capabilities.setVersion("47.0.1");
                 webDriver = new FirefoxDriver();
             } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
@@ -115,27 +120,38 @@ public class RLGExtractor implements Runnable {
                 capabilities.setJavascriptEnabled(true);
                 webDriver = new OperaDriver(capabilities);
             }
+
+            // Load up the webpage in the browser
             webDriver.get(fullUrl);
             System.out.println(fullUrl);
+
+            // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
+
+            // Capture the layout of the page at each width
             Redecheck.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
-//            swf.getProcess().start();
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
+
+            // For each sampled width, analyse the DOM to construct the specific layout structure
             for (int width : sampleWidths) {
                 LayoutFactory lf = lFactories.get(width);
                 oracleLFs.add(lf);
             }
 
+            // Use the initial layouts to build the full RLG
             this.rlg = new ResponsiveLayoutGraph(oracleLFs, sampleWidths, fullUrl, lFactories, binarySearch, webDriver, swf, sleep);
             this.swf.getRlg().stop();
             this.swf.getDetect().start();
+
+            // Use the extracted RLG to find any layout inconsistencies the developer/tester should know about
             RLGAnalyser analyser = new RLGAnalyser(this.getRlg(), webDriver, fullUrl, breakpoints, lFactories, startW, endW);
             ArrayList<ResponsiveLayoutFailure> errors = analyser.analyse();
             this.swf.getDetect().stop();
 
             this.swf.getReport().start();
             HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
+            // For each detected inconsistency, capture
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
                     error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
@@ -177,43 +193,6 @@ public class RLGExtractor implements Runnable {
                 for (int i = 0; i < allWidths.length; i++) {
                     allWidths[i] = i + startW;
                 }
-
-                // Obtain failures from classification files
-//                ResultProcessor rp = new ResultProcessor();
-//                String path = new java.io.File( "." ).getCanonicalPath() + "/../reports-final/" + shortUrl;
-//                File mostRecentRun = rp.lastFileModified(path);
-//                System.out.println(mostRecentRun);
-//
-//                ArrayList<Integer> tpIndexes = new ArrayList<>();
-
-//                String classificationString = rp.getClassification(mostRecentRun, tpIndexes);
-////				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-//                HashMap<String, String> failures = rp.getFailuresFromFile(mostRecentRun, tpIndexes, true);
-//                for (String failure : failures.keySet()) {
-//                    String bounds = failures.get(failure);
-//                    String[] splits = bounds.split(" - ");
-//                    int fMin = Integer.parseInt(splits[0]);
-//                    int fMax = Integer.parseInt(splits[1]);
-//                    boolean detectedBySpotCheck = false;
-//                    for (int scw : SPOT_CHECK_WIDTHS) {
-//                        if ( (scw >= fMin) && (scw <= fMax) ) {
-//                            detectedBySpotCheck = true;
-//                        }
-//                    }
-//                    System.out.println(failure + " " + detectedBySpotCheck);
-//                }
-
-//                StopWatch exhaustive = new StopWatch();
-//                exhaustive.start();
-//                for (int scw : allWidths) {
-//                    BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep, webDriver, scw);
-//                    File outputfile = new File(exhaustiveDir + "/" + scw + ".png");
-//                    ImageIO.write(ss, "png", outputfile);
-//                }
-//                exhaustive.stop();
-//                String exhaustiveTime = Redecheck.getTimeStringFromStopwatch(exhaustive);
-//                Redecheck.writeToFile(fullUrl, exhaustiveTime, "exhaustive-time", Redecheck.timesDirectory);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -246,11 +225,22 @@ public class RLGExtractor implements Runnable {
         return sampleWidths;
     }
 
+    /**
+     * This method determines the initial viewport widths at which to sample the page's layout
+     * @param technique the sample technique being used
+     * @param shortUrl the url of the webpage
+     * @param drive the selenium driver powering the browser
+     * @param startWidth the minimum width
+     * @param finalWidth the maxiumum width
+     * @param stepSize the step size used for interval sampling
+     * @param preamble the directory in which to precede the URL.
+     * @param breakpoints the list of breakpoints
+     * @return
+     */
     public static int[] calculateSampleWidths(String technique, String shortUrl, WebDriver drive, int startWidth, int finalWidth, int stepSize, String preamble, ArrayList<Integer> breakpoints) {
         int[] widths = null;
         ArrayList<Integer> widthsAL = new ArrayList<Integer>();
         if (technique.equals("uniform")) {
-//            System.out.println("Using uniform sampling");
             int currentWidth = startWidth;
 
             widthsAL.add(startWidth);

@@ -7,6 +7,7 @@ import shef.redecheck.Utils;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ResultProcessor {
@@ -18,12 +19,12 @@ public class ResultProcessor {
 	int[][] rq2results;
 	Double[][] rq3results;
 //	static String preamble = "/Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
-	static String preamble = "/Users/thomaswalsh/Documents/PhD/redecheck-journal-paper-data/";
-	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
+	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
+	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
 	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck-org/";
-	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/fault-examples/";
+	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
 	ArrayList<File> nonDetected;
@@ -237,7 +238,7 @@ public class ResultProcessor {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			while((line = bufferedReader.readLine()) != null) {
-				files.add(new File(current + "/../reports/" + line));
+				files.add(new File(current + "/reports/" + line));
 			}
 
 			// Always close files.
@@ -848,7 +849,7 @@ public class ResultProcessor {
 //		writeTimesAndDomsToFile(rp.webpages, 30);
 //		rp.generateStepSizeResults(rp.webpages);
 //		processAllMutants(rp.webpages);
-		ArrayList<File> files = readInSetOfMutants( "/../src/main/java/icst-websites.txt");
+		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
 		String timeData = "";
 		String multiTimeData = "";
 		String subjectData = "";
@@ -869,11 +870,11 @@ public class ResultProcessor {
 
 				int errorCount = getErrorCount(mostRecentRun);
 				String jekyllCode = null;
-				//			try {
-				//				jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-				//			} catch (IOException e) {
-				//				e.printStackTrace();
-				//			}
+				try {
+					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				String distinctFailures = getActualFaults(mostRecentRun);
 				try {
 					totalFailures += Integer.valueOf(distinctFailures);
@@ -886,14 +887,20 @@ public class ResultProcessor {
 						totalDistinctRanges += totalRanges;
 						int testRangeCount = testRanges.size();
 						totalTestRanges += testRangeCount;
-						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
+//						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
 				}
+//				System.out.println(f.getName());
+				LocalDateTime now = LocalDateTime.now();
+				int year = now.getYear();
+				int month = now.getMonthValue();
+				int day = now.getDayOfMonth();
+				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
-		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + "(" + totalTestRanges + ") & " + totalFailures + "\\\\");
+//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + "(" + totalTestRanges + ") & " + totalFailures + "\\\\");
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
@@ -993,6 +1000,11 @@ public class ResultProcessor {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				new File(f.getAbsolutePath() + "/reasons.txt").createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return results;
 	}
