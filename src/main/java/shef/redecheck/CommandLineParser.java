@@ -22,7 +22,7 @@ public class CommandLineParser {
     public int ss = 60;
 
     @Parameter(names = "--start", description = "Start width for sampling")
-    public int startWidth = 400;
+    public int startWidth = 320;
 
     @Parameter(names = "--end", description = "End width for sampling")
     public int endWidth = 1400;

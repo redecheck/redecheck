@@ -845,9 +845,8 @@ public class ResultProcessor {
 				"www.whatshouldireadnext.com/search",
 				"willmyphonework.net",
 				"zerodollarmovies.com"};
-//		writeTimesAndDomsToFile(rp.webpages, 30);
-//		rp.generateStepSizeResults(rp.webpages);
-//		processAllMutants(rp.webpages);
+
+		final int[] SPOT_CHECK_WIDTHS = new int[] {320, 375, 384, 414, 480, 600, 768, 1024, 1280};
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
 		String timeData = "";
 		String multiTimeData = "";
@@ -862,40 +861,44 @@ public class ResultProcessor {
 			if (mostRecentRun == null) {
 				System.out.println("Boo on " + f.getAbsolutePath());
 			} else {
-//				System.out.println(mostRecentRun);
 				String[] splits = f.toString().split("/");
 				String webpage = splits[splits.length - 1];
-				timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
 
-				for (int i = 1; i <= 30; i++) {
-					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+				// Put all thirty iterations of timing data together
+//				for (int i = 1; i <= 30; i++) {
+//					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+//				}
+
+				int errorCount = getErrorCount(mostRecentRun);
+//
+				String distinctFailures = getActualFaults(mostRecentRun);
+				try {
+					totalFailures += Integer.valueOf(distinctFailures);
+					if (errorCount != -1) {
+						ArrayList<Integer> tpIndexes = new ArrayList<>();
+						String classificationString = getClassification(mostRecentRun, tpIndexes);
+						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
+						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
+						System.out.println(RQ2Result);
+//						ArrayList<String> testRanges = groupFailureRanges(ranges);
+//						int totalRanges = ranges.size();
+//						totalDistinctRanges += totalRanges;
+//						int testRangeCount = testRanges.size();
+//						totalTestRanges += testRangeCount;
+						// Print out main RQ1 results row for table
+//						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
+					}
+				} catch (NumberFormatException nfe) {
+					System.out.println(mostRecentRun.getAbsolutePath());
 				}
 
-//				int errorCount = getErrorCount(mostRecentRun);
+////			Write out results into webpage for Jekyll
 //				String jekyllCode = null;
 //				try {
 //					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
-//				String distinctFailures = getActualFaults(mostRecentRun);
-//				try {
-//					totalFailures += Integer.valueOf(distinctFailures);
-//					if (errorCount != -1) {
-//						ArrayList<Integer> tpIndexes = new ArrayList<>();
-//						String classificationString = getClassification(mostRecentRun, tpIndexes);
-//						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
-//						ArrayList<String> testRanges = groupFailureRanges(ranges);
-//						int totalRanges = ranges.size();
-//						totalDistinctRanges += totalRanges;
-//						int testRangeCount = testRanges.size();
-//						totalTestRanges += testRangeCount;
-////						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
-//					}
-//				} catch (NumberFormatException nfe) {
-//					System.out.println(mostRecentRun.getAbsolutePath());
-//				}
-////				System.out.println(f.getName());
 //				LocalDateTime now = LocalDateTime.now();
 //				int year = now.getYear();
 //				int month = now.getMonthValue();
@@ -907,9 +910,28 @@ public class ResultProcessor {
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-		writeToFile(multiTimeData, redecheck+"icst-processing/", "timing-data-issta.csv");
+//		writeToFile(multiTimeData, redecheck+"icst-processing/", "timing-data-issta.csv");
 
 //		rp.writeRQ1and2Data(files);
+	}
+
+	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
+		String result = "";
+		for (String r : ranges) {
+			result += webpage;
+			String[] splits = r.split(" - ");
+			int min = Integer.parseInt(splits[0]);
+			int max = Integer.parseInt(splits[1]);
+			for (int w : scw) {
+				if (w >= min && w <= max) {
+					result += ", T";
+				} else {
+					result += ", F";
+				}
+			}
+			result += "\n";
+		}
+		return result;
 	}
 
 	private ArrayList<String> groupFailureRanges(HashSet<String> ranges) {

@@ -242,16 +242,21 @@ public class RLGAnalyser {
                         errors.add(ofe);
                     } else {
                         // Else, it's just an overlap, so begin by obtaining the preceding and succeeding constraints
+
+
+
+                        // Now, investigate whether the two elements were NOT overlapping at either range
+                        // If no matches found, then clearly elements were NOT OVERLAPPING
+//                        if (prev == null && next == null) {
+////                            olPrev = false;
+////                            olNext = false;
+//                        } else
+
                         AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
                         AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
                         boolean olPrev=true,olNext=true;
 
-                        // Now, investigate whether the two elements were NOT overlapping at either range
-                        // If no matches found, then clearly elements were NOT OVERLAPPING
-                        if (prev == null && next == null) {
-//                            olPrev = false;
-//                            olNext = false;
-                        } else if (prev != null && prev.getType() == Type.SIBLING) {
+                        if (prev != null && prev.getType() == Type.SIBLING) {
                             // Check if elements overlapping in previous constraint
                             if (!prev.getAttributes()[10]) {
                                 olPrev = false;

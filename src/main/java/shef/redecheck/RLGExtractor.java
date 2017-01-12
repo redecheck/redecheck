@@ -9,6 +9,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -102,6 +103,10 @@ public class RLGExtractor implements Runnable {
             // Set up the web driver depending on the browser being used.
             if (browser.equals("chrome")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+                capabilities.setJavascriptEnabled(true);
+                HashMap<String, Object> chromeOptions = new HashMap<String, Object>();
+//                chromeOptions.put("binary", current + "/../resources/chromium");
+//                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
@@ -122,9 +127,20 @@ public class RLGExtractor implements Runnable {
             }
 
             // Load up the webpage in the browser
+//            webDriver.get(fullUrl);
+//            Thread.sleep(1000);
+//            String parentWindow = webDriver.getWindowHandle();
+//            Set beforePopup = webDriver.getWindowHandles();
+//            webDriver.get("file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/chrome-resizer.html");
+//            Thread.sleep(1000);
+//            Set afterPopup = webDriver.getWindowHandles();
+//            afterPopup.removeAll(beforePopup);
+//            if(afterPopup.size() == 1) {
+//                webDriver.switchTo().window((String)afterPopup.toArray()[0]);
+//            }
             webDriver.get(fullUrl);
             System.out.println(fullUrl);
-
+//            Thread.sleep(2000);
             // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
