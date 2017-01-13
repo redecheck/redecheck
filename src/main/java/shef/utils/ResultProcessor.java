@@ -877,16 +877,16 @@ public class ResultProcessor {
 					if (errorCount != -1) {
 						ArrayList<Integer> tpIndexes = new ArrayList<>();
 						String classificationString = getClassification(mostRecentRun, tpIndexes);
-						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
-						System.out.println(RQ2Result);
+						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
+//						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
+//						System.out.println(RQ2Result);
 //						ArrayList<String> testRanges = groupFailureRanges(ranges);
-//						int totalRanges = ranges.size();
-//						totalDistinctRanges += totalRanges;
+						int totalRanges = ranges.size();
+						totalDistinctRanges += totalRanges;
 //						int testRangeCount = testRanges.size();
 //						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
-//						System.out.println(webpage + classificationString + " & " + totalRanges + "(" + testRanges.size() + ") & " + distinctFailures + " \\\\");
+						System.out.println(webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
@@ -906,7 +906,7 @@ public class ResultProcessor {
 //				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
-//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + "(" + totalTestRanges + ") & " + totalFailures + "\\\\");
+		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");

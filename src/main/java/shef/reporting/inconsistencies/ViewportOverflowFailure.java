@@ -48,7 +48,7 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
         try {
-            int captureWidth = min;
+            int captureWidth = (min+max)/2;
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
             BufferedImage img;

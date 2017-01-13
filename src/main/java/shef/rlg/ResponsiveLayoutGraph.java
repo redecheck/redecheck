@@ -89,6 +89,7 @@ public class ResponsiveLayoutGraph {
 
         extractVisibilityConstraints();
         extractAlignmentConstraints();
+        System.out.println(this.getNodes().get("/HTML/BODY/DIV[2]/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]"));
 //        printAlignmentConstraints();
 
     }

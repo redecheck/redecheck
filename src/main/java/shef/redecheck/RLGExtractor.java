@@ -127,20 +127,9 @@ public class RLGExtractor implements Runnable {
             }
 
             // Load up the webpage in the browser
-//            webDriver.get(fullUrl);
-//            Thread.sleep(1000);
-//            String parentWindow = webDriver.getWindowHandle();
-//            Set beforePopup = webDriver.getWindowHandles();
-//            webDriver.get("file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/chrome-resizer.html");
-//            Thread.sleep(1000);
-//            Set afterPopup = webDriver.getWindowHandles();
-//            afterPopup.removeAll(beforePopup);
-//            if(afterPopup.size() == 1) {
-//                webDriver.switchTo().window((String)afterPopup.toArray()[0]);
-//            }
             webDriver.get(fullUrl);
             System.out.println(fullUrl);
-//            Thread.sleep(2000);
+
             // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
