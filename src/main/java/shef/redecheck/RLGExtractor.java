@@ -153,7 +153,9 @@ public class RLGExtractor implements Runnable {
             HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
             // For each detected inconsistency, capture
             if (errors.size() > 0) {
+
                 for (ResponsiveLayoutFailure error : errors) {
+//                    System.out.println(error +"\n\n");
                     error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
             }
