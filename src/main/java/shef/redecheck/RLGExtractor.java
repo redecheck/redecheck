@@ -9,6 +9,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -102,6 +103,10 @@ public class RLGExtractor implements Runnable {
             // Set up the web driver depending on the browser being used.
             if (browser.equals("chrome")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+                capabilities.setJavascriptEnabled(true);
+                HashMap<String, Object> chromeOptions = new HashMap<String, Object>();
+//                chromeOptions.put("binary", current + "/../resources/chromium");
+//                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();

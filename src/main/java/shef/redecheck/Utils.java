@@ -85,9 +85,9 @@ public class Utils {
             } else {
                 screenshot = new AShot().takeScreenshot(d);
             }
-                BufferedImage image;
-                    image= screenshot.getImage();
-                return image;
+            BufferedImage image;
+            image= screenshot.getImage();
+            return image;
         } catch (InterruptedException ie) {
             System.out.println("INTERRUPTED");
         }

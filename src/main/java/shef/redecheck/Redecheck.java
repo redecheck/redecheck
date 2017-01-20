@@ -496,6 +496,7 @@ public class Redecheck {
         }
 
         String result =  (String) ((JavascriptExecutor) cdriver).executeScript(script);
+//        System.out.println(result);
         sw.suspend();
         return result;
     }

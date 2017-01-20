@@ -242,22 +242,12 @@ public class RLGAnalyser {
                         errors.add(ofe);
                     } else {
                         // Else, it's just an overlap, so begin by obtaining the preceding and succeeding constraints
-                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
+//                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
                         AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
                         boolean olPrev=true,olNext=true;
 
                         // Now, investigate whether the two elements were NOT overlapping at either range
                         // If no matches found, then clearly elements were NOT OVERLAPPING
-//                        if (prev == null && next == null) {
-//                            olPrev = false;
-//                            olNext = false;
-//                        } else
-                        if (prev != null && prev.getType() == Type.SIBLING) {
-                            // Check if elements overlapping in previous constraint
-                            if (!prev.getAttributes()[10]) {
-                                olPrev = false;
-                            }
-                        }
                         if (next != null && next.getType() == Type.SIBLING) {
                             // Check if elements overlapping in next constraint
                             if (!next.getAttributes()[10]) {
@@ -265,12 +255,6 @@ public class RLGAnalyser {
                             }
                         }
 
-//                        System.out.println(prev);
-//                        System.out.println(next);
-//                        if (!olPrev)
-//                            System.out.println("Previous");
-//                        if (!olNext)
-//                            System.out.println("Next");
                         // If elements were not overlapping either before or after, then report the failure
                         if (!olNext) {
                             OverlappingFailure oe = new OverlappingFailure(ac);
