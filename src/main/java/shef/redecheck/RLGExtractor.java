@@ -17,6 +17,8 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGAnalyser;
 import shef.mutation.CSSMutator;
+import shef.reporting.inconsistencies.OverflowFailure;
+import shef.reporting.inconsistencies.OverlappingFailure;
 import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.layout.LayoutFactory;
 import shef.rlg.ResponsiveLayoutGraph;
@@ -160,11 +162,13 @@ public class RLGExtractor implements Runnable {
             if (errors.size() > 0) {
 
                 for (ResponsiveLayoutFailure error : errors) {
-//                    System.out.println(error +"\n\n");
-                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                    if (error instanceof OverlappingFailure || error instanceof OverflowFailure) {
+                        System.out.println(error + "\n\n");
+                    }
+//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
             }
-            analyser.writeReport(shortUrl, errors, ts);
+//            analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
 
             // BASELINE SCREENSHOT CAPTURE

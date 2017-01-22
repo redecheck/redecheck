@@ -227,38 +227,34 @@ public class RLGAnalyser {
             if (ac.getType() == Type.SIBLING) {
                 // Only continue analysis if the "overlapping" attribute label is true
                 if (ac.getAttributes()[10]) {
+                    boolean collision = false;
+                    AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
+                    boolean olPrev=true,olNext=true;
 
-                    // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
-                    HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
-                    HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax()+1);
-
-                    // If node2 in ancestry of node1, it's an overflow
-                    if (n1Ancestry.contains(ac.getNode2())) {
-                        OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
-                        errors.add(ofe);
-                    // If node1 in ancestry of node2, it's an overflow
-                    } else if (n2Ancestry.contains(ac.getNode1())) {
-                        OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
-                        errors.add(ofe);
-                    } else {
-                        // Else, it's just an overlap, so begin by obtaining the preceding and succeeding constraints
-//                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
-                        AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
-                        boolean olPrev=true,olNext=true;
-
-                        // Now, investigate whether the two elements were NOT overlapping at either range
-                        // If no matches found, then clearly elements were NOT OVERLAPPING
-                        if (next != null && next.getType() == Type.SIBLING) {
-                            // Check if elements overlapping in next constraint
-                            if (!next.getAttributes()[10]) {
-                                olNext = false;
-                            }
-                        }
-
-                        // If elements were not overlapping either before or after, then report the failure
-                        if (!olNext) {
+                    // Now, investigate whether the two elements were NOT overlapping at either range
+                    // If no matches found, then clearly elements were NOT OVERLAPPING
+                    if (next != null && next.getType() == Type.SIBLING) {
+                        // Check if elements overlapping in next constraint
+                        if (!next.getAttributes()[10]) {
+                            olNext = false;
                             OverlappingFailure oe = new OverlappingFailure(ac);
                             errors.add(oe);
+                            collision = true;
+                        }
+                    }
+                    if (!collision) {
+                        // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
+                        HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax() + 1);
+                        HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax() + 1);
+
+                        // If node2 in ancestry of node1, it's an overflow
+                        if (n1Ancestry.contains(ac.getNode2())) {
+                            OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
+                            errors.add(ofe);
+                            // If node1 in ancestry of node2, it's an overflow
+                        } else if (n2Ancestry.contains(ac.getNode1())) {
+                            OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
+                            errors.add(ofe);
                         }
                     }
                 }
