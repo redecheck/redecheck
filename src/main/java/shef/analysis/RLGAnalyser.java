@@ -62,8 +62,8 @@ public class RLGAnalyser {
         ArrayList<ResponsiveLayoutFailure> cloned1 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 
         for (ResponsiveLayoutFailure rle : cloned1) {
-            if (rle instanceof OverlappingFailure) {
-                AlignmentConstraint ac = ((OverlappingFailure) rle).getConstraint();
+            if (rle instanceof CollisionFailure) {
+                AlignmentConstraint ac = ((CollisionFailure) rle).getConstraint();
                 int chosenWidth = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
                 LayoutFactory lf = layouts.get(chosenWidth);
                 Layout l = lf.layout;
@@ -237,7 +237,7 @@ public class RLGAnalyser {
                         // Check if elements overlapping in next constraint
                         if (!next.getAttributes()[10]) {
                             olNext = false;
-                            OverlappingFailure oe = new OverlappingFailure(ac);
+                            CollisionFailure oe = new CollisionFailure(ac);
                             errors.add(oe);
                             collision = true;
                         }
@@ -1092,7 +1092,7 @@ public class RLGAnalyser {
             return "VO";
         } else if (rle instanceof OverflowFailure) {
             return "OF";
-        } else if (rle instanceof OverlappingFailure) {
+        } else if (rle instanceof CollisionFailure) {
             return "OL";
         } else if (rle instanceof WrappingFailure) {
             return "W";

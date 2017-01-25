@@ -89,7 +89,6 @@ public class ResponsiveLayoutGraph {
 
         extractVisibilityConstraints();
         extractAlignmentConstraints();
-        System.out.println(this.getNodes().get("/HTML/BODY/DIV[2]/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]"));
 //        printAlignmentConstraints();
 
     }
@@ -103,11 +102,12 @@ public class ResponsiveLayoutGraph {
             Map<int[],AlignmentConstraint> map = this.getAlignmentConstraints().row(s);
 
             for (AlignmentConstraint ac : map.values()) {
-//                if (ac.getType() == Type.SIBLING) {
+//                if ((ac.getMax() < 780) && (ac.getMin() > 760))
+                if (ac.getType() == Type.SIBLING) {
 //                    if (ac.getNode1().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]") || ac.getNode2().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]")) {
                         System.out.println(ac);
 //                    }
-//                }
+                }
             }
         }
 //        System.out.println("PARENT-CHILDS");

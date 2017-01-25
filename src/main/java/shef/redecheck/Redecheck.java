@@ -74,7 +74,7 @@ public class Redecheck {
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         System.setProperty("webdriver.chrome.driver", current + "/../resources/chromedriver");
         System.setProperty("webdriver.opera.driver", current + "/../resources/operadriver");
-        System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
+//        System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
         
         clArgs = args;
         new JCommander(clp, clArgs);
@@ -154,10 +154,10 @@ public class Redecheck {
             t.start();
             while(t.isAlive()){}
 
-            ResponsiveLayoutGraph rlg = thread.getRlg();
-            int numNodes = rlg.getNodes().size();
-            int numVCs = rlg.getVisCons().size();
-            int numACs = rlg.getAlignmentConstraints().size();
+//            ResponsiveLayoutGraph rlg = thread.getRlg();
+//            int numNodes = rlg.getNodes().size();
+//            int numVCs = rlg.getVisCons().size();
+//            int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
 //            writeTimes(url, thread.getSwf(), timeStamp);
             if (timing) {

@@ -55,7 +55,7 @@ public class CommandLineParser {
     public int timingID;
 
     @Parameter(names = "--browser", description = "The browser to use for the test run")
-    public String browser = "phantom";
+    public String browser = "firefox";
 
     @Parameter(names = "--baselines", description = "Whether to run the baseline approaches")
     public boolean baselines;

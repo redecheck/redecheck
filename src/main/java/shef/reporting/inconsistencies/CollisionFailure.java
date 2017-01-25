@@ -21,14 +21,14 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 16/06/2016.
  */
-public class OverlappingFailure extends ResponsiveLayoutFailure {
+public class CollisionFailure extends ResponsiveLayoutFailure {
     public AlignmentConstraint getConstraint() {
         return constraint;
     }
 
     AlignmentConstraint constraint;
 
-    public OverlappingFailure(AlignmentConstraint con) {
+    public CollisionFailure(AlignmentConstraint con) {
         constraint = con;
     }
 
@@ -61,7 +61,7 @@ public class OverlappingFailure extends ResponsiveLayoutFailure {
 
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);
-//        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(5));
         int[] coords1 = e1.getBoundingCoords();
         g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 

@@ -23,7 +23,7 @@ public class ResultProcessor {
 	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
-	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck-org/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/redecheck-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
@@ -799,6 +799,7 @@ public class ResultProcessor {
 				"AirBnb",
 				"BugMeNot",
 				"CloudConvert",
+				"Consumer-Reports",
 				"Covered-Calendar",
 				"Days-Old",
 				"Dictation",
@@ -825,6 +826,7 @@ public class ResultProcessor {
 				"www.airbnb.com",
 				"bugmenot.com",
 				"cloudconvert.com",
+				"consumerreports.org",
 				"www.coveredcalendar.com",
 				"www.daysold.com",
 				"dictation.io",
@@ -846,6 +848,34 @@ public class ResultProcessor {
 				"willmyphonework.net",
 				"zerodollarmovies.com"};
 
+		String[] commands = new String[] {
+				"\\threeminutejournalplain",
+				"\\accountkillerplain",
+				"\\airbnbplain",
+				"\\bugmenotplain",
+				"\\cloudconvertplain",
+				"\\consumerreportsplain",
+				"\\coveredcalendarplain",
+				"\\daysoldplain",
+				"\\dictationplain",
+				"\\duolingoplain",
+				"\\honeyplain",
+				"\\hotelwifitestplain",
+				"\\mailinatorplain",
+				"\\midwaymeetupplain",
+				"\\niniteplain",
+				"\\pdfescapeplain",
+				"\\pepfeedplain",
+				"\\pocketplain",
+				"\\rainymoodplain",
+				"\\runpeeplain",
+				"\\stumbleuponplain",
+				"\\topdocumentaryfilmsplain",
+				"\\usersearchplain",
+				"\\whatshouldireadnextplain",
+				"\\willmyphoneworkplain",
+				"\\zerodollarmoviesplain"};
+
 		final int[] SPOT_CHECK_WIDTHS = new int[] {320, 375, 384, 414, 480, 600, 768, 1024, 1280};
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
 		String timeData = "";
@@ -863,11 +893,12 @@ public class ResultProcessor {
 			} else {
 				String[] splits = f.toString().split("/");
 				String webpage = splits[splits.length - 1];
+				String command = commands[files.indexOf(f)];
 
 				// Put all thirty iterations of timing data together
-//				for (int i = 1; i <= 30; i++) {
-//					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-//				}
+				for (int i = 1; i <= 30; i++) {
+					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+				}
 
 				int errorCount = getErrorCount(mostRecentRun);
 //
@@ -883,10 +914,12 @@ public class ResultProcessor {
 //						ArrayList<String> testRanges = groupFailureRanges(ranges);
 						int totalRanges = ranges.size();
 						totalDistinctRanges += totalRanges;
+
 //						int testRangeCount = testRanges.size();
 //						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
-						System.out.println(webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+						System.out.println(totalDistinctRanges + "\n");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
@@ -910,7 +943,7 @@ public class ResultProcessor {
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-//		writeToFile(multiTimeData, redecheck+"icst-processing/", "timing-data-issta.csv");
+//		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-new.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}
@@ -999,12 +1032,12 @@ public class ResultProcessor {
 
 			String[] classifications = getClassifications(mostRecentRun, totalReports);
 			String[] categories = getCategories(mostRecentRun, totalReports);
-			String[] reasons = getReasons(mostRecentRun, totalReports);
+//			String[] reasons = getReasons(mostRecentRun, totalReports);
 			for (int i = 1; i <= totalReports; i++) {
 				File ssFile = new File(mostRecentRun + "/fault" + i);
 				String imageName = ssFile.listFiles()[0].getName();
 				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
+						") | " + classifications[i-1] + " | " + "" + " |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

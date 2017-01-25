@@ -3,6 +3,7 @@ AccountKiller
 AirBnb
 BugMeNot
 CloudConvert
+consumerreports.org
 Covered-Calendar
 Days-Old
 Dictation
