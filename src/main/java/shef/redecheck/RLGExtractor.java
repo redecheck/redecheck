@@ -139,8 +139,11 @@ public class RLGExtractor implements Runnable {
 //            webDriver.findElement(By.id("content-settings-overlay-confirm"));
 //            Thread.sleep(1000);
             String winHandleBefore = webDriver.getWindowHandle();
+            webDriver.get(fullUrl);
+            ((JavascriptExecutor) webDriver).executeScript("var newwindow=window.open(\"" + fullUrl + "\",'test','width=320,height=1024,top=50,left=50', scrollbars='no', menubar='no', resizable='no', toolbar='no', top='+top+', left='+left+', 'false');\n" +
+                    "newwindow.focus();");
             // Load up the webpage in the browser
-            webDriver.get("file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/chrome-resizer.html");
+//            webDriver.get("file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/chrome-resizer.html");
 //            System.out.println(fullUrl);
             for(String winHandle : webDriver.getWindowHandles()){
                 webDriver.switchTo().window(winHandle);
@@ -155,7 +158,7 @@ public class RLGExtractor implements Runnable {
 
             // For each sampled width, analyse the DOM to construct the specific layout structure
             for (int width : sampleWidths) {
-                System.out.println(width);
+//                System.out.println(width);
                 LayoutFactory lf = lFactories.get(width);
                 oracleLFs.add(lf);
             }
