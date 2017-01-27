@@ -609,8 +609,10 @@ public class RLGAnalyser {
                                 if (elementVisible(notInRow, key)) {
                                     System.out.println(elementStillWithinParent(notInRow, n, key));
                                     if (elementStillWithinParent(notInRow, n, key)) {
-                                        WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
-                                        errors.add(we);
+                                        if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
+                                            WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
+                                            errors.add(we);
+                                        }
                                     }
                                 }
                             }
@@ -623,6 +625,21 @@ public class RLGAnalyser {
 
             }
         }
+    }
+
+    private boolean elementNowBelowRow(Node notInRow, ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow, HashSet<AlignmentConstraint> grouped) {
+
+        for (AlignmentConstraint ac : grouped) {
+            Node n1 = ac.getNode1();
+            Node n2 = ac.getNode2();
+
+            if (n1.getXpath().equals(notInRow.getXpath()) || (n2.getXpath().equals(notInRow.getXpath()))) {
+                if (nonWrappedRow.contains(n1) || nonWrappedRow.contains(n2)) {
+                    System.out.println(ac);
+                }
+            }
+        }
+        return true;
     }
 
     private ArrayList<Node> inRowInNextRange(Node notInRow, HashMap<String, ArrayList<ArrayList<Node>>> rows, String key) {
