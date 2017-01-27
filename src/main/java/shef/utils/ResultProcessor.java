@@ -866,7 +866,7 @@ public class ResultProcessor {
 				"\\niniteplain",
 				"\\pdfescapeplain",
 				"\\pepfeedplain",
-				"\\pocketplain",
+				"\\getpocketplain",
 				"\\rainymoodplain",
 				"\\runpeeplain",
 				"\\stumbleuponplain",
@@ -919,7 +919,7 @@ public class ResultProcessor {
 //						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
 						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
-						System.out.println(totalDistinctRanges + "\n");
+//						System.out.println(totalDistinctRanges + "\n");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());

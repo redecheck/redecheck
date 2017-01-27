@@ -491,7 +491,7 @@ public class RLGAnalyser {
 
 
                 for (String key : grouped.keySet()) {
-//                    System.out.println(key);
+                    System.out.println(key);
                     nodesInParentMap.put(key, new HashSet<Node>());
                     try {
                         // Try and put elements into rows
@@ -519,6 +519,7 @@ public class RLGAnalyser {
                                     ArrayList<Node> newRowCol = new ArrayList<>();
                                     newRowCol.add(ac.getNode1());
                                     newRowCol.add(ac.getNode2());
+//                                    System.out.println("Creating new row for " + ac);
 
                                     if (toggle == 1) {
                                         rows.add(newRowCol);
@@ -534,8 +535,10 @@ public class RLGAnalyser {
                                     String matchKey = setOfNodesToString(match);
                                     if (!match.contains(ac.getNode1())) {
                                         match.add(ac.getNode1());
+//                                        System.out.println(ac.getNode1().getXpath() + " added to " + matchKey + "  " + match.size());
                                     } else if (!match.contains(ac.getNode2())) {
                                         match.add(ac.getNode2());
+//                                        System.out.println(ac.getNode2().getXpath() + " added to " + matchKey + "  " + match.size());
                                     }
                                     if (toggle == 1) {
                                         ArrayList<AlignmentConstraint> cons = rowSibConstraints.get(matchKey);
@@ -564,43 +567,6 @@ public class RLGAnalyser {
                             }
                         }
 
-
-
-                        // Filter elements that are in rows and the same column. CAN HAPPEN, TRUST ME!
-//                        for (ArrayList<Node> colToFilter : columns) {
-//
-//                            ArrayList<Node> temp = (ArrayList<Node>) colToFilter.clone();
-//                            for (Node f1 : temp) {
-//                                for (Node f2 : temp) {
-//                                    if (f1 != f2) {
-//                                        if (elementsAlsoInRow(f1, f2, rows)) {
-//                                            // Need to remove from the column
-//                                            colToFilter.remove(f1);
-//                                            colToFilter.remove(f2);
-//                                            removeConstraintsFromCol(f1, f2, colSibConstraints, colToFilter);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        for (ArrayList<Node> rowToFilter : rows) {
-//
-//                            ArrayList<Node> temp = (ArrayList<Node>) rowToFilter.clone();
-//                            for (Node f1 : temp) {
-//                                for (Node f2 : temp) {
-//                                    if (f1 != f2) {
-//                                        if (elementsAlsoInRow(f1, f2, columns)) {
-//                                            // Need to remove from the column
-//                                            rowToFilter.remove(f1);
-//                                            rowToFilter.remove(f2);
-//                                            removeConstraintsFromCol(f1, f2, rowSibConstraints, rowToFilter);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-
                         // FILTER ANY OVERLAPPING ELEMENTS
 
                         for (AlignmentConstraint acOV : overlapping) {
@@ -615,42 +581,25 @@ public class RLGAnalyser {
                                     removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), rowSibConstraints, row);
                                 }
                             }
-
-
-//                            ArrayList<ArrayList<Node>> clonedCols = (ArrayList<ArrayList<Node>>) columns.clone();
-//                            for (ArrayList<Node> col : clonedCols) {
-//                                if (col.contains(acOV.getNode1()) && col.contains(acOV.getNode2())) {
-//                                    ArrayList<Node> actualColumn = columns.get(clonedCols.indexOf(col));
-//                                    actualColumn.remove(acOV.getNode1());
-//                                    actualColumn.remove(acOV.getNode2());
-//                                    removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), colSibConstraints, col);
-//                                }
-//                            }
                         }
-
+//                        if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[2]/UL")) {
+//                            System.out.println();
+//                        }
                         totalRows.put(key, rows);
-//                        totalCols.put(key, columns);
                         totalNotInRows.put(key, nodesNotInRows);
                         totalRowCons.put(key, rowSibConstraints);
-//                        totalColCons.put(key, colSibConstraints);
-
-
-
-                        // Inspect the constraints for each row, to see if any are out of alignment
-
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
+//                if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[2]/UL")) {
+//                    System.out.println("Boo");
+//                }
                 for (String key: totalRows.keySet()) {
                     ArrayList<ArrayList<Node>> rows = totalRows.get(key);
-//                    ArrayList<ArrayList<Node>> cols = totalCols.get(key);
                     ArrayList<Node> not = totalNotInRows.get(key);
                     HashMap<String, ArrayList<AlignmentConstraint>> consRow = totalRowCons.get(key);
-//                    HashMap<String, ArrayList<AlignmentConstraint>> consCol = totalColCons.get(key);
                     for (Node notInRow : not) {
 
                         // Need to refine this to the entire row becoming a column!
@@ -658,6 +607,7 @@ public class RLGAnalyser {
                             ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
                             if (nonWrappedRow != null) {
                                 if (elementVisible(notInRow, key)) {
+                                    System.out.println(elementStillWithinParent(notInRow, n, key));
                                     if (elementStillWithinParent(notInRow, n, key)) {
                                         WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
                                         errors.add(we);
@@ -668,8 +618,6 @@ public class RLGAnalyser {
 
                         }
                     }
-//                    checkAlignments(consRow, key, true);
-//                    checkAlignments(consCol, key, false);
                 }
 
 
@@ -1016,13 +964,14 @@ public class RLGAnalyser {
             if (!attrs[0] && !attrs[1]) {
                 return 1;
             }
-        } else if ( (attrs[0] || attrs[1]) ) {
-            if (!attrs[2] && !attrs[3]) {
-                return 2;
-            }
         }
+//        else if ( (attrs[0] || attrs[1]) ) {
+//            if (!attrs[2] && !attrs[3]) {
+//                return 2;
+//            }
+//        }
 
-        return 0;
+        return -1;
     }
 
 

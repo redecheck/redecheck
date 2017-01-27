@@ -105,12 +105,6 @@ public class RLGExtractor implements Runnable {
                 options.addArguments("disable-popup-blocking");
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-//                WebDriver driver = new ChromeDriver(capabilities);
-//                DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-//                capabilities.setJavascriptEnabled(true);
-//                HashMap<String, Object> chromeOptions = new HashMap<String, Object>();
-//                chromeOptions.put("binary", current + "/../resources/chromium");
-//                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
                 System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
@@ -130,23 +124,16 @@ public class RLGExtractor implements Runnable {
                 webDriver = new OperaDriver(capabilities);
             }
 
-//            webDriver.get("chrome://settings/content");
-//            Thread.sleep(1000);
-//            webDriver.switchTo().frame("settings");
-//            Thread.sleep(2000);
-//            webDriver.findElement(By.xpath("//input[@type='radio' and @name='popups']")).click();
-//            Thread.sleep(1000);
-//            webDriver.findElement(By.id("content-settings-overlay-confirm"));
-//            Thread.sleep(1000);
+            // Load up the webpage in the browser
             String winHandleBefore = webDriver.getWindowHandle();
             webDriver.get(fullUrl);
             ((JavascriptExecutor) webDriver).executeScript("var newwindow=window.open(\"" + fullUrl + "\",'test','width=320,height=1024,top=50,left=50', scrollbars='no', menubar='no', resizable='no', toolbar='no', top='+top+', left='+left+', 'false');\n" +
                     "newwindow.focus();");
-            // Load up the webpage in the browser
-//            webDriver.get("file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/chrome-resizer.html");
-//            System.out.println(fullUrl);
             for(String winHandle : webDriver.getWindowHandles()){
                 webDriver.switchTo().window(winHandle);
+                if (winHandle.equals(winHandleBefore)) {
+                    webDriver.close();
+                }
             }
             // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
@@ -158,7 +145,6 @@ public class RLGExtractor implements Runnable {
 
             // For each sampled width, analyse the DOM to construct the specific layout structure
             for (int width : sampleWidths) {
-//                System.out.println(width);
                 LayoutFactory lf = lFactories.get(width);
                 oracleLFs.add(lf);
             }
@@ -179,14 +165,11 @@ public class RLGExtractor implements Runnable {
             // For each detected inconsistency, capture
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
-//                    if (error instanceof CollisionFailure || error instanceof OverflowFailure) {
-//                        System.out.println(error + "\n\n");
-//                    }
-                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
             }
-            analyser.writeReport(shortUrl, errors, ts);
-//            this.swf.getReport().stop();
+//            analyser.writeReport(shortUrl, errors, ts);
+            this.swf.getReport().stop();
 
             // BASELINE SCREENSHOT CAPTURE
             if (baselines) {
