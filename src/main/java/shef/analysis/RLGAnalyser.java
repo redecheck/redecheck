@@ -605,13 +605,17 @@ public class RLGAnalyser {
                         // Need to refine this to the entire row becoming a column!
                         if (rows.size() > 0) {
                             ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
+
                             if (nonWrappedRow != null) {
-                                if (elementVisible(notInRow, key)) {
-//                                    System.out.println(elementStillWithinParent(notInRow, n, key));
-                                    if (elementStillWithinParent(notInRow, n, key)) {
-                                        if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
-                                            WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
-                                            errors.add(we);
+                                ArrayList<Node> wrappedRow = getWrappedRow(rows, nonWrappedRow);
+                                if (nonWrappedRow.size() - wrappedRow.size() == 1) {
+                                    if (elementVisible(notInRow, key)) {
+                                        //                                    System.out.println(elementStillWithinParent(notInRow, n, key));
+                                        if (elementStillWithinParent(notInRow, n, key)) {
+                                            if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
+                                                WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
+                                                errors.add(we);
+                                            }
                                         }
                                     }
                                 }
@@ -625,6 +629,17 @@ public class RLGAnalyser {
 
             }
         }
+    }
+
+    private ArrayList<Node> getWrappedRow(ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow) {
+        for (Node n : nonWrappedRow) {
+            for (ArrayList<Node> row : rows) {
+                if (row.contains(n)) {
+                    return row;
+                }
+            }
+        }
+        return new ArrayList<>();
     }
 
     private boolean elementNowBelowRow(Node notInRow, ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow, HashSet<AlignmentConstraint> grouped) {

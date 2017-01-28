@@ -165,8 +165,8 @@ public class RLGExtractor implements Runnable {
             // For each detected inconsistency, capture
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
-//                    System.out.println(error + "\n");
-                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                    System.out.println(error + "\n");
+//                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
             }
 //            analyser.writeReport(shortUrl, errors, ts);
