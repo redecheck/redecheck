@@ -491,7 +491,7 @@ public class RLGAnalyser {
 
 
                 for (String key : grouped.keySet()) {
-                    System.out.println(key);
+//                    System.out.println(key);
                     nodesInParentMap.put(key, new HashSet<Node>());
                     try {
                         // Try and put elements into rows
@@ -607,7 +607,7 @@ public class RLGAnalyser {
                             ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
                             if (nonWrappedRow != null) {
                                 if (elementVisible(notInRow, key)) {
-                                    System.out.println(elementStillWithinParent(notInRow, n, key));
+//                                    System.out.println(elementStillWithinParent(notInRow, n, key));
                                     if (elementStillWithinParent(notInRow, n, key)) {
                                         if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
                                             WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
@@ -633,13 +633,19 @@ public class RLGAnalyser {
             Node n1 = ac.getNode1();
             Node n2 = ac.getNode2();
 
-            if (n1.getXpath().equals(notInRow.getXpath()) || (n2.getXpath().equals(notInRow.getXpath()))) {
-                if (nonWrappedRow.contains(n1) || nonWrappedRow.contains(n2)) {
-                    System.out.println(ac);
-                }
+            if ((n1.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n2))
+                    || (n2.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n1))) {
+//                if (nonWrappedRow.contains(n1) || nonWrappedRow.contains(n2)) {
+//                    System.out.println(ac);
+                    if (n1.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[1]) {
+                        return true;
+                    } else if (n2.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[2]) {
+                        return true;
+                    }
+//                }
             }
         }
-        return true;
+        return false;
     }
 
     private ArrayList<Node> inRowInNextRange(Node notInRow, HashMap<String, ArrayList<ArrayList<Node>>> rows, String key) {
