@@ -463,6 +463,7 @@ public class RLGAnalyser {
                     }
                 }
 
+
                 ArrayList<String> keys = extractRanges(values);
                 ArrayList<String> pcKeys = extractRanges(pcValues);
 
@@ -593,9 +594,10 @@ public class RLGAnalyser {
                         e.printStackTrace();
                     }
                 }
-//                if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[2]/UL")) {
+//                if (n.getXpath().equals("/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV/UL")) {
 //                    System.out.println("Boo");
 //                }
+//                System.out.println(n.getXpath());
                 for (String key: totalRows.keySet()) {
                     ArrayList<ArrayList<Node>> rows = totalRows.get(key);
                     ArrayList<Node> not = totalNotInRows.get(key);
@@ -608,7 +610,7 @@ public class RLGAnalyser {
 
                             if (nonWrappedRow != null) {
                                 ArrayList<Node> wrappedRow = getWrappedRow(rows, nonWrappedRow);
-                                if (nonWrappedRow.size() - wrappedRow.size() == 1) {
+                                if (children.size() - wrappedRow.size() == 1) {
                                     if (elementVisible(notInRow, key)) {
                                         //                                    System.out.println(elementStillWithinParent(notInRow, n, key));
                                         if (elementStillWithinParent(notInRow, n, key)) {
