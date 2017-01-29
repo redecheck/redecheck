@@ -594,7 +594,7 @@ public class RLGAnalyser {
                         e.printStackTrace();
                     }
                 }
-//                if (n.getXpath().equals("/HTML/BODY/DIV/DIV/DIV[2]/DIV/DIV/UL")) {
+//                if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[3]")) {
 //                    System.out.println("Boo");
 //                }
 //                System.out.println(n.getXpath());
@@ -610,7 +610,7 @@ public class RLGAnalyser {
 
                             if (nonWrappedRow != null) {
                                 ArrayList<Node> wrappedRow = getWrappedRow(rows, nonWrappedRow);
-                                if (children.size() - wrappedRow.size() == 1) {
+                                if ((nonWrappedRow.size() - wrappedRow.size() == 1) || (children.size()-wrappedRow.size()==1)) {
                                     if (elementVisible(notInRow, key)) {
                                         //                                    System.out.println(elementStillWithinParent(notInRow, n, key));
                                         if (elementStillWithinParent(notInRow, n, key)) {
