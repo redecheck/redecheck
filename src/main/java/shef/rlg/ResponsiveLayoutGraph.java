@@ -90,6 +90,9 @@ public class ResponsiveLayoutGraph {
         extractVisibilityConstraints();
         extractAlignmentConstraints();
 //        printAlignmentConstraints();
+//
+//        System.out.println(this.getNodes().get("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV"));
+//        System.out.println(this.getNodes().get("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV/H4"));
 
     }
 
@@ -103,11 +106,12 @@ public class ResponsiveLayoutGraph {
 
             for (AlignmentConstraint ac : map.values()) {
 //                if ((ac.getMax() < 780) && (ac.getMin() > 760))
-                if (ac.getType() == Type.SIBLING) {
-//                    if (ac.getNode1().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]") || ac.getNode2().getXpath().equals("/HTML/BODY/SECTION[6]/DIV/DIV[2]/DIV[2]")) {
+//                if (ac.getType() == Type.SIBLING) {
+                    if (ac.getNode1().getXpath().contains("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV") ||
+                            ac.getNode2().getXpath().contains("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV")) {
                         System.out.println(ac);
-//                    }
-                }
+                    }
+//                }
             }
         }
 //        System.out.println("PARENT-CHILDS");

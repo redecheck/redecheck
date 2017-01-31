@@ -896,13 +896,14 @@ public class ResultProcessor {
 				String command = commands[files.indexOf(f)];
 
 				// Put all thirty iterations of timing data together
-				for (int i = 1; i <= 30; i++) {
-					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-				}
-
+//				for (int i = 1; i <= 30; i++) {
+//					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+//				}
+//				System.out.println(mostRecentRun.getAbsolutePath());
 				int errorCount = getErrorCount(mostRecentRun);
 //
 				String distinctFailures = getActualFaults(mostRecentRun);
+//				System.out.println("\n" + distinctFailures);
 				try {
 					totalFailures += Integer.valueOf(distinctFailures);
 					if (errorCount != -1) {

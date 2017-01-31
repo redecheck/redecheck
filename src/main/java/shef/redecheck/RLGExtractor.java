@@ -162,7 +162,7 @@ public class RLGExtractor implements Runnable {
             this.swf.getReport().start();
             HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
 
-            // For each detected inconsistency, capture
+//          For each detected inconsistency, capture
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
 //                    System.out.println(error + "\n");

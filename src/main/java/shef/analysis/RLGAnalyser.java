@@ -227,16 +227,19 @@ public class RLGAnalyser {
             if (ac.getType() == Type.SIBLING) {
                 // Only continue analysis if the "overlapping" attribute label is true
                 if (ac.getAttributes()[10]) {
+//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV")) {
+//                        System.out.println(ac);
+//                    }
                     boolean collision = false;
                     AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
-                    boolean olPrev=true,olNext=true;
+//                    boolean olPrev=true,olNext=true;
 
                     // Now, investigate whether the two elements were NOT overlapping at either range
                     // If no matches found, then clearly elements were NOT OVERLAPPING
                     if (next != null && next.getType() == Type.SIBLING) {
                         // Check if elements overlapping in next constraint
                         if (!next.getAttributes()[10]) {
-                            olNext = false;
+//                            olNext = false;
                             CollisionFailure oe = new CollisionFailure(ac);
                             errors.add(oe);
                             collision = true;
