@@ -896,9 +896,9 @@ public class ResultProcessor {
 				String command = commands[files.indexOf(f)];
 
 				// Put all thirty iterations of timing data together
-//				for (int i = 1; i <= 30; i++) {
-//					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-//				}
+				for (int i = 1; i <= 30; i++) {
+					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+				}
 //				System.out.println(mostRecentRun.getAbsolutePath());
 				int errorCount = getErrorCount(mostRecentRun);
 //
@@ -919,7 +919,7 @@ public class ResultProcessor {
 //						int testRangeCount = testRanges.size();
 //						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
-						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+//						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 //						System.out.println(totalDistinctRanges + "\n");
 					}
 				} catch (NumberFormatException nfe) {
@@ -940,11 +940,11 @@ public class ResultProcessor {
 //				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
-		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
+//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-//		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-new.csv");
+		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-final.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}

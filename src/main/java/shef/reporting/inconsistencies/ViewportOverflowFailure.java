@@ -59,7 +59,7 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
 
             Graphics2D g2d = img.createGraphics();
             g2d.setColor(Color.RED);
-            g2d.setStroke(new BasicStroke(2));
+            g2d.setStroke(new BasicStroke(5));
 
             int[] coords = e1.getBoundingCoords();
 //            System.out.println(e1.getXpath());
