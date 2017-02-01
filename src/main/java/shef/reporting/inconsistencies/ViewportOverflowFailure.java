@@ -48,7 +48,7 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
         try {
-            int captureWidth = (min+max)/2;
+            int captureWidth = min;
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
             BufferedImage img;
@@ -66,7 +66,8 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
 //            System.out.println(Arrays.toString(coords));
             g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
 
-            g2d.setColor(Color.GREEN);
+//            g2d.setColor(Color.GREEN);
+            g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
             int[] coords2 = body.getBoundingCoords();
 //            System.out.println(Arrays.toString(coords2));
             g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);

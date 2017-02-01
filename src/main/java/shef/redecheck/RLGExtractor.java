@@ -107,9 +107,9 @@ public class RLGExtractor implements Runnable {
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 webDriver = new ChromeDriver(capabilities);
             } else if (browser.equals("firefox")) {
-                System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
-                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-                webDriver = new FirefoxDriver(capabilities);
+//                System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
+//                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                webDriver = new FirefoxDriver();
             } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
                 dCaps.setJavascriptEnabled(true);
@@ -165,12 +165,13 @@ public class RLGExtractor implements Runnable {
 //          For each detected inconsistency, capture
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
-//                    System.out.println(error + "\n");
                     error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
                 }
             }
             analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
+            System.out.println(this.swf.getRlg().toString());
+            System.out.println(lFactories.size());
 
             // BASELINE SCREENSHOT CAPTURE
             if (baselines) {

@@ -489,15 +489,14 @@ public class Redecheck {
 
     public static String extractDOM(WebDriver cdriver, String script, StopWatch sw) throws IOException {
 
-        if (!sw.isStarted()) {
-            sw.start();
-        } else if (sw.isSuspended()) {
-            sw.resume();
-        }
-
+//        if (!sw.isStarted()) {
+//            sw.start();
+//        } else if (sw.isSuspended()) {
+//            sw.resume();
+//        }
         String result =  (String) ((JavascriptExecutor) cdriver).executeScript(script);
 //        System.out.println(result);
-        sw.suspend();
+//        sw.suspend();
         return result;
     }
 
