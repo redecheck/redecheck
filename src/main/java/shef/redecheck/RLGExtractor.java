@@ -170,8 +170,6 @@ public class RLGExtractor implements Runnable {
             }
             analyser.writeReport(shortUrl, errors, ts);
             this.swf.getReport().stop();
-            System.out.println(this.swf.getRlg().toString());
-            System.out.println(lFactories.size());
 
             // BASELINE SCREENSHOT CAPTURE
             if (baselines) {
