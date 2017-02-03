@@ -7,12 +7,14 @@ import edu.gatech.xpert.dom.JsonDomParser;
 import edu2.gatech.xpert.dom.layout.AGDiff;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.apache.regexp.RE;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import shef.analysis.RLGComparator;
 import shef.layout.LayoutFactory;
 import shef.mutation.ResultClassifier;
 import shef.rlg.ResponsiveLayoutGraph;
@@ -33,22 +35,22 @@ public class Redecheck {
     String[] clArgs;
     public String current;
     public String preamble;
-    public int startWidth;
-    public int finalWidth;
-    public int stepSize;
-    public String sampleTechnique = "uniformBP";
-    public boolean binarySearch = true;
-    public boolean timing;
-    public int timingID;
-    public String browser = "phantom";
-    public String mutantID;
-    public boolean screenshot;
-    public boolean baselines, results;
-    public boolean tool;
+    private int startWidth;
+    private int finalWidth;
+    private int stepSize;
+    private String sampleTechnique = "uniformBP";
+    private boolean binarySearch = true;
+    private boolean timing;
+    private int timingID;
+    private String browser = "phantom";
+    private String mutantID;
+    private boolean screenshot;
+    private boolean baselines, results;
+    private boolean tool;
     public boolean xpert;
-    public int[] widthsToCheck;
-    public int[] allWidths;
-    public TreeSet<Integer> allTS;
+    private int[] widthsToCheck;
+    private int[] allWidths;
+    private TreeSet<Integer> allTS;
     public boolean saveToExtras;
     static HashMap<Integer, DomNode> oracleDoms;
     static HashMap<Integer, String> oracleDomStrings;
@@ -57,16 +59,16 @@ public class Redecheck {
     static HashMap<Integer, LayoutFactory> oFactories;
     static HashMap<Integer, LayoutFactory> tFactories;
     HashMap<Integer, LayoutFactory> layoutFactories;
-    public static PhantomJSDriver driver;
+    private static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
     static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
-    static String reportDirectory = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/reports/";
-    static String timesDirectory = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/times/";
-    static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
+    private final String REPORT_DIRECTORY = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/reports/";
+    private static String timesDirectory = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/times/";
+    private static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
     static int[] manualWidths = {480, 600, 640, 768, 1024, 1280};
     static int sleep = 50;
-    public CommandLineParser clp = new CommandLineParser();
+    private CommandLineParser clp = new CommandLineParser();
 
 
     public Redecheck(String[] args) throws IOException, InterruptedException {
@@ -113,16 +115,6 @@ public class Redecheck {
             allWidths[i] = i + startWidth;
             allTS.add(i+startWidth);
         }
-
-//        if (tool) {
-//            stepSize = clp.ss;
-//            runTool();
-//        }
-//
-//        if (xpert) {
-//            runXpert(oracle, test);
-//        }
-
 
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
@@ -186,51 +178,46 @@ public class Redecheck {
         String timeStamp = formatter.format(date);
         String oracleUrl = preamble + oracle + ".html";
         String testUrl = preamble + test + ".html";
-        RLGExtractor rlg1 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
-//        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, "phantom");
+        RLGExtractor rlg1 = new RLGExtractor(current, oracleUrl, test, oracleDoms, oFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
+        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
         Thread t1 = new Thread(rlg1);
-//        Thread t2 = new Thread(rlg2);
+        Thread t2 = new Thread(rlg2);
 
         t1.start();
-        while (t1.isAlive()) {
+        t2.start();
+        while (t1.isAlive() || t2.isAlive()) {
 
         }
-//        t2.start();
-//        while (t1.isAlive() || t2.isAlive()) {
-//        while ( t2.isAlive()) {
-//        }
 
-//        System.out.println(oFactories.size()== tFactories.size());
-//        for (Integer i : tFactories.keySet()) {
-//            System.out.println(i);
-//        }
+        System.out.println(oFactories.size()== tFactories.size());
+        for (Integer i : tFactories.keySet()) {
+            System.out.println(i);
+        }
 
 
-//        ResponsiveLayoutGraph r = rlg2.getRlg();
-//        ResponsiveLayoutGraph r2 = rlg2.getRlg();
-//        RLGComparator comp = new RLGComparator(r, r2, widthsToCheck);
-//        comp.compare();
-//        comp.compareMatchedNodes();
-//        comp.printDiff();
-//        comp.writeRLGDiffToFile(testUrl, "report-" + sampleTechnique + "-" + stepSize + "-" + binarySearch, true);
-//        copyMutantInfo();
+        ResponsiveLayoutGraph r = rlg2.getRlg();
+        ResponsiveLayoutGraph r2 = rlg2.getRlg();
+        RLGComparator comp = new RLGComparator(r, r2, widthsToCheck);
+        comp.compare();
+        comp.compareMatchedNodes();
+        comp.printDiff();
+        comp.writeRLGDiffToFile(testUrl, "report-" + sampleTechnique + "-" + stepSize + "-" + binarySearch, true);
+        copyMutantInfo();
 
-//        if (mutantID != null) {
-//            comp.writeRLGDiffToFile(redecheck + "screenshots/" + mutantID, "/redecheck-report", false);
-//        }
+        if (mutantID != null) {
+            comp.writeRLGDiffToFile(redecheck + "screenshots/" + mutantID, "/redecheck-report", false);
+        }
 
 //        for (int w : rlg1.getSampleWidths()) {
 //            DomNode or = rlg1.doms.get(w);
 //            DomNode mod = rlg2.doms.get(w);
 //            System.out.println(w + " " + ResultClassifier.domsEqual(or, mod));
 //        }
-//        System.out.println(testDoms.size());
+        System.out.println(testDoms.size());
 //        writeToFile(testUrl, String.valueOf(duration), "time-"+sampleTechnique+"-"+binarySearch );
 //        writeToFile(testUrl, String.valueOf(testDoms.size()), "doms-"+sampleTechnique+"-" + stepSize + "-" + binarySearch, dataDirectory);
 //        writeToFile(testUrl, String.valueOf(rlg2.getInitialDoms()), "doms-initial-"+sampleTechnique+"-" + stepSize + "-" + binarySearch, dataDirectory);
-//        processTimes(rlg2.getSwf(), testUrl);
-
-
+        processTimes(rlg2.getSwf(), testUrl);
     }
 
     private void processTimes(StopwatchFactory swf, String testUrl) {
@@ -253,7 +240,7 @@ public class Redecheck {
         results+= numVCs + ",";
         results+= numACs;
         try {
-            String outFolder = reportDirectory + url;
+            String outFolder = REPORT_DIRECTORY + url;
 
             File dir = new File(outFolder+"/rlg-stats.csv");
             PrintWriter output = new PrintWriter(dir);
@@ -273,7 +260,7 @@ public class Redecheck {
         results+= getTimeStringFromStopwatch(swf.getReport()) + ",";
 
         try {
-            String outFolder = reportDirectory + url;
+            String outFolder = REPORT_DIRECTORY + url;
 
             File dir = new File(outFolder+"/index-" + timeStamp+"/timings.csv");
             PrintWriter output = new PrintWriter(dir);
@@ -460,7 +447,7 @@ public class Redecheck {
                 while (!consecutiveMatches) {
                     // Extract the DOM and save it to the HashMap.
                     Thread.sleep(sleep);
-                    String extractedDom = extractDOM(wdriver, scriptToExtract, swf.getExtract());
+                    String extractedDom = extractDOM(wdriver, scriptToExtract);
 
                     if (previous.equals(extractedDom)) {
 
@@ -480,24 +467,10 @@ public class Redecheck {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        swf.getCapture().suspend();
-//        if (swf.getProcess().isStarted()) {
-//            swf.getProcess().resume();
-//        }
     }
 
-    public static String extractDOM(WebDriver cdriver, String script, StopWatch sw) throws IOException {
-
-//        if (!sw.isStarted()) {
-//            sw.start();
-//        } else if (sw.isSuspended()) {
-//            sw.resume();
-//        }
-        String result =  (String) ((JavascriptExecutor) cdriver).executeScript(script);
-//        System.out.println(result);
-//        sw.suspend();
-        return result;
+    public static String extractDOM(WebDriver cdriver, String script) throws IOException {
+        return (String) ((JavascriptExecutor) cdriver).executeScript(script);
     }
 
 
@@ -522,70 +495,11 @@ public class Redecheck {
         return doms;
     }
 
-//    /**
-//     * Captures a screenshot of the webpage
-//     * @param screenshot	File into which to save the image
-//     * @param driver		The driver to use to get the screenshot
-//     */
-//    public static void captureScreenshot(File screenshot, PhantomJSDriver driver, int width) {
-//        String ssDir = redecheck + "screenshots/" + mutantID + "/";
-//
-//        if (saveToExtras) {
-//            ssDir += "extras/";
-//        }
-//        String ssFile = mutantID;
-//        if (!screenshot.toString().contains("mutant")) {
-//            ssFile += "-oracle-" + width;
-//        } else {
-//            ssFile += "-mutant-" + width;
-//        }
-//        System.out.println(ssFile);
-//        File scrFile = driver.getScreenshotAs(OutputType.FILE);
-//        try {
-//            FileUtils.forceMkdir(new File(ssFile));
-//            FileUtils.copyFile(scrFile, new File(ssDir + ssFile + ".png"));
-//        } catch (IOException e) {
-//            System.err.println("Error saving screenshot");
-//            e.printStackTrace();
-//        }
-//    }
-
-//    public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
-//        try {
-//            d.manage().window().setSize(new Dimension(w, 1000));
-//            Thread.sleep(sleep);
-//
-//            File scrFile = d.getScreenshotAs(OutputType.FILE);
-//
-//            String ssDir = redecheck + "reports/" + url + "/";
-//            String ssFile = "error"+errorID + "atWidth" + w;
-//            try {
-//                FileUtils.forceMkdir(new File(ssFile));
-//                FileUtils.copyFile(scrFile, new File(ssDir + ssFile + ".png"));
-//            } catch (IOException e) {
-//                System.err.println("Error saving screenshot");
-//                e.printStackTrace();
-//            }
-//
-//
-//            BufferedImage img = ImageIO.read(new File(ssDir+ssFile+".png"));
-//            return img;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException ie) {
-//            System.out.println("INTERRUPTED");
-//        }
-//        return null;
-//    }
-
 
 
     public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
         return new PhantomJSDriver(dCaps);
     }
-
-
-
 
     public static void writeToFile(String testUrl, String content, String fileName, String directory) {
 //        System.out.println(fileName);
@@ -599,22 +513,6 @@ public class Redecheck {
 
             File dir = new File(outFolder+fileName+".txt");
             System.out.println(dir.toString());
-            // create multiple directories at one time
-//            boolean successful = dir.mkdirs();
-//            if (successful)
-//            {
-//                // created the directories successfully
-////                System.out.println("directories were created successfully");
-//            }
-//            else
-//            {
-//                // something failed trying to create the directories
-////                System.out.println("failed trying to create the directories");
-//            }
-
-//            int index = testUrl.lastIndexOf('/');
-//            outFolder = testUrl.substring(0, index+1);
-//            System.out.println(outFolder);
             output = new PrintWriter(dir);
             output.append(content);
             output.close();
@@ -659,7 +557,7 @@ public class Redecheck {
 
                     while (!consecutiveMatches) {
                         // Extract the DOM and save it to the HashMap.
-                        String extractedDom = extractDOM(driver, scriptToExtract, new StopWatch());
+                        String extractedDom = extractDOM(driver, scriptToExtract);
 
                         if (previous.equals(extractedDom)) {
                             doms.put(w, parser.parseJsonDom(extractedDom));

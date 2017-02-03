@@ -82,11 +82,16 @@ public class RLGExtractor implements Runnable {
         breakpoints = new ArrayList<>();
         ts = timeStamp;
         this.baselines = baselines;
-        spotCheckWidths = new HashMap<>();
-        spotCheckWidths.put("kersley", new int[] {320, 480, 768, 1024});
-        spotCheckWidths.put("responsinator", new int[] {320, 375, 384, 414, 768, 1024});
-        spotCheckWidths.put("semalt", new int[] {320, 384, 600, 768, 1024});
-        spotCheckWidths.put("wasserman", new int[] {320, 375, 414, 600, 768, 1280});
+
+        // BASELINE SCREENSHOT CAPTURE
+        if (baselines) {
+            spotCheckWidths = new HashMap<>();
+            spotCheckWidths.put("kersley", new int[] {320, 480, 768, 1024});
+            spotCheckWidths.put("responsinator", new int[] {320, 375, 384, 414, 768, 1024});
+            spotCheckWidths.put("semalt", new int[] {320, 384, 600, 768, 1024});
+            spotCheckWidths.put("wasserman", new int[] {320, 375, 414, 600, 768, 1280});
+            runBaselines();
+        }
     }
 
     /**
@@ -98,18 +103,15 @@ public class RLGExtractor implements Runnable {
             this.swf.getRlg().start();
 
             // Set up the web driver depending on the browser being used.
-            if (browser.equals("chrome")) {
-
+            if (browser.equals("firefox")) {
+                webDriver = new FirefoxDriver();
+            } else if (browser.equals("chrome")) {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
                 options.addArguments("disable-popup-blocking");
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 webDriver = new ChromeDriver(capabilities);
-            } else if (browser.equals("firefox")) {
-//                System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
-//                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-                webDriver = new FirefoxDriver();
             } else if (browser.equals("phantom")) { 
                 DesiredCapabilities dCaps = new DesiredCapabilities();
                 dCaps.setJavascriptEnabled(true);
@@ -124,7 +126,7 @@ public class RLGExtractor implements Runnable {
                 webDriver = new OperaDriver(capabilities);
             }
 
-            // Load up the webpage in the browser
+            // Load up the webpage in the browser, using a pop-up to make sure we can resize down to 320 pixels wide
             String winHandleBefore = webDriver.getWindowHandle();
             webDriver.get(fullUrl);
             ((JavascriptExecutor) webDriver).executeScript("var newwindow=window.open(\"" + fullUrl + "\",'test','width=320,height=1024,top=50,left=50', scrollbars='no', menubar='no', resizable='no', toolbar='no', top='+top+', left='+left+', 'false');\n" +
@@ -135,6 +137,7 @@ public class RLGExtractor implements Runnable {
                     webDriver.close();
                 }
             }
+
             // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
@@ -160,60 +163,69 @@ public class RLGExtractor implements Runnable {
             this.swf.getDetect().stop();
 
             this.swf.getReport().start();
-            HashMap<Integer, BufferedImage> imageMap = new HashMap<>();
 
-//          For each detected inconsistency, capture
+//          For each detected RLF, capture a screenshot for the report
             if (errors.size() > 0) {
                 for (ResponsiveLayoutFailure error : errors) {
-                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, imageMap, ts);
+                    error.captureScreenshotExample(errors.indexOf(error)+1, shortUrl, webDriver, fullUrl, ts);
                 }
             }
+
+            // Write the text report to disk
             analyser.writeReport(shortUrl, errors, ts);
+
+            // Stop the timer for the report generation
             this.swf.getReport().stop();
 
-            // BASELINE SCREENSHOT CAPTURE
-            if (baselines) {
-                webDriver.manage().window().setSize(new org.openqa.selenium.Dimension(1400, 1000));
-                webDriver.get(fullUrl);
-                File spotcheckDir, exhaustiveDir;
-                if (!shortUrl.contains("www")) {
-                    String[] splits = shortUrl.split("/");
-                    String webpage = splits[0];
-                    String mutant = "index";
-                    spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/spotcheck/");
-                    exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/exhaustive/");
-                } else {
-                    String[] splits = shortUrl.split("www.");
-                    spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
-                    exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
-                }
-                for (String scTechnique : spotCheckWidths.keySet()) {
-                    File scTechFile = new File(spotcheckDir + "/" + scTechnique + "/");
-                    FileUtils.forceMkdir(scTechFile);
-                    int[] scws = spotCheckWidths.get(scTechnique);
-                    for (int scw : scws) {
-                        BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
-                        BufferedImage dest = ss.getSubimage(0, 0, scw, ss.getHeight());
-                        Graphics2D g2d = ss.createGraphics();
-                        g2d.setColor(Color.RED);
-                        g2d.drawRect(0,0, scw, ss.getHeight());
-                        File outputfile = new File(scTechFile + "/" + scw + ".png");
-                        ImageIO.write(dest, "png", outputfile);
-                    }
-                }
-                FileUtils.forceMkdir(exhaustiveDir);
-                allWidths = new int[(endW - startW) + 1];
-                for (int i = 0; i < allWidths.length; i++) {
-                    allWidths[i] = i + startW;
-                }
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Make sure the WebDriver is closed down
         if (webDriver != null) {
             webDriver.quit();
         }
 
+    }
+
+    /**
+     *
+     * @throws IOException
+     */
+    private void runBaselines() throws IOException {
+        webDriver.manage().window().setSize(new org.openqa.selenium.Dimension(1400, 1000));
+        webDriver.get(fullUrl);
+        File spotcheckDir, exhaustiveDir;
+        if (!shortUrl.contains("www")) {
+            String[] splits = shortUrl.split("/");
+            String webpage = splits[0];
+            String mutant = "index";
+            spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/spotcheck/");
+            exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/exhaustive/");
+        } else {
+            String[] splits = shortUrl.split("www.");
+            spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
+            exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
+        }
+        for (String scTechnique : spotCheckWidths.keySet()) {
+            File scTechFile = new File(spotcheckDir + "/" + scTechnique + "/");
+            try {
+                FileUtils.forceMkdir(scTechFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int[] scws = spotCheckWidths.get(scTechnique);
+            for (int scw : scws) {
+                BufferedImage ss = Utils.getScreenshot(shortUrl, scw, sleep*2, webDriver, scw);
+                BufferedImage dest = ss.getSubimage(0, 0, scw, ss.getHeight());
+                Graphics2D g2d = ss.createGraphics();
+                g2d.setColor(Color.RED);
+                g2d.drawRect(0,0, scw, ss.getHeight());
+                File outputfile = new File(scTechFile + "/" + scw + ".png");
+                ImageIO.write(dest, "png", outputfile);
+            }
+        }
     }
 
 
@@ -253,7 +265,40 @@ public class RLGExtractor implements Runnable {
     public static int[] calculateSampleWidths(String technique, String shortUrl, WebDriver drive, int startWidth, int finalWidth, int stepSize, String preamble, ArrayList<Integer> breakpoints) {
         int[] widths = null;
         ArrayList<Integer> widthsAL = new ArrayList<Integer>();
-        if (technique.equals("uniform")) {
+        if (technique.equals("uniformBP")) {
+            TreeSet<Integer> widthsTS = new TreeSet<Integer>();
+            int currentWidth = startWidth;
+
+            widthsTS.add(startWidth);
+
+            while (currentWidth + stepSize <= finalWidth) {
+                currentWidth = currentWidth + stepSize;
+                widthsTS.add(currentWidth);
+            }
+            widthsTS.add(finalWidth);
+
+            ArrayList<String> cssFiles = initialiseFiles(shortUrl, drive);
+            ArrayList<RuleMedia> mqSet = getMediaQueries(shortUrl, cssFiles, preamble);
+            int[] widthsBP = getBreakpoints(mqSet);
+            for (int w : widthsBP) {
+                if ( (w >= startWidth) && (w <= finalWidth) ) {
+                    widthsTS.add(w);
+                    breakpoints.add(w);
+                }
+            }
+            widths = new int[widthsTS.size()];
+            Iterator iter = widthsTS.iterator();
+            int counter = 0;
+            while(iter.hasNext()) {
+                try {
+                    int i = (int) iter.next();
+                    widths[counter] = i;
+                    counter++;
+                } catch (Exception e) {
+
+                }
+            }
+        } else if (technique.equals("uniform")) {
             int currentWidth = startWidth;
 
             widthsAL.add(startWidth);
@@ -276,14 +321,9 @@ public class RLGExtractor implements Runnable {
                 widths[counter] = i;
                 counter++;
             }
-        } else if (technique.equals("exhaustive")) {
-//            System.out.println("Using exhaustive sampling");
-//            widths = allWidths;
         } else if (technique.equals("random")) {
 
         } else if (technique.equals("breakpoint")) {
-//            System.out.println("Using breakpoint sampling");
-//            String url = preamble + oracle + ".html";
             ArrayList<String> cssFiles = initialiseFiles(shortUrl, drive);
             ArrayList<RuleMedia> mqSet = getMediaQueries(shortUrl, cssFiles, preamble);
             widths = getBreakpoints(mqSet);
@@ -302,47 +342,6 @@ public class RLGExtractor implements Runnable {
             for (Integer i : widthsAL) {
                 widths[counter] = i;
                 counter++;
-            }
-        } else if (technique.equals("uniformBP")) {
-//            System.out.println("Using uniform & breakpoint sampling");
-            TreeSet<Integer> widthsTS = new TreeSet<Integer>();
-            int currentWidth = startWidth;
-
-            widthsTS.add(startWidth);
-
-            while (currentWidth + stepSize <= finalWidth) {
-                currentWidth = currentWidth + stepSize;
-                widthsTS.add(currentWidth);
-            }
-            widthsTS.add(finalWidth);
-
-//            String url = preamble + oracle + ".html";
-            ArrayList<String> cssFiles = initialiseFiles(shortUrl, drive);
-//            System.out.println("Got " + cssFiles.size() + " files");
-            ArrayList<RuleMedia> mqSet = getMediaQueries(shortUrl, cssFiles, preamble);
-//            System.out.println("Got " + mqSet.size() + " MQ's");
-            int[] widthsBP = getBreakpoints(mqSet);
-            for (int w : widthsBP) {
-                if ( (w >= startWidth) && (w <= finalWidth) ) {
-//                    System.out.println("Added " + w);
-                    widthsTS.add(w);
-                    breakpoints.add(w);
-                } else {
-//                    System.out.println("Didn't add " + w);
-                }
-            }
-//            System.out.println(widthsTS);
-            widths = new int[widthsTS.size()];
-            Iterator iter = widthsTS.iterator();
-            int counter = 0;
-            while(iter.hasNext()) {
-                try {
-                    int i = (int) iter.next();
-                    widths[counter] = i;
-                    counter++;
-                } catch (Exception e) {
-
-                }
             }
         }
 

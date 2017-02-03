@@ -4,18 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.screentaker.ViewportPastingStrategy;
-
-import javax.imageio.ImageIO;
 
 /**
  * Created by thomaswalsh on 10/08/15.
@@ -92,6 +87,32 @@ public class Utils {
             System.out.println("INTERRUPTED");
         }
         return null;
+    }
+
+    public static File getOutputFilePath(String url, String timeStamp, int errorID) {
+        File output = null;
+        if (!url.contains("www.")) {
+            String[] splits = url.split("/");
+            String webpage = splits[0];
+            String mutant = "index-" + timeStamp;
+            //                    splits[1];
+            try {
+                output = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String[] splits = url.split("www.");
+            String webpage = splits[1];
+            String mutant = timeStamp;
+            try {
+                output = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return output;
+
     }
 
 }
