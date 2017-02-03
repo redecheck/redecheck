@@ -22,7 +22,7 @@ public class CommandLineParser {
     public int ss = 60;
 
     @Parameter(names = "--start", description = "Start width for sampling")
-    public int startWidth = 400;
+    public int startWidth = 320;
 
     @Parameter(names = "--end", description = "End width for sampling")
     public int endWidth = 1400;
@@ -55,7 +55,13 @@ public class CommandLineParser {
     public int timingID;
 
     @Parameter(names = "--browser", description = "The browser to use for the test run")
-    public String browser = "phantom";
+    public String browser = "firefox";
+
+    @Parameter(names = "--baselines", description = "Whether to run the baseline approaches")
+    public boolean baselines;
+
+    @Parameter(names = "--results", description = "Whether to process experimental results")
+    public boolean results;
 
     @Parameter(names = "--url", description = "The URL to check for faults.")
     public String url;

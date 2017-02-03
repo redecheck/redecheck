@@ -7,6 +7,7 @@ import shef.redecheck.Utils;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ResultProcessor {
@@ -18,12 +19,12 @@ public class ResultProcessor {
 	int[][] rq2results;
 	Double[][] rq3results;
 //	static String preamble = "/Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
-	static String preamble = "/Users/thomaswalsh/Documents/PhD/redecheck-journal-paper-data/";
-	static String target = "/Users/thomaswalsh/Documents/PhD/Redecheck/target/";
-	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Redecheck/";
+	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
+	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
+	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
-	static String githubio = "/Users/thomaswalsh/Documents/PhD/redecheck-org/";
-	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/fault-examples/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/redecheck-org/";
+	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
 	ArrayList<File> nonDetected;
@@ -229,15 +230,15 @@ public class ResultProcessor {
 		String line = null;
 
 		try {
-			String current = new java.io.File( "." ).getCanonicalPath();
+//			String current = new java.io.File( "." ).getCanonicalPath();
 			// FileReader reads text files in the default encoding.
-			String fullFN = current + fileName;
+			String fullFN = redecheck + fileName;
 			FileReader fileReader = new FileReader(fullFN);
 			// Always wrap FileReader in BufferedReader.
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			while((line = bufferedReader.readLine()) != null) {
-				files.add(new File(current + "/reports-final/" + line));
+				files.add(new File(redecheck + "/reports/" + line));
 			}
 
 			// Always close files.
@@ -334,7 +335,7 @@ public class ResultProcessor {
 	private static String getMultiExecutionTime(String webpage, int i) {
 		String result = "";
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(redecheckicst+"times/"+webpage + "/timings" + i + ".csv"));
+			BufferedReader br = new BufferedReader(new FileReader(redecheck+"times/"+webpage + "/timings" + i + ".csv"));
 
 			result += br.readLine();
 
@@ -788,12 +789,17 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
+		rp.getInconsistencyResults();
+	}
+
+	public void getInconsistencyResults() {
 		String[] webpages = new String[] {
 				"3-Minute-Journal",
 				"AccountKiller",
 				"AirBnb",
 				"BugMeNot",
 				"CloudConvert",
+				"Consumer-Reports",
 				"Covered-Calendar",
 				"Days-Old",
 				"Dictation",
@@ -820,6 +826,7 @@ public class ResultProcessor {
 				"www.airbnb.com",
 				"bugmenot.com",
 				"cloudconvert.com",
+				"consumerreports.org",
 				"www.coveredcalendar.com",
 				"www.daysold.com",
 				"dictation.io",
@@ -840,103 +847,177 @@ public class ResultProcessor {
 				"www.whatshouldireadnext.com/search",
 				"willmyphonework.net",
 				"zerodollarmovies.com"};
-//		writeTimesAndDomsToFile(rp.webpages, 30);
-//		rp.generateStepSizeResults(rp.webpages);
-//		processAllMutants(rp.webpages);
-		ArrayList<File> files = rp.readInSetOfMutants("/src/main/java/icst-websites.txt");
+
+		String[] commands = new String[] {
+				"\\threeminutejournalplain",
+				"\\accountkillerplain",
+				"\\airbnbplain",
+				"\\bugmenotplain",
+				"\\cloudconvertplain",
+				"\\consumerreportsplain",
+				"\\coveredcalendarplain",
+				"\\daysoldplain",
+				"\\dictationplain",
+				"\\duolingoplain",
+				"\\honeyplain",
+				"\\hotelwifitestplain",
+				"\\mailinatorplain",
+				"\\midwaymeetupplain",
+				"\\niniteplain",
+				"\\pdfescapeplain",
+				"\\pepfeedplain",
+				"\\getpocketplain",
+				"\\rainymoodplain",
+				"\\runpeeplain",
+				"\\stumbleuponplain",
+				"\\topdocumentaryfilmsplain",
+				"\\usersearchplain",
+				"\\whatshouldireadnextplain",
+				"\\willmyphoneworkplain",
+				"\\zerodollarmoviesplain"};
+
+		final int[] SPOT_CHECK_WIDTHS = new int[] {320, 375, 384, 414, 480, 600, 768, 1024, 1280};
+		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
 		String timeData = "";
 		String multiTimeData = "";
 		String subjectData = "";
 		int totalFailures = 0;
 		int totalDistinctRanges = 0;
+		int totalTestRanges = 0;
 
 
 		for (File f : files) {
 			File mostRecentRun = lastFileModified(f.getAbsolutePath()+"");
 			if (mostRecentRun == null) {
-				System.out.println("Boo");
-			}
-			System.out.println(mostRecentRun);
-			String[] splits = f.toString().split("/");
-			String webpage = splits[splits.length-1];
-			timeData += webpage + "," + getExecutionTime(mostRecentRun) + "\n";
+				System.out.println("Boo on " + f.getAbsolutePath());
+			} else {
+				String[] splits = f.toString().split("/");
+				String webpage = splits[splits.length - 1];
+				String command = commands[files.indexOf(f)];
 
-			int errorCount = getErrorCount(mostRecentRun);
-			String jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-			String distinctFailures = getActualFaults(mostRecentRun);
-			totalFailures += Integer.valueOf(distinctFailures);
-			if (errorCount != -1) {
-				ArrayList<Integer> tpIndexes = new ArrayList<>();
-				String classificationString = getClassification(mostRecentRun, tpIndexes);
-//				int distinctRanges = getFailuresFromFile(mostRecentRun, tpIndexes, true);
-				int totalRanges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
-				totalDistinctRanges += totalRanges;
-//				System.out.println("\\" + webpage + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
-			}
-
-
-
+				// Put all thirty iterations of timing data together
+				for (int i = 1; i <= 30; i++) {
+					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
+				}
+//				System.out.println(mostRecentRun.getAbsolutePath());
+				int errorCount = getErrorCount(mostRecentRun);
 //
-//				Document toMutate = mutator.cloner.deepClone(mutator.page);
+				String distinctFailures = getActualFaults(mostRecentRun);
+//				System.out.println("\n" + distinctFailures);
+				try {
+					totalFailures += Integer.valueOf(distinctFailures);
+					if (errorCount != -1) {
+						ArrayList<Integer> tpIndexes = new ArrayList<>();
+						String classificationString = getClassification(mostRecentRun, tpIndexes);
+						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
+//						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
+//						System.out.println(RQ2Result);
+//						ArrayList<String> testRanges = groupFailureRanges(ranges);
+						int totalRanges = ranges.size();
+						totalDistinctRanges += totalRanges;
 
+//						int testRangeCount = testRanges.size();
+//						totalTestRanges += testRangeCount;
+						// Print out main RQ1 results row for table
+//						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+//						System.out.println(totalDistinctRanges + "\n");
+					}
+				} catch (NumberFormatException nfe) {
+					System.out.println(mostRecentRun.getAbsolutePath());
+				}
 
-//			for (int i = 1; i <= 30; i++) {
-//				multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
-//			}
-
-
-//			File fl = new File(dir);
-//			File[] runfiles = f.listFiles(new FileFilter() {
-//				public boolean accept(File file) {
-//					return file.isDirectory();
+////			Write out results into webpage for Jekyll
+//				String jekyllCode = null;
+//				try {
+//					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
+//				} catch (IOException e) {
+//					e.printStackTrace();
 //				}
-//			});
-//			System.out.println(f.getAbsolutePath() + "  " + runfiles.length);
-//			HashMap<Integer, ArrayList<File>> faultCounts = new HashMap<>();
-//			for (File ff : runfiles) {
-//				int ec = getErrorCount(ff);
-//				if (!faultCounts.containsKey(ec)) {
-//					faultCounts.put(ec, new ArrayList<File>());
-//				}
-//				faultCounts.get(ec).add(ff);
-//			}
-//			if (faultCounts.entrySet().size() > 1) {
-//				for (Integer i : faultCounts.keySet()) {
-//					if (faultCounts.get(i).size() == 1) {
-//						for (File dodgy: faultCounts.get(i)) {
-//							System.out.println(dodgy);
-//						}
-//					}
-//					System.out.println(i + " faults were reported " +faultCounts.get(i).size() + " times");
-//				}
-//			}
-//			System.out.println(jekyllCode);
-			writeToFile(jekyllCode, githubio + "_posts/","2016-09-26-"+webpage+".markdown");
-
+//				LocalDateTime now = LocalDateTime.now();
+//				int year = now.getYear();
+//				int month = now.getMonthValue();
+//				int day = now.getDayOfMonth();
+//				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
+			}
 		}
-//		System.out.println("\\midrule");
 //		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-//		for (String wp : webpages) {
-//			WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
-//			try {
-//				subjectData +=wp + " & "+ mutator.getStatistics(wp) +"\\\\\n";
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
 //		System.out.println(multiTimeData);
 //		System.out.println(subjectData);
 //		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-//		writeToFile(multiTimeData, redecheckicst+"icst-processing/", "timing-data.csv");
+		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-rerun.csv");
 
 //		rp.writeRQ1and2Data(files);
 	}
 
-	private static void writeJekyllFile(String jekyllCode, String webpage) {
+	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
+		String result = "";
+		for (String r : ranges) {
+			result += webpage;
+			String[] splits = r.split(" - ");
+			int min = Integer.parseInt(splits[0]);
+			int max = Integer.parseInt(splits[1]);
+			for (int w : scw) {
+				if (w >= min && w <= max) {
+					result += ", T";
+				} else {
+					result += ", F";
+				}
+			}
+			result += "\n";
+		}
+		return result;
+	}
+
+	private ArrayList<String> groupFailureRanges(HashSet<String> ranges) {
+		ArrayList<String> grouped = new ArrayList<>();
+
+		for (String r : ranges) {
+//			System.out.println(r);
+			String[] splits = r.split(" - ");
+			int rMin = Integer.parseInt(splits[0]);
+			int rMax = Integer.parseInt(splits[1]);
+			String match = "";
+			ArrayList<String> groupedClone = (ArrayList<String>) grouped.clone();
+//			for (String g : grouped) {
+			while (groupedClone.size() > 0) {
+				String g = groupedClone.remove(0);
+//				System.out.println(g);
+				if (match.equals("")) {
+					splits = g.split(" - ");
+					int gMin = Integer.parseInt(splits[0]);
+					int gMax = Integer.parseInt(splits[1]);
+//					System.out.println("Comparing " + r + " and " + g);
+					if (rMin <= gMax && gMin <= rMax) {
+						// We've found a match
+						// x1 <= y2 && y1 <= x2
+//						System.out.println("Overlap between " + r + " and " + g);
+						match = g;
+						grouped.remove(match);
+						if (rMin < gMin) {
+							grouped.add(gMin + " - " + rMax);
+						} else {
+							grouped.add(rMin + " - " + gMax);
+						}
+//						break;
+
+					}
+				}
+			}
+
+			if (match.equals("")) {
+//				System.out.println("Adding " + r);
+				grouped.add(r);
+			} else {
+				// Remove the original match
+//				grouped.remove(match);
+				// Add in the new value, representing the overlap between the two
+
+			}
+		}
+		return grouped;
 	}
 
 	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
-//		System.out.println(webpage);
 		String jekyllCode = "";
 		try {
 
@@ -952,12 +1033,12 @@ public class ResultProcessor {
 
 			String[] classifications = getClassifications(mostRecentRun, totalReports);
 			String[] categories = getCategories(mostRecentRun, totalReports);
-			String[] reasons = getReasons(mostRecentRun, totalReports);
+//			String[] reasons = getReasons(mostRecentRun, totalReports);
 			for (int i = 1; i <= totalReports; i++) {
 				File ssFile = new File(mostRecentRun + "/fault" + i);
 				String imageName = ssFile.listFiles()[0].getName();
 				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
+						") | " + classifications[i-1] + " | " + "" + " |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -978,6 +1059,11 @@ public class ResultProcessor {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				new File(f.getAbsolutePath() + "/reasons.txt").createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return results;
 	}
@@ -1032,7 +1118,7 @@ public class ResultProcessor {
 		return results;
 	}
 
-	private static int getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
+	public static HashSet<String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
 		HashSet<String> errorStrings = new HashSet<>();
 
 		try {
@@ -1041,8 +1127,10 @@ public class ResultProcessor {
 			int errorIndex = 1;
 			boolean foundBounds = false;
 			String[] splits, splits2;
+			String contents = "";
 			int min = 0, max=0;
 			while(line != null) {
+//				contents += line;
 				if (line.contains("overflowed the viewport")) {
 					splits = line.split(" and ");
 					splits2 = splits[0].split("between ");
@@ -1104,7 +1192,7 @@ public class ResultProcessor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return errorStrings.size();
+		return errorStrings;
 	}
 
 
@@ -1120,7 +1208,7 @@ public class ResultProcessor {
 		return "Null";
 	}
 
-	private static String getClassification(File f, ArrayList<Integer> tpIndexes) {
+	public static String getClassification(File f, ArrayList<Integer> tpIndexes) {
 		String result = "";
 		HashMap<String, HashMap<Integer, Integer>> counts = new HashMap<>();
 		counts.put("SR", new HashMap<Integer, Integer>());

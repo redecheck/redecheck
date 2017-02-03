@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGThread;
+import shef.redecheck.RLGExtractor;
 import shef.rlg.Node;
 
 import javax.imageio.ImageIO;
@@ -53,7 +53,7 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
 //            if (imageMap.containsKey(captureWidth)) {
 //                img = imageMap.get(captureWidth);
 //            } else {
-                img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, url);
+                img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, url);
 //                imageMap.put(captureWidth, img);
 //            }
             LayoutFactory lf = lfs.get(captureWidth);

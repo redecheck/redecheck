@@ -79,14 +79,7 @@ public class Element {
         return boundingCoords;
     }
 
-    public void setContentCoords(int[] contentCoords) {
-        this.contentCoords = contentCoords;
-        updateContentRectangle();
-    }
 
-    private void updateContentRectangle() {
-        this.contentRectangle = new Rectangle(contentCoords[0], contentCoords[1], contentCoords[2]-contentCoords[0], contentCoords[3] - contentCoords[1]);
-    }
 
     public Rectangle getContentRectangle() {
         return this.contentRectangle;

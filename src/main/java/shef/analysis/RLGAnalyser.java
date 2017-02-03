@@ -62,8 +62,8 @@ public class RLGAnalyser {
         ArrayList<ResponsiveLayoutFailure> cloned1 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 
         for (ResponsiveLayoutFailure rle : cloned1) {
-            if (rle instanceof OverlappingFailure) {
-                AlignmentConstraint ac = ((OverlappingFailure) rle).getConstraint();
+            if (rle instanceof CollisionFailure) {
+                AlignmentConstraint ac = ((CollisionFailure) rle).getConstraint();
                 int chosenWidth = getWidthWithinRange(ac.getMin(), ac.getMax(), layouts);
                 LayoutFactory lf = layouts.get(chosenWidth);
                 Layout l = lf.layout;
@@ -146,10 +146,10 @@ public class RLGAnalyser {
                     /* If no constraints found, it is assumed the node is ALWAYS overflowing the viewport, so reports an
                     error as such
                      */
-                    int repMin = n.getVisibilityConstraints().get(0).appear;
-                    int repMax = n.getVisibilityConstraints().get(0).disappear;
-                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
-                    errors.add(voe);
+//                    int repMin = n.getVisibilityConstraints().get(0).appear;
+//                    int repMax = n.getVisibilityConstraints().get(0).disappear;
+//                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
+//                    errors.add(voe);
                 } else {
                     // Initialises the min value of the gap
                     int gmin = vmin;
@@ -227,46 +227,37 @@ public class RLGAnalyser {
             if (ac.getType() == Type.SIBLING) {
                 // Only continue analysis if the "overlapping" attribute label is true
                 if (ac.getAttributes()[10]) {
+//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV")) {
+//                        System.out.println(ac);
+//                    }
+                    boolean collision = false;
+                    AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
+//                    boolean olPrev=true,olNext=true;
 
-                    // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
-                    HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax()+1);
-                    HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax()+1);
-
-                    // If node2 in ancestry of node1, it's an overflow
-                    if (n1Ancestry.contains(ac.getNode2())) {
-                        OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
-                        errors.add(ofe);
-                    // If node1 in ancestry of node2, it's an overflow
-                    } else if (n2Ancestry.contains(ac.getNode1())) {
-                        OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
-                        errors.add(ofe);
-                    } else {
-                        // Else, it's just an overlap, so begin by obtaining the preceding and succeeding constraints
-                        AlignmentConstraint prev = getPreviousOrNextConstraint(ac, true, false);
-                        AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
-                        boolean olPrev=true,olNext=true;
-
-                        // Now, investigate whether the two elements were NOT overlapping at either range
-                        // If no matches found, then clearly elements were NOT OVERLAPPING
-                        if (prev == null && next == null) {
-                            olPrev = false;
-                            olNext = false;
-                        } else if (prev != null && prev.getType() == Type.SIBLING) {
-                            // Check if elements overlapping in previous constraint
-                            if (!prev.getAttributes()[10]) {
-                                olPrev = false;
-                            }
-                        } else if (next != null && next.getType() == Type.SIBLING) {
-                            // Check if elements overlapping in next constraint
-                            if (!next.getAttributes()[10]) {
-                                olNext = false;
-                            }
-                        }
-
-                        // If elements were not overlapping either before or after, then report the failure
-                        if (!olPrev || !olNext) {
-                            OverlappingFailure oe = new OverlappingFailure(ac);
+                    // Now, investigate whether the two elements were NOT overlapping at either range
+                    // If no matches found, then clearly elements were NOT OVERLAPPING
+                    if (next != null && next.getType() == Type.SIBLING) {
+                        // Check if elements overlapping in next constraint
+                        if (!next.getAttributes()[10]) {
+//                            olNext = false;
+                            CollisionFailure oe = new CollisionFailure(ac);
                             errors.add(oe);
+                            collision = true;
+                        }
+                    }
+                    if (!collision) {
+                        // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
+                        HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax() + 1);
+                        HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax() + 1);
+
+                        // If node2 in ancestry of node1, it's an overflow
+                        if (n1Ancestry.contains(ac.getNode2())) {
+                            OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
+                            errors.add(ofe);
+                            // If node1 in ancestry of node2, it's an overflow
+                        } else if (n2Ancestry.contains(ac.getNode1())) {
+                            OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
+                            errors.add(ofe);
                         }
                     }
                 }
@@ -475,6 +466,7 @@ public class RLGAnalyser {
                     }
                 }
 
+
                 ArrayList<String> keys = extractRanges(values);
                 ArrayList<String> pcKeys = extractRanges(pcValues);
 
@@ -531,6 +523,7 @@ public class RLGAnalyser {
                                     ArrayList<Node> newRowCol = new ArrayList<>();
                                     newRowCol.add(ac.getNode1());
                                     newRowCol.add(ac.getNode2());
+//                                    System.out.println("Creating new row for " + ac);
 
                                     if (toggle == 1) {
                                         rows.add(newRowCol);
@@ -546,8 +539,10 @@ public class RLGAnalyser {
                                     String matchKey = setOfNodesToString(match);
                                     if (!match.contains(ac.getNode1())) {
                                         match.add(ac.getNode1());
+//                                        System.out.println(ac.getNode1().getXpath() + " added to " + matchKey + "  " + match.size());
                                     } else if (!match.contains(ac.getNode2())) {
                                         match.add(ac.getNode2());
+//                                        System.out.println(ac.getNode2().getXpath() + " added to " + matchKey + "  " + match.size());
                                     }
                                     if (toggle == 1) {
                                         ArrayList<AlignmentConstraint> cons = rowSibConstraints.get(matchKey);
@@ -576,43 +571,6 @@ public class RLGAnalyser {
                             }
                         }
 
-
-
-                        // Filter elements that are in rows and the same column. CAN HAPPEN, TRUST ME!
-//                        for (ArrayList<Node> colToFilter : columns) {
-//
-//                            ArrayList<Node> temp = (ArrayList<Node>) colToFilter.clone();
-//                            for (Node f1 : temp) {
-//                                for (Node f2 : temp) {
-//                                    if (f1 != f2) {
-//                                        if (elementsAlsoInRow(f1, f2, rows)) {
-//                                            // Need to remove from the column
-//                                            colToFilter.remove(f1);
-//                                            colToFilter.remove(f2);
-//                                            removeConstraintsFromCol(f1, f2, colSibConstraints, colToFilter);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        for (ArrayList<Node> rowToFilter : rows) {
-//
-//                            ArrayList<Node> temp = (ArrayList<Node>) rowToFilter.clone();
-//                            for (Node f1 : temp) {
-//                                for (Node f2 : temp) {
-//                                    if (f1 != f2) {
-//                                        if (elementsAlsoInRow(f1, f2, columns)) {
-//                                            // Need to remove from the column
-//                                            rowToFilter.remove(f1);
-//                                            rowToFilter.remove(f2);
-//                                            removeConstraintsFromCol(f1, f2, rowSibConstraints, rowToFilter);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-
                         // FILTER ANY OVERLAPPING ELEMENTS
 
                         for (AlignmentConstraint acOV : overlapping) {
@@ -627,52 +585,43 @@ public class RLGAnalyser {
                                     removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), rowSibConstraints, row);
                                 }
                             }
-
-
-//                            ArrayList<ArrayList<Node>> clonedCols = (ArrayList<ArrayList<Node>>) columns.clone();
-//                            for (ArrayList<Node> col : clonedCols) {
-//                                if (col.contains(acOV.getNode1()) && col.contains(acOV.getNode2())) {
-//                                    ArrayList<Node> actualColumn = columns.get(clonedCols.indexOf(col));
-//                                    actualColumn.remove(acOV.getNode1());
-//                                    actualColumn.remove(acOV.getNode2());
-//                                    removeConstraintsFromCol(acOV.getNode1(), acOV.getNode2(), colSibConstraints, col);
-//                                }
-//                            }
                         }
-
+//                        if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[2]/UL")) {
+//                            System.out.println();
+//                        }
                         totalRows.put(key, rows);
-//                        totalCols.put(key, columns);
                         totalNotInRows.put(key, nodesNotInRows);
                         totalRowCons.put(key, rowSibConstraints);
-//                        totalColCons.put(key, colSibConstraints);
-
-
-
-                        // Inspect the constraints for each row, to see if any are out of alignment
-
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
+//                if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[3]")) {
+//                    System.out.println("Boo");
+//                }
+//                System.out.println(n.getXpath());
                 for (String key: totalRows.keySet()) {
                     ArrayList<ArrayList<Node>> rows = totalRows.get(key);
-//                    ArrayList<ArrayList<Node>> cols = totalCols.get(key);
                     ArrayList<Node> not = totalNotInRows.get(key);
                     HashMap<String, ArrayList<AlignmentConstraint>> consRow = totalRowCons.get(key);
-//                    HashMap<String, ArrayList<AlignmentConstraint>> consCol = totalColCons.get(key);
                     for (Node notInRow : not) {
 
                         // Need to refine this to the entire row becoming a column!
                         if (rows.size() > 0) {
                             ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
+
                             if (nonWrappedRow != null) {
-                                if (elementVisible(notInRow, key)) {
-                                    if (elementStillWithinParent(notInRow, n, key)) {
-                                        WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
-                                        errors.add(we);
+                                ArrayList<Node> wrappedRow = getWrappedRow(rows, nonWrappedRow);
+                                if ((nonWrappedRow.size() - wrappedRow.size() == 1) || (children.size()-wrappedRow.size()==1)) {
+                                    if (elementVisible(notInRow, key)) {
+                                        //                                    System.out.println(elementStillWithinParent(notInRow, n, key));
+                                        if (elementStillWithinParent(notInRow, n, key)) {
+                                            if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
+                                                WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
+                                                errors.add(we);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -680,13 +629,43 @@ public class RLGAnalyser {
 
                         }
                     }
-//                    checkAlignments(consRow, key, true);
-//                    checkAlignments(consCol, key, false);
                 }
 
 
             }
         }
+    }
+
+    private ArrayList<Node> getWrappedRow(ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow) {
+        for (Node n : nonWrappedRow) {
+            for (ArrayList<Node> row : rows) {
+                if (row.contains(n)) {
+                    return row;
+                }
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    private boolean elementNowBelowRow(Node notInRow, ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow, HashSet<AlignmentConstraint> grouped) {
+
+        for (AlignmentConstraint ac : grouped) {
+            Node n1 = ac.getNode1();
+            Node n2 = ac.getNode2();
+
+            if ((n1.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n2))
+                    || (n2.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n1))) {
+//                if (nonWrappedRow.contains(n1) || nonWrappedRow.contains(n2)) {
+//                    System.out.println(ac);
+                    if (n1.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[1]) {
+                        return true;
+                    } else if (n2.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[2]) {
+                        return true;
+                    }
+//                }
+            }
+        }
+        return false;
     }
 
     private ArrayList<Node> inRowInNextRange(Node notInRow, HashMap<String, ArrayList<ArrayList<Node>>> rows, String key) {
@@ -1028,13 +1007,14 @@ public class RLGAnalyser {
             if (!attrs[0] && !attrs[1]) {
                 return 1;
             }
-        } else if ( (attrs[0] || attrs[1]) ) {
-            if (!attrs[2] && !attrs[3]) {
-                return 2;
-            }
         }
+//        else if ( (attrs[0] || attrs[1]) ) {
+//            if (!attrs[2] && !attrs[3]) {
+//                return 2;
+//            }
+//        }
 
-        return 0;
+        return -1;
     }
 
 
@@ -1104,7 +1084,7 @@ public class RLGAnalyser {
             return "VO";
         } else if (rle instanceof OverflowFailure) {
             return "OF";
-        } else if (rle instanceof OverlappingFailure) {
+        } else if (rle instanceof CollisionFailure) {
             return "OL";
         } else if (rle instanceof WrappingFailure) {
             return "W";
