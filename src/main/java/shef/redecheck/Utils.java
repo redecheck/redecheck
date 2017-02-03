@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -73,38 +72,47 @@ public class Utils {
         try {
             d.manage().window().setSize(new Dimension(w, 1000));
             Thread.sleep(sleep);
-            Screenshot screenshot;
+            Screenshot screenshot = null;
+            File src = null;
             if (d instanceof ChromeDriver) {
                 screenshot = new AShot().shootingStrategy(
                         new ViewportPastingStrategy(500)).takeScreenshot(d);
             } else {
                 screenshot = new AShot().takeScreenshot(d);
             }
-            String ssDir = Redecheck.redecheck + "target/";
-            String ssFile = "error"+errorID + "atWidth" + w;
-            try {
-                FileUtils.forceMkdir(new File(ssFile));
-                BufferedImage image = screenshot.getImage();
-                return image;
-//                return image;
-//                ImageIO.write(image, "PNG", new File(ssDir + ssFile + ".png"));
-//                FileUtils.copyFile(scrFile, new File(ssDir + ssFile + ".png"));
-            } catch (IOException e) {
-                System.err.println("Error saving screenshot");
-                e.printStackTrace();
-            }
-
-
-//            BufferedImage img = ImageIO.read(new File(ssDir+ssFile+".png"));
-//            FileUtils.forceDelete(new File(ssDir + ssFile + ".png"));
-//            return img;
+            BufferedImage image;
+            image= screenshot.getImage();
+            return image;
         } catch (InterruptedException ie) {
             System.out.println("INTERRUPTED");
         }
-//        } catch (IOException e) {
-//            System.out.println("Failed to read image");
-//        }
         return null;
+    }
+
+    public static File getOutputFilePath(String url, String timeStamp, int errorID) {
+        File output = null;
+        if (!url.contains("www.")) {
+            String[] splits = url.split("/");
+            String webpage = splits[0];
+            String mutant = "index-" + timeStamp;
+            //                    splits[1];
+            try {
+                output = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String[] splits = url.split("www.");
+            String webpage = splits[1];
+            String mutant = timeStamp;
+            try {
+                output = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return output;
+
     }
 
 }

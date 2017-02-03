@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGThread;
+import shef.redecheck.RLGExtractor;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -42,7 +42,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 //        if (imageMap.containsKey(captureWidth)) {
 //            img = imageMap.get(captureWidth);
 //        } else {
-            img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+            img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 ////            imageMap.put(captureWidth, img);
 //        }
 //        System.out.println(captureWidth + " " + (img == null));
@@ -81,7 +81,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
         }
 
 //        captureWidth = (prev.getMin()+prev.getMax())/2;
-//        img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+//        img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 //        lf = lfs.get(captureWidth);
 //        e1 = lf.getElementMap().get(ac.getNode1().getXpath());
 //        e2 = lf.getElementMap().get(ac.getNode2().getXpath());
@@ -110,7 +110,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 //
 //
 //        captureWidth = (next.getMin()+next.getMax())/2;
-//        img = RLGThread.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+//        img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
 //        lf = lfs.get(captureWidth);
 //        e1 = lf.getElementMap().get(ac.getNode1().getXpath());
 //        e2 = lf.getElementMap().get(ac.getNode2().getXpath());

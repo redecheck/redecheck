@@ -59,10 +59,10 @@ public class LayoutFactory {
                         int[] coords = e.getBoundingCoords();
                         if (coords != null && coords[2] >=0) {
                             Rectangle r = new Rectangle(coords[0], coords[1], coords[2], coords[3]);
-                            int[] contentCoords = getCoords(nodeData, false);
+//                            int[] contentCoords = getCoords(nodeData, false);
 //                            HashMap<String, String> styles = getStyles(nodeData);
 //                            System.out.println(contentCoords[0]);
-                            e.setContentCoords(contentCoords);
+//                            e.setContentCoords(contentCoords);
 //                            e.setStyles(styles);
                             rectangles.put(numElements, r);
                             rtree.add(r, numElements);

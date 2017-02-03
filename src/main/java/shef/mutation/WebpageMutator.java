@@ -16,6 +16,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.rits.cloning.Cloner;
 
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.redecheck.Utils;
 
 public class WebpageMutator {
@@ -36,7 +39,7 @@ public class WebpageMutator {
 	
 	// Update this to the path to your project
 	String preamble = "file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/";
-	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/fault-examples/";
+	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	// Storage for mutation candidates and other things
 	HashSet<String> usedClassesHTML, usedTagsHTML, usedIdsHTML;
 	HashSet<String> usedClassesCSS, usedTagsCSS, usedIdsCSS;
@@ -80,7 +83,14 @@ public class WebpageMutator {
         usedDeclarations = 0;
 		
 		try {
-            driver = new FirefoxDriver();
+            current = new java.io.File( "." ).getCanonicalPath();
+            DesiredCapabilities dCaps = new DesiredCapabilities();
+            dCaps.setJavascriptEnabled(true);
+            dCaps.setCapability("takesScreenshot", true);
+            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
+            String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
+            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+            driver = new PhantomJSDriver(dCaps);
 			extractCssFiles(baseURL);
 			parseHTML(baseURL);
 			loadInCss(this.baseURL);
@@ -108,7 +118,7 @@ public class WebpageMutator {
         String script = null;
         try {
         	current = new java.io.File( "." ).getCanonicalPath(); 
-            script = Utils.readFile(current + "/resources/getCssFiles.js");
+            script = Utils.readFile(current + "/../resources/getCssFiles.js");
 //            System.out.println(current + "/resources/getCssFiles.js");
             ArrayList<String> files = (ArrayList<String>) js.executeScript(script);
 //            System.out.println(files.size());
@@ -434,7 +444,7 @@ public class WebpageMutator {
     }
 
     public int getElementCount(String url) throws IOException {
-        int htmlLines = countLines((preamble + url+"/index.html").replace("file:", ""));
+        int htmlLines = countLines((url+"/index.html").replace("file:", ""));
         int cssLines = 0;
 //        for (String cssFile : cssFiles) {
 //            cssLines += countLines(preamble.replace("file:","") + shorthand + "/index/" + cssFile.replace("./",""));
@@ -513,8 +523,9 @@ public class WebpageMutator {
                 "ZeroDollarMovies"};
 //                {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
 
-		current = new java.io.File( "." ).getCanonicalPath();
-		System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+
+
+//		System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
 		for (String wp : webpages) {
             WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
 //
