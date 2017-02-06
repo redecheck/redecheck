@@ -114,12 +114,27 @@ Element collision failures occur when two elements that were not overlapping at 
 ```ELEMENTS /HTML/BODY/DIV/DIV[2]/DIV/DIV[2] AND /HTML/BODY/DIV/DIV[2]/DIV/DIV/FORM/DIV ARE OVERLAPPING BETWEEN 768 AND 1132```
 
 The two offending elements are also highlighted in a screenshot which accompanies the test report. Subdirectories named `faultXXX` where XXX is the number of the failure in the report contain the relevant screenshot. The screenshot for the above failure is shown below:
-
-Inline-style:
-![alt text](readme-images/overlapWidth950.png "Highlighted image of element collision")
+![Highlighted image of element collision](readme-images/overlapWidth950.png "Highlighted image of element collision")
 
 #### Element protrusion
+Element protrusion failures occur when a container is no longer wide enough to fit all of its contents, so elements spill out into surrounding parts of the page. A failure report for this failure type is shown below:
 
+```/HTML/BODY/DIV[3]/DIV/DIV[2] OVERFLOWED ITS PARENT BETWEEN 801 AND 805
+	/HTML/BODY/DIV[3] , /HTML/BODY/DIV[3]/DIV/DIV[2] , SIBLING , 801 , 805 ,  {aboverightAlignoverlapping}```
+
+![Highlighted image of element protrusion](readme-images/overflow803.png "Highlighted image of element protrusion")
+
+Here we see an element (blue) reported as overflowing its parent (red) between 801px and 805px.
+
+
+#### Viewport protrusion
+An extension of element protrusion, this failure type occurs when part or all of an element is pushed outside of the viewable portion of the page. They are reported as follows:
+
+```/HTML/BODY/DIV[2] overflowed the viewport window between 415 and 767```
+
+![Highlighted image of viewport protrusion](readme-images/viewportOverflow591.png "Highlighted image of viewport protrusion")
+
+Here we can clearly see the main content container (highlighted in red) overflowing the viewport window (highlighted in green), meaning everything to the right of the green vertical line will be unviewable to the user.
 
 ## Building and Execution Environment
 
