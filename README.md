@@ -111,30 +111,48 @@ As ReDeCheck is currently capable of detecting five different types of responsiv
 #### Element Collision
 Element collision failures occur when two elements that were not overlapping at wider widths begin to overlap as the viewport narrows. The two offending elements and the viewport widths at which the failure occurs are presented in the test report as follows:
 
-```ELEMENTS /HTML/BODY/DIV/DIV[2]/DIV/DIV[2] AND /HTML/BODY/DIV/DIV[2]/DIV/DIV/FORM/DIV ARE OVERLAPPING BETWEEN 768 AND 1132```
+```
+ELEMENTS /HTML/BODY/DIV/DIV[2]/DIV/DIV[2] AND /HTML/BODY/DIV/DIV[2]/DIV/DIV/FORM/DIV ARE OVERLAPPING BETWEEN 768 AND 1132
+```
 
 The two offending elements are also highlighted in a screenshot which accompanies the test report. Subdirectories named `faultXXX` where XXX is the number of the failure in the report contain the relevant screenshot. The screenshot for the above failure is shown below:
 ![Highlighted image of element collision](readme-images/overlapWidth950.png "Highlighted image of element collision")
 
-#### Element protrusion
+#### Element Protrusion
 Element protrusion failures occur when a container is no longer wide enough to fit all of its contents, so elements spill out into surrounding parts of the page. A failure report for this failure type is shown below:
 
-```/HTML/BODY/DIV[3]/DIV/DIV[2] OVERFLOWED ITS PARENT BETWEEN 801 AND 805
-	/HTML/BODY/DIV[3] , /HTML/BODY/DIV[3]/DIV/DIV[2] , SIBLING , 801 , 805 ,  {aboverightAlignoverlapping}```
+```
+/HTML/BODY/DIV[3]/DIV/DIV[2] OVERFLOWED ITS PARENT BETWEEN 801 AND 805
+/HTML/BODY/DIV[3] , /HTML/BODY/DIV[3]/DIV/DIV[2] , SIBLING , 801 , 805 ,  {aboverightAlignoverlapping}
+```
 
 ![Highlighted image of element protrusion](readme-images/overflow-Width803.png "Highlighted image of element protrusion")
 
 Here we see an element (blue) reported as overflowing its parent (red) between 801px and 805px.
 
 
-#### Viewport protrusion
+#### Viewport Protrusion
 An extension of element protrusion, this failure type occurs when part or all of an element is pushed outside of the viewable portion of the page. They are reported as follows:
 
-```/HTML/BODY/DIV[2] overflowed the viewport window between 415 and 767```
+```
+/HTML/BODY/DIV[2] overflowed the viewport window between 415 and 767
+```
 
 ![Highlighted image of viewport protrusion](readme-images/viewportOverflowWidth591.png "Highlighted image of viewport protrusion")
 
 Here we can clearly see the main content container (highlighted in red) overflowing the viewport window (highlighted in green), meaning everything to the right of the green vertical line will be unviewable to the user.
+
+#### Small-Range Layouts
+When developers make mistake in how their media queries turn on and off as the viewport resizes, weird layouts can be observed for a small number of viewport widths. An example is shown below:
+```
+SMALL RANGE ERROR:
+	THIS: /HTML/BODY/DIV , /HTML/BODY/NAV , SIBLING , 990 , 991 ,  {belowleftAlignrightAlignxMidAlignoverlapping}
+	PREV: /HTML/BODY/DIV , /HTML/BODY/NAV , SIBLING , 320 , 989 ,  {belowleftAlignrightAlignxMidAlign}
+	NEXT: /HTML/BODY/DIV , /HTML/BODY/NAV , SIBLING , 992 , 1400 ,  {belowleftAlignrightAlignxMidAlign}
+```
+![Highlighted image of small-range layout](readme-images/smallrangeWidth990.png "Highlighted image of small-range layout")
+
+Here we can see that for two viewport widths (990-991px), the header navigation links are displayed on a new line in the navbar, which in turn causes the header to overlap with the main content of the page.
 
 ## Building and Execution Environment
 
