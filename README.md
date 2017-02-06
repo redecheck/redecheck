@@ -13,18 +13,14 @@ programming language. If you wish to build the ReDeCheck tool from its source co
 Maven on your workstation. If you have already installed Maven, then please go directly to the next section. Otherwise,
 follow the installation guidelines at https://maven.apache.org/install.html.
 
-## Downloading and Installing
+## Downloading ReDeCheck
 
-1. Clone the ReDeCheck project repository using either a graphical Git client or by running the following command at the
+Clone the ReDeCheck project repository using either a graphical Git client or by running the following command at the
    prompt of your terminal window:
 
    `git clone https://github.com/redecheck/redecheck-tool.git`
 
-2. If you wish to use the provided .jar file included with ReDeCheck, then please skip to "Running ReDeCheck" section.
-
-3. Otherwise, if you want to build ReDeCheck from its source code, then follow the instructions in the next section.
-
-### Installing
+## Installing ReDeCheck
 
 As ReDeCheck has been implemented as a Maven project using the Java programming language, the easiest method of
 generating the executable tool involves importing the project into an integrated development environment (IDE) and
@@ -34,6 +30,8 @@ would prefer to build the project using the command line in an appropriate termi
 are also provided.
 
 #### Dependencies
+
+The `pom.xml` file provided in the repository will handle the vast majority of dependencies needed for ReDeCheck to install and run correctly. However, before attempting to run ReDeCheck to test your websites, please ensure your setup is complete with the following requirements:
 
 ##### Java Version
 
@@ -45,35 +43,10 @@ to install it correctly. After downloading and installing the JDK, you are also 
 1.8) as the chosen Java Development Kit for the ReDeCheck project. Please follow the instructions provided by either
 your operating system or your integrated development environments to accomplish this task.
 
-##### PhantomJS
+##### Firefox
 
-PhantomJS is a "headless web stack" that allows ReDeCheck to interact with the responsive web site subject to testing;
-to learn more about this tool, please visit http://phantomjs.org/.  ReDeCheck requires that you place a PhantomJS
-executable inside the `resources/` directory where Maven will store all of the objects that it build during the
-compilation phase.  You may have to create this folder manually through your file explorer or terminal window.
-
-ReDeCheck has been developed and tested using PhantomJS 1.9.8, which can be downloaded for all major operating systems
-from https://bitbucket.org/ariya/phantomjs/downloads. Once the archive is downloaded, decompress it using a tool
-provided by your operating system. Now, move the `phantomjs` executable &mdash; found in the `bin/` directory of your
-platform-specific directory for PhantomJS &mdash; to the `resources/` directory where ReDeCheck can access it correctly.
-
-You can test if `phantomjs` is installed correctly by using your terminal window to navigate to the `resources/`
-directory and typing `./phantomjs --version`. If this command does not output `1.9.8` or it outputs an error message,
-then you need to repair your installation of PhantomJS before continuing to install and use ReDeCheck.
-
-#### Use of X-PERT
-
-Where appropriate to avoid duplicating effort, ReDeCheck re-uses methods from the alignment graph code of the X-PERT
-tool that can automatically detect cross-browser incompatibilities. Since X-PERT is available under the MIT license from
-https://github.com/gatech/xpert, the developers of ReDeCheck have bundled X-PERT's source code in the ReDeCheck
-repository.  X-PERT's source code is contained within the `edu/` directory of the `src/` directory. ReDeCheck contains a
-class called `AlignmentGraphFactory` that operates as a "bridge" to the X-PERT classes, thus allowing ReDeCheck to
-seamlessly access them.
-
-More details about the X-PERT system are available in the following paper:
-
-- S. Roy Choudhary, M. R. Prasad, and A. Orso, “X-PERT: Accurate identification of cross-browser issues in Web
-applications,” in Proc. of the 35th ICSE, 2013
+ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the webpage under test. Currently, it relies upon version 46, which is available at
+https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest.
 
 #### Installation with Eclipse
 
@@ -98,126 +71,18 @@ applications,” in Proc. of the 35th ICSE, 2013
 1. Navigate to the root directory containing of your installation of ReDeCheck.
 2. Type the following command to build the tool: `mvn package`
 3. Maven will build the project from scratch, downloading all the required dependencies for the project automatically.
-6. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with the command line failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try one of the methods that uses an IDE.
+4. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with the command line failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try one of the methods that uses an IDE.
 
 ## Running ReDeCheck
 
-Once you have ReDeCheck correctly packaged and ready to run, then there are two points that you must understand in order
-to effectively use the tool:
+Once you have ReDeCheck correctly packaged and ready to run on your workstation, you have two options regarding the running of the tool:
 
-1. The configuration parameters and how they affect the way the tool works.
-2. The reports produced by the tool and the way in which they support the analysis of the differences between the two versions of a web page under test.
+1) Run ReDeCheck on a fully live site on the World Wide Web.
+2) Run ReDeCheck on a local web page file.
 
-### Configuration Parameters
+Examples of how to run ReDeCheck in each configuration are shown below:
 
-The remainder of this tutorial assumes that ReDeCheck is run from the `target/` directory that contains the
-`redecheck-jar-with-dependencies.jar` file. ReDeCheck is run from the command line and takes five compulsory arguments
-which control various facets of its execution. The *preamble* parameter is optional and is mainly used when testing web
-pages that are stored locally on the file system. ReDeCheck's arguments are defined and described in the following
-table:
-
-Argument | Description
--------  | ---------------
-oracle   | URL of the oracle version of the web page
-test     | URL of the test version of the web page
-step     | The step size to use during the sampling process. For example, a step size of 40 would result in the web page being sampled at 40px intervals (e.g., 400px, 440px, 480px, ...)
-start    | The viewport width at which to start sampling
-end      | The viewport width at which to finish sampling
-preamble | Preamble for navigating to the local versions of the web page in the file system
-
-An example showing the command line input is presented below:
-
-```
-java -jar redecheck-jar-with-dependencies.jar --oracle demo.com/index --test demo.com/0 --step 20 --start 400 --end 1400
-```
-
-In the previous example, the current live version of the web page under test (*demo.com/index*) is being used as the oracle
-to compare against the test version (*demo.com/0*).
-
-The remaining three parameters (i.e., step, start, and end) are used to control the generation of the layout model used
-to compare the two versions of the web page. The parameters shown in the example above would result in the initial
-sampling process examining the web pages at 40px intervals between the viewport widths of 400px and 1400px.
-
-Different combinations of values for these parameters can be used to conduct different types of testing. For instance,
-the values chosen for the previous example would support "regular strength" testing across a wide range of devices, from
-mobile phones to tablets up to laptops and desktops. However, if the tester only wishes to test the page's layout on
-mobile phones, the parameters could be set to 10, 320, and 800, respectively, performing a more thorough test on a
-smaller range of device resolutions.
-
-#### Running the Shield Example
-
-Provided with the download of ReDeCheck is directory containing an oracle version (i.e., the `index`) and twenty mutants
-(i.e., those numbered 0 to 19) of an open-source web site, currently available at http://www.blacktie.co/demo/shield/.
-As the web pages themselves are local, rather than live on the web, the *preamble* parameter is required to run the
-tool:
-
-```
-java -jar redecheck-jar-with-dependencies.jar --oracle shield.com/index --test shield.com/2 --step 40 --start 400 --end 1400 --preamble $PATH_TO_REDECHECK_DIRECTORY/testing/
-```
-
-Running the aforementioned command will allow you to see the tool in action with some different versions of a single web page
-being used as input.
-
-### Interpreting and Understanding the Reports
-
-After the tool has finished comparing the two versions of the web site, it produces a report that should display
-automatically on the screen. To get the most out of ReDeCheck, it is important to learn how to interpret these reports,
-thus making it as easy as is possible to locate and fix any detected problems.
-
-The report is split into three sections, corresponding to the three main layout features of responsive web design:
-visibility, alignment and width. In the following content, we'll present an example of each category of error, in
-addition to furnishing a guide on how to understand them:
-
-#### Visibility Errors
-
-```
-HTML/BODY/NAV/BUTTON
-
-Oracle:
-    400 -> 767
-Test:
-    400 -> 775
-```
-
-In this example, the report shows that the `button` element contained within the `nav` element is visible at a different
-range of viewport widths in the test version compared to the oracle. This could potentially have further types of
-impacts, such as changing the intended alignment of other nearby elements. As such, so it is important to check the
-visibility of this `nav` at different viewport widths.
-
-#### Alignment Errors
-
-```
-/HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG[2] -> /HTML/BODY/DIV[2]/DIV[4]/DIV/H4/IMG
- Oracle:
-    400 -> 1300     rightOf,topAlign,bottomAlign
-
- Test:
-    400 -> 440      below
-    441 -> 1300     rightOf,topAlign,bottomAlign
-```
-
-The example shows that in the oracle version of the web page the two images (i.e., `IMG` and `IMG[2]`) are always side
-by side, with the `IMG[2]` element always being to the right of `IMG`. However, in the test version, the second image
-wraps onto a different line at a small range of narrow viewport widths, which may make the overall layout of the web
-site look unprofessional and in some severe cases, difficult to use. It is therefore beneficial to both developers,
-testers, and, ultimately, the users of the web site, if this issue can be detected and fixed before the new version of
-the site goes live.
-
-#### Width Errors
-```
-/HTML/BODY/DIV[2]/DIV/DIV[6]
- Oracle:
-    400 --> 767 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
-    768 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
- Test:
-    400 --> 775 : 50.0% of /HTML/BODY/DIV[2]/DIV + 0.0
-    776 --> 940 : 0.0% of /HTML/BODY/DIV[2]/DIV + 250.0
-```
-
-The example above shows that element `DIV[6]` exhibits different width behaviour in the two different versions, in this
-particular case, from viewport widths 768px to 775px. This can cause unwanted layout issues, especially if other
-elements nearby have changed widths while `DIV[6]` has not, or vice versa. It is therefore very useful to know the exact
-behaviour each element exhibits and whether they are different in the two versions of the web page.
+#### Running on a Live Site
 
 ## Building and Execution Environment
 
