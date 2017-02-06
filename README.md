@@ -9,7 +9,7 @@ testing both efficient and effective!
 ## Installing Maven
 
 The ReDeCheck project has been implemented using Maven, a build automation tool for projects programmed in the Java
-programming language. In order to build the ReDeCheck tool from its source code, then you will first need to install
+programming language. If you wish to build the ReDeCheck tool from its source code, then you will first need to install
 Maven on your workstation. If you have already installed Maven, then please go directly to the next section. Otherwise,
 follow the installation guidelines at https://maven.apache.org/install.html.
 
@@ -19,7 +19,7 @@ Clone the ReDeCheck project repository using either a graphical Git client or by
    prompt of your terminal window:
 
    `git clone https://github.com/redecheck/redecheck-tool.git`
-   
+
 ## Installing ReDeCheck
 
 As ReDeCheck has been implemented as a Maven project using the Java programming language, the easiest method of
@@ -45,7 +45,7 @@ your operating system or your integrated development environments to accomplish 
 
 ##### Firefox
 
-ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the webpage under test. Currently, it relies upon version 46, which is available at 
+ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the webpage under test. Currently, it relies upon version 46, which is available at
 https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest.
 
 #### Installation with Eclipse
@@ -85,3 +85,21 @@ Examples of how to run ReDeCheck in each configuration are shown below:
 #### Running on a Live Site
 
 
+## Building and Execution Environment
+
+All of the previous instructions for building, installing, and using ReDeCheck have been tested on Mac OS X 10.11 "El
+Capitan" and Ubuntu Linux 15.04 "Vivid Vervet". All of the development and testing on the Mac OS X workstations was done
+with Java Standard Edition 1.7, while the same work was done with Java Standard Edition 1.8 on the Ubuntu workstation. While
+ReDeCheck is very likely to work on other Unix-based development environments, we cannot guarantee correct results for
+systems different than the ones mentioned previously. Currently, we do not provide full support for the building,
+installation, and use of ReDeCheck on Windows; forks and pull requests that provide this functionality are welcomed.
+
+## Problems or Praise?
+
+If you have any problems with building, installing, or executing ReDeCheck, then please feel free to create an issue
+associated with this Git repository using the "Issues" link at the top of this site. The contributors to the
+`redecheck-tool` the repository will do all that they can to resolve your issue and ensure that the entire tool works
+well in your development environment and for your web site. If you find that ReDeCheck works well, then we also
+encourage you to "star" and "watch" the project!
+
+Thank you for your interest in responsive web testing and the ReDeCheck tool!
