@@ -122,7 +122,7 @@ Element protrusion failures occur when a container is no longer wide enough to f
 ```/HTML/BODY/DIV[3]/DIV/DIV[2] OVERFLOWED ITS PARENT BETWEEN 801 AND 805
 	/HTML/BODY/DIV[3] , /HTML/BODY/DIV[3]/DIV/DIV[2] , SIBLING , 801 , 805 ,  {aboverightAlignoverlapping}```
 
-![Highlighted image of element protrusion](readme-images/overflow803.png "Highlighted image of element protrusion")
+![Highlighted image of element protrusion](readme-images/overflow-Width803.png "Highlighted image of element protrusion")
 
 Here we see an element (blue) reported as overflowing its parent (red) between 801px and 805px.
 
@@ -132,7 +132,7 @@ An extension of element protrusion, this failure type occurs when part or all of
 
 ```/HTML/BODY/DIV[2] overflowed the viewport window between 415 and 767```
 
-![Highlighted image of viewport protrusion](readme-images/viewportOverflow591.png "Highlighted image of viewport protrusion")
+![Highlighted image of viewport protrusion](readme-images/viewportOverflowWidth591.png "Highlighted image of viewport protrusion")
 
 Here we can clearly see the main content container (highlighted in red) overflowing the viewport window (highlighted in green), meaning everything to the right of the green vertical line will be unviewable to the user.
 
