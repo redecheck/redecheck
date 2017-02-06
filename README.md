@@ -152,7 +152,18 @@ SMALL RANGE ERROR:
 ```
 ![Highlighted image of small-range layout](readme-images/smallrangeWidth990.png "Highlighted image of small-range layout")
 
-Here we can see that for two viewport widths (990-991px), the header navigation links are displayed on a new line in the navbar, which in turn causes the header to overlap with the main content of the page.
+Here we can see that for two viewport widths (990-991px), the header navigation links are displayed on a new line in the navbar (highlighted in blue), which in turn causes the header to overlap with the main content of the page (highlighted in red).
+
+#### Wrapping elements
+The final type of failure currently detected by ReDeCheck occurs when an element is no longer wide enough to render it's contents in a single row, so one element wraps onto a new line below. Below is an example:
+```
+WRAPPING ELEMENT ERROR FOR RANGE 456 -> 514:
+	/HTML/BODY/DIV/DIV/FORM/BUTTON wrapped from row
+	[ /HTML/BODY/DIV/DIV/FORM/INPUT /HTML/BODY/DIV/DIV/FORM/LABEL /HTML/BODY/DIV/DIV/FORM/BUTTON ]
+```
+![Highlighted image of wrapping failure](readme-images/wrappingWidth485.png "Highlighted image of wrapping failure")
+
+The above example shows how as the viewport narrows, the form is not wide enough to render its three components side by side in a row, so the `BUTTON` (highlighted in red) wraps onto a new line.
 
 ## Building and Execution Environment
 
