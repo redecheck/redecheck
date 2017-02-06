@@ -83,12 +83,29 @@ Once you have ReDeCheck correctly packaged and ready to run on your workstation,
 Examples of how to run ReDeCheck in each configuration are shown below:
 
 #### Running on a Live Site
+Running ReDeCheck to test a live webpage is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command:
+```java -jar redecheck-jar-with-dependencies.jar --url http://conf.researchr.org/home/issta-2017```
+
+The above command will render the home page of the ISSTA 2017 Conference.
+
+#### Running on a Local Page
+Running ReDeCheck to test a live webpage is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command:
+```java -jar redecheck-jar-with-dependencies.jar --url Duolingo --page index.html --preamble /Users/joebloggs/websites/```
+
+To explain how the various parameters are combined into a full local file path for ReDeCheck to use, we'll work through the above example.
+
+| Parameter        | Description           |
+| ------------- |-------------- |
+| preamble      | The root directory in which all your local website files are stored |
+| url | The directory containing the web page you want to test |
+| page | The specific page you wish to test |
+
+The full file path produced in this example is `Users/joebloggs/websites/Duolingo/index.html`, so by simply changing any combination of these parameters you can test any local web page.
 
 
 ## Building and Execution Environment
 
-All of the previous instructions for building, installing, and using ReDeCheck have been tested on Mac OS X 10.11 "El
-Capitan" and Ubuntu Linux 15.04 "Vivid Vervet". All of the development and testing on the Mac OS X workstations was done
+All of the previous instructions for building, installing, and using ReDeCheck have been tested on MacOS 10.12 "Sierra" and Ubuntu Linux 15.04 "Vivid Vervet". All of the development and testing on the Mac OS X workstations was done
 with Java Standard Edition 1.7, while the same work was done with Java Standard Edition 1.8 on the Ubuntu workstation. While
 ReDeCheck is very likely to work on other Unix-based development environments, we cannot guarantee correct results for
 systems different than the ones mentioned previously. Currently, we do not provide full support for the building,
