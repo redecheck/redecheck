@@ -88,23 +88,27 @@ Running ReDeCheck to test a live webpage is simple. Simply navigate into the `ta
 
 The above command will render the home page of the ISSTA 2017 Conference.
 
+##### The ReDeCheck RLF repository
+To aid with any potential replication of our experimental results, we have made the entire collection of 26 web pages used in our experimental study available [here](https://github.com/redecheck/redecheck-rlf-examples). To run ReDeCheck on any of the provided web pages, follow the intructions below entitled "Running on a Local Page".
+
 #### Running on a Local Page
-Running ReDeCheck to test a live webpage is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command:
-```java -jar redecheck-jar-with-dependencies.jar --url Duolingo --page index.html --preamble /Users/joebloggs/websites/```
+
+Running ReDeCheck to test a local web page is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command, which runs the Duolingo example from a local clone of the webpage repository:
+```java -jar redecheck-jar-with-dependencies.jar --url Duolingo --page index.html --preamble /Users/joebloggs/redecheck-rlf-examples/```
 
 To explain how the various parameters are combined into a full local file path for ReDeCheck to use, we'll work through the above example.
 
 | Parameter        | Description           |
 | ------------- |-------------- |
-| preamble      | The root directory in which all your local website files are stored |
-| url | The directory containing the web page you want to test |
-| page | The specific page you wish to test |
+| --preamble      | The root directory in which all your local website files are stored |
+| --url | The directory containing the web page you want to test |
+| --page | The specific page you wish to test |
 
-The full file path produced in this example is `Users/joebloggs/websites/Duolingo/index.html`, so by simply changing any combination of these parameters you can test any local web page.
+The full file path produced in this example is `Users/joebloggs/redecheck-rlf-examples/Duolingo/index.html`, so by simply changing any combination of these parameters you can test any local web page.
 
 ## Understanding ReDeCheck's Reports
 
-After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
+After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots, which will be saved in the `reports` directory of your ReDeCheck installation, with each report marked with a timestamp. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
 
 As ReDeCheck is currently capable of detecting five different types of responsive layout failure, we'll present an example of each so you know what to expect when going through your own test reports.
 
@@ -177,7 +181,7 @@ installation, and use of ReDeCheck on Windows; forks and pull requests that prov
 
 If you have any problems with building, installing, or executing ReDeCheck, then please feel free to create an issue
 associated with this Git repository using the "Issues" link at the top of this site. The contributors to the
-`redecheck-tool` the repository will do all that they can to resolve your issue and ensure that the entire tool works
+`redecheck-tool` repository will do all that they can to resolve your issue and ensure that the entire tool works
 well in your development environment and for your web site. If you find that ReDeCheck works well, then we also
 encourage you to "star" and "watch" the project!
 
