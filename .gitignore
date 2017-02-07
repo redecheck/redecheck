@@ -11,3 +11,5 @@
 /src/main/java/edu2/
 /.settings/
 /.idea/
+.classpath
+time-processing/.Rproj.user/

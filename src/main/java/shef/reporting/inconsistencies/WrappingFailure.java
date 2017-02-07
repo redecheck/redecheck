@@ -44,7 +44,7 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
     }
 
     @Override
-    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullurl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
+    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullurl, String timeStamp) {
         try {
             int captureWidth = (min + max) / 2;
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();

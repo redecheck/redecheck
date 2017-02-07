@@ -34,7 +34,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 
 
     @Override
-    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
+    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
         int captureWidth = (ac.getMin()+ac.getMax())/2;
         HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
