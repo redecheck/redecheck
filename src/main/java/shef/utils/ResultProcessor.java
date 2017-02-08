@@ -993,12 +993,12 @@ public class ResultProcessor {
 
 			String[] classifications = getClassifications(mostRecentRun, totalReports);
 			String[] categories = getCategories(mostRecentRun, totalReports);
-//			String[] reasons = getReasons(mostRecentRun, totalReports);
+			String[] reasons = getReasons(mostRecentRun, totalReports);
 			for (int i = 1; i <= totalReports; i++) {
 				File ssFile = new File(mostRecentRun + "/fault" + i);
 				String imageName = ssFile.listFiles()[0].getName();
 				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + "" + " |\n";
+						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1036,11 +1036,11 @@ public class ResultProcessor {
 			int counter = 0;
 			while (line != null) {
 				if (line.equals("VO")) {
-					results[counter] = "Viewport Overflow";
+					results[counter] = "Viewport Protrusion";
 				} else if (line.equals("OF")) {
-					results[counter] = "Element Overflow";
+					results[counter] = "Element Protrusion";
 				} else if (line.equals("OL")) {
-					results[counter] = "Overlap";
+					results[counter] = "Element Collision";
 				} else if (line.equals("W")) {
 					results[counter] = "Wrapping";
 				} else if (line.equals("SR")) {
