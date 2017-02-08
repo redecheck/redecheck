@@ -41,6 +41,10 @@ public class RLGAnalyser {
         this.vmax = vmax;
     }
 
+    /**
+     * Analyses the RLG to identify responsive layout failures
+     * @return
+     */
     public ArrayList<ResponsiveLayoutFailure> analyse() {
         errors = new ArrayList<>();
 
@@ -61,6 +65,7 @@ public class RLGAnalyser {
 
         ArrayList<ResponsiveLayoutFailure> cloned1 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
 
+        // Check to see if any of the element collisions are simply due to rounding errors
         for (ResponsiveLayoutFailure rle : cloned1) {
             if (rle instanceof CollisionFailure) {
                 AlignmentConstraint ac = ((CollisionFailure) rle).getConstraint();
@@ -84,12 +89,14 @@ public class RLGAnalyser {
         }
 
         ArrayList<ResponsiveLayoutFailure> cloned2 = (ArrayList<ResponsiveLayoutFailure>) errors.clone();
-        for (ResponsiveLayoutFailure rle : cloned2) {
-            if (rle instanceof OverflowFailure) {
 
-                AlignmentConstraint ac = ((OverflowFailure) rle).getOfCon();
-//                AlignmentConstraint m = ((OverflowFailure) rle).getMatch();
-                Node overflowed = ((OverflowFailure) rle).getOverflowed();
+        // Check to see if any of the element protrusion failures are due to rounding issues
+        for (ResponsiveLayoutFailure rle : cloned2) {
+            if (rle instanceof ElementProtrusionFailure) {
+
+                AlignmentConstraint ac = ((ElementProtrusionFailure) rle).getOfCon();
+//                AlignmentConstraint m = ((ElementProtrusionFailure) rle).getMatch();
+                Node overflowed = ((ElementProtrusionFailure) rle).getOverflowed();
                 Node parent = null;
                 if (ac.getNode1() == overflowed) {
                     parent = ac.getNode2();
@@ -110,13 +117,8 @@ public class RLGAnalyser {
                 int diffT = ip.getBoundingCoords()[1]-e.getBoundingCoords()[1];
 
                 if (diffR == 1 || diffB == 1 || diffL == 1 || diffT == 1) {
-//                    System.out.println("One pixel overflow");
                     errors.remove(rle);
                 }
-//                else if (parentAlsoOverflowed(((OverflowFailure) rle).getOverflowed(), cloned2)) {
-////                    System.out.println("REMOVING " + rle+ " BECAUSE OF PARENT OVERFLOW");
-//                    errors.remove(rle);
-//                }
             }
         }
     }
@@ -141,16 +143,9 @@ public class RLGAnalyser {
                     conBounds.put(pc.getMin(), pc.getMax());
                 }
 
-
-                if (pCons.size() == 0) {
-                    /* If no constraints found, it is assumed the node is ALWAYS overflowing the viewport, so reports an
-                    error as such
-                     */
-//                    int repMin = n.getVisibilityConstraints().get(0).appear;
-//                    int repMax = n.getVisibilityConstraints().get(0).disappear;
-//                    ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
-//                    errors.add(voe);
-                } else {
+                // Checks that at least one parent constraint exists, as if not the element is always outside the viewport and therefore
+                // not reported as a failure
+                if (pCons.size() > 0) {
                     // Initialises the min value of the gap
                     int gmin = vmin;
                     for (Map.Entry e : conBounds.entrySet()) {
@@ -165,7 +160,7 @@ public class RLGAnalyser {
                                 // If so, create a viewport overflow failure for the range at which n is visible
                                 int repMin = getNumberFromKey(key, 0);
                                 int repMax = getNumberFromKey(key, 1);
-                                ViewportOverflowFailure voe = new ViewportOverflowFailure(n, repMin, repMax);
+                                ViewportProtrusionFailure voe = new ViewportProtrusionFailure(n, repMin, repMax);
                                 errors.add(voe);
                             }
                         }
@@ -177,7 +172,7 @@ public class RLGAnalyser {
                         If not, report a viewport overflow failure.
                      */
                     if (gmin < vmax && !isVisible(n, gmin, vmax).equals("")) {
-                        ViewportOverflowFailure voe = new ViewportOverflowFailure(n, gmin, vmax);
+                        ViewportProtrusionFailure voe = new ViewportProtrusionFailure(n, gmin, vmax);
                         errors.add(voe);
                     }
                 }
@@ -225,38 +220,35 @@ public class RLGAnalyser {
         for (AlignmentConstraint ac : alignmentConstraints.values()) {
             // We only need to look at the sibling ones
             if (ac.getType() == Type.SIBLING) {
+
                 // Only continue analysis if the "overlapping" attribute label is true
                 if (ac.getAttributes()[10]) {
-//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV")) {
-//                        System.out.println(ac);
-//                    }
                     boolean collision = false;
                     AlignmentConstraint next = getPreviousOrNextConstraint(ac, false, false);
-//                    boolean olPrev=true,olNext=true;
 
-                    // Now, investigate whether the two elements were NOT overlapping at either range
-                    // If no matches found, then clearly elements were NOT OVERLAPPING
+                    // Now, investigate whether the two elements were NOT overlapping at the wider range
                     if (next != null && next.getType() == Type.SIBLING) {
                         // Check if elements overlapping in next constraint
                         if (!next.getAttributes()[10]) {
-//                            olNext = false;
+                            // If they weren't then report a collision failure
                             CollisionFailure oe = new CollisionFailure(ac);
                             errors.add(oe);
                             collision = true;
                         }
                     }
+
+                    // Only continue checking if the current constraint was not identified as a collision failure
                     if (!collision) {
                         // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
                         HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax() + 1);
                         HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax() + 1);
 
-                        // If node2 in ancestry of node1, it's an overflow
+                        // If node2 in ancestry of node1 or vice verse, it's an overflow
                         if (n1Ancestry.contains(ac.getNode2())) {
-                            OverflowFailure ofe = new OverflowFailure(ac.getNode1(), ac);
+                            ElementProtrusionFailure ofe = new ElementProtrusionFailure(ac.getNode1(), ac);
                             errors.add(ofe);
-                            // If node1 in ancestry of node2, it's an overflow
                         } else if (n2Ancestry.contains(ac.getNode1())) {
-                            OverflowFailure ofe = new OverflowFailure(ac.getNode2(), ac);
+                            ElementProtrusionFailure ofe = new ElementProtrusionFailure(ac.getNode2(), ac);
                             errors.add(ofe);
                         }
                     }
@@ -307,41 +299,41 @@ public class RLGAnalyser {
     }
 
 
-    private ArrayList<AlignmentConstraint> getParentChildConstraints(Node node1, Node node2) {
-        ArrayList<AlignmentConstraint> toReturn = new ArrayList<>();
-        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
-            if (ac.getType() == Type.PARENT_CHILD) {
-                if (ac.getNode1() == node1 && ac.getNode2() == node2) {
-                    toReturn.add(ac);
-                } else if (ac.getNode1() == node2 && ac.getNode2() == node1) {
-                    toReturn.add(ac);
-                }
-            }
-        }
-        return toReturn;
-    }
-
-
-    private boolean checkForRelatedOverflowErrors(AlignmentConstraint ac) {
-        Node ac1 = ac.getNode1();
-        Node ac2 = ac.getNode2();
-
-        for (ResponsiveLayoutFailure e : errors) {
-            if (e instanceof OverflowFailure) {
-                Node overflowed = ((OverflowFailure) e).getOverflowed();
-
-//                for (Node intended : ((OverflowFailure) e).getMap().keySet()) {
-                    if ((ac1.getXpath().equals(overflowed.getXpath()) || ac2.getXpath().equals(overflowed.getXpath()))) {
-//                        System.out.println("Wanted to remove " + ac + " because of " + overflowed.getXpath());
-//                        System.out.println(overflowed.getXpath());
-//                        System.out.println();
-                        return true;
-                    }
+//    private ArrayList<AlignmentConstraint> getParentChildConstraints(Node node1, Node node2) {
+//        ArrayList<AlignmentConstraint> toReturn = new ArrayList<>();
+//        for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
+//            if (ac.getType() == Type.PARENT_CHILD) {
+//                if (ac.getNode1() == node1 && ac.getNode2() == node2) {
+//                    toReturn.add(ac);
+//                } else if (ac.getNode1() == node2 && ac.getNode2() == node1) {
+//                    toReturn.add(ac);
 //                }
-            }
-        }
-        return false;
-    }
+//            }
+//        }
+//        return toReturn;
+//    }
+
+
+//    private boolean checkForRelatedOverflowErrors(AlignmentConstraint ac) {
+//        Node ac1 = ac.getNode1();
+//        Node ac2 = ac.getNode2();
+//
+//        for (ResponsiveLayoutFailure e : errors) {
+//            if (e instanceof ElementProtrusionFailure) {
+//                Node overflowed = ((ElementProtrusionFailure) e).getOverflowed();
+//
+////                for (Node intended : ((ElementProtrusionFailure) e).getMap().keySet()) {
+//                    if ((ac1.getXpath().equals(overflowed.getXpath()) || ac2.getXpath().equals(overflowed.getXpath()))) {
+////                        System.out.println("Wanted to remove " + ac + " because of " + overflowed.getXpath());
+////                        System.out.println(overflowed.getXpath());
+////                        System.out.println();
+//                        return true;
+//                    }
+////                }
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * This method analyses the constraints to see if any represent potential small-range layout inconsistencies
@@ -426,36 +418,48 @@ public class RLGAnalyser {
         return (min+max)/2;
     }
 
-    private boolean parentAlsoOverflowed(Node overflowed, ArrayList<ResponsiveLayoutFailure> cloned) {
-        String overflowedXP = overflowed.getXpath();
+//    private boolean parentAlsoOverflowed(Node overflowed, ArrayList<ResponsiveLayoutFailure> cloned) {
+//        String overflowedXP = overflowed.getXpath();
+//
+//        for (ResponsiveLayoutFailure e : cloned) {
+//            if (e instanceof ElementProtrusionFailure) {
+//                String comparisonXP = ((ElementProtrusionFailure) e).getOverflowed().getXpath();
+//                if (overflowedXP.contains(comparisonXP) && !overflowedXP.equals(comparisonXP)) {
+////                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
+//                    return true;
+//                }
+//            } else if (e instanceof ViewportProtrusionFailure) {
+//                String comparisonXP = ((ViewportProtrusionFailure) e).getNode().getXpath();
+//                if (overflowedXP.contains(comparisonXP) || overflowedXP.equals(comparisonXP)) {
+////                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-        for (ResponsiveLayoutFailure e : cloned) {
-            if (e instanceof OverflowFailure) {
-                String comparisonXP = ((OverflowFailure) e).getOverflowed().getXpath();
-                if (overflowedXP.contains(comparisonXP) && !overflowedXP.equals(comparisonXP)) {
-//                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
-                    return true;
-                }
-            } else if (e instanceof ViewportOverflowFailure) {
-                String comparisonXP = ((ViewportOverflowFailure) e).getNode().getXpath();
-                if (overflowedXP.contains(comparisonXP) || overflowedXP.equals(comparisonXP)) {
-//                    System.out.println("Matched " + overflowedXP + " to " + comparisonXP);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
+    /**
+     * Checks each node in turn and looks whether any of its children elements wrap incongruously at any point
+     */
     private void checkForWrappingElements() {
+        // Iterate through each node in the RLG
         for (Node n : rlg.getNodes().values()) {
+
+            // Get the children of the node
             ArrayList<Node> children = getChildrenOfNode(n);
+
+            // Continure if more than one child element
             if (children.size() > 1) {
                 TreeSet<Integer> values = new TreeSet<>();
                 TreeSet<Integer> pcValues = new TreeSet<>();
                 ArrayList<AlignmentConstraint> sibs = new ArrayList<>();
+
+                // Iterate through all alignment constraints
                 for (AlignmentConstraint ac : rlg.getAlignmentConstraints().values()) {
                     if (ac.getType() == Type.SIBLING) {
+
+                        // If its a sibling containing two of n's children, add to the set
                         if ((children.contains(ac.getNode1())) && (children.contains(ac.getNode2()))) {
                             if (childrenWithinParent(ac, n)) {
                                 sibs.add(ac);
@@ -466,36 +470,27 @@ public class RLGAnalyser {
                     }
                 }
 
-
+                // Extract the different behaviour ranges from the set of upper and lower bounds
                 ArrayList<String> keys = extractRanges(values);
-                ArrayList<String> pcKeys = extractRanges(pcValues);
 
                 // Match based on bounds
                 HashMap<String, HashSet<AlignmentConstraint>> grouped = new HashMap<>();
                 for (String k : keys) {
-                    grouped.put(k, new HashSet<AlignmentConstraint>());
-                }
-                HashMap<String, ArrayList<AlignmentConstraint>> pcGrouped = new HashMap<>();
-                for (String pck : pcKeys) {
-                    pcGrouped.put(pck, new ArrayList<AlignmentConstraint>());
+                    grouped.put(k, new HashSet<>());
                 }
 
-                // Group both the sibling and parent-child constraints
+                // Group the sibling constraints
                 for (AlignmentConstraint ac : sibs) {
                     putConstraintIntoGroups(grouped, ac);
                 }
 
                 HashMap<String, ArrayList<ArrayList<Node>>> totalRows = new HashMap<>();
-//                HashMap<String, ArrayList<ArrayList<Node>>> totalCols = new HashMap<>();
                 HashMap<String, ArrayList<Node>> totalNotInRows = new HashMap<>();
                 HashMap<String, HashMap<String, ArrayList<AlignmentConstraint>>> totalRowCons = new HashMap<>();
-//                HashMap<String, HashMap<String, ArrayList<AlignmentConstraint>>> totalColCons = new HashMap<>();
                 HashMap<String, HashSet<Node>> nodesInParentMap = new HashMap<>();
 
-
-
+                // Iterate through each layout range
                 for (String key : grouped.keySet()) {
-//                    System.out.println(key);
                     nodesInParentMap.put(key, new HashSet<Node>());
                     try {
                         // Try and put elements into rows
@@ -503,57 +498,47 @@ public class RLGAnalyser {
                         ArrayList<ArrayList<Node>> columns = new ArrayList<>();
                         HashMap<String, ArrayList<AlignmentConstraint>> rowSibConstraints = new HashMap<>();
                         HashMap<String, ArrayList<AlignmentConstraint>> rowPCConstraints = new HashMap<>();
-
-//                        HashMap<String, ArrayList<AlignmentConstraint>> colSibConstraints = new HashMap<>();
-//                        HashMap<String, ArrayList<AlignmentConstraint>> colPCConstraints = new HashMap<>();
                         ArrayList<Node> nodesNotInRows = (ArrayList<Node>) children.clone();
-//                        ArrayList<Node> nodesNotInColumns = (ArrayList<Node>) children.clone();
                         HashSet<AlignmentConstraint> fullSet = grouped.get(key);
                         HashSet<AlignmentConstraint> overlapping = new HashSet<>();
 
+                        // Iterate through each constraint true at the current width
                         for (AlignmentConstraint ac : fullSet) {
                             nodesInParentMap.get(key).add(ac.getNode1());
                             nodesInParentMap.get(key).add(ac.getNode2());
+
+                            // Check whether the two elements are aligned in a row
                             int toggle = alignedInRowOrColumn(ac);
 
+                            // If they are in a row
                             if (toggle != 0) {
+
+                                // See if the constraint matches an existing row
                                 ArrayList<Node> match = matchingExistingPattern(ac, rows, columns, toggle, fullSet);
                                 if (match == null) {
-                                    // Create a new row with both elements in it.
+                                    // If no match, create a new row with both elements in it.
                                     ArrayList<Node> newRowCol = new ArrayList<>();
                                     newRowCol.add(ac.getNode1());
                                     newRowCol.add(ac.getNode2());
-//                                    System.out.println("Creating new row for " + ac);
 
                                     if (toggle == 1) {
                                         rows.add(newRowCol);
                                         rowSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
                                         rowSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
-                                    } else {
-//                                        columns.add(newRowCol);
-//                                        colSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
-//                                        colSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
                                     }
                                 } else {
-                                    // Add the remaining element to the row
+                                    // If a match is found, add the elements to the row
                                     String matchKey = setOfNodesToString(match);
                                     if (!match.contains(ac.getNode1())) {
                                         match.add(ac.getNode1());
-//                                        System.out.println(ac.getNode1().getXpath() + " added to " + matchKey + "  " + match.size());
                                     } else if (!match.contains(ac.getNode2())) {
                                         match.add(ac.getNode2());
-//                                        System.out.println(ac.getNode2().getXpath() + " added to " + matchKey + "  " + match.size());
                                     }
                                     if (toggle == 1) {
                                         ArrayList<AlignmentConstraint> cons = rowSibConstraints.get(matchKey);
                                         rowSibConstraints.remove(matchKey);
                                         rowSibConstraints.put(setOfNodesToString(match), cons);
                                         rowSibConstraints.get(setOfNodesToString(match)).add(ac);
-                                    } else {
-//                                        ArrayList<AlignmentConstraint> cons = colSibConstraints.get(matchKey);
-//                                        colSibConstraints.remove(matchKey);
-//                                        colSibConstraints.put(setOfNodesToString(match), cons);
-//                                        colSibConstraints.get(setOfNodesToString(match)).add(ac);
                                     }
                                 }
 
@@ -561,9 +546,6 @@ public class RLGAnalyser {
                                 if (toggle == 1) {
                                     nodesNotInRows.remove(ac.getNode1());
                                     nodesNotInRows.remove(ac.getNode2());
-                                } else {
-//                                    nodesNotInColumns.remove(ac.getNode1());
-//                                    nodesNotInColumns.remove(ac.getNode2());
                                 }
 
                             } else if (toggle == 0) {
@@ -572,7 +554,6 @@ public class RLGAnalyser {
                         }
 
                         // FILTER ANY OVERLAPPING ELEMENTS
-
                         for (AlignmentConstraint acOV : overlapping) {
 
                             // See if the elements were in a row or column
@@ -586,9 +567,6 @@ public class RLGAnalyser {
                                 }
                             }
                         }
-//                        if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[2]/UL")) {
-//                            System.out.println();
-//                        }
                         totalRows.put(key, rows);
                         totalNotInRows.put(key, nodesNotInRows);
                         totalRowCons.put(key, rowSibConstraints);
@@ -597,27 +575,34 @@ public class RLGAnalyser {
                         e.printStackTrace();
                     }
                 }
-//                if (n.getXpath().equals("/HTML/BODY/DIV[5]/FOOTER/DIV[3]")) {
-//                    System.out.println("Boo");
-//                }
-//                System.out.println(n.getXpath());
+
+                // Iterate again through the set of ranges where rows have been found
                 for (String key: totalRows.keySet()) {
+                    // Get the rows for that range
                     ArrayList<ArrayList<Node>> rows = totalRows.get(key);
+
+                    // Get the nodes NOT in rows
                     ArrayList<Node> not = totalNotInRows.get(key);
-                    HashMap<String, ArrayList<AlignmentConstraint>> consRow = totalRowCons.get(key);
+
+                    // Iterate through each element NOT in a row
                     for (Node notInRow : not) {
 
-                        // Need to refine this to the entire row becoming a column!
+                        // Check a row exists, because you can't have a wrap without a row
                         if (rows.size() > 0) {
+
+                            // Check to see if a matching row is found at the wider viewport range
                             ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
 
+                            // If a matching row found
                             if (nonWrappedRow != null) {
                                 ArrayList<Node> wrappedRow = getWrappedRow(rows, nonWrappedRow);
                                 if ((nonWrappedRow.size() - wrappedRow.size() == 1) || (children.size()-wrappedRow.size()==1)) {
                                     if (elementVisible(notInRow, key)) {
-                                        //                                    System.out.println(elementStillWithinParent(notInRow, n, key));
                                         if (elementStillWithinParent(notInRow, n, key)) {
+
+                                            // Check the element is now below the rest of the row
                                             if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
+                                                // If so, report the wrapping failure
                                                 WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
                                                 errors.add(we);
                                             }
@@ -625,8 +610,6 @@ public class RLGAnalyser {
                                     }
                                 }
                             }
-                        } else {
-
                         }
                     }
                 }
@@ -655,8 +638,6 @@ public class RLGAnalyser {
 
             if ((n1.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n2))
                     || (n2.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n1))) {
-//                if (nonWrappedRow.contains(n1) || nonWrappedRow.contains(n2)) {
-//                    System.out.println(ac);
                     if (n1.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[1]) {
                         return true;
                     } else if (n2.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[2]) {
@@ -687,15 +668,15 @@ public class RLGAnalyser {
         return null;
     }
 
-    private boolean inColumnInstead(ArrayList<ArrayList<Node>> cols, Node notInRow) {
-        for (ArrayList<Node> col : cols) {
-            if (col.contains(notInRow)) {
-//                System.out.println(notInRow.getXpath() + " was in a column instead");
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean inColumnInstead(ArrayList<ArrayList<Node>> cols, Node notInRow) {
+//        for (ArrayList<Node> col : cols) {
+//            if (col.contains(notInRow)) {
+////                System.out.println(notInRow.getXpath() + " was in a column instead");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     private boolean elementStillWithinParent(Node wrapped, Node n, String key) {
         int kMin = getNumberFromKey(key, 0);
@@ -735,23 +716,19 @@ public class RLGAnalyser {
         }
     }
 
-    private boolean elementsAlsoInRow(Node f1, Node f2, ArrayList<ArrayList<Node>> rows) {
-        for (ArrayList<Node> row : rows) {
-            if (row.contains(f1) && (row.contains(f2))) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean elementsAlsoInRow(Node f1, Node f2, ArrayList<ArrayList<Node>> rows) {
+//        for (ArrayList<Node> row : rows) {
+//            if (row.contains(f1) && (row.contains(f2))) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     private boolean childrenWithinParent(AlignmentConstraint ac, Node n) {
         Node n1 = ac.getNode1();
         Node n2 = ac.getNode2();
-//        if (n.getXpath().equals("/HTML/BODY/DIV/FOOTER")) {
-//            System.out.println("Debug");
-//        }
-//        ArrayList<AlignmentConstraint> n1cons = n1.getParentConstraints();
-//        ArrayList<AlignmentConstraint> n2cons = n2.getParentConstraints();
+
         for (Node node : new Node[] {n1, n2}) {
             ArrayList<AlignmentConstraint> cons = node.getParentConstraints();
             if (sameParent(cons)) {
@@ -760,11 +737,7 @@ public class RLGAnalyser {
                 for (AlignmentConstraint con : cons) {
                     if ((con.getMin() <= ac.getMin()) && (con.getMax() >= ac.getMax())) {
                         if (con.getNode1().getXpath().equals(n.getXpath())) {
-//                        System.out.println(ac);
                             return true;
-                        } else {
-//                        System.out.println(ac);
-//                        System.out.println(n + "\n\n");
                         }
                     }
                 }
@@ -796,75 +769,75 @@ public class RLGAnalyser {
         }
     }
 
-    private void checkAlignments(HashMap<String, ArrayList<AlignmentConstraint>> rowColConstraints, String key, boolean isRow) {
-        for (String nodes : rowColConstraints.keySet()) {
-            ArrayList<AlignmentConstraint> constraints = rowColConstraints.get(nodes);
-            ArrayList<AlignmentConstraint> aligned1 = new ArrayList<>();
-            ArrayList<AlignmentConstraint> aligned2 = new ArrayList<>();
-            ArrayList<AlignmentConstraint> aligned3 = new ArrayList<>();
-
-            HashSet<Node> alNodes1 = new HashSet<>();
-            HashSet<Node> alNodes2 = new HashSet<>();
-            HashSet<Node> alNodes3 = new HashSet<>();
-            HashSet<Node> totalNodes = new HashSet<>();
-
-            for (AlignmentConstraint ac : constraints) {
-
-                boolean[] attkey = ac.generateAlignmentsOnly();
-                boolean att1, att2, att3;
-                if (isRow) {
-                    att1 = attkey[0];
-                    att2 = attkey[1];
-                    att3 = attkey[2];
-                } else {
-                    att1 = attkey[3];
-                    att2 = attkey[4];
-                    att3 = attkey[5];
-                }
-                totalNodes.add(ac.getNode1());
-                totalNodes.add(ac.getNode2());
-
-                if (att1) {
-                    aligned1.add(ac);
-                    alNodes1.add(ac.getNode1());
-                    alNodes1.add(ac.getNode2());
-                }
-                if (att2) {
-                    aligned2.add(ac);
-                    alNodes2.add(ac.getNode1());
-                    alNodes2.add(ac.getNode2());
-                }
-                if (att3) {
-                    aligned3.add(ac);
-                    alNodes3.add(ac.getNode1());
-                    alNodes3.add(ac.getNode2());
-                }
-            }
-
-            int sum = (totalNodes.size()-1)*(totalNodes.size())/2;
-            if (constraints.size() > 1 && constraints.size() == sum) {
-                // Check if not all nodes were aligned, and if enough were to consider it a pattern
-                HashSet<Node> notAligned = (HashSet<Node>) totalNodes.clone();
-                if ((alNodes1.size() < totalNodes.size()) && (alNodes1.size() >= 2)) {
-                    for (Node n : alNodes1) {
-                        notAligned.remove(n);
-                    }
-                    if (alNodes1.size() > notAligned.size() && alNodes3.size() < totalNodes.size()) {
-                        MisalignedFailure me = new MisalignedFailure(alNodes1, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
-                        errors.add(me);
-                    }
-                } else if ((alNodes2.size() < totalNodes.size()) && (alNodes2.size() >= 2)) {
-                    for (Node n : alNodes2) {
-                        notAligned.remove(n);
-                    }
-                    if (alNodes2.size() > notAligned.size() && alNodes3.size() < totalNodes.size() && alNodes1.size() < totalNodes.size()) {
-                        MisalignedFailure me = new MisalignedFailure(alNodes2, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
-                        errors.add(me);
-                    }
-                }
-            }
-        }
-    }
+//    private void checkAlignments(HashMap<String, ArrayList<AlignmentConstraint>> rowColConstraints, String key, boolean isRow) {
+//        for (String nodes : rowColConstraints.keySet()) {
+//            ArrayList<AlignmentConstraint> constraints = rowColConstraints.get(nodes);
+//            ArrayList<AlignmentConstraint> aligned1 = new ArrayList<>();
+//            ArrayList<AlignmentConstraint> aligned2 = new ArrayList<>();
+//            ArrayList<AlignmentConstraint> aligned3 = new ArrayList<>();
+//
+//            HashSet<Node> alNodes1 = new HashSet<>();
+//            HashSet<Node> alNodes2 = new HashSet<>();
+//            HashSet<Node> alNodes3 = new HashSet<>();
+//            HashSet<Node> totalNodes = new HashSet<>();
+//
+//            for (AlignmentConstraint ac : constraints) {
+//
+//                boolean[] attkey = ac.generateAlignmentsOnly();
+//                boolean att1, att2, att3;
+//                if (isRow) {
+//                    att1 = attkey[0];
+//                    att2 = attkey[1];
+//                    att3 = attkey[2];
+//                } else {
+//                    att1 = attkey[3];
+//                    att2 = attkey[4];
+//                    att3 = attkey[5];
+//                }
+//                totalNodes.add(ac.getNode1());
+//                totalNodes.add(ac.getNode2());
+//
+//                if (att1) {
+//                    aligned1.add(ac);
+//                    alNodes1.add(ac.getNode1());
+//                    alNodes1.add(ac.getNode2());
+//                }
+//                if (att2) {
+//                    aligned2.add(ac);
+//                    alNodes2.add(ac.getNode1());
+//                    alNodes2.add(ac.getNode2());
+//                }
+//                if (att3) {
+//                    aligned3.add(ac);
+//                    alNodes3.add(ac.getNode1());
+//                    alNodes3.add(ac.getNode2());
+//                }
+//            }
+//
+//            int sum = (totalNodes.size()-1)*(totalNodes.size())/2;
+//            if (constraints.size() > 1 && constraints.size() == sum) {
+//                // Check if not all nodes were aligned, and if enough were to consider it a pattern
+//                HashSet<Node> notAligned = (HashSet<Node>) totalNodes.clone();
+//                if ((alNodes1.size() < totalNodes.size()) && (alNodes1.size() >= 2)) {
+//                    for (Node n : alNodes1) {
+//                        notAligned.remove(n);
+//                    }
+//                    if (alNodes1.size() > notAligned.size() && alNodes3.size() < totalNodes.size()) {
+//                        MisalignedFailure me = new MisalignedFailure(alNodes1, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
+//                        errors.add(me);
+//                    }
+//                } else if ((alNodes2.size() < totalNodes.size()) && (alNodes2.size() >= 2)) {
+//                    for (Node n : alNodes2) {
+//                        notAligned.remove(n);
+//                    }
+//                    if (alNodes2.size() > notAligned.size() && alNodes3.size() < totalNodes.size() && alNodes1.size() < totalNodes.size()) {
+//                        MisalignedFailure me = new MisalignedFailure(alNodes2, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
+//                        errors.add(me);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     private String setOfNodesToString(ArrayList<Node> nodes) {
@@ -906,28 +879,28 @@ public class RLGAnalyser {
         return keys;
     }
 
-    private ArrayList<AlignmentConstraint> addInAdditionalConstraints(String key, HashMap<String, ArrayList<AlignmentConstraint>> grouped) {
-        ArrayList<AlignmentConstraint> original = grouped.get(key);
-        if (original != null) {
-            ArrayList<AlignmentConstraint> fullSet = (ArrayList<AlignmentConstraint>) original.clone();
-            int minO = getNumberFromKey(key, 0);
-            int maxO = getNumberFromKey(key, 1);
-
-            for (String key2 : grouped.keySet()) {
-                // Not readding the same constraints
-                if (!key.equals(key2)) {
-                    int minN = getNumberFromKey(key2, 0);
-                    int maxN = getNumberFromKey(key2, 1);
-                    if ((minN <= minO) && (maxN >= maxO)) {
-                        fullSet.addAll(grouped.get(key2));
-                    }
-                }
-            }
-
-            return fullSet;
-        }
-        return new ArrayList<>();
-    }
+//    private ArrayList<AlignmentConstraint> addInAdditionalConstraints(String key, HashMap<String, ArrayList<AlignmentConstraint>> grouped) {
+//        ArrayList<AlignmentConstraint> original = grouped.get(key);
+//        if (original != null) {
+//            ArrayList<AlignmentConstraint> fullSet = (ArrayList<AlignmentConstraint>) original.clone();
+//            int minO = getNumberFromKey(key, 0);
+//            int maxO = getNumberFromKey(key, 1);
+//
+//            for (String key2 : grouped.keySet()) {
+//                // Not readding the same constraints
+//                if (!key.equals(key2)) {
+//                    int minN = getNumberFromKey(key2, 0);
+//                    int maxN = getNumberFromKey(key2, 1);
+//                    if ((minN <= minO) && (maxN >= maxO)) {
+//                        fullSet.addAll(grouped.get(key2));
+//                    }
+//                }
+//            }
+//
+//            return fullSet;
+//        }
+//        return new ArrayList<>();
+//    }
 
     private int getNumberFromKey(String key, int i) {
         String[] splits = key.split(":");
@@ -1008,11 +981,6 @@ public class RLGAnalyser {
                 return 1;
             }
         }
-//        else if ( (attrs[0] || attrs[1]) ) {
-//            if (!attrs[2] && !attrs[3]) {
-//                return 2;
-//            }
-//        }
 
         return -1;
     }
@@ -1080,9 +1048,9 @@ public class RLGAnalyser {
     private String errorToKey(ResponsiveLayoutFailure rle) {
         if (rle instanceof SmallRangeFailure) {
             return "SR";
-        } else if (rle instanceof ViewportOverflowFailure) {
+        } else if (rle instanceof ViewportProtrusionFailure) {
             return "VO";
-        } else if (rle instanceof OverflowFailure) {
+        } else if (rle instanceof ElementProtrusionFailure) {
             return "OF";
         } else if (rle instanceof CollisionFailure) {
             return "OL";

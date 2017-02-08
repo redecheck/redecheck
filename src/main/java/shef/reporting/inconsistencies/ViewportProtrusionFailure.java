@@ -19,7 +19,7 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 19/08/2016.
  */
-public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
+public class ViewportProtrusionFailure extends ResponsiveLayoutFailure {
     Node node;
     int min, max;
 
@@ -35,7 +35,7 @@ public class ViewportOverflowFailure extends ResponsiveLayoutFailure {
         return max;
     }
 
-    public ViewportOverflowFailure(Node n, int i, int key) {
+    public ViewportProtrusionFailure(Node n, int i, int key) {
         node = n;
         min = i;
         max = key;

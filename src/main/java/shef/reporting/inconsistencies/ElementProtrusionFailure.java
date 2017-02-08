@@ -21,7 +21,7 @@ import java.util.HashSet;
 /**
  * Created by thomaswalsh on 31/05/2016.
  */
-public class OverflowFailure extends ResponsiveLayoutFailure {
+public class ElementProtrusionFailure extends ResponsiveLayoutFailure {
     AlignmentConstraint ac1, ac2, ofCon, match;
     HashMap<Node, ArrayList<AlignmentConstraint>> map;
 
@@ -36,14 +36,14 @@ public class OverflowFailure extends ResponsiveLayoutFailure {
         return map;
     }
 
-    public OverflowFailure(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
+    public ElementProtrusionFailure(HashMap<Node, ArrayList<AlignmentConstraint>> m, Node ip, Node n) {
         this.map = m;
         intendedParent = ip;
         overflowed = n;
 //        System.out.println(n);
     }
 
-    public OverflowFailure(Node o, AlignmentConstraint ac) {
+    public ElementProtrusionFailure(Node o, AlignmentConstraint ac) {
         overflowed = o;
         ofCon = ac;
 
