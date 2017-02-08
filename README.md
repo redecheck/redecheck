@@ -94,7 +94,7 @@ To aid with any potential replication of our experimental results, we have made 
 #### Running on a Local Page
 
 Running ReDeCheck to test a local web page is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command, which runs the Duolingo example from a local clone of the webpage repository:
-```java -jar redecheck-jar-with-dependencies.jar --url Duolingo --page index.html --preamble /Users/joebloggs/redecheck-rlf-examples/```
+```java -jar redecheck-jar-with-dependencies.jar --url Duolingo/index.html --preamble /Users/joebloggs/redecheck-rlf-examples/```
 
 To explain how the various parameters are combined into a full local file path for ReDeCheck to use, we'll work through the above example.
 
@@ -102,7 +102,6 @@ To explain how the various parameters are combined into a full local file path f
 | ------------- |-------------- |
 | --preamble      | The root directory in which all your local website files are stored |
 | --url | The directory containing the web page you want to test |
-| --page | The specific page you wish to test |
 
 The full file path produced in this example is `Users/joebloggs/redecheck-rlf-examples/Duolingo/index.html`, so by simply changing any combination of these parameters you can test any local web page.
 

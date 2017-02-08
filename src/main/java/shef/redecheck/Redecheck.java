@@ -136,7 +136,7 @@ public class Redecheck {
             scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
             String fullUrl;
             if (preamble != null) {
-                fullUrl = "file://" + preamble + url + "/index.html";
+                fullUrl = "file://" + preamble + url;
             } else {
                 fullUrl = url;
             }

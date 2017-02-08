@@ -96,34 +96,6 @@ public class ResultProcessor {
 //		System.out.println("THERE WERE " + allMutants.size() + " TOTAL MUTANTS");
 	}
 
-//	private void processTimeData() {
-//		String resultString = "";
-//		for (String webpage : webpages) {
-////			resultString += webpage;
-//
-//			ArrayList<File> mutantFolders = getMutantFolders(webpage);
-//			double[] times = new double[mutantFolders.size()];
-//            int counter = 0;
-//			for (File mf : mutantFolders) {
-////				String timeData = getTimeData(mf);
-//				String timeData = Double.toString(getTotalTime(mf));
-//				if (!timeData.equals("")) {
-////					System.out.println(mf);
-////					System.out.println(getTimeData(mf));
-//					resultString += webpage +"," + timeData + "\n";
-//				}
-////                double time = getTimeFromFile(mf, "rlg");
-////                times[counter] = time;
-//
-//                counter++;
-//            }
-////			resultString += "\n";
-//
-//		}
-//		System.out.println(resultString);
-//		writeToFile(resultString, preamble, "timingData.csv");
-//	}
-
 	private void pickRandomSet() {
 		Random random = new Random();
 		ArrayList<File> randomSet = new ArrayList<>();
@@ -899,54 +871,42 @@ public class ResultProcessor {
 				for (int i = 1; i <= 30; i++) {
 					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
 				}
-//				System.out.println(mostRecentRun.getAbsolutePath());
+
 				int errorCount = getErrorCount(mostRecentRun);
 //
 				String distinctFailures = getActualFaults(mostRecentRun);
-//				System.out.println("\n" + distinctFailures);
 				try {
 					totalFailures += Integer.valueOf(distinctFailures);
 					if (errorCount != -1) {
 						ArrayList<Integer> tpIndexes = new ArrayList<>();
 						String classificationString = getClassification(mostRecentRun, tpIndexes);
 						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
-//						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
-//						System.out.println(RQ2Result);
-//						ArrayList<String> testRanges = groupFailureRanges(ranges);
 						int totalRanges = ranges.size();
 						totalDistinctRanges += totalRanges;
 
-//						int testRangeCount = testRanges.size();
-//						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
-//						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
-//						System.out.println(totalDistinctRanges + "\n");
+						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
 				}
 
-////			Write out results into webpage for Jekyll
-//				String jekyllCode = null;
-//				try {
-//					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				LocalDateTime now = LocalDateTime.now();
-//				int year = now.getYear();
-//				int month = now.getMonthValue();
-//				int day = now.getDayOfMonth();
-//				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
+//				Write out results into webpage for Jekyll
+				String jekyllCode = null;
+				try {
+					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				LocalDateTime now = LocalDateTime.now();
+				int year = now.getYear();
+				int month = now.getMonthValue();
+				int day = now.getDayOfMonth();
+				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
-//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-//		System.out.println(multiTimeData);
-//		System.out.println(subjectData);
-//		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
+		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
 		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-rerun.csv");
-
-//		rp.writeRQ1and2Data(files);
 	}
 
 	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
@@ -1033,12 +993,12 @@ public class ResultProcessor {
 
 			String[] classifications = getClassifications(mostRecentRun, totalReports);
 			String[] categories = getCategories(mostRecentRun, totalReports);
-//			String[] reasons = getReasons(mostRecentRun, totalReports);
+			String[] reasons = getReasons(mostRecentRun, totalReports);
 			for (int i = 1; i <= totalReports; i++) {
 				File ssFile = new File(mostRecentRun + "/fault" + i);
 				String imageName = ssFile.listFiles()[0].getName();
 				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + "" + " |\n";
+						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1076,11 +1036,11 @@ public class ResultProcessor {
 			int counter = 0;
 			while (line != null) {
 				if (line.equals("VO")) {
-					results[counter] = "Viewport Overflow";
+					results[counter] = "Viewport Protrusion";
 				} else if (line.equals("OF")) {
-					results[counter] = "Element Overflow";
+					results[counter] = "Element Protrusion";
 				} else if (line.equals("OL")) {
-					results[counter] = "Overlap";
+					results[counter] = "Element Collision";
 				} else if (line.equals("W")) {
 					results[counter] = "Wrapping";
 				} else if (line.equals("SR")) {

@@ -387,19 +387,24 @@ public class RLGExtractor implements Runnable {
                 }
             }
         }
-        int[] extras = new int[bps.size()];
-        Iterator iter = bps.iterator();
-        int counter = 0;
-        while(iter.hasNext()) {
-            try {
-                int i = (int) iter.next();
-                extras[counter] = i;
-                counter++;
-            } catch (Exception e) {
 
+        if (bps.size() > 0) {
+            int[] extras = new int[bps.size()];
+            Iterator iter = bps.iterator();
+            int counter = 0;
+            while (iter.hasNext()) {
+                try {
+                    int i = (int) iter.next();
+                    extras[counter] = i;
+                    counter++;
+                } catch (Exception e) {
+
+                }
             }
+
+            return extras;
         }
-        return extras;
+        return new int[0];
 
     }
 
@@ -421,73 +426,75 @@ public class RLGExtractor implements Runnable {
         ArrayList<RuleMedia> mqCandidates = new ArrayList<RuleMedia>();
         URL cssUrl = null;
         URLConnection conn;
-        String[] cssContent = new String[cssFiles.size()];
-        int counter = 0;
+        if (cssFiles != null) {
+            String[] cssContent = new String[cssFiles.size()];
+            int counter = 0;
 
-        for (String cssFile : cssFiles) {
-//            System.out.println(cssFile);
-            String contents = "";
-            try {
-                if (cssFile.contains("http")) {
-                    cssUrl = new URL(cssFile);
-                } else if (cssFile.substring(0, 2).equals("//")) {
-                    cssUrl = new URL("http:" + cssFile);
-                } else {
-//                    System.out.println("LOCAL");
-                    cssUrl = new URL(("file://" + preamble + base + "/" + cssFile.replace("./", "")));
-//                    cssUrl = new URL(("file://" + preamble + base.split("/")[0] + "/" + base.split("/")[1] + "/" + cssFile.replace("./", "")));
+            for (String cssFile : cssFiles) {
+                //            System.out.println(cssFile);
+                String contents = "";
+                try {
+                    if (cssFile.contains("http")) {
+                        cssUrl = new URL(cssFile);
+                    } else if (cssFile.substring(0, 2).equals("//")) {
+                        cssUrl = new URL("http:" + cssFile);
+                    } else {
+                        //                    System.out.println("LOCAL");
+                        cssUrl = new URL(("file://" + preamble + base + "/" + cssFile.replace("./", "")));
+                        //                    cssUrl = new URL(("file://" + preamble + base.split("/")[0] + "/" + base.split("/")[1] + "/" + cssFile.replace("./", "")));
+                    }
+                    //                System.out.println(cssUrl);
+
+                    conn = cssUrl.openConnection();
+
+                    BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                    //                long start = System.nanoTime();
+                    String inputLine;
+                    while ((inputLine = input.readLine()) != null) {
+                        contents += inputLine;
+                    }
+                    //                long end = System.nanoTime();
+                    //                double duration = ((end - start) / 1000000000.0);
+                    //                System.out.println(duration);
+                    contents += "\n\n";
+                    cssContent[counter] = contents;
+
+
+                } catch (Exception e) {
+                    //                e.printStackTrace();
+                    //                System.out.println("Problem loading or layout the CSS file " + cssUrl.toString());
                 }
-//                System.out.println(cssUrl);
-
-                conn = cssUrl.openConnection();
-
-                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-//                long start = System.nanoTime();
-                String inputLine;
-                while ((inputLine = input.readLine()) != null) {
-                    contents += inputLine;
-                }
-//                long end = System.nanoTime();
-//                double duration = ((end - start) / 1000000000.0);
-//                System.out.println(duration);
-                contents += "\n\n";
-                cssContent[counter] = contents;
-
-
-            } catch (Exception e) {
-//                e.printStackTrace();
-//                System.out.println("Problem loading or layout the CSS file " + cssUrl.toString());
+                counter++;
             }
-            counter++;
-        }
 
-        StyleSheet ss = null;
-        for (int i = 0; i < cssContent.length; i++) {
-            String s = cssContent[i];
-//            System.out.println(s);
-            try {
-                String prettified = s;
-//                        CSSMutator.prettifyCss(s);
-                StyleSheet temp = CSSFactory.parse(prettified);
-//                System.out.println(temp);
-                for (RuleBlock rb : temp.asList()) {
-                    if (rb instanceof RuleMedia) {
-                        RuleMedia rm = (RuleMedia) rb;
-                        if (CSSMutator.hasNumericQuery(rm)) {
+            StyleSheet ss = null;
+            for (int i = 0; i < cssContent.length; i++) {
+                String s = cssContent[i];
+                //            System.out.println(s);
+                try {
+                    String prettified = s;
+                    //                        CSSMutator.prettifyCss(s);
+                    StyleSheet temp = CSSFactory.parse(prettified);
+                    //                System.out.println(temp);
+                    for (RuleBlock rb : temp.asList()) {
+                        if (rb instanceof RuleMedia) {
+                            RuleMedia rm = (RuleMedia) rb;
+                            if (CSSMutator.hasNumericQuery(rm)) {
 
-                            if (rm.asList().size() > 0) {
-                                mqCandidates.add(rm);
+                                if (rm.asList().size() > 0) {
+                                    mqCandidates.add(rm);
+                                }
                             }
                         }
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (CSSException e) {
+                    e.printStackTrace();
+                } catch (NullPointerException e) {
+                    System.out.println("Null pointer for some reason on " + i);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (CSSException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                System.out.println("Null pointer for some reason on " + i);
             }
         }
         return mqCandidates;
