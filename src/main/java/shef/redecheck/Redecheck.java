@@ -76,7 +76,7 @@ public class Redecheck {
         System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
         System.setProperty("webdriver.chrome.driver", current + "/../resources/chromedriver");
         System.setProperty("webdriver.opera.driver", current + "/../resources/operadriver");
-//        System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
+        System.setProperty("webdriver.gecko.driver", current + "/../resources/geckodriver");
         
         clArgs = args;
         new JCommander(clp, clArgs);
