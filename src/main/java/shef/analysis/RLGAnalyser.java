@@ -471,7 +471,7 @@ public class RLGAnalyser {
                 }
 
                 // Extract the different behaviour ranges from the set of upper and lower bounds
-                ArrayList<String> keys = extractRanges(values);
+                ArrayList<String> keys = extractLayoutRanges(values);
 
                 // Match based on bounds
                 HashMap<String, HashSet<AlignmentConstraint>> grouped = new HashMap<>();
@@ -495,9 +495,7 @@ public class RLGAnalyser {
                     try {
                         // Try and put elements into rows
                         ArrayList<ArrayList<Node>> rows = new ArrayList<>();
-                        ArrayList<ArrayList<Node>> columns = new ArrayList<>();
                         HashMap<String, ArrayList<AlignmentConstraint>> rowSibConstraints = new HashMap<>();
-                        HashMap<String, ArrayList<AlignmentConstraint>> rowPCConstraints = new HashMap<>();
                         ArrayList<Node> nodesNotInRows = (ArrayList<Node>) children.clone();
                         HashSet<AlignmentConstraint> fullSet = grouped.get(key);
                         HashSet<AlignmentConstraint> overlapping = new HashSet<>();
@@ -508,24 +506,25 @@ public class RLGAnalyser {
                             nodesInParentMap.get(key).add(ac.getNode2());
 
                             // Check whether the two elements are aligned in a row
-                            int toggle = alignedInRowOrColumn(ac);
+                            int toggle = alignedInRow(ac);
 
                             // If they are in a row
                             if (toggle != 0) {
 
                                 // See if the constraint matches an existing row
-                                ArrayList<Node> match = matchingExistingPattern(ac, rows, columns, toggle, fullSet);
+                                ArrayList<Node> match = getMatchingExistingRow(ac, rows, fullSet);
                                 if (match == null) {
                                     // If no match, create a new row with both elements in it.
-                                    ArrayList<Node> newRowCol = new ArrayList<>();
-                                    newRowCol.add(ac.getNode1());
-                                    newRowCol.add(ac.getNode2());
+                                    ArrayList<Node> newRow = new ArrayList<>();
+                                    newRow.add(ac.getNode1());
+                                    newRow.add(ac.getNode2());
 
-                                    if (toggle == 1) {
-                                        rows.add(newRowCol);
-                                        rowSibConstraints.put(setOfNodesToString(newRowCol), new ArrayList<AlignmentConstraint>());
-                                        rowSibConstraints.get(setOfNodesToString(newRowCol)).add(ac);
-                                    }
+//                                    if (toggle == 1) {
+                                    // Add the new row to the full set of rows
+                                    rows.add(newRow);
+                                    rowSibConstraints.put(setOfNodesToString(newRow), new ArrayList<AlignmentConstraint>());
+                                    rowSibConstraints.get(setOfNodesToString(newRow)).add(ac);
+//                                    }
                                 } else {
                                     // If a match is found, add the elements to the row
                                     String matchKey = setOfNodesToString(match);
@@ -534,12 +533,13 @@ public class RLGAnalyser {
                                     } else if (!match.contains(ac.getNode2())) {
                                         match.add(ac.getNode2());
                                     }
-                                    if (toggle == 1) {
-                                        ArrayList<AlignmentConstraint> cons = rowSibConstraints.get(matchKey);
-                                        rowSibConstraints.remove(matchKey);
-                                        rowSibConstraints.put(setOfNodesToString(match), cons);
-                                        rowSibConstraints.get(setOfNodesToString(match)).add(ac);
-                                    }
+//                                    if (toggle == 1) {
+                                    // Update the full set of rows to have a key for the expanded row
+                                    ArrayList<AlignmentConstraint> cons = rowSibConstraints.get(matchKey);
+                                    rowSibConstraints.remove(matchKey);
+                                    rowSibConstraints.put(setOfNodesToString(match), cons);
+                                    rowSibConstraints.get(setOfNodesToString(match)).add(ac);
+//                                    }
                                 }
 
                                 // Remove from ArrayLists to detect elements not placed into row or column
@@ -591,7 +591,7 @@ public class RLGAnalyser {
                         if (rows.size() > 0) {
 
                             // Check to see if a matching row is found at the wider viewport range
-                            ArrayList<Node> nonWrappedRow = inRowInNextRange(notInRow, totalRows, key);
+                            ArrayList<Node> nonWrappedRow = getRowInNextRange(notInRow, totalRows, key);
 
                             // If a matching row found
                             if (nonWrappedRow != null) {
@@ -601,7 +601,7 @@ public class RLGAnalyser {
                                         if (elementStillWithinParent(notInRow, n, key)) {
 
                                             // Check the element is now below the rest of the row
-                                            if (elementNowBelowRow(notInRow, rows, nonWrappedRow, grouped.get(key))) {
+                                            if (elementNowBelowRow(notInRow, nonWrappedRow, grouped.get(key))) {
                                                 // If so, report the wrapping failure
                                                 WrappingFailure we = new WrappingFailure(notInRow, nonWrappedRow, getNumberFromKey(key, 0), getNumberFromKey(key, 1));
                                                 errors.add(we);
@@ -619,7 +619,14 @@ public class RLGAnalyser {
         }
     }
 
+    /**
+     * This method returns the set of nodes representing the row from which an element has wrapped
+     * @param rows              the set of rows through which to search
+     * @param nonWrappedRow     the row in which the element has not wrapped
+     * @return                  the row in which the element has wrapped
+     */
     private ArrayList<Node> getWrappedRow(ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow) {
+        // Iterate through
         for (Node n : nonWrappedRow) {
             for (ArrayList<Node> row : rows) {
                 if (row.contains(n)) {
@@ -630,33 +637,61 @@ public class RLGAnalyser {
         return new ArrayList<>();
     }
 
-    private boolean elementNowBelowRow(Node notInRow, ArrayList<ArrayList<Node>> rows, ArrayList<Node> nonWrappedRow, HashSet<AlignmentConstraint> grouped) {
-
+    /**
+     * This method inspects the alignment constraints to see whether the supposedly 'wrapped' element is now below the rest of the row
+     * @param notInRow          The node no longer in a row
+     * @param nonWrappedRow     The row in which the element has not wrapped
+     * @param grouped           The alignment constraints for the elements, grouped by behaviour range
+     * @return                  Whether the element is now below the row
+     */
+    private boolean elementNowBelowRow(Node notInRow, ArrayList<Node> nonWrappedRow, HashSet<AlignmentConstraint> grouped) {
+        // Iterate through each constraint until one we can analyse
         for (AlignmentConstraint ac : grouped) {
             Node n1 = ac.getNode1();
             Node n2 = ac.getNode2();
 
-            if ((n1.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n2))
-                    || (n2.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n1))) {
-                    if (n1.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[1]) {
-                        return true;
-                    } else if (n2.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[2]) {
-                        return true;
-                    }
-//                }
+            // Check the constraint contains the 'wrapped' element and one of the non-wrapped ones
+            if ((n1.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n2)) || (n2.getXpath().equals(notInRow.getXpath()) && nonWrappedRow.contains(n1))) {
+
+                // Check the alignment attributes and return true if the wrapped element is below the non-wrapped one.
+                if (n1.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[1]) {
+                    return true;
+                } else if (n2.getXpath().equals(notInRow.getXpath()) && ac.getAttributes()[2]) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    private ArrayList<Node> inRowInNextRange(Node notInRow, HashMap<String, ArrayList<ArrayList<Node>>> rows, String key) {
+    /**
+     * This method checks whether the element supposedly 'wrapped' is in a row at the next behaviour range and returns it if it is.
+     * @param notInRow  The node no longer in a row
+     * @param rows      The set of rows across all behaviour ranges
+     * @param key       The key of the current behaviour range
+     * @return          The row containing the wrapped element, or null.
+     */
+    private ArrayList<Node> getRowInNextRange(Node notInRow, HashMap<String, ArrayList<ArrayList<Node>>> rows, String key) {
+        // Get the upper bound of the current range
         int x = getNumberFromKey(key,1);
+
+        // Iterate through all the keys in the set
         for (String key2 : rows.keySet()) {
+
+            // Check it's not the same key
             if (!key.equals(key2)) {
+                // Get the lower bound of the different key
                 int first = getNumberFromKey(key2, 0);
+
+                // If this one is the immediately wider range, do our further analysis
                 if (first - x == 1) {
+
+                    // Get the rows for this range
                     ArrayList<ArrayList<Node>> rs = rows.get(key2);
+
+                    // Iterate through all the rows
                     for (ArrayList<Node> r : rs) {
+                        // If the row contains the element we're looking for, return the row
                         if (r.contains(notInRow)) {
                             return r;
                         }
@@ -668,25 +703,28 @@ public class RLGAnalyser {
         return null;
     }
 
-//    private boolean inColumnInstead(ArrayList<ArrayList<Node>> cols, Node notInRow) {
-//        for (ArrayList<Node> col : cols) {
-//            if (col.contains(notInRow)) {
-////                System.out.println(notInRow.getXpath() + " was in a column instead");
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    private boolean elementStillWithinParent(Node wrapped, Node n, String key) {
+    /**
+     * This method checks whether the 'wrapped' element is still within the parent element
+     * @param wrapped   The wrapped element
+     * @param parent    The parent element
+     * @param key       The behaviour range we need to check for
+     * @return
+     */
+    private boolean elementStillWithinParent(Node wrapped, Node parent, String key) {
+        // Extract the lower and upper bounds of the behaviour range
         int kMin = getNumberFromKey(key, 0);
         int kMax = getNumberFromKey(key, 1);
-        boolean foundFault = false;
 
+        // Get the parent constraints of the wrapped element
         ArrayList<AlignmentConstraint> pCons = wrapped.getParentConstraints();
+
+        // Iterate through each of the parent constraints
         for (AlignmentConstraint con : pCons) {
+
+            // Make sure the constraint holds for the behaviour range
             if ((con.getMin() <= kMax) && (kMin <= con.getMax())) {
-                if (con.getNode1().getXpath().equals(n.getXpath())) {
+                // If the parent in the constraint equals the parent we passed in, return true.
+                if (con.getNode1().getXpath().equals(parent.getXpath())) {
                     return true;
                 }
             }
@@ -715,15 +753,6 @@ public class RLGAnalyser {
             }
         }
     }
-
-//    private boolean elementsAlsoInRow(Node f1, Node f2, ArrayList<ArrayList<Node>> rows) {
-//        for (ArrayList<Node> row : rows) {
-//            if (row.contains(f1) && (row.contains(f2))) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     private boolean childrenWithinParent(AlignmentConstraint ac, Node n) {
         Node n1 = ac.getNode1();
@@ -852,6 +881,11 @@ public class RLGAnalyser {
         return result;
     }
 
+    /**
+     * This method puts an alignment constraint into groups based on its bounds.
+     * @param grouped   The set into which the alignment constraint will be placed
+     * @param ac        The alignment constraint to examine
+     */
     private void putConstraintIntoGroups(HashMap<String, HashSet<AlignmentConstraint>> grouped, AlignmentConstraint ac) {
         for (String k : grouped.keySet()) {
             int min = getNumberFromKey(k, 0);
@@ -862,94 +896,85 @@ public class RLGAnalyser {
         }
     }
 
-    private ArrayList<String> extractRanges(TreeSet<Integer> values) {
+    /**
+     * Extracts the various ranges of layout behaviour from a set of upper and lower bounds
+     * @param values    The set of lower and upper bounds, in ascending order
+     * @return          A set of ranges, saved as a list of string keys
+     */
+    private ArrayList<String> extractLayoutRanges(TreeSet<Integer> values) {
         ArrayList<String> keys = new ArrayList<>();
         int prev=0;
         int curr;
+        // Iterate through all the values
         for (Integer i : values) {
             curr = i;
+            // If this isn't the first value we've looked at...
             if (prev != 0) {
+
+                // If the two numbers aren't immediately consecutive...
                 if (curr-prev != 1) {
+                    // Create the new key and add to the list
                     String key = prev + ":" + curr;
                     keys.add(key);
                 }
             }
+            // Update the value of prev so we can repeat the process
             prev = curr;
         }
         return keys;
     }
 
-//    private ArrayList<AlignmentConstraint> addInAdditionalConstraints(String key, HashMap<String, ArrayList<AlignmentConstraint>> grouped) {
-//        ArrayList<AlignmentConstraint> original = grouped.get(key);
-//        if (original != null) {
-//            ArrayList<AlignmentConstraint> fullSet = (ArrayList<AlignmentConstraint>) original.clone();
-//            int minO = getNumberFromKey(key, 0);
-//            int maxO = getNumberFromKey(key, 1);
-//
-//            for (String key2 : grouped.keySet()) {
-//                // Not readding the same constraints
-//                if (!key.equals(key2)) {
-//                    int minN = getNumberFromKey(key2, 0);
-//                    int maxN = getNumberFromKey(key2, 1);
-//                    if ((minN <= minO) && (maxN >= maxO)) {
-//                        fullSet.addAll(grouped.get(key2));
-//                    }
-//                }
-//            }
-//
-//            return fullSet;
-//        }
-//        return new ArrayList<>();
-//    }
-
+    /**
+     * Simple utility to extract a numeric bound from a string key
+     * @param key   The string key to extract from
+     * @param i     The bound we want (either 0 or 1)
+     * @return      The extracted bound
+     */
     private int getNumberFromKey(String key, int i) {
         String[] splits = key.split(":");
         return Integer.valueOf(splits[i]);
     }
 
 
-    private ArrayList<Node> matchingExistingPattern(AlignmentConstraint ac, ArrayList<ArrayList<Node>> rows, ArrayList<ArrayList<Node>> columns, int rowCol, HashSet<AlignmentConstraint> fullSet) {
+    /**
+     *  This method analyses the existing rows extracted to see if the current constraint matches any of them
+     * @param ac        The alignment constraint describing the two elements in a row
+     * @param rows      The set of rows currently extracted for this behaviour range
+     * @param fullSet   The set of all alignment constraints for the current behaviour range
+     * @return          The matching row if one is found, else null
+     */
+    private ArrayList<Node> getMatchingExistingRow(AlignmentConstraint ac, ArrayList<ArrayList<Node>> rows, HashSet<AlignmentConstraint> fullSet) {
+        // Get the nodes of the current constraints
         Node n1 = ac.getNode1();
         Node n2 = ac.getNode2();
 
+        // Get all the sibling constraints linked to the two nodes
         ArrayList<AlignmentConstraint> n1cons = getSiblingEdges(n1, fullSet);
         ArrayList<AlignmentConstraint> n2cons = getSiblingEdges(n2, fullSet);
 
         // Check through all existing rows
-        if (rowCol == 1) {
-            for (ArrayList<Node> row : rows) {
-                for (Node n : row) {
-                    for (AlignmentConstraint acon : n1cons) {
-                        if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
-                            if (alignedInRowOrColumn(acon) == 1) {
-                                return row;
-                            }
-                        }
-                    }
-                    for (AlignmentConstraint acon : n2cons) {
-                        if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
-                            if (alignedInRowOrColumn(acon) == 1) {
-                                return row;
-                            }
+        for (ArrayList<Node> row : rows) {
+            // Go through each node in the current row
+            for (Node n : row) {
+
+                // Check each constraint linked to n1
+                for (AlignmentConstraint acon : n1cons) {
+                    // If the constraint linked to the element we already know is in a row...
+                    if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
+
+                        // Check if the constraint also describes a row
+                        if (alignedInRow(acon) == 1) {
+                            // If so, we've found a matching row, so return it
+                            return row;
                         }
                     }
                 }
-            }
-        } else if (rowCol == 2) {
-            for (ArrayList<Node> col : columns) {
-                for (Node n : col) {
-                    for (AlignmentConstraint acon : n1cons) {
-                        if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
-                            if (alignedInRowOrColumn(acon) == 2) {
-                                return col;
-                            }
-                        }
-                    }
-                    for (AlignmentConstraint acon : n2cons) {
-                        if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
-                            if (alignedInRowOrColumn(acon) == 2) {
-                                return col;
-                            }
+
+                // Do exactly the same but with the second node if we haven't already found a match
+                for (AlignmentConstraint acon : n2cons) {
+                    if ((acon.getNode1().equals(n)) || (acon.getNode2().equals(n))) {
+                        if (alignedInRow(acon) == 1) {
+                            return row;
                         }
                     }
                 }
@@ -970,7 +995,12 @@ public class RLGAnalyser {
         return cons;
     }
 
-    private int alignedInRowOrColumn(AlignmentConstraint ac) {
+    /**
+     * Analyses an alignment constraint to determine whether the two nodes are aligned in a row
+     * @param ac    The alignment constraint to analyse
+     * @return      1 for yes, 0 or -1 for no.
+     */
+    private int alignedInRow(AlignmentConstraint ac) {
         boolean[] attrs = ac.getAttributes();
 
         if (attrs[10]) {
