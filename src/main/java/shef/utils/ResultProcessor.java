@@ -902,11 +902,11 @@ public class ResultProcessor {
 				int year = now.getYear();
 				int month = now.getMonthValue();
 				int day = now.getDayOfMonth();
-				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
+//				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
 		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-rerun.csv");
+//		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-rerun.csv");
 	}
 
 	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
@@ -1085,54 +1085,16 @@ public class ResultProcessor {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
 			String line = br.readLine();
 			int errorIndex = 1;
-			boolean foundBounds = false;
-			String[] splits, splits2;
+
+
 			String contents = "";
-			int min = 0, max=0;
+
 			while(line != null) {
 //				contents += line;
-				if (line.contains("overflowed the viewport")) {
-					splits = line.split(" and ");
-					splits2 = splits[0].split("between ");
-					min = Integer.valueOf(splits2[1]);
-					max = Integer.valueOf(splits[1]);
-					foundBounds = true;
-				} else if (line.contains("OVERLAPPING")) {
-					try {
-//						System.out.println(line);
-						splits = line.split(" AND ");
-						splits2 = splits[1].split("BETWEEN ");
-						min = Integer.valueOf(splits2[1]);
-						max = Integer.valueOf(splits[2]);
-//
-						foundBounds = true;
-					} catch (Exception e ) {
-						System.out.println("Issue with " + line);
-					}
-				} else if (line.contains("THIS:")) {
-					splits = line.split(" , ");
-					min = Integer.valueOf(splits[3]);
-					max = Integer.valueOf(splits[4]);
-					foundBounds = true;
-				} else if (line.contains("WRAPPING")) {
-					splits = line.split(" -> ");
-					splits2 = splits[0].split("RANGE ");
-					min = Integer.valueOf(splits2[1]);
-					max = Integer.valueOf(splits[1].split(":")[0]);
-					foundBounds = true;
-				} else if (line.contains("OVERFLOWED ITS PARENT")) {
-					try {
-//						System.out.println(line);
-						splits = line.split(" AND ");
-						splits2 = splits[0].split("BETWEEN ");
-						min = Integer.valueOf(splits2[1]);
-						max = Integer.valueOf(splits[1]);
-//
-						foundBounds = true;
-					} catch (Exception e ) {
-						System.out.println("Issue with " + line);
-					}
-				}
+				int[] bounds = getFailureBounds(line);
+				int min = bounds[0];
+				int max = bounds[1];
+
 				if (b) {
 					if (tpIndexes.contains(errorIndex)) {
 						errorStrings.add(min + " - " + max);
@@ -1143,16 +1105,65 @@ public class ResultProcessor {
 					}
 				}
 
-				if (line.equals("")) {
-					errorIndex++;
-					foundBounds = false;
-				}
+//				if (line.equals("")) {
+//					errorIndex++;
+//					foundBounds = false;
+//				}
 				line = br.readLine();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return errorStrings;
+	}
+
+	private static int[] getFailureBounds(String line) {
+		String[] splits, splits2;
+		int min = 0, max=0;
+		boolean foundBounds = false;
+		if (line.contains("overflowed the viewport")) {
+			splits = line.split(" and ");
+			splits2 = splits[0].split("between ");
+			min = Integer.valueOf(splits2[1]);
+			max = Integer.valueOf(splits[1]);
+			foundBounds = true;
+		} else if (line.contains("OVERLAPPING")) {
+			try {
+//						System.out.println(line);
+				splits = line.split(" AND ");
+				splits2 = splits[1].split("BETWEEN ");
+				min = Integer.valueOf(splits2[1]);
+				max = Integer.valueOf(splits[2]);
+//
+				foundBounds = true;
+			} catch (Exception e ) {
+				System.out.println("Issue with " + line);
+			}
+		} else if (line.contains("THIS:")) {
+			splits = line.split(" , ");
+			min = Integer.valueOf(splits[3]);
+			max = Integer.valueOf(splits[4]);
+			foundBounds = true;
+		} else if (line.contains("WRAPPING")) {
+			splits = line.split(" -> ");
+			splits2 = splits[0].split("RANGE ");
+			min = Integer.valueOf(splits2[1]);
+			max = Integer.valueOf(splits[1].split(":")[0]);
+			foundBounds = true;
+		} else if (line.contains("OVERFLOWED ITS PARENT")) {
+			try {
+//						System.out.println(line);
+				splits = line.split(" AND ");
+				splits2 = splits[0].split("BETWEEN ");
+				min = Integer.valueOf(splits2[1]);
+				max = Integer.valueOf(splits[1]);
+//
+				foundBounds = true;
+			} catch (Exception e ) {
+				System.out.println("Issue with " + line);
+			}
+		}
+		return new int[] {min, max};
 	}
 
 
