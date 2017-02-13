@@ -883,12 +883,12 @@ public class ResultProcessor {
 					if (errorCount != -1) {
 						ArrayList<Integer> tpIndexes = new ArrayList<>();
 						String classificationString = getClassification(mostRecentRun, tpIndexes);
-						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
-						int totalRanges = ranges.size();
-						totalDistinctRanges += totalRanges;
+//						ArrayList<int[]> ranges = getFailuresFromFile(mostRecentRun);
+//						int totalRanges = ranges.size();
+//						totalDistinctRanges += totalRanges;
 
 						// Print out main RQ1 results row for table
-						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
+//						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
@@ -969,12 +969,17 @@ public class ResultProcessor {
 
 	public void writeArchiveWebpages() throws IOException {
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
-		HashMap<String, ArrayList<String>> groupedResults = new HashMap<>();
-		groupedResults.put("Element Collision",new ArrayList<>());
-		groupedResults.put("Element Protrusion",new ArrayList<>());
-		groupedResults.put("Viewport Protrusion",new ArrayList<>());
-		groupedResults.put("Small-Range",new ArrayList<>());
-		groupedResults.put("Wrapping",new ArrayList<>());
+		String[] types = new String[] {"Element Collision","Element Protrusion", "Viewport Protrusion", "Small-Range","Wrapping"};
+		String[] classes = new String[] {"TP", "FP", "NOI"};
+		HashMap<String, HashMap<String, ArrayList<String>>> groupedResults = new HashMap<>();
+
+		for (String c : classes) {
+			groupedResults.put(c, new HashMap<>());
+			for (String t : types) {
+				HashMap<String, ArrayList<String>> hm = groupedResults.get(c);
+				hm.put(t, new ArrayList<>());
+			}
+		}
 
 
 		String fullTable = "";
@@ -990,15 +995,23 @@ public class ResultProcessor {
 			String[] classifications = getClassifications(mostRecentRun, errorCount);
 			String[] categories = getCategories(mostRecentRun, errorCount);
 			String[] reasons = getReasons(mostRecentRun, errorCount);
+			ArrayList<int[]> bounds = getFailureBounds(mostRecentRun);
 			for (int i = 1; i <= errorCount; i++) {
-				String tableRow =   generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons);
+				String tableRow =   generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons, bounds);
 				String category = categories[i-1];
-
-				groupedResults.get(category).add(webpage + " | " + tableRow);
-				fullTable += "| " + String.valueOf(totalCount + i) + " | "  + tableRow + "\n";
+				String classification = classifications[i-1];
+				try {
+					groupedResults.get(classification).get(category).add(tableRow);
+					fullTable += "| " + String.valueOf(totalCount + i) + " | " + tableRow + "\n";
+				} catch(Exception e ) {
+//					System.out.println(tableRow);
+//					System.out.println(category);
+//					System.out.println(classification + "\n");
+					e.printStackTrace();
+				}
 			}
 			totalCount = totalCount + errorCount;
-			jekyllCode = addInScreenshotTable(mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons);
+			jekyllCode = addInScreenshotTable(mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons, bounds);
 			LocalDateTime now = LocalDateTime.now();
 			int year = now.getYear();
 			int month = now.getMonthValue();
@@ -1006,26 +1019,36 @@ public class ResultProcessor {
 			writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 		}
 		int count = 0;
-		for (String key : groupedResults.keySet()) {
-			for (String row : groupedResults.get(key)) {
-				count++;
-				System.out.println("| " + count + " | " + row);
+		for (String classification : classes) {
+			System.out.println("\n### " + classification + "\n");
+			System.out.println("| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | Screenshot |");
+			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
+			for (String key : types) {
+				for (String row : hm.get(key)) {
+					count++;
+					System.out.println("| " + count + " | " + row);
+				}
 			}
 		}
+
+
 //		System.out.println(fullTable);
 	}
 
-	private static String generateTableRow(int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons) {
+	private static String generateTableRow(int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) {
 //		System.out.println(totalCount + " " + i);
 		String row = "";
 		File ssFile = new File(mostRecentRun + "/fault" + i);
 		String imageName = ssFile.listFiles()[0].getName();
-		row +=  categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-				") | " + classifications[i-1] + " | " + reasons[i-1] + " |";
+		int[] bs = bounds.get(i-1);
+
+
+		row +=  categories[i-1] + "| | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i-1] + " | " + reasons[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
+				") |";
 		return row;
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons) throws IOException {
+	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
 		String jekyllCode = "";
 		try {
 
@@ -1037,12 +1060,12 @@ public class ResultProcessor {
 			int numDecs = mutator.getDeclarationCount();
 
 			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
-			jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | Distinct RLF |\n";
+			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | Screenshot |\n";
 
 
 			for (int i = 1; i <= totalReports; i++) {
 
-				jekyllCode += "| " + i + "| " + generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons)+" |\n";
+				jekyllCode += "| " + i + "| " + generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons, bounds)+" |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1122,92 +1145,132 @@ public class ResultProcessor {
 		return results;
 	}
 
-	public static HashSet<String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
-		HashSet<String> errorStrings = new HashSet<>();
-
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
-			String line = br.readLine();
-			int errorIndex = 1;
-
-
-			String contents = "";
-
-			while(line != null) {
-//				contents += line;
-				int[] bounds = getFailureBounds(line);
-				int min = bounds[0];
-				int max = bounds[1];
-
-				if (b) {
-					if (tpIndexes.contains(errorIndex)) {
-						errorStrings.add(min + " - " + max);
-					}
-				} else {
-					if (min != 0 && max != 0) {
-						errorStrings.add(min + " - " + max);
-					}
-				}
-
+//	public static ArrayList<int[]> getFailuresFromFile(File f) {
+//		HashSet<String> errorStrings = new HashSet<>();
+//		ArrayList<int[]> boundsList = new ArrayList<>();
+//		try {
+//			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
+//			String line = br.readLine();
+//			int errorIndex = 1;
+//			boolean foundBounds = false;
+//
+//			String contents = "";
+//
+//			while(line != null) {
+////				contents += line;
+//				int[] bounds = getFailureBounds(line, foundBounds);
+//				boundsList.add(bounds);
+//				int min = bounds[0];
+//				int max = bounds[1];
+////
+////				if (b) {
+////					if (tpIndexes.contains(errorIndex)) {
+////						errorStrings.add(min + " - " + max);
+////					}
+////				} else {
+////					if (min != 0 && max != 0) {
+////						errorStrings.add(min + " - " + max);
+////					}
+////				}
+//
 //				if (line.equals("")) {
 //					errorIndex++;
 //					foundBounds = false;
+//				}
+//				line = br.readLine();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return boundsList;
+//	}
+
+	private static ArrayList<int[]> getFailureBounds(File f) {
+		ArrayList<int[]> boundsList = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
+			String failureString = "";
+			String line = br.readLine();
+			int errorIndex = 1;
+			boolean foundBounds = false;
+
+			String contents = "";
+
+			while (line != null) {
+				while (!line.equals("")) {
+					failureString += line;
+					line = br.readLine();
+				}
+				String[] splits, splits2;
+				int min = 0, max = 0;
+				try {
+					if (failureString.contains("overflowed the viewport")) {
+						splits = failureString.split(" and ");
+						splits2 = splits[0].split("between ");
+						min = Integer.valueOf(splits2[1]);
+						max = Integer.valueOf(splits[1]);
+						foundBounds = true;
+					} else if (failureString.contains("OVERLAPPING")) {
+						try {
+							//						System.out.println(line);
+							splits = failureString.split(" AND ");
+							splits2 = splits[1].split("BETWEEN ");
+							min = Integer.valueOf(splits2[1]);
+							max = Integer.valueOf(splits[2]);
+							//
+							foundBounds = true;
+						} catch (Exception e) {
+							System.out.println("Issue with " + line);
+						}
+					} else if (failureString.contains("THIS:")) {
+						splits = failureString.split(" , ");
+						min = Integer.valueOf(splits[3]);
+						max = Integer.valueOf(splits[4]);
+						foundBounds = true;
+					} else if (failureString.contains("WRAPPING")) {
+						splits = failureString.split(" -> ");
+						splits2 = splits[0].split("RANGE ");
+						min = Integer.valueOf(splits2[1]);
+						max = Integer.valueOf(splits[1].split(":")[0]);
+						foundBounds = true;
+					} else if (failureString.contains("OVERFLOWED ITS PARENT")) {
+//						try {
+							//						System.out.println(line);
+						splits = failureString.split(" AND ");
+//						splits2 = splits[1].split("\\t");
+						min = Integer.valueOf(splits[0].split("BETWEEN ")[1]);
+						max = Integer.valueOf(splits[1].split("\\t")[0]);
+						//
+						foundBounds = true;
+
+					}
+				} catch (Exception ex) {
+					System.out.println("Issue with " + failureString);
+				}
+//				if (b) {
+//					if (tpIndexes.contains(errorIndex)) {
+//						errorStrings.add(min + " - " + max);
+//					}
+//				} else {
+//					if (min != 0 && max != 0) {
+//						errorStrings.add(min + " - " + max);
+//					}
+//				}
+				if (min == 0 || max == 0) {
+					System.out.println(line);
+				}
+				boundsList.add(new int[] {min, max});
+				failureString = "";
+//				if (line.equals("")) {
+				errorIndex++;
+				foundBounds = false;
 //				}
 				line = br.readLine();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return errorStrings;
-	}
-
-	private static int[] getFailureBounds(String line) {
-		String[] splits, splits2;
-		int min = 0, max=0;
-		boolean foundBounds = false;
-		if (line.contains("overflowed the viewport")) {
-			splits = line.split(" and ");
-			splits2 = splits[0].split("between ");
-			min = Integer.valueOf(splits2[1]);
-			max = Integer.valueOf(splits[1]);
-			foundBounds = true;
-		} else if (line.contains("OVERLAPPING")) {
-			try {
-//						System.out.println(line);
-				splits = line.split(" AND ");
-				splits2 = splits[1].split("BETWEEN ");
-				min = Integer.valueOf(splits2[1]);
-				max = Integer.valueOf(splits[2]);
-//
-				foundBounds = true;
-			} catch (Exception e ) {
-				System.out.println("Issue with " + line);
-			}
-		} else if (line.contains("THIS:")) {
-			splits = line.split(" , ");
-			min = Integer.valueOf(splits[3]);
-			max = Integer.valueOf(splits[4]);
-			foundBounds = true;
-		} else if (line.contains("WRAPPING")) {
-			splits = line.split(" -> ");
-			splits2 = splits[0].split("RANGE ");
-			min = Integer.valueOf(splits2[1]);
-			max = Integer.valueOf(splits[1].split(":")[0]);
-			foundBounds = true;
-		} else if (line.contains("OVERFLOWED ITS PARENT")) {
-			try {
-//						System.out.println(line);
-				splits = line.split(" AND ");
-				splits2 = splits[0].split("BETWEEN ");
-				min = Integer.valueOf(splits2[1]);
-				max = Integer.valueOf(splits[1]);
-//
-				foundBounds = true;
-			} catch (Exception e ) {
-				System.out.println("Issue with " + line);
-			}
-		}
-		return new int[] {min, max};
+		return boundsList;
 	}
 
 
