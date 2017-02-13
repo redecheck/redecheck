@@ -7,7 +7,6 @@ import edu.gatech.xpert.dom.JsonDomParser;
 import edu2.gatech.xpert.dom.layout.AGDiff;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.apache.regexp.RE;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -124,7 +123,8 @@ public class Redecheck {
 
         if (results) {
             ResultProcessor rp = new ResultProcessor();
-            rp.getInconsistencyResults();
+//            rp.getInconsistencyResults();
+            rp.writeArchiveWebpages();
         }
     }
 

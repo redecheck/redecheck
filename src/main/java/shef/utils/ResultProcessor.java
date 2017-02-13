@@ -12,7 +12,7 @@ import java.util.*;
 
 public class ResultProcessor {
 
-	String[] webpages = new String[] {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
+//	String[] webpages = new String[] {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
 
 	int[][] rq1results;
 
@@ -34,6 +34,89 @@ public class ResultProcessor {
 	HashMap<String, ArrayList<File>> groupedByOperator;
 	ArrayList<String> operatorList;
 	static NumberFormat formatter;
+
+	String[] webpages = new String[] {
+			"3-Minute-Journal",
+			"AccountKiller",
+			"AirBnb",
+			"BugMeNot",
+			"CloudConvert",
+			"Consumer-Reports",
+			"Covered-Calendar",
+			"Days-Old",
+			"Dictation",
+			"Duolingo",
+			"Honey",
+			"HotelWifiTest",
+			"Mailinator",
+			"MidwayMeetup",
+			"Ninite",
+			"Pdf-Escape",
+			"PepFeed",
+			"Pocket",
+			"RainyMood",
+			"RunPee",
+			"StumbleUpon",
+			"TopDocumentary",
+			"UserSearch",
+			"WhatShouldIReadNext",
+			"WillMyPhoneWork",
+			"ZeroDollarMovies"};
+	String[] urls = new String[] {
+			"www.3minutejournal.com",
+			"www.accountkiller.com/en",
+			"www.airbnb.com",
+			"bugmenot.com",
+			"cloudconvert.com",
+			"consumerreports.org",
+			"www.coveredcalendar.com",
+			"www.daysold.com",
+			"dictation.io",
+			"www.duolingo.com",
+			"www.joinhoney.com/install",
+			"www.hotelwifitest.com",
+			"www.mailinator.com",
+			"www.midwaymeetup.com",
+			"ninite.com",
+			"www.pdfescape.com",
+			"www.pepfeed.com",
+			"getpocket.com",
+			"rainymood.com",
+			"runpee.com",
+			"www.stumbleupon.com",
+			"topdocumentaryfilms.com",
+			"usersearch.org",
+			"www.whatshouldireadnext.com/search",
+			"willmyphonework.net",
+			"zerodollarmovies.com"};
+
+	String[] commands = new String[] {
+			"\\threeminutejournalplain",
+			"\\accountkillerplain",
+			"\\airbnbplain",
+			"\\bugmenotplain",
+			"\\cloudconvertplain",
+			"\\consumerreportsplain",
+			"\\coveredcalendarplain",
+			"\\daysoldplain",
+			"\\dictationplain",
+			"\\duolingoplain",
+			"\\honeyplain",
+			"\\hotelwifitestplain",
+			"\\mailinatorplain",
+			"\\midwaymeetupplain",
+			"\\niniteplain",
+			"\\pdfescapeplain",
+			"\\pepfeedplain",
+			"\\getpocketplain",
+			"\\rainymoodplain",
+			"\\runpeeplain",
+			"\\stumbleuponplain",
+			"\\topdocumentaryfilmsplain",
+			"\\usersearchplain",
+			"\\whatshouldireadnextplain",
+			"\\willmyphoneworkplain",
+			"\\zerodollarmoviesplain"};
 	
 	public ResultProcessor() {
 		allMutants = new ArrayList<>();
@@ -761,92 +844,12 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
-		rp.getInconsistencyResults();
+//		rp.getInconsistencyResults();
+		rp.writeArchiveWebpages();
 	}
 
 	public void getInconsistencyResults() {
-		String[] webpages = new String[] {
-				"3-Minute-Journal",
-				"AccountKiller",
-				"AirBnb",
-				"BugMeNot",
-				"CloudConvert",
-				"Consumer-Reports",
-				"Covered-Calendar",
-				"Days-Old",
-				"Dictation",
-				"Duolingo",
-				"Honey",
-				"HotelWifiTest",
-				"Mailinator",
-				"MidwayMeetup",
-				"Ninite",
-				"Pdf-Escape",
-				"PepFeed",
-				"Pocket",
-				"RainyMood",
-				"RunPee",
-				"StumbleUpon",
-				"TopDocumentary",
-				"UserSearch",
-				"WhatShouldIReadNext",
-				"WillMyPhoneWork",
-				"ZeroDollarMovies"};
-		String[] urls = new String[] {
-				"www.3minutejournal.com",
-				"www.accountkiller.com/en",
-				"www.airbnb.com",
-				"bugmenot.com",
-				"cloudconvert.com",
-				"consumerreports.org",
-				"www.coveredcalendar.com",
-				"www.daysold.com",
-				"dictation.io",
-				"www.duolingo.com",
-				"www.joinhoney.com/install",
-				"www.hotelwifitest.com",
-				"www.mailinator.com",
-				"www.midwaymeetup.com",
-				"ninite.com",
-				"www.pdfescape.com",
-				"www.pepfeed.com",
-				"getpocket.com",
-				"rainymood.com",
-				"runpee.com",
-				"www.stumbleupon.com",
-				"topdocumentaryfilms.com",
-				"usersearch.org",
-				"www.whatshouldireadnext.com/search",
-				"willmyphonework.net",
-				"zerodollarmovies.com"};
 
-		String[] commands = new String[] {
-				"\\threeminutejournalplain",
-				"\\accountkillerplain",
-				"\\airbnbplain",
-				"\\bugmenotplain",
-				"\\cloudconvertplain",
-				"\\consumerreportsplain",
-				"\\coveredcalendarplain",
-				"\\daysoldplain",
-				"\\dictationplain",
-				"\\duolingoplain",
-				"\\honeyplain",
-				"\\hotelwifitestplain",
-				"\\mailinatorplain",
-				"\\midwaymeetupplain",
-				"\\niniteplain",
-				"\\pdfescapeplain",
-				"\\pepfeedplain",
-				"\\getpocketplain",
-				"\\rainymoodplain",
-				"\\runpeeplain",
-				"\\stumbleuponplain",
-				"\\topdocumentaryfilmsplain",
-				"\\usersearchplain",
-				"\\whatshouldireadnextplain",
-				"\\willmyphoneworkplain",
-				"\\zerodollarmoviesplain"};
 
 		final int[] SPOT_CHECK_WIDTHS = new int[] {320, 375, 384, 414, 480, 600, 768, 1024, 1280};
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
@@ -891,18 +894,7 @@ public class ResultProcessor {
 					System.out.println(mostRecentRun.getAbsolutePath());
 				}
 
-//				Write out results into webpage for Jekyll
-				String jekyllCode = null;
-				try {
-					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				LocalDateTime now = LocalDateTime.now();
-				int year = now.getYear();
-				int month = now.getMonthValue();
-				int day = now.getDayOfMonth();
-				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
+//
 			}
 		}
 		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
@@ -977,7 +969,65 @@ public class ResultProcessor {
 		return grouped;
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
+	public void writeArchiveWebpages() throws IOException {
+		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
+		HashMap<String, ArrayList<String>> groupedResults = new HashMap<>();
+		groupedResults.put("Element Collision",new ArrayList<>());
+		groupedResults.put("Element Protrusion",new ArrayList<>());
+		groupedResults.put("Viewport Protrusion",new ArrayList<>());
+		groupedResults.put("Small-Range",new ArrayList<>());
+		groupedResults.put("Wrapping",new ArrayList<>());
+
+
+		String fullTable = "";
+		fullTable += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
+		int totalCount = 0;
+		for (File f : files) {
+			File mostRecentRun = lastFileModified(f.getAbsolutePath() + "");
+			String webpage = this.webpages[files.indexOf(f)];
+
+			// Write out results into webpage for Jekyll
+			String jekyllCode = null;
+			int errorCount = getErrorCount(mostRecentRun);
+			String[] classifications = getClassifications(mostRecentRun, errorCount);
+			String[] categories = getCategories(mostRecentRun, errorCount);
+			String[] reasons = getReasons(mostRecentRun, errorCount);
+			for (int i = 1; i <= errorCount; i++) {
+				String tableRow =   generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons);
+				String category = categories[i-1];
+
+				groupedResults.get(category).add(webpage + " | " + tableRow);
+				fullTable += "| " + String.valueOf(totalCount + i) + " | "  + tableRow + "\n";
+			}
+			totalCount = totalCount + errorCount;
+			jekyllCode = addInScreenshotTable(mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons);
+			LocalDateTime now = LocalDateTime.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int day = now.getDayOfMonth();
+			writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
+		}
+		int count = 0;
+		for (String key : groupedResults.keySet()) {
+			for (String row : groupedResults.get(key)) {
+				count++;
+				System.out.println("| " + count + " | " + row);
+			}
+		}
+//		System.out.println(fullTable);
+	}
+
+	private static String generateTableRow(int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons) {
+//		System.out.println(totalCount + " " + i);
+		String row = "";
+		File ssFile = new File(mostRecentRun + "/fault" + i);
+		String imageName = ssFile.listFiles()[0].getName();
+		row +=  categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
+				") | " + classifications[i-1] + " | " + reasons[i-1] + " |";
+		return row;
+	}
+
+	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons) throws IOException {
 		String jekyllCode = "";
 		try {
 
@@ -989,16 +1039,12 @@ public class ResultProcessor {
 			int numDecs = mutator.getDeclarationCount();
 
 			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
-			jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
+			jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | Distinct RLF |\n";
 
-			String[] classifications = getClassifications(mostRecentRun, totalReports);
-			String[] categories = getCategories(mostRecentRun, totalReports);
-			String[] reasons = getReasons(mostRecentRun, totalReports);
+
 			for (int i = 1; i <= totalReports; i++) {
-				File ssFile = new File(mostRecentRun + "/fault" + i);
-				String imageName = ssFile.listFiles()[0].getName();
-				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + reasons[i-1] + " |\n";
+
+				jekyllCode += "| " + i + "| " + generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons)+" |\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
