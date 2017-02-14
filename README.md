@@ -121,7 +121,16 @@ The full file path produced in this example is `Users/joebloggs/redecheck-rlf-ex
 
 ## Understanding ReDeCheck's Reports
 
-After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots, which will be saved in the `reports` directory of your ReDeCheck installation, with each report marked with a timestamp. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
+After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots, which will be saved in the `reports` directory of your ReDeCheck installation, with each report marked with a timestamp, such as the example below:
+1. `reports`
+..* `Duolingo`
+....* 'index-2017-01-29_12-28-49'
+......* `/fault1`
+......* `/fault1`
+......* `fault-report.txt`
+
+
+To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
 
 As ReDeCheck is currently capable of detecting five different types of responsive layout failure, an example of each is presented below so you know what to expect when going through your own test reports.
 
