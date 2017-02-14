@@ -45,7 +45,9 @@ your operating system or your integrated development environments to accomplish 
 ##### Firefox
 
 ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the web page under test. Currently, it has been tested on version 46, which is available at
-https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest. As there are a large number of options available, here is an example. To install on MacOS, first select `mac/` and then select your desired language (e.g. `en-GB` for English UK). Please be careful to not simply download the SDK (e.g. `firefox-46.0.mac-x86_64.sdk.tar.bz2`) as this will not provide you with an executable Firefox browser.
+https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest. There is no need to manually add Firefox into your `PATH` variable, as the tool will automatically find it on your workstation.
+
+As there are a large number of options available, here is an example. To install on MacOS, first select `mac/` and then select your desired language (e.g. `en-GB` for English UK). Please be careful to not simply download the SDK (e.g. `firefox-46.0.mac-x86_64.sdk.tar.bz2`) as this will not provide you with an executable Firefox browser.
 
 You may be able to use ReDeCheck with a more recent version of Firefox, but due to widely reported communication issues between Selenium and Firefox version 47 and later, there is a chance it may not execute correctly. If this is the case, using version 46 should solve the issue.
 
