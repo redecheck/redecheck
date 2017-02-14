@@ -110,7 +110,7 @@ To aid with any potential replication of our experimental results, we have made 
 Running ReDeCheck to test a local web page is simple. Simply navigate into the `target` directory of your ReDeCheck installation (to make sure you're in the same directory as the executable .jar generated in the previous step) and run the following command, which runs the Duolingo example from a local clone of the webpage repository:
 ```java -jar redecheck-jar-with-dependencies.jar --url Duolingo/index.html --preamble /Users/joebloggs/redecheck-rlf-examples/```
 
-To explain how the various parameters are combined into a full local file path for ReDeCheck to use, we'll work through the above example.
+To explain how the various parameters are combined into a full local file path for ReDeCheck to use, the above example is now explained step-by-step.
 
 | Parameter        | Description           |
 | ------------- |-------------- |
@@ -123,7 +123,7 @@ The full file path produced in this example is `Users/joebloggs/redecheck-rlf-ex
 
 After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots, which will be saved in the `reports` directory of your ReDeCheck installation, with each report marked with a timestamp. To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
 
-As ReDeCheck is currently capable of detecting five different types of responsive layout failure, we'll present an example of each so you know what to expect when going through your own test reports.
+As ReDeCheck is currently capable of detecting five different types of responsive layout failure, an example of each is presented below so you know what to expect when going through your own test reports.
 
 #### Element Collision
 Element collision failures occur when two elements that were not overlapping at wider widths begin to overlap as the viewport narrows. The two offending elements and the viewport widths at which the failure occurs are presented in the test report as follows:
