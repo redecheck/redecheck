@@ -122,26 +122,36 @@ The full file path produced in this example is `Users/joebloggs/redecheck-rlf-ex
 ## Understanding ReDeCheck's Reports
 
 After the tool has finished analysing a webpage for responsive layout failures, it produces a report and a series of highlighted screenshots, which will be saved in the `reports` directory of your ReDeCheck installation, with each report marked with a timestamp, such as the example below:
-1. `reports`
-..* `Duolingo`
-....* 'index-2017-01-29_12-28-49'
-......* `/fault1`
-......* `/fault1`
-......* `fault-report.txt`
 
+```
+reports
+└───Duolingo
+    └───index-2017-01-29_12-28-49
+        │   fault-report.txt
+        └───fault1
+        │   └───overlapWidth600.png
+        └───fault2
+        │   └───overflowWidth800.png
+        └───fault3
+            └───wrappingWidth350.png       
+```
+
+Each issue listed in `fault-report.txt` is also highlighted in an accompanying screenshot. Subdirectories named `faultXXX` where XXX is the number of the failure in `fault-report.txt` contain the relevant screenshot.
+
+**Please note** - If the tool detects no issues with the test web page, the directory for the report will not contain any `/fault*` subdirectories and `fault-report.txt` will simply state `NO ERRORS DETECTED`.
 
 To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
 
 As ReDeCheck is currently capable of detecting five different types of responsive layout failure, an example of each is presented below so you know what to expect when going through your own test reports.
 
 #### Element Collision
-Element collision failures occur when two elements that were not overlapping at wider widths begin to overlap as the viewport narrows. The two offending elements and the viewport widths at which the failure occurs are presented in the test report as follows:
+Element collision failures occur when two elements that were not overlapping at wider widths begin to overlap as the viewport narrows. The two offending elements and the viewport widths at which the failure occurs are presented in the `fault-report.txt` file as follows:
 
 ```
 ELEMENTS /HTML/BODY/DIV/DIV[2]/DIV/DIV[2] AND /HTML/BODY/DIV/DIV[2]/DIV/DIV/FORM/DIV ARE OVERLAPPING BETWEEN 768 AND 1132
 ```
 
-The two offending elements are also highlighted in a screenshot which accompanies the test report. Subdirectories named `faultXXX` where XXX is the number of the failure in the report contain the relevant screenshot. The screenshot for the above failure is shown below:
+The screenshot for the above failure is shown below:
 ![Highlighted image of element collision](readme-images/overlapWidth950.png "Highlighted image of element collision")
 
 #### Element Protrusion
