@@ -984,7 +984,7 @@ public class ResultProcessor {
 
 		String fullTable = "";
 		fullTable += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
-		int totalCount = 0;
+		int totalCount = 1;
 		for (File f : files) {
 			File mostRecentRun = lastFileModified(f.getAbsolutePath() + "");
 			String webpage = this.webpages[files.indexOf(f)];
@@ -997,12 +997,13 @@ public class ResultProcessor {
 			String[] reasons = getReasons(mostRecentRun, errorCount);
 			ArrayList<int[]> bounds = getFailureBounds(mostRecentRun);
 			for (int i = 1; i <= errorCount; i++) {
-				String tableRow =   generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons, bounds);
+				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, true);
 				String category = categories[i-1];
 				String classification = classifications[i-1];
 				try {
 					groupedResults.get(classification).get(category).add(tableRow);
-					fullTable += "| " + String.valueOf(totalCount + i) + " | " + tableRow + "\n";
+//					fullTable += "| " + String.valueOf(totalCount + i) + " | " + tableRow + "\n";
+					totalCount++;
 				} catch(Exception e ) {
 //					System.out.println(tableRow);
 //					System.out.println(category);
@@ -1010,45 +1011,68 @@ public class ResultProcessor {
 					e.printStackTrace();
 				}
 			}
-			totalCount = totalCount + errorCount;
-			jekyllCode = addInScreenshotTable(mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons, bounds);
+//			totalCount = totalCount + errorCount;
+			jekyllCode = addInScreenshotTable(totalCount-errorCount,mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons, bounds);
 			LocalDateTime now = LocalDateTime.now();
 			int year = now.getYear();
 			int month = now.getMonthValue();
 			int day = now.getDayOfMonth();
 			writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 		}
-		int count = 0;
-		for (String classification : classes) {
-			System.out.println("\n### " + classification + "\n");
-			System.out.println("| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | Screenshot |");
-			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
-			for (String key : types) {
-				for (String row : hm.get(key)) {
-					count++;
-					System.out.println("| " + count + " | " + row);
-				}
-			}
-		}
+//		int count = 0;
+//		for (String classification : classes) {
+//			System.out.println("\n### " + classification + "\n");
+//			System.out.println("| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | More Details |");
+//			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
+//			for (String key : types) {
+//				for (String row : hm.get(key)) {
+//					count++;
+//					System.out.println(row);
+////					"| " + count + " | " +
+//				}
+//			}
+//		}
 
 
 //		System.out.println(fullTable);
 	}
 
-	private static String generateTableRow(int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) {
+	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, boolean full) {
 //		System.out.println(totalCount + " " + i);
 		String row = "";
 		File ssFile = new File(mostRecentRun + "/fault" + i);
 		String imageName = ssFile.listFiles()[0].getName();
 		int[] bs = bounds.get(i-1);
 
+		LocalDateTime now = LocalDateTime.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		String monthS = "";
+		int day = now.getDayOfMonth();
+		String dayS = "";
+		if (month < 10) {
+			monthS = "0" + month;
+		} else {
+			monthS = "" + month;
+		}
 
-		row +=  categories[i-1] + "| | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i-1] + " | " + reasons[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-				") |";
+		if (day < 10) {
+			dayS = "0" + day;
+		} else {
+			dayS = "" + day;
+		}
+
+		if (full) {
+			row += "| " + count + " | " + categories[i - 1] + "| | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | [Click]({{ site.baseurl }}/" + year + "/" + monthS + "/" + dayS + "/" + webpage + ".html) |";
+			//				" | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
+			//				") |";
+		} else {
+			row += "| " + count + " | " + categories[i - 1] + "| | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName + ") |";
+		}
 		return row;
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
+	private static String addInScreenshotTable(int count, File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
 		String jekyllCode = "";
 		try {
 
@@ -1060,12 +1084,11 @@ public class ResultProcessor {
 			int numDecs = mutator.getDeclarationCount();
 
 			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
-			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | Screenshot |\n";
+			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Viewport Range | Classification | Reason | Screenshot |\n";
 
 
 			for (int i = 1; i <= totalReports; i++) {
-
-				jekyllCode += "| " + i + "| " + generateTableRow(i, mostRecentRun, webpage, classifications, categories, reasons, bounds)+" |\n";
+				jekyllCode += generateTableRow(count+i-1, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, false) + "\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1197,13 +1220,14 @@ public class ResultProcessor {
 			String contents = "";
 
 			while (line != null) {
-				while (!line.equals("")) {
-					failureString += line;
-					line = br.readLine();
-				}
-				String[] splits, splits2;
-				int min = 0, max = 0;
 				try {
+					while (!line.equals("")) {
+						failureString += line;
+						line = br.readLine();
+					}
+					String[] splits, splits2;
+					int min = 0, max = 0;
+
 					if (failureString.contains("overflowed the viewport")) {
 						splits = failureString.split(" and ");
 						splits2 = splits[0].split("between ");
@@ -1244,6 +1268,15 @@ public class ResultProcessor {
 						foundBounds = true;
 
 					}
+
+					if (min == 0 || max == 0) {
+						System.out.println(line);
+					}
+					boundsList.add(new int[] {min, max});
+					failureString = "";
+//				if (line.equals("")) {
+					errorIndex++;
+					foundBounds = false;
 				} catch (Exception ex) {
 					System.out.println("Issue with " + failureString);
 				}
@@ -1256,14 +1289,7 @@ public class ResultProcessor {
 //						errorStrings.add(min + " - " + max);
 //					}
 //				}
-				if (min == 0 || max == 0) {
-					System.out.println(line);
-				}
-				boundsList.add(new int[] {min, max});
-				failureString = "";
-//				if (line.equals("")) {
-				errorIndex++;
-				foundBounds = false;
+
 //				}
 				line = br.readLine();
 			}

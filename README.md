@@ -3,8 +3,7 @@
 ReDeCheck (REsponsive DEsign CHECKer, pronounced “Ready Check”) is an automated tool designed to aid developers during
 the process of testing the layouts of responsive (i.e., "mobile ready") web sites. With the huge range of devices
 currently available, performing adequate quality assurance on a sufficient range of devices is extremely difficult, if
-not impossible. Yet, since it is important to have a high-quality mobile-ready web site, ReDeCheck makes responsive web
-testing both efficient and effective!
+not impossible. ReDeCheck extracts the layout of a web page at a wide variety of viewport widths, from smartphones to desktops, then analyses the layout behaviour found to detect common RWD layout issues, such as overlapping elements, elements overflowing their containers or the viewport, and incongruous wrapping elements. Since it is important to have a high-quality mobile-ready web site, ReDeCheck makes responsive web testing both efficient and effective!
 
 ## Installing Maven
 
@@ -45,8 +44,10 @@ your operating system or your integrated development environments to accomplish 
 
 ##### Firefox
 
-ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the webpage under test. Currently, it relies upon version 46, which is available at
-https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest.
+ReDeCheck uses the popular Mozilla Firefox web browser to render and analyse the web page under test. Currently, it has been tested on version 46, which is available at
+https://ftp.mozilla.org/pub/firefox/releases/46.0/, for all major operating systems. Simply download and install the relevant version for your setup and ReDeCheck will handle the rest. As there are a large number of options available, here is an example. To install on MacOS, first select `mac/` and then select your desired language (e.g. `en-GB` for English UK). Please be careful to not simply download the SDK (e.g. `firefox-46.0.mac-x86_64.sdk.tar.bz2`) as this will not provide you with an executable Firefox browser.
+
+You may be able to use ReDeCheck with a more recent version of Firefox, but due to widely reported communication issues between Selenium and Firefox version 47 and later, there is a chance it may not execute correctly. If this is the case, using version 46 should solve the issue.
 
 #### Installation with Eclipse
 
