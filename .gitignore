@@ -13,5 +13,9 @@
 /.idea/
 .classpath
 time-processing/.Rproj.user/
+/times/
+/time-processing/
+
+
 
 *.iml

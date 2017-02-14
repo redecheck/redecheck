@@ -76,6 +76,17 @@ You may be able to use ReDeCheck with a more recent version of Firefox, but due 
 3. Maven will build the project from scratch, downloading all the required dependencies for the project automatically.
 4. A JAR file called `redecheck-jar-with-dependencies.jar` should have been created in the `target` directory of ReDeCheck's main directory; if this JAR file does not exist, then the installation with the command line failed and you will not yet be able to use ReDeCheck. Please try these steps again or, alternatively, try one of the methods that uses an IDE.
 
+## Directory Structure
+
+Before presenting usage examples for the tool, below is the directory structure following a clean clone of the repository:
+
+* `src` - Contains all the source code and test code for the tool
+* `resources` - Contains various drivers required by the tool
+* `readme-images` - Contains images used by this README file
+
+**IMPORTANT** - After running the tool for the first time, a `reports` directory will be created. This is where all the failure reports will be stored.
+
+
 ## Running ReDeCheck
 
 Once you have ReDeCheck correctly packaged and ready to run on your workstation, you have two options regarding the running of the tool:

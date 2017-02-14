@@ -1,8 +1,0 @@
-Changed term from 1.0 to -1.0
-figure {
-	margin: 1.0em 40.0px;
-}
-
-figure {
-	margin: -1.0em 40.0px;
-}
