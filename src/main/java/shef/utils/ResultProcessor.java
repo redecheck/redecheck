@@ -981,63 +981,76 @@ public class ResultProcessor {
 			}
 		}
 
-
-		String fullTable = "";
-		fullTable += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
 		int totalCount = 1;
+		LocalDateTime now = LocalDateTime.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
 		for (File f : files) {
 			File mostRecentRun = lastFileModified(f.getAbsolutePath() + "");
 			String webpage = this.webpages[files.indexOf(f)];
 
 			// Write out results into webpage for Jekyll
-			String jekyllCode = null;
 			int errorCount = getErrorCount(mostRecentRun);
 			String[] classifications = getClassifications(mostRecentRun, errorCount);
 			String[] categories = getCategories(mostRecentRun, errorCount);
 			String[] reasons = getReasons(mostRecentRun, errorCount);
+			String[] distinctRLFMapping = getDistinctRLFMapping(mostRecentRun, errorCount);
 			ArrayList<int[]> bounds = getFailureBounds(mostRecentRun);
 			for (int i = 1; i <= errorCount; i++) {
-				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, true);
 				String category = categories[i-1];
 				String classification = classifications[i-1];
+				String jekyllCode = "---\nlayout: post\ntitle: \"" + webpage + " Failure " + i + "\"\n---\n";
+				jekyllCode += "| **Report Type** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
+				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false);
+				String fullTableRow = generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, true);
+				jekyllCode += tableRow;
+
+				if (classification.equals("TP")) {
+					try {
+						String distinctContent = FileUtils.readFileToString(new File(redecheck + "reports/distinct/" + distinctRLFMapping[i - 1] + ".txt"));
+						jekyllCode += "\n\n## About Distinct RLF " + distinctRLFMapping[i-1] +"\n\n" + distinctContent;
+					} catch (FileNotFoundException fnfe) {
+
+					}
+				}
+
 				try {
-					groupedResults.get(classification).get(category).add(tableRow);
-//					fullTable += "| " + String.valueOf(totalCount + i) + " | " + tableRow + "\n";
+					groupedResults.get(classification).get(category).add(fullTableRow);
+					writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + "-failure-" + i + ".markdown");
 					totalCount++;
 				} catch(Exception e ) {
-//					System.out.println(tableRow);
-//					System.out.println(category);
-//					System.out.println(classification + "\n");
 					e.printStackTrace();
 				}
 			}
-//			totalCount = totalCount + errorCount;
-			jekyllCode = addInScreenshotTable(totalCount-errorCount,mostRecentRun, webpage, urls[files.indexOf(f)], errorCount, classifications, categories, reasons, bounds);
-			LocalDateTime now = LocalDateTime.now();
-			int year = now.getYear();
-			int month = now.getMonthValue();
-			int day = now.getDayOfMonth();
-			writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 		}
-//		int count = 0;
-//		for (String classification : classes) {
-//			System.out.println("\n### " + classification + "\n");
-//			System.out.println("| Report No. | Report Type | Distinct RLF No. | Web Page | Viewport Range | Classification | Reason | More Details |");
-//			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
-//			for (String key : types) {
-//				for (String row : hm.get(key)) {
-//					count++;
-//					System.out.println(row);
-////					"| " + count + " | " +
-//				}
-//			}
-//		}
+		String archiveString = "---\n" +
+				"layout: page\n" +
+				"title: Results Archive\n" +
+				"permalink: /results-archive/\n" +
+				"---\n\n";
 
+		String introduction = FileUtils.readFileToString(new File(redecheck+ "reports/distinct/intro.txt"));
 
-//		System.out.println(fullTable);
+		archiveString += introduction + "\n\n";
+
+		for (String classification : classes) {
+			archiveString += "\n### " + classification + "### {#" + classification + "}\n\n";
+			archiveString += "| Report Type | Distinct RLF | Web Page | Viewport Range | Classification | Reason |\n";
+			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
+			for (String key : types) {
+				for (String row : hm.get(key)) {
+					archiveString += row + "\n";
+				}
+			}
+		}
+
+		writeToFile(archiveString, githubio, "results-archive.md");
 	}
 
-	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, boolean full) {
+
+
+	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, String[] distinctRLFMapping, boolean full) {
 //		System.out.println(totalCount + " " + i);
 		String row = "";
 		File ssFile = new File(mostRecentRun + "/fault" + i);
@@ -1063,38 +1076,36 @@ public class ResultProcessor {
 		}
 
 		if (full) {
-			row += "| " + count + " | " + categories[i - 1] + "| | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | [Click]({{ site.baseurl }}/" + year + "/" + monthS + "/" + dayS + "/" + webpage + ".html) |";
-			//				" | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-			//				") |";
+			row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i-1] + " | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information]({{ site.baseurl }}/" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
 		} else {
-			row += "| " + count + " | " + categories[i - 1] + "| | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName + ") |";
+			row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i-1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
 		}
 		return row;
 	}
 
-	private static String addInScreenshotTable(int count, File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
-		String jekyllCode = "";
-		try {
-
-			String current = new java.io.File(".").getCanonicalPath();
-			System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
-
-			WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
-			int numElements = mutator.getElementCount(faultExamples + webpage);
-			int numDecs = mutator.getDeclarationCount();
-
-			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
-			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Viewport Range | Classification | Reason | Screenshot |\n";
-
-
-			for (int i = 1; i <= totalReports; i++) {
-				jekyllCode += generateTableRow(count+i-1, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, false) + "\n";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return jekyllCode;
-	}
+//	private static String addInScreenshotTable(int count, File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
+//		String jekyllCode = "";
+//		try {
+//
+//			String current = new java.io.File(".").getCanonicalPath();
+//			System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+//
+//			WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
+//			int numElements = mutator.getElementCount(faultExamples + webpage);
+//			int numDecs = mutator.getDeclarationCount();
+//
+//			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
+//			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Viewport Range | Classification | Reason | Screenshot |\n";
+//
+//
+//			for (int i = 1; i <= totalReports; i++) {
+//				jekyllCode += generateTableRow(count+i-1, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false) + "\n";
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return jekyllCode;
+//	}
 
 	private static String[] getReasons(File f, int count) {
 		String[] results = new String[count];
@@ -1111,6 +1122,33 @@ public class ResultProcessor {
 			e.printStackTrace();
 			try {
 				new File(f.getAbsolutePath() + "/reasons.txt").createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return results;
+	}
+
+	private String[] getDistinctRLFMapping(File mostRecentRun, int errorCount) {
+		String[] results = new String[errorCount];
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(mostRecentRun.getAbsolutePath() + "/distinct-mapping.txt"));
+			String line = br.readLine();
+			int counter = 0;
+			while (line != null) {
+				if (!line.equals("-")) {
+					results[counter] = line;
+				} else {
+					results[counter] = "";
+				}
+
+				counter++;
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				new File(mostRecentRun.getAbsolutePath() + "/reasons.txt").createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
