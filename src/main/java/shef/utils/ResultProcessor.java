@@ -971,6 +971,10 @@ public class ResultProcessor {
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
 		String[] types = new String[] {"Element Collision","Element Protrusion", "Viewport Protrusion", "Small-Range","Wrapping"};
 		String[] classes = new String[] {"TP", "FP", "NOI"};
+		HashMap<String, String> classificationMap = new HashMap<>();
+		classificationMap.put("TP", "True Positives");
+		classificationMap.put("FP", "False Positives");
+		classificationMap.put("NOI", "Non-Observable Issues");
 		HashMap<String, HashMap<String, ArrayList<String>>> groupedResults = new HashMap<>();
 
 		for (String c : classes) {
@@ -1035,7 +1039,7 @@ public class ResultProcessor {
 		archiveString += introduction + "\n\n";
 
 		for (String classification : classes) {
-			archiveString += "\n### " + classification + "### {#" + classification + "}\n\n";
+			archiveString += "\n### " + classificationMap.get(classification) + "### {#" + classification + "}\n\n";
 			archiveString += "| Report Type | Distinct RLF | Web Page | Viewport Range | Classification | Reason |\n";
 			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
 			for (String key : types) {
