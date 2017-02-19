@@ -61,16 +61,18 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
 
             Graphics2D g2d = img.createGraphics();
             g2d.setColor(Color.RED);
-            g2d.setStroke(new BasicStroke(2));
+            g2d.setStroke(new BasicStroke(3));
             int[] coords1 = e1.getBoundingCoords();
             g2d.drawRect(coords1[0], coords1[1], coords1[2] - coords1[0], coords1[3] - coords1[1]);
 
             g2d.setColor(Color.CYAN);
-            g2d.setStroke(new BasicStroke(1));
+            g2d.setStroke(new BasicStroke(3));
             for (Node n : row) {
-                Element e2 = lf.getElementMap().get(n.getXpath());
-                int[] coords2 = e2.getBoundingCoords();
-                g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
+                if (!n.getXpath().equals(wrapped.getXpath())) {
+                    Element e2 = lf.getElementMap().get(n.getXpath());
+                    int[] coords2 = e2.getBoundingCoords();
+                    g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
+                }
             }
             g2d.dispose();
             try {

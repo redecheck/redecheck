@@ -52,7 +52,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);
-//        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(3));
         int[] coords1 = e1.getBoundingCoords();
         g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 

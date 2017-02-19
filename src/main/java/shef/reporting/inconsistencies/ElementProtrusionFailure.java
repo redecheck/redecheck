@@ -103,7 +103,7 @@ public class ElementProtrusionFailure extends ResponsiveLayoutFailure {
         Graphics2D g2d = img.createGraphics();
 
         // Highlight the two elements in different colours
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(3));
         g2d.setColor(Color.RED);
         g2d.drawRect(coords1[0], coords1[1], coords1[2] - coords1[0], coords1[3] - coords1[1]);
         g2d.setColor(Color.CYAN);
