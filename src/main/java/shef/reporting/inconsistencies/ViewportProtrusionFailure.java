@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGExtractor;
+import shef.main.RLGExtractor;
 import shef.rlg.Node;
 
 import javax.imageio.ImageIO;
@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -48,7 +47,7 @@ public class ViewportProtrusionFailure extends ResponsiveLayoutFailure {
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
         try {
-            int captureWidth = min;
+            int captureWidth = (min+max)/2;
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
             BufferedImage img;

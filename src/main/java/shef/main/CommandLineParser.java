@@ -1,4 +1,4 @@
-package shef.redecheck;
+package shef.main;
 
 import com.beust.jcommander.Parameter;
 

@@ -27,7 +27,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import shef.redecheck.Utils;
+import shef.main.Utils;
 
 /**
  * Created by thomaswalsh on 05/10/2015.

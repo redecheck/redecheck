@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import shef.layout.*;
 import shef.layout.Sibling;
-import shef.redecheck.Redecheck;
+import shef.main.Tool;
 import edu.gatech.xpert.dom.*;
 import edu.gatech.xpert.dom.layout.*;
 import java.util.*;
@@ -858,7 +858,7 @@ public class ResponsiveLayoutGraph {
     		return lf;
     	} else {
             if (!lFactories.containsKey(width)) {
-                Redecheck.capturePageModel(url, new int[]{width}, doms, 50, false, false, driver, swf, lFactories);
+                Tool.capturePageModel(url, new int[]{width}, doms, 50, false, false, driver, swf, lFactories);
                 alreadyGathered.add(width);
             }
     		return lFactories.get(width);
@@ -1191,19 +1191,19 @@ public class ResponsiveLayoutGraph {
     public void captureExtraDoms(int[] widths) {
     	if (widths.length == 2) {
 	    	if ((!alreadyGathered.contains(widths[0])) && (!alreadyGathered.contains(widths[1]))) {
-	    		Redecheck.capturePageModel(url, widths, doms, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, widths, doms, sleep, false, false, wdriver, swf, lFactories);
 	    		alreadyGathered.add(widths[0]);
 	    		alreadyGathered.add(widths[1]);
 	    	} else if (!alreadyGathered.contains(widths[0])) {
-	    		Redecheck.capturePageModel(url, new int[]{widths[0]}, doms, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[0]}, doms, sleep, false, false, wdriver, swf, lFactories);
 	    		alreadyGathered.add(widths[0]);
 	    	} else if (!alreadyGathered.contains(widths[1])) {
-	    		Redecheck.capturePageModel(url, new int[]{widths[1]}, doms, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[1]}, doms, sleep, false, false, wdriver, swf, lFactories);
 	    		alreadyGathered.add(widths[1]);
 	    	}
     	} else if (widths.length == 1) {
     		if (!alreadyGathered.contains(widths[0])) {
-	    		Redecheck.capturePageModel(url, new int[]{widths[0]}, doms, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[0]}, doms, sleep, false, false, wdriver, swf, lFactories);
 	    		alreadyGathered.add(widths[0]);
     		}
     	}

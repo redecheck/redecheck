@@ -1,4 +1,4 @@
-package shef.redecheck;
+package shef.main;
 
 import java.awt.image.BufferedImage;
 import java.io.*;

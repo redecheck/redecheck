@@ -1,8 +1,7 @@
 package shef.utils;
 
 import org.apache.commons.io.FileUtils;
-import shef.mutation.WebpageMutator;
-import shef.redecheck.Utils;
+import shef.main.Utils;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -19,11 +18,11 @@ public class ResultProcessor {
 	int[][] rq2results;
 	Double[][] rq3results;
 //	static String preamble = "/Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
-	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
+	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/main-journal-paper-data/";
 	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
-	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
-	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/redecheck-org/";
+	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/main-icst/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/main-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
@@ -896,7 +895,7 @@ public class ResultProcessor {
 			}
 		}
 		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-//		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-rerun.csv");
+//		writeToFile(multiTimeData, main+"time-processing/", "timing-data-issta-rerun.csv");
 	}
 
 	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
@@ -1005,9 +1004,13 @@ public class ResultProcessor {
 				String category = categories[i-1];
 				String classification = classifications[i-1];
 				String jekyllCode = "---\nlayout: post\ntitle: \"" + webpage + " Failure " + i + "\"\n---\n";
-				jekyllCode += "| **Report Type** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
-				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false);
-				String fullTableRow = generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, true);
+				if (classification.equals("TP")) {
+					jekyllCode += "| **Report Type** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
+				} else {
+					jekyllCode += "| **Report Type** | **Viewport Range** | **Classification** | **Reason** |\n";
+				}
+				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false, classification.equals("TP"));
+				String fullTableRow = generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, true, classification.equals("TP"));
 				jekyllCode += tableRow;
 
 				if (classification.equals("TP")) {
@@ -1040,7 +1043,11 @@ public class ResultProcessor {
 
 		for (String classification : classes) {
 			archiveString += "\n### " + classificationMap.get(classification) + "### {#" + classification + "}\n\n";
-			archiveString += "| Report Type | Distinct RLF | Web Page | Viewport Range | Classification | Reason |\n";
+			if (classification.equals("TP")) {
+				archiveString += "| **Report Type** | **Distinct RLF** | **Web Page** | **Viewport Range** | **Classification** | **Reason** |\n";
+			} else {
+				archiveString += "| **Report Type** | **Web Page** | **Viewport Range** | **Classification** | **Reason** |\n";
+			}
 			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
 			for (String key : types) {
 				for (String row : hm.get(key)) {
@@ -1054,7 +1061,7 @@ public class ResultProcessor {
 
 
 
-	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, String[] distinctRLFMapping, boolean full) {
+	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, String[] distinctRLFMapping, boolean full, boolean tp) {
 //		System.out.println(totalCount + " " + i);
 		String row = "";
 		File ssFile = new File(mostRecentRun + "/fault" + i);
@@ -1080,9 +1087,17 @@ public class ResultProcessor {
 		}
 
 		if (full) {
-			row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i-1] + " | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information]({{ site.baseurl }}/" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
+			if (tp) {
+				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
+			} else {
+				row += "| " + categories[i - 1] + "| " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
+			}
 		} else {
-			row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i-1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+			if (tp) {
+				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../../../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+			} else {
+				row += "| " + categories[i - 1] + "| " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../../../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+			}
 		}
 		return row;
 	}

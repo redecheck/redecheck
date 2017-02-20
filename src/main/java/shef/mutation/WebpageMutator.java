@@ -12,14 +12,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.rits.cloning.Cloner;
 
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import shef.redecheck.Utils;
+import shef.main.Utils;
 
 public class WebpageMutator {
 	
@@ -38,7 +37,7 @@ public class WebpageMutator {
     
 	
 	// Update this to the path to your project
-	String preamble = "file:///Users/thomaswalsh/Documents/Workspace/redecheck/testing/";
+	String preamble = "file:///Users/thomaswalsh/Documents/Workspace/main/testing/";
 	String preamble2 = "file:///Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	// Storage for mutation candidates and other things
 	HashSet<String> usedClassesHTML, usedTagsHTML, usedIdsHTML;
@@ -374,7 +373,7 @@ public class WebpageMutator {
 
 //    public static String getWebpageData(File f) {
 //        String result = "";
-//        String dirString = f.toString().replace("redecheck-icst/reports", "fault-examples");
+//        String dirString = f.toString().replace("main-icst/reports", "fault-examples");
 //        try {
 //            int htmlLines = countLines((dirString+"/index.html").replace("file:", ""));
 //            System.out.println(htmlLines);

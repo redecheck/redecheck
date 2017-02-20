@@ -1,4 +1,4 @@
-package shef.redecheck;
+package shef.main;
 
 
 
@@ -143,7 +143,7 @@ public class RLGExtractor implements Runnable {
             initialDoms = sampleWidths.length;
 
             // Capture the layout of the page at each width
-            Redecheck.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
+            Tool.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
 
             // For each sampled width, analyse the DOM to construct the specific layout structure
@@ -201,12 +201,12 @@ public class RLGExtractor implements Runnable {
             String[] splits = shortUrl.split("/");
             String webpage = splits[0];
             String mutant = "index";
-            spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/spotcheck/");
-            exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + webpage + "/exhaustive/");
+            spotcheckDir = new File(Tool.redecheck + "/screenshots/" + webpage + "/spotcheck/");
+            exhaustiveDir = new File(Tool.redecheck + "/screenshots/" + webpage + "/exhaustive/");
         } else {
             String[] splits = shortUrl.split("www.");
-            spotcheckDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
-            exhaustiveDir = new File(Redecheck.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
+            spotcheckDir = new File(Tool.redecheck + "/screenshots/" + splits[1] + "/spotcheck/");
+            exhaustiveDir = new File(Tool.redecheck + "/screenshots/" + splits[1] + "/exhaustive/");
         }
         for (String scTechnique : spotCheckWidths.keySet()) {
             File scTechFile = new File(spotcheckDir + "/" + scTechnique + "/");
@@ -234,8 +234,8 @@ public class RLGExtractor implements Runnable {
     }
 
     public static BufferedImage getScreenshot(int captureWidth, int errorID, HashMap<Integer, LayoutFactory> lfs, WebDriver d, String fullUrl) {
-        Redecheck.capturePageModel(fullUrl, new int[] {captureWidth}, new HashMap<Integer, DomNode>(), Redecheck.sleep, false, false, d, new StopwatchFactory(), lfs);
-        return Utils.getScreenshot(fullUrl,captureWidth, Redecheck.sleep, d, errorID);
+        Tool.capturePageModel(fullUrl, new int[] {captureWidth}, new HashMap<Integer, DomNode>(), Tool.sleep, false, false, d, new StopwatchFactory(), lfs);
+        return Utils.getScreenshot(fullUrl,captureWidth, Tool.sleep, d, errorID);
     }
 
     public StopwatchFactory getSwf() {
@@ -440,7 +440,7 @@ public class RLGExtractor implements Runnable {
                         cssUrl = new URL("http:" + cssFile);
                     } else {
                         //                    System.out.println("LOCAL");
-                        cssUrl = new URL(("file://" + preamble + base + "/" + cssFile.replace("./", "")));
+                        cssUrl = new URL(("file://" + preamble + base.replace("/index.html", "") + "/" + cssFile.replace("./", "")));
                         //                    cssUrl = new URL(("file://" + preamble + base.split("/")[0] + "/" + base.split("/")[1] + "/" + cssFile.replace("./", "")));
                     }
                     //                System.out.println(cssUrl);

@@ -1,13 +1,11 @@
 package shef.reporting.inconsistencies;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGExtractor;
-import shef.redecheck.Utils;
+import shef.main.RLGExtractor;
+import shef.main.Utils;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 

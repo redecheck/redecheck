@@ -1,4 +1,4 @@
-package shef.redecheck;
+package shef.main;
 
 import com.rits.cloning.Cloner;
 import org.junit.Before;

@@ -51,7 +51,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>shef.redecheck.Redecheck</mainClass>
+                            <mainClass>shef.main.Tool</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
