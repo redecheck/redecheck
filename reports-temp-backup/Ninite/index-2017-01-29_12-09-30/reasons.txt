@@ -1,0 +1,2 @@
+Intentional layout change causes element to appear on separate row
+'terms' nav link clearly wrapped onto new line
