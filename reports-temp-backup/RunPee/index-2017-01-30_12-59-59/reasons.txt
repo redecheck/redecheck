@@ -1,6 +1,0 @@
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling
-Intentional layout change causes element to appear on separate row
