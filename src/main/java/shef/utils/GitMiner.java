@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by thomaswalsh on 31/05/2016.
  */
 public class GitMiner {
-    static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/redecheck/cloned-repos/";
+    static String dataDirectory = "/Users/thomaswalsh/Documents/PhD/main/cloned-repos/";
     String[] keywords = new String[] {"responsive", "fault", "layout", "error", "bug"};
     public GitMiner() {
         mine("https://github.com/twbs/bootstrap");

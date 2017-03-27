@@ -1,8 +1,7 @@
 package shef.utils;
 
 import org.apache.commons.io.FileUtils;
-import shef.mutation.WebpageMutator;
-import shef.redecheck.Utils;
+import shef.main.Utils;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -12,17 +11,17 @@ import java.util.*;
 
 public class ResultProcessor {
 
-	String[] webpages = new String[] {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
+//	String[] webpages = new String[] {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
 
 	int[][] rq1results;
 
 	int[][] rq2results;
 	Double[][] rq3results;
 //	static String preamble = "/Users/thomaswalsh/Documents/Workspace/Redecheck/testing/";
-	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/redecheck-journal-paper-data/";
+	static String preamble = "/Users/thomaswalsh/Documents/PhD/Papers/main-journal-paper-data/";
 	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
-	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/redecheck-icst/";
+	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/main-icst/";
 	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/redecheck-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
@@ -34,6 +33,89 @@ public class ResultProcessor {
 	HashMap<String, ArrayList<File>> groupedByOperator;
 	ArrayList<String> operatorList;
 	static NumberFormat formatter;
+
+	String[] webpages = new String[] {
+			"3-Minute-Journal",
+			"AccountKiller",
+			"AirBnb",
+			"BugMeNot",
+			"CloudConvert",
+			"Consumer-Reports",
+			"Covered-Calendar",
+			"Days-Old",
+			"Dictation",
+			"Duolingo",
+			"Honey",
+			"HotelWifiTest",
+			"Mailinator",
+			"MidwayMeetup",
+			"Ninite",
+			"Pdf-Escape",
+			"PepFeed",
+			"Pocket",
+			"RainyMood",
+			"RunPee",
+			"StumbleUpon",
+			"TopDocumentary",
+			"UserSearch",
+			"WhatShouldIReadNext",
+			"WillMyPhoneWork",
+			"ZeroDollarMovies"};
+	String[] urls = new String[] {
+			"www.3minutejournal.com",
+			"www.accountkiller.com/en",
+			"www.airbnb.com",
+			"bugmenot.com",
+			"cloudconvert.com",
+			"consumerreports.org",
+			"www.coveredcalendar.com",
+			"www.daysold.com",
+			"dictation.io",
+			"www.duolingo.com",
+			"www.joinhoney.com/install",
+			"www.hotelwifitest.com",
+			"www.mailinator.com",
+			"www.midwaymeetup.com",
+			"ninite.com",
+			"www.pdfescape.com",
+			"www.pepfeed.com",
+			"getpocket.com",
+			"rainymood.com",
+			"runpee.com",
+			"www.stumbleupon.com",
+			"topdocumentaryfilms.com",
+			"usersearch.org",
+			"www.whatshouldireadnext.com/search",
+			"willmyphonework.net",
+			"zerodollarmovies.com"};
+
+	String[] commands = new String[] {
+			"\\threeminutejournalplain",
+			"\\accountkillerplain",
+			"\\airbnbplain",
+			"\\bugmenotplain",
+			"\\cloudconvertplain",
+			"\\consumerreportsplain",
+			"\\coveredcalendarplain",
+			"\\daysoldplain",
+			"\\dictationplain",
+			"\\duolingoplain",
+			"\\honeyplain",
+			"\\hotelwifitestplain",
+			"\\mailinatorplain",
+			"\\midwaymeetupplain",
+			"\\niniteplain",
+			"\\pdfescapeplain",
+			"\\pepfeedplain",
+			"\\getpocketplain",
+			"\\rainymoodplain",
+			"\\runpeeplain",
+			"\\stumbleuponplain",
+			"\\topdocumentaryfilmsplain",
+			"\\usersearchplain",
+			"\\whatshouldireadnextplain",
+			"\\willmyphoneworkplain",
+			"\\zerodollarmoviesplain"};
 	
 	public ResultProcessor() {
 		allMutants = new ArrayList<>();
@@ -95,34 +177,6 @@ public class ResultProcessor {
 //		System.out.println(nonDetected.size() + " MUTANTS CAUSED NO RLG CHANGES");
 //		System.out.println("THERE WERE " + allMutants.size() + " TOTAL MUTANTS");
 	}
-
-//	private void processTimeData() {
-//		String resultString = "";
-//		for (String webpage : webpages) {
-////			resultString += webpage;
-//
-//			ArrayList<File> mutantFolders = getMutantFolders(webpage);
-//			double[] times = new double[mutantFolders.size()];
-//            int counter = 0;
-//			for (File mf : mutantFolders) {
-////				String timeData = getTimeData(mf);
-//				String timeData = Double.toString(getTotalTime(mf));
-//				if (!timeData.equals("")) {
-////					System.out.println(mf);
-////					System.out.println(getTimeData(mf));
-//					resultString += webpage +"," + timeData + "\n";
-//				}
-////                double time = getTimeFromFile(mf, "rlg");
-////                times[counter] = time;
-//
-//                counter++;
-//            }
-////			resultString += "\n";
-//
-//		}
-//		System.out.println(resultString);
-//		writeToFile(resultString, preamble, "timingData.csv");
-//	}
 
 	private void pickRandomSet() {
 		Random random = new Random();
@@ -789,92 +843,12 @@ public class ResultProcessor {
 	
 	public static void main(String[] args) throws IOException {
 		ResultProcessor rp = new ResultProcessor();
-		rp.getInconsistencyResults();
+//		rp.getInconsistencyResults();
+		rp.writeArchiveWebpages();
 	}
 
 	public void getInconsistencyResults() {
-		String[] webpages = new String[] {
-				"3-Minute-Journal",
-				"AccountKiller",
-				"AirBnb",
-				"BugMeNot",
-				"CloudConvert",
-				"Consumer-Reports",
-				"Covered-Calendar",
-				"Days-Old",
-				"Dictation",
-				"Duolingo",
-				"Honey",
-				"HotelWifiTest",
-				"Mailinator",
-				"MidwayMeetup",
-				"Ninite",
-				"Pdf-Escape",
-				"PepFeed",
-				"Pocket",
-				"RainyMood",
-				"RunPee",
-				"StumbleUpon",
-				"TopDocumentary",
-				"UserSearch",
-				"WhatShouldIReadNext",
-				"WillMyPhoneWork",
-				"ZeroDollarMovies"};
-		String[] urls = new String[] {
-				"www.3minutejournal.com",
-				"www.accountkiller.com/en",
-				"www.airbnb.com",
-				"bugmenot.com",
-				"cloudconvert.com",
-				"consumerreports.org",
-				"www.coveredcalendar.com",
-				"www.daysold.com",
-				"dictation.io",
-				"www.duolingo.com",
-				"www.joinhoney.com/install",
-				"www.hotelwifitest.com",
-				"www.mailinator.com",
-				"www.midwaymeetup.com",
-				"ninite.com",
-				"www.pdfescape.com",
-				"www.pepfeed.com",
-				"getpocket.com",
-				"rainymood.com",
-				"runpee.com",
-				"www.stumbleupon.com",
-				"topdocumentaryfilms.com",
-				"usersearch.org",
-				"www.whatshouldireadnext.com/search",
-				"willmyphonework.net",
-				"zerodollarmovies.com"};
 
-		String[] commands = new String[] {
-				"\\threeminutejournalplain",
-				"\\accountkillerplain",
-				"\\airbnbplain",
-				"\\bugmenotplain",
-				"\\cloudconvertplain",
-				"\\consumerreportsplain",
-				"\\coveredcalendarplain",
-				"\\daysoldplain",
-				"\\dictationplain",
-				"\\duolingoplain",
-				"\\honeyplain",
-				"\\hotelwifitestplain",
-				"\\mailinatorplain",
-				"\\midwaymeetupplain",
-				"\\niniteplain",
-				"\\pdfescapeplain",
-				"\\pepfeedplain",
-				"\\getpocketplain",
-				"\\rainymoodplain",
-				"\\runpeeplain",
-				"\\stumbleuponplain",
-				"\\topdocumentaryfilmsplain",
-				"\\usersearchplain",
-				"\\whatshouldireadnextplain",
-				"\\willmyphoneworkplain",
-				"\\zerodollarmoviesplain"};
 
 		final int[] SPOT_CHECK_WIDTHS = new int[] {320, 375, 384, 414, 480, 600, 768, 1024, 1280};
 		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
@@ -899,54 +873,29 @@ public class ResultProcessor {
 				for (int i = 1; i <= 30; i++) {
 					multiTimeData += webpage + "," + i + "," + getMultiExecutionTime(webpage, i) + "\n";
 				}
-//				System.out.println(mostRecentRun.getAbsolutePath());
+
 				int errorCount = getErrorCount(mostRecentRun);
 //
 				String distinctFailures = getActualFaults(mostRecentRun);
-//				System.out.println("\n" + distinctFailures);
 				try {
 					totalFailures += Integer.valueOf(distinctFailures);
 					if (errorCount != -1) {
 						ArrayList<Integer> tpIndexes = new ArrayList<>();
 						String classificationString = getClassification(mostRecentRun, tpIndexes);
-						HashSet<String> ranges = getFailuresFromFile(mostRecentRun, tpIndexes, false);
-//						String RQ2Result = getRQ2Result(ranges, SPOT_CHECK_WIDTHS, webpage);
-//						System.out.println(RQ2Result);
-//						ArrayList<String> testRanges = groupFailureRanges(ranges);
-						int totalRanges = ranges.size();
-						totalDistinctRanges += totalRanges;
+//						ArrayList<int[]> ranges = getFailuresFromFile(mostRecentRun);
+//						int totalRanges = ranges.size();
+//						totalDistinctRanges += totalRanges;
 
-//						int testRangeCount = testRanges.size();
-//						totalTestRanges += testRangeCount;
 						// Print out main RQ1 results row for table
 //						System.out.println(command + classificationString + " & " + totalRanges + " & " + distinctFailures + " \\\\");
-//						System.out.println(totalDistinctRanges + "\n");
 					}
 				} catch (NumberFormatException nfe) {
 					System.out.println(mostRecentRun.getAbsolutePath());
 				}
-
-////			Write out results into webpage for Jekyll
-//				String jekyllCode = null;
-//				try {
-//					jekyllCode = addInScreenshotTable(mostRecentRun, webpages[files.indexOf(f)], urls[files.indexOf(f)], errorCount);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				LocalDateTime now = LocalDateTime.now();
-//				int year = now.getYear();
-//				int month = now.getMonthValue();
-//				int day = now.getDayOfMonth();
-//				writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + ".markdown");
 			}
 		}
-//		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
-//		System.out.println(multiTimeData);
-//		System.out.println(subjectData);
-//		writeToFile(timeData, redecheck+"icst-processing/", "timeData.csv");
-		writeToFile(multiTimeData, redecheck+"time-processing/", "timing-data-issta-final.csv");
-
-//		rp.writeRQ1and2Data(files);
+		System.out.println("{\\sc Total}         &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & " + totalDistinctRanges + " & " + totalFailures + "\\\\");
+//		writeToFile(multiTimeData, main+"time-processing/", "timing-data-issta-rerun.csv");
 	}
 
 	private String getRQ2Result(HashSet<String> ranges, int[] scw, String webpage) {
@@ -1017,34 +966,148 @@ public class ResultProcessor {
 		return grouped;
 	}
 
-	private static String addInScreenshotTable(File mostRecentRun, String webpage, String url, int totalReports) throws IOException {
-		String jekyllCode = "";
-		try {
+	public void writeArchiveWebpages() throws IOException {
+		ArrayList<File> files = readInSetOfMutants( "/src/main/java/icst-websites.txt");
+		String[] types = new String[] {"Element Collision","Element Protrusion", "Viewport Protrusion", "Small-Range","Wrapping"};
+		String[] classes = new String[] {"TP", "FP", "NOI"};
+		HashMap<String, String> classificationMap = new HashMap<>();
+		classificationMap.put("TP", "True Positives");
+		classificationMap.put("FP", "False Positives");
+		classificationMap.put("NOI", "Non-Observable Issues");
+		HashMap<String, HashMap<String, ArrayList<String>>> groupedResults = new HashMap<>();
 
-			String current = new java.io.File(".").getCanonicalPath();
-			System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
-
-			WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
-			int numElements = mutator.getElementCount(faultExamples + webpage);
-			int numDecs = mutator.getDeclarationCount();
-
-			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
-			jekyllCode += "| Failure No. | Category | Screenshot | Classification | Reason | \n";
-
-			String[] classifications = getClassifications(mostRecentRun, totalReports);
-			String[] categories = getCategories(mostRecentRun, totalReports);
-//			String[] reasons = getReasons(mostRecentRun, totalReports);
-			for (int i = 1; i <= totalReports; i++) {
-				File ssFile = new File(mostRecentRun + "/fault" + i);
-				String imageName = ssFile.listFiles()[0].getName();
-				jekyllCode += "| " + i + " | " + categories[i-1] + " | [Click]({{ site.baseurl }}/assets/images/" + webpage + "/fault" + i + "/" + imageName +
-						") | " + classifications[i-1] + " | " + "" + " |\n";
+		for (String c : classes) {
+			groupedResults.put(c, new HashMap<>());
+			for (String t : types) {
+				HashMap<String, ArrayList<String>> hm = groupedResults.get(c);
+				hm.put(t, new ArrayList<>());
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return jekyllCode;
+
+		int totalCount = 1;
+		LocalDateTime now = LocalDateTime.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		for (File f : files) {
+			File mostRecentRun = lastFileModified(f.getAbsolutePath() + "");
+			String webpage = this.webpages[files.indexOf(f)];
+
+			// Write out results into webpage for Jekyll
+			int errorCount = getErrorCount(mostRecentRun);
+			String[] classifications = getClassifications(mostRecentRun, errorCount);
+			String[] categories = getCategories(mostRecentRun, errorCount);
+			String[] reasons = getReasons(mostRecentRun, errorCount);
+			String[] distinctRLFMapping = getDistinctRLFMapping(mostRecentRun, errorCount);
+			ArrayList<int[]> bounds = getFailureBounds(mostRecentRun);
+			for (int i = 1; i <= errorCount; i++) {
+				String category = categories[i-1];
+				String classification = classifications[i-1];
+				String jekyllCode = "---\nlayout: post\ntitle: \"" + webpage + " Failure " + i + "\"\npermalink: " + webpage + "-failure-" + i + "\n---\n";
+				if (classification.equals("TP")) {
+					jekyllCode += "Below is a summary of the failure report produced by the tool. If it has been classified as a *true positive (TP)*, then further information about the distinct responsive layout failure is available if you scroll down the page.\n\n";
+					jekyllCode += "| **Report Type** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
+				} else {
+					jekyllCode += "| **Report Type** | **Viewport Range** | **Classification** | **Reason** |\n";
+				}
+				String tableRow =   generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false, classification.equals("TP"));
+				String fullTableRow = generateTableRow(totalCount, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, true, classification.equals("TP"));
+				jekyllCode += tableRow;
+
+				if (classification.equals("TP")) {
+					try {
+						String distinctContent = FileUtils.readFileToString(new File(redecheck + "reports/distinct/" + distinctRLFMapping[i - 1] + ".txt"));
+						jekyllCode += "\n\n## About Distinct RLF " + distinctRLFMapping[i-1] +" {#About-drlf}\n\n" + distinctContent;
+					} catch (FileNotFoundException fnfe) {
+
+					}
+				}
+
+				try {
+					groupedResults.get(classification).get(category).add(fullTableRow);
+					writeToFile(jekyllCode, githubio + "/_posts", year + "-" + month + "-" + day + "-" + f.getName() + "-failure-" + i + ".markdown");
+					totalCount++;
+				} catch(Exception e ) {
+					e.printStackTrace();
+				}
+			}
+		}
+		String archiveString = "---\n" +
+				"layout: page\n" +
+				"title: Results Archive\n" +
+				"permalink: /results-archive/\n" +
+				"---\n\n";
+
+		String introduction = FileUtils.readFileToString(new File(redecheck+ "reports/distinct/intro.txt"));
+
+		archiveString += introduction + "\n\n";
+
+		for (String classification : classes) {
+			archiveString += "\n### " + classificationMap.get(classification) + "### {#" + classification + "}\n\n";
+			if (classification.equals("TP")) {
+				archiveString += "| **Report Type** | **Web Page** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
+			} else {
+				archiveString += "| **Report Type** | **Web Page** | **Viewport Range** | **Classification** | **Reason** |\n";
+			}
+			HashMap<String, ArrayList<String>> hm = groupedResults.get(classification);
+			for (String key : types) {
+				for (String row : hm.get(key)) {
+					archiveString += row + "\n";
+				}
+			}
+		}
+
+		writeToFile(archiveString, githubio, "results-archive.md");
 	}
+
+
+
+	private static String generateTableRow(int count, int i, File mostRecentRun, String webpage, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds, String[] distinctRLFMapping, boolean full, boolean tp) {
+//		System.out.println(totalCount + " " + i);
+		String row = "";
+		File ssFile = new File(mostRecentRun + "/fault" + i);
+		String imageName = ssFile.listFiles()[0].getName();
+		int[] bs = bounds.get(i-1);
+
+		if (full) {
+			if (tp) {
+				row += "| " + categories[i - 1] + "| " + webpage + " | [" + distinctRLFMapping[i - 1] + "](" + "../" + webpage + "-failure-" + i + ".html#About-drlf) | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + webpage + "-failure-" + i + ".html) |";
+			} else {
+				row += "| " + categories[i - 1] + "| " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + webpage + "-failure-" + i + ".html) |";
+			}
+		} else {
+			if (tp) {
+				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+			} else {
+				row += "| " + categories[i - 1] + "| " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+			}
+		}
+		return row;
+	}
+
+//	private static String addInScreenshotTable(int count, File mostRecentRun, String webpage, String url, int totalReports, String[] classifications, String[] categories, String[] reasons, ArrayList<int[]> bounds) throws IOException {
+//		String jekyllCode = "";
+//		try {
+//
+//			String current = new java.io.File(".").getCanonicalPath();
+//			System.setProperty("phantomjs.binary.path", current + "/resources/phantomjs");
+//
+//			WebpageMutator mutator = new WebpageMutator(webpage + "/index.html", webpage, 0);
+//			int numElements = mutator.getElementCount(faultExamples + webpage);
+//			int numDecs = mutator.getDeclarationCount();
+//
+//			jekyllCode += "---\nlayout: post\ntitle: \"" + webpage + "\"\nelements: " + numElements + "\ndecs: " + numDecs + "\nfullurl: " + url + "\n---\n";
+//			jekyllCode += "| Report No. | Report Type | Distinct RLF No. | Viewport Range | Classification | Reason | Screenshot |\n";
+//
+//
+//			for (int i = 1; i <= totalReports; i++) {
+//				jekyllCode += generateTableRow(count+i-1, i, mostRecentRun, webpage, classifications, categories, reasons, bounds, distinctRLFMapping, false) + "\n";
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return jekyllCode;
+//	}
 
 	private static String[] getReasons(File f, int count) {
 		String[] results = new String[count];
@@ -1068,6 +1131,33 @@ public class ResultProcessor {
 		return results;
 	}
 
+	private String[] getDistinctRLFMapping(File mostRecentRun, int errorCount) {
+		String[] results = new String[errorCount];
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(mostRecentRun.getAbsolutePath() + "/distinct-mapping.txt"));
+			String line = br.readLine();
+			int counter = 0;
+			while (line != null) {
+				if (!line.equals("-")) {
+					results[counter] = line;
+				} else {
+					results[counter] = "";
+				}
+
+				counter++;
+				line = br.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				new File(mostRecentRun.getAbsolutePath() + "/reasons.txt").createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return results;
+	}
+
 	private static String[] getCategories(File f, int count) {
 		String[] results = new String[count];
 		try {
@@ -1076,11 +1166,11 @@ public class ResultProcessor {
 			int counter = 0;
 			while (line != null) {
 				if (line.equals("VO")) {
-					results[counter] = "Viewport Overflow";
+					results[counter] = "Viewport Protrusion";
 				} else if (line.equals("OF")) {
-					results[counter] = "Element Overflow";
+					results[counter] = "Element Protrusion";
 				} else if (line.equals("OL")) {
-					results[counter] = "Overlap";
+					results[counter] = "Element Collision";
 				} else if (line.equals("W")) {
 					results[counter] = "Wrapping";
 				} else if (line.equals("SR")) {
@@ -1118,81 +1208,135 @@ public class ResultProcessor {
 		return results;
 	}
 
-	public static HashSet<String> getFailuresFromFile(File f, ArrayList<Integer> tpIndexes, boolean b) {
-		HashSet<String> errorStrings = new HashSet<>();
+//	public static ArrayList<int[]> getFailuresFromFile(File f) {
+//		HashSet<String> errorStrings = new HashSet<>();
+//		ArrayList<int[]> boundsList = new ArrayList<>();
+//		try {
+//			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
+//			String line = br.readLine();
+//			int errorIndex = 1;
+//			boolean foundBounds = false;
+//
+//			String contents = "";
+//
+//			while(line != null) {
+////				contents += line;
+//				int[] bounds = getFailureBounds(line, foundBounds);
+//				boundsList.add(bounds);
+//				int min = bounds[0];
+//				int max = bounds[1];
+////
+////				if (b) {
+////					if (tpIndexes.contains(errorIndex)) {
+////						errorStrings.add(min + " - " + max);
+////					}
+////				} else {
+////					if (min != 0 && max != 0) {
+////						errorStrings.add(min + " - " + max);
+////					}
+////				}
+//
+//				if (line.equals("")) {
+//					errorIndex++;
+//					foundBounds = false;
+//				}
+//				line = br.readLine();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return boundsList;
+//	}
 
+	private static ArrayList<int[]> getFailureBounds(File f) {
+		ArrayList<int[]> boundsList = new ArrayList<>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
+			String failureString = "";
 			String line = br.readLine();
 			int errorIndex = 1;
 			boolean foundBounds = false;
-			String[] splits, splits2;
+
 			String contents = "";
-			int min = 0, max=0;
-			while(line != null) {
-//				contents += line;
-				if (line.contains("overflowed the viewport")) {
-					splits = line.split(" and ");
-					splits2 = splits[0].split("between ");
-					min = Integer.valueOf(splits2[1]);
-					max = Integer.valueOf(splits[1]);
-					foundBounds = true;
-				} else if (line.contains("OVERLAPPING")) {
-					try {
-//						System.out.println(line);
-						splits = line.split(" AND ");
-						splits2 = splits[1].split("BETWEEN ");
-						min = Integer.valueOf(splits2[1]);
-						max = Integer.valueOf(splits[2]);
-//
-						foundBounds = true;
-					} catch (Exception e ) {
-						System.out.println("Issue with " + line);
+
+			while (line != null) {
+				try {
+					while (!line.equals("")) {
+						failureString += line;
+						line = br.readLine();
 					}
-				} else if (line.contains("THIS:")) {
-					splits = line.split(" , ");
-					min = Integer.valueOf(splits[3]);
-					max = Integer.valueOf(splits[4]);
-					foundBounds = true;
-				} else if (line.contains("WRAPPING")) {
-					splits = line.split(" -> ");
-					splits2 = splits[0].split("RANGE ");
-					min = Integer.valueOf(splits2[1]);
-					max = Integer.valueOf(splits[1].split(":")[0]);
-					foundBounds = true;
-				} else if (line.contains("OVERFLOWED ITS PARENT")) {
-					try {
-//						System.out.println(line);
-						splits = line.split(" AND ");
-						splits2 = splits[0].split("BETWEEN ");
+					String[] splits, splits2;
+					int min = 0, max = 0;
+
+					if (failureString.contains("overflowed the viewport")) {
+						splits = failureString.split(" and ");
+						splits2 = splits[0].split("between ");
 						min = Integer.valueOf(splits2[1]);
 						max = Integer.valueOf(splits[1]);
-//
 						foundBounds = true;
-					} catch (Exception e ) {
-						System.out.println("Issue with " + line);
-					}
-				}
-				if (b) {
-					if (tpIndexes.contains(errorIndex)) {
-						errorStrings.add(min + " - " + max);
-					}
-				} else {
-					if (min != 0 && max != 0) {
-						errorStrings.add(min + " - " + max);
-					}
-				}
+					} else if (failureString.contains("OVERLAPPING")) {
+						try {
+							//						System.out.println(line);
+							splits = failureString.split(" AND ");
+							splits2 = splits[1].split("BETWEEN ");
+							min = Integer.valueOf(splits2[1]);
+							max = Integer.valueOf(splits[2]);
+							//
+							foundBounds = true;
+						} catch (Exception e) {
+							System.out.println("Issue with " + line);
+						}
+					} else if (failureString.contains("THIS:")) {
+						splits = failureString.split(" , ");
+						min = Integer.valueOf(splits[3]);
+						max = Integer.valueOf(splits[4]);
+						foundBounds = true;
+					} else if (failureString.contains("WRAPPING")) {
+						splits = failureString.split(" -> ");
+						splits2 = splits[0].split("RANGE ");
+						min = Integer.valueOf(splits2[1]);
+						max = Integer.valueOf(splits[1].split(":")[0]);
+						foundBounds = true;
+					} else if (failureString.contains("OVERFLOWED ITS PARENT")) {
+//						try {
+							//						System.out.println(line);
+						splits = failureString.split(" AND ");
+//						splits2 = splits[1].split("\\t");
+						min = Integer.valueOf(splits[0].split("BETWEEN ")[1]);
+						max = Integer.valueOf(splits[1].split("\\t")[0]);
+						//
+						foundBounds = true;
 
-				if (line.equals("")) {
+					}
+
+					if (min == 0 || max == 0) {
+						System.out.println(line);
+					}
+					boundsList.add(new int[] {min, max});
+					failureString = "";
+//				if (line.equals("")) {
 					errorIndex++;
 					foundBounds = false;
+				} catch (Exception ex) {
+					System.out.println("Issue with " + failureString);
 				}
+//				if (b) {
+//					if (tpIndexes.contains(errorIndex)) {
+//						errorStrings.add(min + " - " + max);
+//					}
+//				} else {
+//					if (min != 0 && max != 0) {
+//						errorStrings.add(min + " - " + max);
+//					}
+//				}
+
+//				}
 				line = br.readLine();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return errorStrings;
+		return boundsList;
 	}
 
 

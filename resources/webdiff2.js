@@ -404,7 +404,7 @@ function getAllStyles(elem) {
 
 
 
-// var iframewindow= frames['redecheck-frame'];
+// var iframewindow= frames['main-frame'];
 window.scrollTo(0, 0);
 
 /**
@@ -448,8 +448,7 @@ while(nodes.length > 0){
 			  c('xpath', n, getXPath, true),
 			  c('visible', n, isVisible),
 			  c('overflow', n, getOverflow),
-			  c('coord', n, getDOMCoords),
-			  c('contentCoords', n, getContentRectangle)
+			  c('coord', n, getDOMCoords)
 			  // ,
 			  // c('styles', n, getAllStyles)
 		  ];

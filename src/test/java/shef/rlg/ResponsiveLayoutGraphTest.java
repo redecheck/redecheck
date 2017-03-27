@@ -10,7 +10,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import shef.layout.*;
-import shef.redecheck.Redecheck;
+import shef.main.Tool;
 
 import java.util.*;
 
@@ -26,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
  * Created by thomaswalsh on 17/09/15.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( Redecheck.class )
+@PrepareForTest( Tool.class )
 public class ResponsiveLayoutGraphTest {
     ResponsiveLayoutGraph rlg;
     Cloner cloner;
@@ -711,7 +711,7 @@ public class ResponsiveLayoutGraphTest {
 //
     @Test
     public void testFindAppearPointRecursiveBranch1NodeMatch() throws InterruptedException {
-        PowerMockito.mockStatic(Redecheck.class);
+        PowerMockito.mockStatic(Tool.class);
         Element el1 = new Element("first",0,0,100,100);
         rlg.url = "randomsite";
         rlg.alreadyGathered = spy(new HashSet<Integer>());
@@ -730,7 +730,7 @@ public class ResponsiveLayoutGraphTest {
 
     @Test
     public void testFindAppearPointRecursiveBranch1NodeNoMatch() throws InterruptedException {
-        PowerMockito.mockStatic(Redecheck.class);
+        PowerMockito.mockStatic(Tool.class);
         Element el1 = new Element("first",0,0,100,100);
         Element el2 = new Element("second", 25, 25, 75, 75);
         rlg.url = "randomsite";
@@ -750,7 +750,7 @@ public class ResponsiveLayoutGraphTest {
 
     @Test
     public void testSearchDisappearRecursiveBranch1NodeNoMatch() throws InterruptedException {
-        PowerMockito.mockStatic(Redecheck.class);
+        PowerMockito.mockStatic(Tool.class);
         Element el1 = new Element("first",0,0,100,100);
         Element el2 = new Element("second", 25, 25, 75, 75);
         rlg.url = "randomsite";
@@ -770,7 +770,7 @@ public class ResponsiveLayoutGraphTest {
 
     @Test
     public void testSearchDisappearRecursiveBranch1NodeMatch() throws InterruptedException {
-        PowerMockito.mockStatic(Redecheck.class);
+        PowerMockito.mockStatic(Tool.class);
         Element el1 = new Element("first",0,0,100,100);
         Element el2 = new Element("second", 25, 25, 75, 75);
         rlg.url = "randomsite";

@@ -36,7 +36,7 @@ public class RLGComparator {
     public static ArrayList<VisibilityError> vcErrors;
     public static ArrayList<AlignmentError> acErrors;
     static String redecheck = "/Users/thomaswalsh/Documents/Workspace/Redecheck/";
-    static String dataDirectory = "/Users/thomaswalsh/Documents/Workspace/redecheck-journal-paper-data/";
+    static String dataDirectory = "/Users/thomaswalsh/Documents/Workspace/main-journal-paper-data/";
 
     // public static ArrayList<WidthError> wcErrors;
     public int[] defaultWidths;

@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGExtractor;
+import shef.main.RLGExtractor;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -34,7 +34,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 
 
     @Override
-    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
+    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
         int captureWidth = (ac.getMin()+ac.getMax())/2;
         HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
@@ -52,7 +52,7 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 
         Graphics2D g2d = img.createGraphics();
         g2d.setColor(Color.RED);
-//        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(3));
         int[] coords1 = e1.getBoundingCoords();
         g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
 

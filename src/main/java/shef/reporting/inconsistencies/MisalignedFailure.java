@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
-import shef.redecheck.RLGExtractor;
+import shef.main.RLGExtractor;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -63,7 +63,7 @@ public class MisalignedFailure extends ResponsiveLayoutFailure {
     }
 
     @Override
-    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, HashMap<Integer, BufferedImage> imageMap, String timeStamp) {
+    public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
         int captureWidth = 0;
         captureWidth = (min + max) / 2;
 
