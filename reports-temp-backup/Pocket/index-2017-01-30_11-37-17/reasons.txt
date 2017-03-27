@@ -1,8 +1,0 @@
-No overlap of content, just DOM coordinates
-No overlap of content, just DOM coordinates
-Element is not visibly protruding
-Element is not visibly protruding
-Element is not visibly protruding
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling
-No significant layout change, just coincidental attribute labelling

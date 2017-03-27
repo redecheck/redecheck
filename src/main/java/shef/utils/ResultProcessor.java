@@ -22,7 +22,7 @@ public class ResultProcessor {
 	static String target = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/target/";
 	static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
 	static String redecheckicst = "/Users/thomaswalsh/Documents/PhD/main-icst/";
-	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/main-org/";
+	static String githubio = "/Users/thomaswalsh/Documents/PhD/Websites/redecheck-org/";
 	static String faultExamples = "/Users/thomaswalsh/Documents/PhD/Resources/fault-examples/";
 	ArrayList<File> allMutants;
 	ArrayList<File> mutantsForAnalysis;
@@ -1003,8 +1003,9 @@ public class ResultProcessor {
 			for (int i = 1; i <= errorCount; i++) {
 				String category = categories[i-1];
 				String classification = classifications[i-1];
-				String jekyllCode = "---\nlayout: post\ntitle: \"" + webpage + " Failure " + i + "\"\n---\n";
+				String jekyllCode = "---\nlayout: post\ntitle: \"" + webpage + " Failure " + i + "\"\npermalink: " + webpage + "-failure-" + i + "\n---\n";
 				if (classification.equals("TP")) {
+					jekyllCode += "Below is a summary of the failure report produced by the tool. If it has been classified as a *true positive (TP)*, then further information about the distinct responsive layout failure is available if you scroll down the page.\n\n";
 					jekyllCode += "| **Report Type** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
 				} else {
 					jekyllCode += "| **Report Type** | **Viewport Range** | **Classification** | **Reason** |\n";
@@ -1016,7 +1017,7 @@ public class ResultProcessor {
 				if (classification.equals("TP")) {
 					try {
 						String distinctContent = FileUtils.readFileToString(new File(redecheck + "reports/distinct/" + distinctRLFMapping[i - 1] + ".txt"));
-						jekyllCode += "\n\n## About Distinct RLF " + distinctRLFMapping[i-1] +"\n\n" + distinctContent;
+						jekyllCode += "\n\n## About Distinct RLF " + distinctRLFMapping[i-1] +" {#About-drlf}\n\n" + distinctContent;
 					} catch (FileNotFoundException fnfe) {
 
 					}
@@ -1044,7 +1045,7 @@ public class ResultProcessor {
 		for (String classification : classes) {
 			archiveString += "\n### " + classificationMap.get(classification) + "### {#" + classification + "}\n\n";
 			if (classification.equals("TP")) {
-				archiveString += "| **Report Type** | **Distinct RLF** | **Web Page** | **Viewport Range** | **Classification** | **Reason** |\n";
+				archiveString += "| **Report Type** | **Web Page** | **Distinct RLF** | **Viewport Range** | **Classification** | **Reason** |\n";
 			} else {
 				archiveString += "| **Report Type** | **Web Page** | **Viewport Range** | **Classification** | **Reason** |\n";
 			}
@@ -1068,35 +1069,17 @@ public class ResultProcessor {
 		String imageName = ssFile.listFiles()[0].getName();
 		int[] bs = bounds.get(i-1);
 
-		LocalDateTime now = LocalDateTime.now();
-		int year = now.getYear();
-		int month = now.getMonthValue();
-		String monthS = "";
-		int day = now.getDayOfMonth();
-		String dayS = "";
-		if (month < 10) {
-			monthS = "0" + month;
-		} else {
-			monthS = "" + month;
-		}
-
-		if (day < 10) {
-			dayS = "0" + day;
-		} else {
-			dayS = "" + day;
-		}
-
 		if (full) {
 			if (tp) {
-				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
+				row += "| " + categories[i - 1] + "| " + webpage + " | [" + distinctRLFMapping[i - 1] + "](" + "../" + webpage + "-failure-" + i + ".html#About-drlf) | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + webpage + "-failure-" + i + ".html) |";
 			} else {
-				row += "| " + categories[i - 1] + "| " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + year + "/" + monthS + "/" + dayS + "/" + webpage + "-failure-" + i + ".html) |";
+				row += "| " + categories[i - 1] + "| " + webpage + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " [Screenshot and Detailed Information](../" + webpage + "-failure-" + i + ".html) |";
 			}
 		} else {
 			if (tp) {
-				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../../../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+				row += "| " + categories[i - 1] + "| " + distinctRLFMapping[i - 1] + " | " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
 			} else {
-				row += "| " + categories[i - 1] + "| " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../../../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
+				row += "| " + categories[i - 1] + "| " + bs[0] + "px-" + bs[1] + "px | " + classifications[i - 1] + " | " + reasons[i - 1] + " | \n\n![Screenshot of the fault](../assets/images/" + webpage + "/fault" + i + "/" + imageName + "){: .center-image }";
 			}
 		}
 		return row;
