@@ -39,6 +39,7 @@ public class RLGAnalyser {
         layouts = lFactories;
         this.vmin = vmin;
         this.vmax = vmax;
+        errors = new ArrayList<>();
     }
 
     /**
@@ -46,7 +47,7 @@ public class RLGAnalyser {
      * @return
      */
     public ArrayList<ResponsiveLayoutFailure> analyse() {
-        errors = new ArrayList<>();
+        
 
         checkForViewportOverflows(rlg.getNodes());
         detectOverflowOrOverlap(rlg.getAlignmentConstraints());
@@ -127,8 +128,7 @@ public class RLGAnalyser {
      * This method analyses a set of RLG nodes to determine whether any of them overflow the viewport
      * @param nodes The set of nodes to analyse
      */
-    private void checkForViewportOverflows(HashMap<String, Node> nodes) {
-
+    public void checkForViewportOverflows(HashMap<String, Node> nodes) {
         // Iterate through all the nodes
         for (Node n : nodes.values()) {
             // Don't analyse the BODY tag, as it's the root and therefore has no parent
@@ -214,7 +214,7 @@ public class RLGAnalyser {
      * have been found
      * @param alignmentConstraints the set of constraints to analyse
      */
-    private void detectOverflowOrOverlap(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
+    public void detectOverflowOrOverlap(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
 
         // Iterate through all constraints
         for (AlignmentConstraint ac : alignmentConstraints.values()) {
@@ -242,7 +242,7 @@ public class RLGAnalyser {
                         // Get the ancestry of the two nodes, so we can see if the overlap is due to an overflow
                         HashSet<Node> n1Ancestry = getAncestry(ac.getNode1(), ac.getMax() + 1);
                         HashSet<Node> n2Ancestry = getAncestry(ac.getNode2(), ac.getMax() + 1);
-
+                        
                         // If node2 in ancestry of node1 or vice verse, it's an overflow
                         if (n1Ancestry.contains(ac.getNode2())) {
                             ElementProtrusionFailure ofe = new ElementProtrusionFailure(ac.getNode1(), ac);
@@ -1163,7 +1163,7 @@ public class RLGAnalyser {
 //    }
 
 
-    private String setOfNodesToString(ArrayList<Node> nodes) {
+    public String setOfNodesToString(ArrayList<Node> nodes) {
         String result = "";
         if (nodes.size() > 0) {
             for (Node n : nodes) {
@@ -1387,5 +1387,9 @@ public class RLGAnalyser {
             return "M";
         }
         return "NULL";
+    }
+    
+    public ResponsiveLayoutGraph getRlg() {
+    	return rlg;
     }
 }

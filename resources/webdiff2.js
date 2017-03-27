@@ -404,7 +404,7 @@ function getAllStyles(elem) {
 
 
 
-// var iframewindow= frames['redecheck-frame'];
+// var iframewindow= frames['main-frame'];
 window.scrollTo(0, 0);
 
 /**

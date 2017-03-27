@@ -1,5 +1,6 @@
-package shef.main;
+package shef.analysis;
 
+import com.google.common.collect.HashBasedTable;
 import com.rits.cloning.Cloner;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,111 +109,111 @@ public class RLGComparatorTest {
     }
 
 
-//    @Test
-//    public void testCompareAlignmentConstraintsMatch() throws Exception {
-//        Node n1 = new Node("first");
-//        Node n2 = new Node("first");
-//        Node parent = new Node("parent");
-//        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[6]);
-//        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[6]);
-//        HashMap<String, AlignmentConstraint> map1 = new HashMap<>();
-//        map1.put(ac.generateKey(), ac);
-//        HashMap<String, AlignmentConstraint> map2 = new HashMap<>();
-//        map2.put(ac2.generateKey(), ac2);
-//
-//        when (rlg1.getAlignments()).thenReturn(map1);
-//        when (rlg2.getAlignments()).thenReturn(map2);
-//
-//        comp.compareAlignmentConstraints(n1, n2);
-//        assertEquals(0, comp.acErrors.size());
-//    }
-//
-//    @Test
-//    public void testCompareAlignmentConstraintsMatchDiffBounds() throws Exception {
-//        Node n1 = new Node("first");
-//        Node n2 = new Node("first");
-//        Node parent = new Node("parent");
-//        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[6]);
-//        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 805, new boolean[6]);
-//        HashMap<String, AlignmentConstraint> map1 = new HashMap<>();
-//        map1.put(ac.generateKey(), ac);
-//        HashMap<String, AlignmentConstraint> map2 = new HashMap<>();
-//        map2.put(ac2.generateKey(), ac2);
-//
-//        when (rlg1.getAlignments()).thenReturn(map1);
-//        when (rlg2.getAlignments()).thenReturn(map2);
-//
-//        comp.compareAlignmentConstraints(n1, n2);
-//        assertEquals(1, comp.acErrors.size());
-//        assertEquals(true, comp.acErrors.get(0).getDesc().equals("diffBounds"));
-//    }
-//
-//    @Test
-//    public void testCompareAlignmentConstraintsMatchDiffAttributes() throws Exception {
-//        Node n1 = new Node("first");
-//        Node n2 = new Node("first");
-//        Node parent = new Node("parent");
-//        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
-//        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {false, true, false, false, false, false});
-//        HashMap<String, AlignmentConstraint> map1 = new HashMap<>();
-//        map1.put(ac.generateKey(), ac);
-//        HashMap<String, AlignmentConstraint> map2 = new HashMap<>();
-//        map2.put(ac2.generateKey(), ac2);
-//
-//        when (rlg1.getAlignments()).thenReturn(map1);
-//        when (rlg2.getAlignments()).thenReturn(map2);
-//
-//        comp.compareAlignmentConstraints(n1, n2);
-//        assertEquals(1, comp.acErrors.size());
-//        assertEquals(true, comp.acErrors.get(0).getDesc().equals("diffAttributes"));
-//    }
-//
-//    @Test
-//    public void testCompareAlignmentConstraintsMatchUnmatchedOracle() throws Exception {
-//        Node n1 = new Node("first");
-//        Node n2 = new Node("first");
-//        Node parent = new Node("parent");
-//        Node n3 = new Node("third");
-//        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
-//        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
-//        AlignmentConstraint ac3 = new AlignmentConstraint(n1, n3, Type.SIBLING, 500, 1000, new boolean[8]);
-//        HashMap<String, AlignmentConstraint> map1 = new HashMap<>();
-//        map1.put(ac.generateKey(), ac);
-//        map1.put(ac3.generateKey(), ac3);
-//        HashMap<String, AlignmentConstraint> map2 = new HashMap<>();
-//        map2.put(ac2.generateKey(), ac2);
-//
-//        when (rlg1.getAlignments()).thenReturn(map1);
-//        when (rlg2.getAlignments()).thenReturn(map2);
-//
-//        comp.compareAlignmentConstraints(n1, n2);
-//        assertEquals(1, comp.acErrors.size());
-//        assertEquals(true, comp.acErrors.get(0).getDesc().equals("unmatched-oracle"));
-//    }
-//
-//    @Test
-//    public void testCompareAlignmentConstraintsMatchUnmatchedTest() throws Exception {
-//        Node n1 = new Node("first");
-//        Node n2 = new Node("first");
-//        Node parent = new Node("parent");
-//        Node n3 = new Node("third");
-//        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
-//        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false});
-//        AlignmentConstraint ac3 = new AlignmentConstraint(n2, n3, Type.SIBLING, 500, 1000, new boolean[8]);
-//        HashMap<String, AlignmentConstraint> map1 = new HashMap<>();
-//        map1.put(ac.generateKey(), ac);
-//
-//        HashMap<String, AlignmentConstraint> map2 = new HashMap<>();
-//        map2.put(ac2.generateKey(), ac2);
-//        map2.put(ac3.generateKey(), ac3);
-//
-//        when (rlg1.getAlignments()).thenReturn(map1);
-//        when (rlg2.getAlignments()).thenReturn(map2);
-//
-//        comp.compareAlignmentConstraints(n1, n2);
-//        assertEquals(1, comp.acErrors.size());
-//        assertEquals(true, comp.acErrors.get(0).getDesc().equals("unmatched-test"));
-//    }
+    @Test
+    public void testCompareAlignmentConstraintsMatch() throws Exception {
+        Node n1 = new Node("first");
+        Node n2 = new Node("first");
+        Node parent = new Node("parent");
+        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[6], new boolean[2]);
+        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[6], new boolean[2]);
+        HashBasedTable<String, int[], AlignmentConstraint> map1 = HashBasedTable.create();
+        map1.put(ac.generateKey(), new int[]{400,0}, ac);
+        HashBasedTable<String, int[], AlignmentConstraint> map2 = HashBasedTable.create();
+        map2.put(ac2.generateKey(), new int[]{400,0}, ac2);
+
+        when (rlg1.getAlignmentConstraints()).thenReturn(map1);
+        when (rlg2.getAlignmentConstraints()).thenReturn(map2);
+
+        comp.compareAlignmentConstraints(n1, n2);
+        assertEquals(0, comp.acErrors.size());
+    }
+
+    @Test
+    public void testCompareAlignmentConstraintsMatchDiffBounds() throws Exception {
+        Node n1 = new Node("first");
+        Node n2 = new Node("first");
+        Node parent = new Node("parent");
+        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[6], new boolean[2]);
+        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 805, new boolean[6], new boolean[2]);
+        HashBasedTable<String, int[], AlignmentConstraint> map1 = HashBasedTable.create();
+        map1.put(ac.generateKey(), new int[]{400,0}, ac);
+        HashBasedTable<String, int[], AlignmentConstraint> map2 = HashBasedTable.create();
+        map2.put(ac2.generateKey(), new int[]{400,0}, ac2);
+
+        when (rlg1.getAlignmentConstraints()).thenReturn(map1);
+        when (rlg2.getAlignmentConstraints()).thenReturn(map2);
+
+        comp.compareAlignmentConstraints(n1, n2);
+        assertEquals(1, comp.acErrors.size());
+        assertEquals(true, comp.acErrors.get(0).getDesc().equals("diffBounds"));
+    }
+
+    @Test
+    public void testCompareAlignmentConstraintsMatchDiffAttributes() throws Exception {
+        Node n1 = new Node("first");
+        Node n2 = new Node("first");
+        Node parent = new Node("parent");
+        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false}, new boolean[2]);
+        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {false, true, false, false, false, false}, new boolean[2]);
+        HashBasedTable<String, int[], AlignmentConstraint> map1 = HashBasedTable.create();
+        map1.put(ac.generateKey(), new int[]{400,0}, ac);
+        HashBasedTable<String, int[], AlignmentConstraint> map2 = HashBasedTable.create();
+        map2.put(ac2.generateKey(), new int[]{400,0}, ac2);
+
+        when (rlg1.getAlignmentConstraints()).thenReturn(map1);
+        when (rlg2.getAlignmentConstraints()).thenReturn(map2);
+
+        comp.compareAlignmentConstraints(n1, n2);
+        assertEquals(1, comp.acErrors.size());
+        assertEquals(true, comp.acErrors.get(0).getDesc().equals("diffAttributes"));
+    }
+
+    @Test
+    public void testCompareAlignmentConstraintsMatchUnmatchedOracle() throws Exception {
+        Node n1 = new Node("first");
+        Node n2 = new Node("first");
+        Node parent = new Node("parent");
+        Node n3 = new Node("third");
+        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false}, new boolean[2]);
+        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false}, new boolean[2]);
+        AlignmentConstraint ac3 = new AlignmentConstraint(n1, n3, Type.SIBLING, 500, 1000, new boolean[11], new boolean[2]);
+        HashBasedTable<String, int[], AlignmentConstraint> map1 = HashBasedTable.create();
+        map1.put(ac.generateKey(), new int[]{400,800}, ac);
+        map1.put(ac3.generateKey(), new int[]{500,1000}, ac3);
+        HashBasedTable<String, int[], AlignmentConstraint> map2 = HashBasedTable.create();
+        map2.put(ac2.generateKey(), new int[]{400,800}, ac2);
+
+        when (rlg1.getAlignmentConstraints()).thenReturn(map1);
+        when (rlg2.getAlignmentConstraints()).thenReturn(map2);
+
+        comp.compareAlignmentConstraints(n1, n2);
+        assertEquals(1, comp.acErrors.size());
+        assertEquals(true, comp.acErrors.get(0).getDesc().equals("unmatched-oracle"));
+    }
+
+    @Test
+    public void testCompareAlignmentConstraintsMatchUnmatchedTest() throws Exception {
+        Node n1 = new Node("first");
+        Node n2 = new Node("first");
+        Node parent = new Node("parent");
+        Node n3 = new Node("third");
+        AlignmentConstraint ac = new AlignmentConstraint(n1, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false}, new boolean[2]);
+        AlignmentConstraint ac2 = new AlignmentConstraint(n2, parent, Type.PARENT_CHILD, 400, 800, new boolean[] {true, false, false, false, false, false}, new boolean[2]);
+        AlignmentConstraint ac3 = new AlignmentConstraint(n2, n3, Type.SIBLING, 500, 1000, new boolean[11], new boolean[2]);
+        HashBasedTable<String, int[], AlignmentConstraint> map1 = HashBasedTable.create();
+        map1.put(ac.generateKey(), new int[]{400,800}, ac);
+
+        HashBasedTable<String, int[], AlignmentConstraint> map2 = HashBasedTable.create();
+        map2.put(ac2.generateKey(), new int[]{400,800}, ac2);
+        map2.put(ac3.generateKey(), new int[]{500,1000}, ac3);
+
+        when (rlg1.getAlignmentConstraints()).thenReturn(map1);
+        when (rlg2.getAlignmentConstraints()).thenReturn(map2);
+
+        comp.compareAlignmentConstraints(n1, n2);
+        assertEquals(1, comp.acErrors.size());
+        assertEquals(true, comp.acErrors.get(0).getDesc().equals("unmatched-test"));
+    }
 
 //    @Test
 //    public void testCompareWidthConstraintsMatch() throws Exception {
@@ -271,7 +272,7 @@ public class RLGComparatorTest {
 //        assertEquals(1, comp.wcErrors.size());
 //        assertEquals(true, comp.wcErrors.get(0).getDesc().equals("unmatched-oracle"));
 //    }
-//
+
 //    @Test
 //    public void testCompareWidthConstraintsUnmatchedTest() throws Exception {
 //        Node n1 = new Node("first");
