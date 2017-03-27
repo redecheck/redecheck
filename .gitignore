@@ -13,3 +13,5 @@ Redecheck.iml
 .Rproj.user
 *.class
 /target/classes
+
+reports/
