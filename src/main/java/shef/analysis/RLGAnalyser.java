@@ -339,7 +339,7 @@ public class RLGAnalyser {
      * This method analyses the constraints to see if any represent potential small-range layout inconsistencies
      * @param alignmentConstraints the set of constraints to analyse
      */
-    private void checkForSmallRanges(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
+    public void checkForSmallRanges(HashBasedTable<String, int[], AlignmentConstraint> alignmentConstraints) {
         for (AlignmentConstraint ac : alignmentConstraints.values()) {
             // See if the bounds width is less than the threshold, in this case, 5 pixels
             if ( (ac.getMax() - ac.getMin()) < 5 ) {
@@ -1061,7 +1061,7 @@ public class RLGAnalyser {
         return false;
     }
 
-    private boolean sameParent(ArrayList<AlignmentConstraint> cons) {
+    public boolean sameParent(ArrayList<AlignmentConstraint> cons) {
         HashSet<String> parentXPaths = new HashSet<>();
         for (AlignmentConstraint ac : cons) {
             parentXPaths.add(ac.getNode1().getXpath());
@@ -1186,7 +1186,7 @@ public class RLGAnalyser {
      * @param values    The set of lower and upper bounds, in ascending order
      * @return          A set of ranges, saved as a list of string keys
      */
-    private ArrayList<String> extractLayoutRanges(TreeSet<Integer> values) {
+    public ArrayList<String> extractLayoutRanges(TreeSet<Integer> values) {
         ArrayList<String> keys = new ArrayList<>();
         int prev=0;
         int curr;

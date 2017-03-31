@@ -448,7 +448,6 @@ public class Tool {
                     // Extract the DOM and save it to the HashMap.
                     Thread.sleep(sleep);
                     String extractedDom = extractDOM(wdriver, scriptToExtract);
-
                     if (previous.equals(extractedDom)) {
 
                         lFactories.put(w, new LayoutFactory(extractedDom));

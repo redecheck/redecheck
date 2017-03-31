@@ -126,6 +126,7 @@ public class RLGExtractor implements Runnable {
                 webDriver = new OperaDriver(capabilities);
             }
 
+            JavascriptExecutor js = (JavascriptExecutor) webDriver;
             // Load up the webpage in the browser, using a pop-up to make sure we can resize down to 320 pixels wide
             String winHandleBefore = webDriver.getWindowHandle();
             webDriver.get(fullUrl);
@@ -138,7 +139,11 @@ public class RLGExtractor implements Runnable {
                 }
             }
 
-            // Calculate the initial sample widths
+            // Trying to interact with the CSS of the web page
+//            String changeScript = Utils.readFile(current +"/../resources/cssChanger.js");
+//            js.executeScript("var myElement = document.querySelector('h1'); myElement.style.fontSize = '20px';");
+
+//            // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
 

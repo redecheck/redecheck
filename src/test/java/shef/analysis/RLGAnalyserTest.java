@@ -8,6 +8,7 @@ import static org.mockito.Mockito.spy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import com.rits.cloning.Cloner;
 import shef.layout.LayoutFactory;
 import shef.reporting.inconsistencies.CollisionFailure;
 import shef.reporting.inconsistencies.ElementProtrusionFailure;
+import shef.reporting.inconsistencies.SmallRangeFailure;
 import shef.reporting.inconsistencies.ViewportProtrusionFailure;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
@@ -226,4 +228,89 @@ public class RLGAnalyserTest {
 		String result = analyser.setOfNodesToString(nodes);
 		assertEquals("BODY first second ", result);
 	}
+	
+	@Test
+	public void testExtractLayoutRanges() {
+		TreeSet<Integer> ts = new TreeSet<>();
+		ts.add(320);
+		ts.add(450);
+		ts.add(451);
+		ts.add(699);
+		ts.add(700);
+		ts.add(1024);
+		ts.add(1025);
+		ts.add(1400);
+		ArrayList<String> expected = new ArrayList<String>();
+		expected.add("320:450");
+		expected.add("451:699");
+		expected.add("700:1024");
+		expected.add("1025:1400");
+		assertEquals(expected, analyser.extractLayoutRanges(ts));
+	}
+	
+	@Test
+	public void testSameParentTrue() {
+		AlignmentConstraint bodyN1 = new AlignmentConstraint(body, n1, Type.PARENT_CHILD, 400,1400, new boolean[] {true, false, false, false, false, false}, null);
+		AlignmentConstraint bodyN2 = new AlignmentConstraint(body, n2, Type.PARENT_CHILD, 400,700, new boolean[] {true, false, false, false, false, false}, null);
+		ArrayList<AlignmentConstraint> cons = new ArrayList<>();
+		cons.add(bodyN1);
+		cons.add(bodyN2);
+		assertTrue(analyser.sameParent(cons));
+	}
+	
+	@Test
+	public void testSameParentFalse() {
+		AlignmentConstraint bodyN1 = new AlignmentConstraint(body, n1, Type.PARENT_CHILD, 400,1400, new boolean[] {true, false, false, false, false, false}, null);
+		AlignmentConstraint bodyN2 = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 400,700, new boolean[] {true, false, false, false, false, false}, null);
+		ArrayList<AlignmentConstraint> cons = new ArrayList<>();
+		cons.add(bodyN1);
+		cons.add(bodyN2);
+		assertFalse(analyser.sameParent(cons));
+	}
+
+	@Test
+	public void testSmallRangeTrue() {
+        AlignmentConstraint before = new AlignmentConstraint(n1, n2, Type.SIBLING, 320,700, new boolean[] {true, false, false, false, false, false, true, false, false, false, false}, null);
+        AlignmentConstraint small = new AlignmentConstraint(n1, n2, Type.SIBLING, 701,704, new boolean[] {true, false, false, false, false, false, true, false, false, false, true}, null);
+        AlignmentConstraint after = new AlignmentConstraint(n1, n2, Type.SIBLING, 705,1400, new boolean[] {true, false, false, false, false, false, true, false, false, false, false}, null);
+
+        HashBasedTable<String, int[], AlignmentConstraint> acs = HashBasedTable.create();
+        acs.put(before.generateKey(), new int[]{320, 700}, before);
+        acs.put(small.generateKey(), new int[]{701, 704}, small);
+        acs.put(after.generateKey(), new int[]{705, 1400}, after);
+        doReturn(acs).when(analyser.rlg).getAlignmentConstraints();
+        analyser.rlg.setAlignmentConstraints(acs);
+        analyser.checkForSmallRanges(acs);
+        assertEquals("One failure should have been reported", 1, analyser.errors.size());
+        SmallRangeFailure sre = (SmallRangeFailure) analyser.errors.get(0);
+        assertEquals("Failure min bound should be 701", 701, sre.getBounds()[0]);
+        assertEquals("Failure max bound should be 704", 704, sre.getBounds()[1]);
+    }
+
+    @Test
+    public void testSmallRangeNoBefore() {
+        AlignmentConstraint small = new AlignmentConstraint(n1, n2, Type.SIBLING, 701, 704, new boolean[]{true, false, false, false, false, false, true, false, false, false, true}, null);
+        AlignmentConstraint after = new AlignmentConstraint(n1, n2, Type.SIBLING, 705, 1400, new boolean[]{true, false, false, false, false, false, true, false, false, false, false}, null);
+
+        HashBasedTable<String, int[], AlignmentConstraint> acs = HashBasedTable.create();
+        acs.put(small.generateKey(), new int[]{701, 704}, small);
+        acs.put(after.generateKey(), new int[]{705, 1400}, after);
+        doReturn(acs).when(analyser.rlg).getAlignmentConstraints();
+        analyser.rlg.setAlignmentConstraints(acs);
+        analyser.checkForSmallRanges(acs);
+        assertEquals("No failure should have been reported", 0, analyser.errors.size());
+    }
+    @Test
+    public void testSmallRangeNoAfter() {
+        AlignmentConstraint before = new AlignmentConstraint(n1, n2, Type.SIBLING, 320,700, new boolean[] {true, false, false, false, false, false, true, false, false, false, false}, null);
+        AlignmentConstraint small = new AlignmentConstraint(n1, n2, Type.SIBLING, 701, 704, new boolean[]{true, false, false, false, false, false, true, false, false, false, true}, null);
+
+        HashBasedTable<String, int[], AlignmentConstraint> acs = HashBasedTable.create();
+        acs.put(before.generateKey(), new int[]{320, 700}, before);
+        acs.put(small.generateKey(), new int[]{701, 704}, small);
+        doReturn(acs).when(analyser.rlg).getAlignmentConstraints();
+        analyser.rlg.setAlignmentConstraints(acs);
+        analyser.checkForSmallRanges(acs);
+        assertEquals("No failure should have been reported", 0, analyser.errors.size());
+    }
 }
