@@ -406,7 +406,7 @@ public class RLGAnalyser {
      * @param layouts the map of layouts already extracted
      * @return
      */
-    private int getWidthWithinRange(int min, int max, HashMap<Integer, LayoutFactory> layouts) {
+    public int getWidthWithinRange(int min, int max, HashMap<Integer, LayoutFactory> layouts) {
         // Iterate through all layouts
         for (Integer i : layouts.keySet()) {
             // If the width is within the range, return it
@@ -608,8 +608,6 @@ public class RLGAnalyser {
                         }
                     }
                 }
-
-
             }
         }
     }

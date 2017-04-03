@@ -115,16 +115,16 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-remote-driver</artifactId>-->
-            <!--<version>3.0.1</version>-->
+        <!--<groupId>org.seleniumhq.selenium</groupId>-->
+        <!--<artifactId>selenium-remote-driver</artifactId>-->
+        <!--<version>3.0.1</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-    		<!--<groupId>org.seleniumhq.selenium</groupId>-->
-    		<!--<artifactId>selenium-server</artifactId>-->
-    		<!--<version>3.0.1</version>-->
-		<!--</dependency>-->
+        <!--<groupId>org.seleniumhq.selenium</groupId>-->
+        <!--<artifactId>selenium-server</artifactId>-->
+        <!--<version>3.0.1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.antlr</groupId>
@@ -148,9 +148,9 @@
             <version>1.9.2</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.github.detro.ghostdriver</groupId>-->
-            <!--<artifactId>phantomjsdriver</artifactId>-->
-            <!--<version>1.0.4</version>-->
+        <!--<groupId>com.github.detro.ghostdriver</groupId>-->
+        <!--<artifactId>phantomjsdriver</artifactId>-->
+        <!--<version>1.0.4</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -210,10 +210,10 @@
         </dependency>
 
         <dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.4.8</version>
-		</dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.8</version>
+        </dependency>
 
         <dependency>
             <groupId>org.xmlunit</groupId>

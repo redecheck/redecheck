@@ -41,7 +41,9 @@ public class Tool {
     private boolean binarySearch = true;
     private boolean timing;
     private int timingID;
-    private String browser = "phantom";
+    private String browser;
+    private String reportPath;
+    private String classificationPath;
     private String mutantID;
     private boolean screenshot;
     private boolean baselines, results;
@@ -99,6 +101,12 @@ public class Tool {
         if (clp.browser != null) {
             browser = clp.browser;
         }
+        if (clp.reportPath != null) {
+            reportPath = clp.reportPath;
+        }
+        if (clp.classificationPath != null) {
+            classificationPath = clp.classificationPath;
+        }
         timing = clp.timing;
         timingID = clp.timingID;
         url = clp.url;
@@ -117,14 +125,36 @@ public class Tool {
 
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
-        if (!results) {
+        if (!results && classificationPath == null && reportPath == null) {
             runFaultDetector();
+        }
+
+        if (classificationPath != null && reportPath != null) {
+            runFixer();
         }
 
         if (results) {
             ResultProcessor rp = new ResultProcessor();
 //            rp.getInconsistencyResults();
             rp.writeArchiveWebpages();
+        }
+    }
+
+    private void runFixer() {
+        try {
+            scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
+            String fullUrl;
+            if (preamble != null) {
+                fullUrl = "file://" + preamble + url;
+            } else {
+                fullUrl = url;
+            }
+            System.out.println(fullUrl);
+
+            FaultPatcher patcher = new FaultPatcher(fullUrl, url, browser, current, reportPath, classificationPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -141,7 +171,7 @@ public class Tool {
                 fullUrl = url;
             }
             System.out.println(fullUrl);
-            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, layoutFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
+            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
             Thread t = new Thread(thread);
             t.start();
             while(t.isAlive()){}
@@ -178,15 +208,15 @@ public class Tool {
         String timeStamp = formatter.format(date);
         String oracleUrl = preamble + oracle + ".html";
         String testUrl = preamble + test + ".html";
-        RLGExtractor rlg1 = new RLGExtractor(current, oracleUrl, test, oracleDoms, oFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
-        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, tFactories, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
+        RLGExtractor rlg1 = new RLGExtractor(current, oracleUrl, test, oracleDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
+        RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
         Thread t1 = new Thread(rlg1);
         Thread t2 = new Thread(rlg2);
 
         t1.start();
         t2.start();
         while (t1.isAlive() || t2.isAlive()) {
-
+            // Let the RLGs get gathered.
         }
 
         System.out.println(oFactories.size()== tFactories.size());
@@ -402,11 +432,11 @@ public class Tool {
         driver = getNewDriver(dCaps);
         driver.get(oracle);
         System.out.println(oracle);
-        capturePageModel(oracle, widths, oDoms, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
+        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
 //        System.out.println("O" + oDoms.size());
         driver.get(test);
         System.out.println(test);
-        capturePageModel(test, widths, tDoms, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
+        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
 //        System.out.println("T" + tDoms.size());
         driver.close();
         driver.quit();
@@ -416,9 +446,8 @@ public class Tool {
      * This method samples the DOM of a webpage at a set of viewports, and saves the DOMs into a HashMap
      * @param url        The url of the webpage
      * @param widths    The viewport widths to sample
-     * @param doms        The HashMap to save the DOMs into.
      */
-    public static void capturePageModel(String url, int[] widths, HashMap<Integer, DomNode> doms, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories) {
+    public static void capturePageModel(String url, int[] widths, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories) {
         // Create a parser for the DOM strings
         JsonDomParser parser = new JsonDomParser();
         File domFile=null;

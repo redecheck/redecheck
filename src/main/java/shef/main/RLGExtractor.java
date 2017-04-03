@@ -15,9 +15,10 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGAnalyser;
 import shef.mutation.CSSMutator;
-import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.layout.LayoutFactory;
+import shef.reporting.inconsistencies.ResponsiveLayoutFailure;
 import shef.rlg.ResponsiveLayoutGraph;
+import shef.utils.BrowserFactory;
 import shef.utils.StopwatchFactory;
 
 import javax.imageio.ImageIO;
@@ -64,12 +65,12 @@ public class RLGExtractor implements Runnable {
 
 
 
-    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, HashMap<Integer, LayoutFactory> facts, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp, boolean baselines) throws IOException{
+    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp, boolean baselines) throws IOException{
         this.current = current;
         this.fullUrl = fullUrl;
         this.shortUrl = shortUrl;
         this.doms = doms;
-        this.lFactories = facts;
+        this.lFactories = new HashMap<>();
         this.browser = b;
         this.sampleTechnique = st;
         this.binarySearch = bs;
@@ -102,29 +103,7 @@ public class RLGExtractor implements Runnable {
             // Start the timer
             this.swf.getRlg().start();
 
-            // Set up the web driver depending on the browser being used.
-            if (browser.equals("firefox")) {
-                webDriver = new FirefoxDriver();
-            } else if (browser.equals("chrome")) {
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("test-type");
-                options.addArguments("disable-popup-blocking");
-                DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-                webDriver = new ChromeDriver(capabilities);
-            } else if (browser.equals("phantom")) { 
-                DesiredCapabilities dCaps = new DesiredCapabilities();
-                dCaps.setJavascriptEnabled(true);
-                dCaps.setCapability("takesScreenshot", true);
-                dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
-                String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
-                dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-                webDriver = new PhantomJSDriver(dCaps);
-            } else if (browser.equals("opera")) {
-                DesiredCapabilities capabilities = DesiredCapabilities.operaBlink();
-                capabilities.setJavascriptEnabled(true);
-                webDriver = new OperaDriver(capabilities);
-            }
+            webDriver = BrowserFactory.getNewDriver(browser);
 
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
             // Load up the webpage in the browser, using a pop-up to make sure we can resize down to 320 pixels wide
@@ -139,16 +118,13 @@ public class RLGExtractor implements Runnable {
                 }
             }
 
-            // Trying to interact with the CSS of the web page
-//            String changeScript = Utils.readFile(current +"/../resources/cssChanger.js");
-//            js.executeScript("var myElement = document.querySelector('h1'); myElement.style.fontSize = '20px';");
 
-//            // Calculate the initial sample widths
+            // Calculate the initial sample widths
             sampleWidths = calculateSampleWidths(sampleTechnique, shortUrl, webDriver, startW, endW, stepSize, preamble, breakpoints);
             initialDoms = sampleWidths.length;
 
             // Capture the layout of the page at each width
-            Tool.capturePageModel(fullUrl, sampleWidths, doms, sleep, false, false, webDriver, swf, lFactories);
+            Tool.capturePageModel(fullUrl, sampleWidths, sleep, false, false, webDriver, swf, lFactories);
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
 
             // For each sampled width, analyse the DOM to construct the specific layout structure
@@ -239,7 +215,7 @@ public class RLGExtractor implements Runnable {
     }
 
     public static BufferedImage getScreenshot(int captureWidth, int errorID, HashMap<Integer, LayoutFactory> lfs, WebDriver d, String fullUrl) {
-        Tool.capturePageModel(fullUrl, new int[] {captureWidth}, new HashMap<Integer, DomNode>(), Tool.sleep, false, false, d, new StopwatchFactory(), lfs);
+        Tool.capturePageModel(fullUrl, new int[] {captureWidth}, Tool.sleep, false, false, d, new StopwatchFactory(), lfs);
         return Utils.getScreenshot(fullUrl,captureWidth, Tool.sleep, d, errorID);
     }
 

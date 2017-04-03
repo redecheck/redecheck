@@ -66,4 +66,10 @@ public class CommandLineParser {
     @Parameter(names = "--url", description = "The URL to check for faults.")
     public String url;
 
+    @Parameter(names = "--report", description = "Name of the report file to read in.")
+    public String reportPath;
+
+    @Parameter(names = "--classification", description = "Path to the classification file to read in")
+    public String classificationPath;
+
 }

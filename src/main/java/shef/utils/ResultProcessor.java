@@ -1185,7 +1185,7 @@ public class ResultProcessor {
 		return results;
 	}
 
-	private static String[] getClassifications(File f, int count) {
+	public static String[] getClassifications(File f, int count) {
 		String[] results = new String[count];
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/classification.txt"));
@@ -1247,6 +1247,37 @@ public class ResultProcessor {
 //		}
 //		return boundsList;
 //	}
+
+	public static String[] getFailureStrings(File file) {
+		ArrayList<String> strings = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath() + "/fault-report.txt"));
+			String failureString = "";
+			String line = br.readLine();
+
+			while (line != null) {
+				try {
+					while (!line.equals("")) {
+						failureString += line;
+						line = br.readLine();
+					}
+					strings.add(failureString);
+//
+					line = br.readLine();
+					failureString = "";
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		String[] failures = new String[strings.size()];
+		for (int i = 0; i < strings.size(); i++) {
+			failures[i] = strings.get(i);
+		}
+		return failures;
+	}
 
 	private static ArrayList<int[]> getFailureBounds(File f) {
 		ArrayList<int[]> boundsList = new ArrayList<>();

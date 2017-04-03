@@ -211,6 +211,29 @@ public class RLGAnalyserTest {
         assertEquals("Failure min bound should be 400", 400, epe.getBounds()[0]);
         assertEquals("Failure max bound should be 700", 700, epe.getBounds()[1]);
 	}
+
+	@Test
+	public void testOverflowWithIssueFlipped() {
+		AlignmentConstraint bodyN1 = new AlignmentConstraint(body, n1, Type.PARENT_CHILD, 400,1400, new boolean[] {true, false, false, false, false, false}, null);
+		AlignmentConstraint bodyN2 = new AlignmentConstraint(body, n2, Type.PARENT_CHILD, 400,700, new boolean[] {true, false, false, false, false, false}, null);
+		AlignmentConstraint overlapping = new AlignmentConstraint(n2, n1, Type.SIBLING, 400,700, new boolean[] {true, false, false, false, false, false, true, false, false, false, true}, null);
+		AlignmentConstraint notOverlapping = new AlignmentConstraint(n1, n2, Type.PARENT_CHILD, 701,1400, new boolean[] {true, false, false, false, false, false}, null);
+		n1.addParentConstraint(bodyN1);
+		n2.addParentConstraint(bodyN2);
+		n2.addParentConstraint(notOverlapping);
+		HashBasedTable<String, int[], AlignmentConstraint> acs = HashBasedTable.create();
+		acs.put(bodyN1.generateKey(), new int[]{400, 1400}, bodyN1);
+		acs.put(bodyN2.generateKey(), new int[]{400, 700}, bodyN2);
+		acs.put(overlapping.generateKey(), new int[]{400, 700}, overlapping);
+		acs.put(notOverlapping.generateKey(), new int[]{701, 1400}, notOverlapping);
+		doReturn(acs).when(analyser.rlg).getAlignmentConstraints();
+		analyser.rlg.setAlignmentConstraints(acs);
+		analyser.detectOverflowOrOverlap(acs);
+		assertEquals("One failure should have been reported", 1, analyser.errors.size());
+		ElementProtrusionFailure epe = (ElementProtrusionFailure) analyser.errors.get(0);
+		assertEquals("Failure min bound should be 400", 400, epe.getBounds()[0]);
+		assertEquals("Failure max bound should be 700", 700, epe.getBounds()[1]);
+	}
 	
 	@Test
 	public void testSetOfNodesToStringEmpty() {
@@ -312,5 +335,16 @@ public class RLGAnalyserTest {
         analyser.rlg.setAlignmentConstraints(acs);
         analyser.checkForSmallRanges(acs);
         assertEquals("No failure should have been reported", 0, analyser.errors.size());
+    }
+
+    @Test
+    public void testGetWidthWithinRange() {
+        HashMap<Integer, LayoutFactory> layouts = new HashMap<>();
+        layouts.put(320, new LayoutFactory("[]"));
+        layouts.put(380, new LayoutFactory("[]"));
+        layouts.put(440, new LayoutFactory("[]"));
+        layouts.put(500, new LayoutFactory("[]"));
+        assertEquals("Should return 320", 320, analyser.getWidthWithinRange(320, 500, layouts));
+        assertEquals("Should return 600", 600, analyser.getWidthWithinRange(550, 650, layouts));
     }
 }
