@@ -1158,7 +1158,7 @@ public class ResultProcessor {
 		return results;
 	}
 
-	private static String[] getCategories(File f, int count) {
+	public static String[] getCategories(File f, int count) {
 		String[] results = new String[count];
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/error-types.txt"));
