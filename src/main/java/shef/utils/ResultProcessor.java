@@ -1279,7 +1279,7 @@ public class ResultProcessor {
 		return failures;
 	}
 
-	private static ArrayList<int[]> getFailureBounds(File f) {
+	public static ArrayList<int[]> getFailureBounds(File f) {
 		ArrayList<int[]> boundsList = new ArrayList<>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f.getAbsolutePath() + "/fault-report.txt"));
