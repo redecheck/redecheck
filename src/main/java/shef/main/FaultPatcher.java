@@ -22,19 +22,23 @@ public class FaultPatcher {
     ArrayList<int[]> bounds;
     public String browser, fullUrl, url, rPath, cPath;
     private HashMap<Integer, LayoutFactory> layoutFactories;
+    File directory;
 
-    public FaultPatcher(String fullUrl, String url, String browser, String current, String rp, String cp) {
+    public FaultPatcher(String fullUrl, String url, String browser, String current) {
 
         try {
             webDriver = BrowserFactory.getNewDriver(browser);
             webDriver.get(fullUrl);
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
 
+            directory = ResultProcessor.lastFileModified(current+"/../reports/" + url.split("/")[0]+"/");
+            System.out.println(directory);
+
             layoutFactories = new HashMap<>();
-            errors = ResultProcessor.getFailureStrings(new File(current+"/../reports/" + url.split("/")[0]+"/"+rp));
-            classifications = ResultProcessor.getClassifications(new File(current+"/../reports/" + url.split("/")[0]+"/"+cp), errors.length);
-            categories = ResultProcessor.getCategories(new File(current+"/../reports/" + url.split("/")[0]+"/"+cp), errors.length);
-            bounds = ResultProcessor.getFailureBounds(new File(current+"/../reports/" + url.split("/")[0]+"/"+rp));
+            errors = ResultProcessor.getFailureStrings(directory);
+            classifications = ResultProcessor.getClassifications(directory, errors.length);
+            categories = ResultProcessor.getCategories(directory, errors.length);
+            bounds = ResultProcessor.getFailureBounds(directory);
 
             for (int i = 0; i < errors.length; i++) {
                 if (classifications[i].equals("TP")) {
@@ -45,10 +49,16 @@ public class FaultPatcher {
                     int[] fBounds = bounds.get(i);
 
                     // Resize browser to upper bound of fault
-                    webDriver.manage().window().setSize(new Dimension(fBounds[1], 1000));
+                    int currentSize = fBounds[1];
+                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
 
                     // Verify failure manifests at the upper bound
-                    boolean failureManifesting = checkForFailure(nodes, categories[i], fBounds[1]);
+                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize);
+                    while (!failureManifesting) {
+                        currentSize--;
+                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+                        failureManifesting = checkForFailure(nodes, categories[i], currentSize);
+                    }
                     System.out.println(failureManifesting);
                 }
             }
@@ -81,12 +91,16 @@ public class FaultPatcher {
         Layout layout = layoutFactories.get(fBound).layout;
 
         // Element collision check
-        if (category.equals("Element Collision")) {
+        if (category.equals("Element Collision") || category.equals("Element Protrusion")) {
 
             for (Relationship r : layout.getRelationships().values()) {
                 if (r instanceof Sibling) {
                     if (nodes.contains(r.getNode1().getXpath()) && nodes.contains(r.getNode2().getXpath())) {
-                        return true;
+                        if (((Sibling) r).generateAttributeArray()[10]) {
+                            return true;
+                        } else {
+                            System.out.println(r);
+                        }
                     }
                 }
             }
@@ -96,6 +110,9 @@ public class FaultPatcher {
         } else if (category.equals("Viewport Protrusion")) {
             String vpNode = nodes.get(0);
             for (Relationship r : layout.getRelationships().values()) {
+                if (nodes.contains(r.getNode1().getXpath()) || nodes.contains(r.getNode2().getXpath())) {
+                    System.out.println(r);
+                }
                 // We're only interested in pc edges
                 if (r instanceof ParentChild) {
                     // If the VP node is the child, return
@@ -106,6 +123,8 @@ public class FaultPatcher {
             }
             return true;
         }
+
+        // Element Protrusion Check
         return false;
     }
 

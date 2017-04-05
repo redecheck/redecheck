@@ -42,8 +42,7 @@ public class Tool {
     private boolean timing;
     private int timingID;
     private String browser;
-    private String reportPath;
-    private String classificationPath;
+    private boolean fix;
     private String mutantID;
     private boolean screenshot;
     private boolean baselines, results;
@@ -101,12 +100,7 @@ public class Tool {
         if (clp.browser != null) {
             browser = clp.browser;
         }
-        if (clp.reportPath != null) {
-            reportPath = clp.reportPath;
-        }
-        if (clp.classificationPath != null) {
-            classificationPath = clp.classificationPath;
-        }
+        fix = clp.fix;
         timing = clp.timing;
         timingID = clp.timingID;
         url = clp.url;
@@ -125,11 +119,11 @@ public class Tool {
 
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
-        if (!results && classificationPath == null && reportPath == null) {
+        if (!results && !fix) {
             runFaultDetector();
         }
 
-        if (classificationPath != null && reportPath != null) {
+        if (fix) {
             runFixer();
         }
 
@@ -151,7 +145,7 @@ public class Tool {
             }
             System.out.println(fullUrl);
 
-            FaultPatcher patcher = new FaultPatcher(fullUrl, url, browser, current, reportPath, classificationPath);
+            FaultPatcher patcher = new FaultPatcher(fullUrl, url, browser, current);
 
         } catch (IOException e) {
             e.printStackTrace();
