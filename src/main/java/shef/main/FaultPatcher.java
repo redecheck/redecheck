@@ -4,7 +4,6 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import shef.layout.*;
-import shef.rlg.Node;
 import shef.utils.BrowserFactory;
 import shef.utils.ResultProcessor;
 
@@ -53,11 +52,11 @@ public class FaultPatcher {
                     webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
 
                     // Verify failure manifests at the upper bound
-                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize);
+                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     while (!failureManifesting) {
                         currentSize--;
                         webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
-                        failureManifesting = checkForFailure(nodes, categories[i], currentSize);
+                        failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     }
                     System.out.println(failureManifesting);
                 }
@@ -86,20 +85,19 @@ public class FaultPatcher {
         }
     }
 
-    private boolean checkForFailure(ArrayList<String> nodes, String category, int fBound) {
+    private boolean checkForFailure(ArrayList<String> nodes, String category, int fBound, String error) {
         Tool.capturePageModel(fullUrl, new int[] {fBound}, 50, false, false, webDriver, null, layoutFactories);
         Layout layout = layoutFactories.get(fBound).layout;
 
-        // Element collision check
+        // Element collision or element protrusion check
         if (category.equals("Element Collision") || category.equals("Element Protrusion")) {
 
             for (Relationship r : layout.getRelationships().values()) {
                 if (r instanceof Sibling) {
                     if (nodes.contains(r.getNode1().getXpath()) && nodes.contains(r.getNode2().getXpath())) {
+                        // Check the matching sibling edge actually has the overlapping attribute set to true.
                         if (((Sibling) r).generateAttributeArray()[10]) {
                             return true;
-                        } else {
-                            System.out.println(r);
                         }
                     }
                 }
@@ -110,9 +108,6 @@ public class FaultPatcher {
         } else if (category.equals("Viewport Protrusion")) {
             String vpNode = nodes.get(0);
             for (Relationship r : layout.getRelationships().values()) {
-                if (nodes.contains(r.getNode1().getXpath()) || nodes.contains(r.getNode2().getXpath())) {
-                    System.out.println(r);
-                }
                 // We're only interested in pc edges
                 if (r instanceof ParentChild) {
                     // If the VP node is the child, return
@@ -122,10 +117,25 @@ public class FaultPatcher {
                 }
             }
             return true;
-        }
 
-        // Element Protrusion Check
+            // Small Range Check
+        } else if (category.equals("Small-Range")) {
+            for (Relationship r : layout.getRelationships().values()) {
+                if (nodes.contains(r.getNode1().getXpath()) && nodes.contains(r.getNode2().getXpath())) {
+                    Sibling s = (Sibling) r;
+                    String actual = s.generateAttributeSet();
+                    String expected = getAttributesFromString(error);
+                    if (actual.trim().equals(expected.trim())) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
+    }
+
+    private String getAttributesFromString(String error) {
+        return error.split(" , ")[5].split(" ")[1].split("}")[0]+"}";
     }
 
 
@@ -148,10 +158,16 @@ public class FaultPatcher {
             String[] splits = error.split("\t")[1].split(" , ");
             nodes.add(splits[0]);
             nodes.add(splits[1]);
-        } else {
-
+        } else if (category.equals("Small-Range")) {
+            String offender = error.split("THIS: ")[1].split("\t")[0];
+            System.out.println(offender);
+            String[] splits = offender.split(" , ");
+            nodes.add(splits[0]);
+            nodes.add(splits[1]);
         }
 
         return nodes;
     }
+
+
 }
