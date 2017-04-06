@@ -1,14 +1,23 @@
 package shef.main;
 
+import cz.vutbr.web.css.CSSFactory;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import shef.layout.*;
+import shef.mutation.WebpageMutator;
 import shef.utils.BrowserFactory;
 import shef.utils.ResultProcessor;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,13 +67,36 @@ public class FaultPatcher {
                         webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
                         failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     }
-                    System.out.println(failureManifesting);
+
+                    boolean faultFixed = false;
+                    while (!faultFixed) {
+                        String script = "var element = document.evaluate(\"" +nodes.get(0) + "\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; var styles = window.getComputedStyle(element);  element.style.fontSize = '20px';";
+                        System.out.println(script);
+                        String result = (String) js.executeScript(script);
+
+                    }
                 }
             }
 
+            // Try and parse all the CSS
+//            WebpageMutator mutator = new WebpageMutator(fullUrl, url, 0);
+
+//            try {
+//                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//                DocumentBuilder db = factory.newDocumentBuilder();
+//                File f = new File("../../../Resources/fault-examples/"+url);
+//                Document doc = db.parse(f);
+////            CSSFactory.getUsedStyles();
+//            } catch (ParserConfigurationException e) {
+//                e.printStackTrace();
+//            } catch (SAXException e) {
+//                e.printStackTrace();
+//            }
+
+
             // Trying to interact with the CSS of the web page
 //            String originalValue = (String) js.executeScript("var myElement = document.querySelector('h1'); var styles = window.getComputedStyle(myElement); return styles.getPropertyValue('font-size');");
-            js.executeScript("var myElement = document.querySelector('h1'); myElement.style.fontSize = '20px';");
+//            js.executeScript("var myElement = document.querySelector('h1'); myElement.style.fontSize = '20px';");
 //            String afterValue = (String) js.executeScript("var myElement = document.querySelector('h1'); var styles = window.getComputedStyle(myElement); return styles.getPropertyValue('font-size');");
 //            Tool.capturePageModel(fullUrl, new int[] {800}, 50, false, false, webDriver, null, layoutFactories);
 //            LayoutFactory layoutFactory = layoutFactories.get(800);
@@ -118,7 +150,7 @@ public class FaultPatcher {
             }
             return true;
 
-            // Small Range Check
+        // Small Range Check
         } else if (category.equals("Small-Range")) {
             for (Relationship r : layout.getRelationships().values()) {
                 if (nodes.contains(r.getNode1().getXpath()) && nodes.contains(r.getNode2().getXpath())) {
@@ -130,6 +162,22 @@ public class FaultPatcher {
                     }
                 }
             }
+
+        // Wrapping check
+        } else if (category.equals("Wrapping")) {
+            String wrapped = getWrappedNode(error);
+            for (Relationship r : layout.getRelationships().values()) {
+                if (r instanceof Sibling) {
+                    Sibling s = (Sibling) r;
+                    if (s.getNode1().getXpath().equals(wrapped) && nodes.contains(s.getNode2().getXpath()) && s.generateAttributeArray()[1]) {
+                        return true;
+                    } else if (s.getNode2().getXpath().equals(wrapped) && nodes.contains(s.getNode1().getXpath()) && s.generateAttributeArray()[0]) {
+                        return true;
+                    }
+                }
+            }
+            // Return false if we haven't found a match
+            return false;
         }
         return false;
     }
@@ -145,7 +193,10 @@ public class FaultPatcher {
             String wrapped = error.split(":\t")[1].split(" wrapped")[0];
             String[] row = error.split("row \t")[1].split(" ");
             for (String r : row) {
-                nodes.add(r);
+                if (!r.equals("[") && !r.equals("]")) {
+                    nodes.add(r);
+                }
+
             }
         } else if (category.equals("Viewport Protrusion")) {
             nodes.add(error.split(" overflowed")[0]);
@@ -167,6 +218,10 @@ public class FaultPatcher {
         }
 
         return nodes;
+    }
+
+    private String getWrappedNode(String error) {
+        return error.split(":\t")[1].split(" wrapped")[0];
     }
 
 
