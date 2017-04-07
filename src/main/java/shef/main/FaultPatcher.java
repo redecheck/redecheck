@@ -40,7 +40,7 @@ public class FaultPatcher {
             JavascriptExecutor js = (JavascriptExecutor) webDriver;
 
             directory = ResultProcessor.lastFileModified(current+"/../reports/" + url.split("/")[0]+"/");
-            System.out.println(directory);
+//            System.out.println(directory);
 
             layoutFactories = new HashMap<>();
             errors = ResultProcessor.getFailureStrings(directory);
@@ -48,38 +48,40 @@ public class FaultPatcher {
             categories = ResultProcessor.getCategories(directory, errors.length);
             bounds = ResultProcessor.getFailureBounds(directory);
 
-            for (int i = 0; i < errors.length; i++) {
-                if (classifications[i].equals("TP")) {
-
-                    // General setup
-                    String error = errors[i];
-                    ArrayList<String> nodes = getNodesFromError(error, categories[i]);
-                    int[] fBounds = bounds.get(i);
-
-                    // Resize browser to upper bound of fault
-                    int currentSize = fBounds[1];
-                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
-
-                    // Verify failure manifests at the upper bound
-                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
-                    while (!failureManifesting) {
-                        currentSize--;
-                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
-                        failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
-                    }
-
-                    boolean faultFixed = false;
-                    while (!faultFixed) {
-                        String script = "var element = document.evaluate(\"" +nodes.get(0) + "\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; var styles = window.getComputedStyle(element);  element.style.fontSize = '20px';";
-                        System.out.println(script);
-                        String result = (String) js.executeScript(script);
-
-                    }
-                }
-            }
+//            for (int i = 0; i < errors.length; i++) {
+//                if (classifications[i].equals("TP")) {
+//
+//                    // General setup
+//                    String error = errors[i];
+//                    ArrayList<String> nodes = getNodesFromError(error, categories[i]);
+//                    int[] fBounds = bounds.get(i);
+//
+//                    // Resize browser to upper bound of fault
+//                    int currentSize = fBounds[1];
+//                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+//
+//                    // Verify failure manifests at the upper bound
+//                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
+//                    while (!failureManifesting) {
+//                        currentSize--;
+//                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+//                        failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
+//                    }
+//
+//                    boolean faultFixed = false;
+//                    while (!faultFixed) {
+//                        String script = generateRandomInjectionScript(nodes, error);
+////                                "
+//                        System.out.println(script);
+//                        String result = (String) js.executeScript(script);
+//                        faultFixed = true;
+//                    }
+//                }
+//            }
 
             // Try and parse all the CSS
-//            WebpageMutator mutator = new WebpageMutator(fullUrl, url, 0);
+            WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0);
+            System.out.println(mutator.getRuleCandidates().size());
 
 //            try {
 //                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -93,20 +95,6 @@ public class FaultPatcher {
 //                e.printStackTrace();
 //            }
 
-
-            // Trying to interact with the CSS of the web page
-//            String originalValue = (String) js.executeScript("var myElement = document.querySelector('h1'); var styles = window.getComputedStyle(myElement); return styles.getPropertyValue('font-size');");
-//            js.executeScript("var myElement = document.querySelector('h1'); myElement.style.fontSize = '20px';");
-//            String afterValue = (String) js.executeScript("var myElement = document.querySelector('h1'); var styles = window.getComputedStyle(myElement); return styles.getPropertyValue('font-size');");
-//            Tool.capturePageModel(fullUrl, new int[] {800}, 50, false, false, webDriver, null, layoutFactories);
-//            LayoutFactory layoutFactory = layoutFactories.get(800);
-//            System.out.println(layoutFactory.layout.toString());
-//            function getElementByXpath(path) {
-//            return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-//}
-//
-//            console.log( getElementByXpath("//html[1]/body[1]/div[1]") );
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -115,6 +103,11 @@ public class FaultPatcher {
                 webDriver.quit();
             }
         }
+    }
+
+    private String generateRandomInjectionScript(ArrayList<String> nodes, String error) {
+        String result = "var element = document.evaluate(\"" +nodes.get(0) + "\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; var styles = window.getComputedStyle(element);  element.style.fontSize = '20px';";
+        return result;
     }
 
     private boolean checkForFailure(ArrayList<String> nodes, String category, int fBound, String error) {

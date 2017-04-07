@@ -102,14 +102,13 @@ public class CSSMutator {
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void mutateBreakpoint(int i, HashMap<String, StyleSheet> toMutate, int selector) {
+    public void mutateMediaQuery(int i, HashMap<String, StyleSheet> toMutate, int selector) {
         boolean madeMutant = false;
         while(!madeMutant) {
             try {
                 Collections.shuffle(mqCandidates);
                 RuleMedia temp = mqCandidates.get(0);
                 RuleMedia rm = (RuleMedia) getRuleBlockFromStyleSheet(toMutate, temp);
-                RuleMedia toPrint = cloner.deepClone(rm);
                 List<MediaQuery> queries = rm.getMediaQueries();
                 Collections.shuffle(queries);
                 MediaQuery mq = queries.get(0);
@@ -119,36 +118,44 @@ public class CSSMutator {
                 MediaExpression me = exs.get(0);
                 if (selector == 3) {
                     Term t = me.asList().get(0);
-                    int mutatorValue = random.nextInt(10) + 1;
-
-                    int sign = random.nextInt(10);
-                    float orig = (float) t.getValue();
-                    float mutated;
-                    if (sign <= 5) {
-                        mutated = (float) orig + mutatorValue;
-                    } else {
-                        mutated = (float) orig - mutatorValue;
-                    }
-                    t.setValue(mutated);
-                    writeMutantToFile(i, "Changed value from " + orig + " to " + mutated + " in \n" + rm);
+                    changeBreakpoint(t, i, rm);
                     madeMutant = true;
-
                 } else {
-                    if (me.getFeature().equals("min-width")) {
-                        me.setFeature("max-width");
-                    } else if (me.getFeature().equals("max-width")) {
-                        me.setFeature("min-width");
-                    }
+                    changeCondition(me);
                     writeMutantToFile(i, "Changed expression to " + me.getFeature() + " in \n" + rm);
                     madeMutant = true;
 
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-//                System.out.println("WENT WRONG SOMEWHERE");
             }
         }
     }
+
+    private void changeBreakpoint(Term t, int i, RuleMedia rm) {
+        int mutatorValue = random.nextInt(10) + 1;
+
+        int sign = random.nextInt(10);
+        float orig = (float) t.getValue();
+        float mutated;
+        if (sign <= 5) {
+            mutated = (float) orig + mutatorValue;
+        } else {
+            mutated = (float) orig - mutatorValue;
+        }
+        t.setValue(mutated);
+        writeMutantToFile(i, "Changed value from " + orig + " to " + mutated + " in \n" + rm);
+    }
+
+    public void changeCondition(MediaExpression me) {
+        if (me.getFeature().equals("min-width")) {
+            me.setFeature("max-width");
+        } else if (me.getFeature().equals("max-width")) {
+            me.setFeature("min-width");
+        }
+    }
+
+
 
     public void shiftRuleBlock(int i, StyleSheet toMutate) {
         int index;
@@ -254,49 +261,10 @@ public class CSSMutator {
                         
                         // If the rule-value mutation operator is selected
                         if (selector2 == 0) {
+
+                            changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate);
 //                            System.out.println("Mutating rule-value");
-                            if ( (!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
-                                int mutator = random.nextInt(10) + 1;
-                                int sign = random.nextInt(10);
-                                float orig = (float) t.getValue();
-                                float mutated;
-                                if (orig == 0.0f) {
-                                    mutated = orig + mutator;
-                                } else {
-                                    if (sign <= 5) {
-                                        mutated = (float) orig + mutator;
-                                    } else {
-                                        mutated = (float) orig - mutator;
-                                    }
-                                }
-                                t.setValue(mutated);
-                                writeMutantToFile(i, "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
-                                mutatedARule = true;
-                                madeMutant = true;
-                            } else {
-//                                System.out.println(decToMutate.getProperty());
-                                String current = (String) t.getValue();
-//                                System.out.println(current);
-                                String newValue = "";
-                                if (decToMutate.getProperty().equals("float")) {
-                                    int valSelector = random.nextInt(floatOptions.length);
-                                    newValue = floatOptions[valSelector];
-                                } else if (decToMutate.getProperty().equals("position")) {
-                                    int valSelector = random.nextInt(positionOptions.length);
-                                    newValue = positionOptions[valSelector];
-                                } else if (decToMutate.getProperty().equals("display")) {
-                                    int valSelector = random.nextInt(displayOptions.length);
-                                    newValue = displayOptions[valSelector];
-                                }
-//                                System.out.println(newValue);
-                                if (!newValue.equals(current)) {
-                                    t.setValue(newValue);
-//                                    System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
-                                    writeMutantToFile(i, "Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
-                                    mutatedARule = true;
-                                    madeMutant = true;
-                                }
-                            }
+
 
 	                        
 	                    // If the rule-unit mutation operator is selected    
@@ -356,7 +324,50 @@ public class CSSMutator {
         }
     }
 
-
+    private void changeRuleValue(String property, Term t, boolean mutatedARule, boolean madeMutant, int i, RuleSet toMutate, RuleSet toPrint, Declaration decToMutate) {
+        if ( (!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
+            int mutator = random.nextInt(10) + 1;
+            int sign = random.nextInt(10);
+            float orig = (float) t.getValue();
+            float mutated;
+            if (orig == 0.0f) {
+                mutated = orig + mutator;
+            } else {
+                if (sign <= 5) {
+                    mutated = (float) orig + mutator;
+                } else {
+                    mutated = (float) orig - mutator;
+                }
+            }
+            t.setValue(mutated);
+            writeMutantToFile(i, "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
+            mutatedARule = true;
+            madeMutant = true;
+        } else {
+//                                System.out.println(decToMutate.getProperty());
+            String current = (String) t.getValue();
+//                                System.out.println(current);
+            String newValue = "";
+            if (decToMutate.getProperty().equals("float")) {
+                int valSelector = random.nextInt(floatOptions.length);
+                newValue = floatOptions[valSelector];
+            } else if (decToMutate.getProperty().equals("position")) {
+                int valSelector = random.nextInt(positionOptions.length);
+                newValue = positionOptions[valSelector];
+            } else if (decToMutate.getProperty().equals("display")) {
+                int valSelector = random.nextInt(displayOptions.length);
+                newValue = displayOptions[valSelector];
+            }
+//                                System.out.println(newValue);
+            if (!newValue.equals(current)) {
+                t.setValue(newValue);
+//                                    System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
+                writeMutantToFile(i, "Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
+                mutatedARule = true;
+                madeMutant = true;
+            }
+        }
+    }
 
 
     @SuppressWarnings("unchecked")
@@ -621,7 +632,7 @@ public class CSSMutator {
         if (selector <=1) {
             mutateRule(this.mutantNumber, toMutate, selector);
         } else {
-            mutateBreakpoint(this.mutantNumber, toMutate, selector);
+            mutateMediaQuery(this.mutantNumber, toMutate, selector);
         }
         writeToFile(this.mutantNumber, toMutate, this.shorthand);
         writeNewHtml(toMutate);

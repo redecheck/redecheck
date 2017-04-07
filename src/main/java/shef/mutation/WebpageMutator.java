@@ -30,6 +30,15 @@ public class WebpageMutator {
     Document page;
     private String htmlContent;
     LinkedHashMap<String, StyleSheet> stylesheets;
+
+    public ArrayList<RuleMedia> getMqCandidates() {
+        return mqCandidates;
+    }
+
+    public ArrayList<RuleSet> getRuleCandidates() {
+        return ruleCandidates;
+    }
+
     ArrayList<RuleMedia> mqCandidates;
     ArrayList<RuleSet> ruleCandidates;
     int usedBlocks;
@@ -244,20 +253,8 @@ public class WebpageMutator {
                             List<Declaration> decs = rs.asList();
                             usedDeclarations += decs.size();
                             ArrayList<Declaration> decsToKeep = new ArrayList<Declaration>();
-                            for (Declaration d : decs) {
-                                List<Term<?>> terms = d.asList();
-                                for (Term t : terms) {
-                                    if ((t instanceof TermLength) || (t instanceof TermPercent) || (t instanceof TermIdent)){
-                                        for (String p : wantedProperties) {
-                                            if (d.getProperty().toLowerCase().equals(p)) {
-                                                if (!decsToKeep.contains(d)) {
-                                                    decsToKeep.add(d);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            filterDeclarations(decs, decsToKeep);
+
                             if (decsToKeep.size() > 0) {
                                 rs.replaceAll(decsToKeep);
                                 ruleCandidates.add(rs);
@@ -274,22 +271,7 @@ public class WebpageMutator {
                                     List<Declaration> decs = rs.asList();
                                     usedDeclarations += decs.size();
                                     ArrayList<Declaration> decsToKeep = new ArrayList<Declaration>();
-                                    for (Declaration d : decs) {
-
-                                        List<Term<?>> terms = d.asList();
-                                        for (Term t : terms) {
-                                            if ((t instanceof TermLength) || (t instanceof TermPercent) || (t instanceof TermIdent)) {
-                                                for (String p : wantedProperties) {
-                                                    if (d.getProperty().toLowerCase().equals(p)) {
-//
-                                                        if (!decsToKeep.contains(d)) {
-                                                            decsToKeep.add(d);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    filterDeclarations(decs, decsToKeep);
 
                                     if (decsToKeep.size() > 0) {
                                         rs.replaceAll(decsToKeep);
@@ -315,8 +297,25 @@ public class WebpageMutator {
             }
         }
     }
-	
-	private boolean ignoreTag(String tagName) {
+
+    private void filterDeclarations(List<Declaration> decs, ArrayList<Declaration> decsToKeep) {
+        for (Declaration d : decs) {
+            List<Term<?>> terms = d.asList();
+            for (Term t : terms) {
+                if ((t instanceof TermLength) || (t instanceof TermPercent) || (t instanceof TermIdent)){
+                    for (String p : wantedProperties) {
+                        if (d.getProperty().toLowerCase().equals(p)) {
+                            if (!decsToKeep.contains(d)) {
+                                decsToKeep.add(d);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean ignoreTag(String tagName) {
         for (int i =0; i < tagsIgnore.length; i++) {
             if (tagsIgnore[i].equals(tagName)) {
                 return true;
@@ -462,32 +461,32 @@ public class WebpageMutator {
         return numDomNodes;
     }
 
-    public int getDeclarationCount() {
-        int numBlocks = 0;
-        int numDecs = 0;
-        int numCSSSelectors;
-
-        for (StyleSheet ss : stylesheets.values()) {
-            for (RuleBlock rb : ss) {
-                numBlocks++;
-                if (rb instanceof RuleSet) {
-                    RuleSet casted = (RuleSet) rb;
-                    for (Declaration d : casted.asList()) {
-                        numDecs++;
-                    }
-                } else if (rb instanceof RuleMedia) {
-                    RuleMedia casted2 = (RuleMedia) rb;
-                    for (RuleSet rs : casted2.asList()) {
-                        numBlocks++;
-                        for (Declaration d : rs.asList()) {
-                            numDecs++;
-                        }
-                    }
-                }
-            }
-        }
-        return numDecs;
-    }
+//    public int getDeclarationCount() {
+//        int numBlocks = 0;
+//        int numDecs = 0;
+//        int numCSSSelectors;
+//
+//        for (StyleSheet ss : stylesheets.values()) {
+//            for (RuleBlock rb : ss) {
+//                numBlocks++;
+//                if (rb instanceof RuleSet) {
+//                    RuleSet casted = (RuleSet) rb;
+//                    for (Declaration d : casted.asList()) {
+//                        numDecs++;
+//                    }
+//                } else if (rb instanceof RuleMedia) {
+//                    RuleMedia casted2 = (RuleMedia) rb;
+//                    for (RuleSet rs : casted2.asList()) {
+//                        numBlocks++;
+//                        for (Declaration d : rs.asList()) {
+//                            numDecs++;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return numDecs;
+//    }
 
 
 	
