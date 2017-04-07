@@ -48,27 +48,31 @@ public class FaultPatcher {
             categories = ResultProcessor.getCategories(directory, errors.length);
             bounds = ResultProcessor.getFailureBounds(directory);
 
-//            for (int i = 0; i < errors.length; i++) {
-//                if (classifications[i].equals("TP")) {
-//
-//                    // General setup
-//                    String error = errors[i];
-//                    ArrayList<String> nodes = getNodesFromError(error, categories[i]);
-//                    int[] fBounds = bounds.get(i);
-//
-//                    // Resize browser to upper bound of fault
-//                    int currentSize = fBounds[1];
-//                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
-//
-//                    // Verify failure manifests at the upper bound
-//                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
-//                    while (!failureManifesting) {
-//                        currentSize--;
-//                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
-//                        failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
-//                    }
-//
-//                    boolean faultFixed = false;
+            for (int i = 0; i < errors.length; i++) {
+                if (classifications[i].equals("TP")) {
+
+                    // General setup
+                    String error = errors[i];
+                    ArrayList<String> nodes = getNodesFromError(error, categories[i]);
+                    int[] fBounds = bounds.get(i);
+
+                    // Resize browser to upper bound of fault
+                    int currentSize = fBounds[1];
+                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+
+                    // Verify failure manifests at the upper bound
+                    boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
+                    while (!failureManifesting) {
+                        currentSize--;
+                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+                        failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
+                    }
+
+                    // Try and parse all the CSS
+                    WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0, nodes);
+                    System.out.println(mutator.getRuleCandidates().size());
+
+                    boolean faultFixed = false;
 //                    while (!faultFixed) {
 //                        String script = generateRandomInjectionScript(nodes, error);
 ////                                "
@@ -76,12 +80,10 @@ public class FaultPatcher {
 //                        String result = (String) js.executeScript(script);
 //                        faultFixed = true;
 //                    }
-//                }
-//            }
+                }
+            }
 
-            // Try and parse all the CSS
-            WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0);
-            System.out.println(mutator.getRuleCandidates().size());
+
 
 //            try {
 //                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

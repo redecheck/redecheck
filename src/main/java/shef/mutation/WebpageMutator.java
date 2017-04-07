@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -30,6 +31,7 @@ public class WebpageMutator {
     Document page;
     private String htmlContent;
     LinkedHashMap<String, StyleSheet> stylesheets;
+    ArrayList<String> faultyXpaths;
 
     public ArrayList<RuleMedia> getMqCandidates() {
         return mqCandidates;
@@ -71,10 +73,11 @@ public class WebpageMutator {
 	
 	
 	
-	public WebpageMutator(String url, String shorthand, int i) {
+	public WebpageMutator(String url, String shorthand, int i, ArrayList<String> nodes) {
 		this.baseURL = url;
 		this.shorthand = shorthand;
 		this.numberOfMutants = i;
+		this.faultyXpaths = nodes;
 		random = new Random();
 		mqCandidates = new ArrayList<>();
 		ruleCandidates = new ArrayList<>();
@@ -107,7 +110,6 @@ public class WebpageMutator {
 			e.printStackTrace();
 		}
         driver.quit();
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -153,17 +155,14 @@ public class WebpageMutator {
             Document doc = Jsoup.parse(contents);
             page = doc;
             for (Element e : doc.getAllElements()) {
+                if (e.children().size() == 0) {
+                    System.out.println(buildXpath(e, doc));
+                }
         		// Load in information for HTML mutation
                 if (e.classNames().size() > 0) {
-                    if (e.tag().equals("STYLE")) {
-//                        System.out.println(e);
-                    }
                     for (String c : e.classNames()) {
-//                        if (HTMLMutator.isGridSizingClass(c)) {
                         usedClassesHTML.add(c);
                         classCandidates.add(e);
-//                        }
-                        
                     }
                 }
                 if (!e.ownText().equals("")) {
@@ -201,8 +200,44 @@ public class WebpageMutator {
             System.out.println("There was a problem layout the HTML of the specified website :(");
         }
     }
-	
-	@SuppressWarnings({ "unused", "rawtypes" })
+
+    private String buildXpath(Element e, Document doc) {
+	    String result = "";
+	    ArrayList<String> tags = new ArrayList<>();
+	    while (e.parent() != null) {
+	        int id = getIDAddon(e, e.parent().children());
+	        if (id > 1) {
+                tags.add(e.tagName() + "[" + id + "]");
+            } else {
+	            tags.add(e.tagName());
+            }
+
+            e = e.parent();
+        }
+        for (String t : tags) {
+	        result = "/" + t.toUpperCase() + result;
+        }
+	    return result;
+    }
+
+    private int getIDAddon(Element e, Elements children) {
+	    // Check whether this is the only child with this tag
+        ArrayList<Element> sameTags = new ArrayList<>();
+        for (Element c : children) {
+//            if (c != e) {
+                if (c.tagName() == e.tagName()) {
+//                    if (e.tagName().equals("div")) {
+//                        System.out.println(e.tagName());
+//                        System.out.println();
+//                    }
+                    sameTags.add(c);
+                }
+//            }
+        }
+        return sameTags.indexOf(e) + 1;
+    }
+
+    @SuppressWarnings({ "unused", "rawtypes" })
     public void loadInCss(String base) {
 		stylesheets = new LinkedHashMap<String, StyleSheet>();
         URL cssUrl = null;
@@ -490,71 +525,71 @@ public class WebpageMutator {
 
 
 	
-	public static void main(String[] args) throws IOException {
-
-        String stats = "";
-        String[] webpages = new String[] {
-                "3-Minute-Journal",
-                "AccountKiller",
-                "AirBnb",
-                "BugMeNot",
-                "CloudConvert",
-                "Covered-Calendar",
-                "Days-Old",
-                "Dictation",
-                "Duolingo",
-                "GetPocket",
-                "Honey",
-                "HotelWifiTest",
-                "Mailinator",
-                "MidwayMeetup",
-                "Ninite-new",
-                "Pdf-Escape",
-                "PepFeed",
-                "RainyMood",
-                "RunPee",
-                "StumbleUpon",
-                "TopDocumentary",
-                "UserSearch",
-                "WhatShouldIReadNext",
-                "WillMyPhoneWork",
-                "ZeroDollarMovies"};
-//                {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
-
-
-
-//		System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
-		for (String wp : webpages) {
-            WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0);
+//	public static void main(String[] args) throws IOException {
 //
-            Document toMutate = mutator.cloner.deepClone(mutator.page);
-            stats += wp + mutator.getStatistics(wp) + "\n";
-//            System.out.println(mutator.usedClassesHTML.size() + mutator.usedIdsHTML.size() + mutator.usedTagsHTML.size());
-//            System.out.println(mutator.usedClassesCSS.size() + mutator.usedIdsCSS.size() + mutator.usedTagsCSS.size());
-//            for (int i = 1; i <= mutator.numberOfMutants; i++) {
-//                try {
-//                    int selector = random.nextInt(8);
-//                    if (selector == 2 || selector == 3) {
-//                        if (mutator.mqCandidates.size() == 0) {
-//                            throw new Exception();
-//                        }
-//                    }
-//                    if (selector <= 3) {
-//                        CSSMutator cssMutator = new CSSMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.ruleCandidates, mutator.mqCandidates, toMutate, i);
-//                        cssMutator.mutate(selector);
-//                    } else {
-//                        HTMLMutator htmlMutator = new HTMLMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.classCandidates, mutator.htmlCandidates, toMutate, mutator.usedClassesHTML, mutator.usedIdsHTML, mutator.usedTagsHTML, i);
-//                        htmlMutator.mutate(selector);
-//                    }
-//                    mutator.copyResourcesDirectory(i);
-//                } catch (Exception e) {
+//        String stats = "";
+//        String[] webpages = new String[] {
+//                "3-Minute-Journal",
+//                "AccountKiller",
+//                "AirBnb",
+//                "BugMeNot",
+//                "CloudConvert",
+//                "Covered-Calendar",
+//                "Days-Old",
+//                "Dictation",
+//                "Duolingo",
+//                "GetPocket",
+//                "Honey",
+//                "HotelWifiTest",
+//                "Mailinator",
+//                "MidwayMeetup",
+//                "Ninite-new",
+//                "Pdf-Escape",
+//                "PepFeed",
+//                "RainyMood",
+//                "RunPee",
+//                "StumbleUpon",
+//                "TopDocumentary",
+//                "UserSearch",
+//                "WhatShouldIReadNext",
+//                "WillMyPhoneWork",
+//                "ZeroDollarMovies"};
+////                {"aftrnoon.com", "annettescreations.net", "ashtonsnook.com", "bittorrent.com", "coursera.com", "denondj.com", "getbootstrap.com", "issta.cispa", "namemesh.com", "paydemand.com", "rebeccamade.com", "reserve.com", "responsiveprocess.com", "shield.com", "teamtreehouse.com"};
 //
-//                }
-//            }
-        }
-
-        System.out.println(stats);
-	}
+//
+//
+////		System.setProperty("phantomjs.binary.path", current + "/../resources/phantomjs");
+//		for (String wp : webpages) {
+//            WebpageMutator mutator = new WebpageMutator(wp+"/index.html", wp, 0, nodes);
+////
+//            Document toMutate = mutator.cloner.deepClone(mutator.page);
+//            stats += wp + mutator.getStatistics(wp) + "\n";
+////            System.out.println(mutator.usedClassesHTML.size() + mutator.usedIdsHTML.size() + mutator.usedTagsHTML.size());
+////            System.out.println(mutator.usedClassesCSS.size() + mutator.usedIdsCSS.size() + mutator.usedTagsCSS.size());
+////            for (int i = 1; i <= mutator.numberOfMutants; i++) {
+////                try {
+////                    int selector = random.nextInt(8);
+////                    if (selector == 2 || selector == 3) {
+////                        if (mutator.mqCandidates.size() == 0) {
+////                            throw new Exception();
+////                        }
+////                    }
+////                    if (selector <= 3) {
+////                        CSSMutator cssMutator = new CSSMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.ruleCandidates, mutator.mqCandidates, toMutate, i);
+////                        cssMutator.mutate(selector);
+////                    } else {
+////                        HTMLMutator htmlMutator = new HTMLMutator(mutator.baseURL, mutator.shorthand, mutator.stylesheets, mutator.classCandidates, mutator.htmlCandidates, toMutate, mutator.usedClassesHTML, mutator.usedIdsHTML, mutator.usedTagsHTML, i);
+////                        htmlMutator.mutate(selector);
+////                    }
+////                    mutator.copyResourcesDirectory(i);
+////                } catch (Exception e) {
+////
+////                }
+////            }
+//        }
+//
+//        System.out.println(stats);
+//	}
 
 
 
