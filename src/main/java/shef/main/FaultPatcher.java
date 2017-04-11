@@ -1,6 +1,7 @@
 package shef.main;
 
 import cz.vutbr.web.css.CSSFactory;
+import cz.vutbr.web.css.RuleSet;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -70,7 +71,9 @@ public class FaultPatcher {
 
                     // Try and parse all the CSS
                     WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0, nodes);
-                    System.out.println(mutator.getRuleCandidates().size());
+                    for (RuleSet r : mutator.getRuleCandidates()) {
+                        System.out.println(r);
+                    }
 
                     boolean faultFixed = false;
 //                    while (!faultFixed) {

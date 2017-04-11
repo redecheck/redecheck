@@ -32,6 +32,7 @@ public class WebpageMutator {
     private String htmlContent;
     LinkedHashMap<String, StyleSheet> stylesheets;
     ArrayList<String> faultyXpaths;
+    ArrayList<Element> faultyElements;
 
     public ArrayList<RuleMedia> getMqCandidates() {
         return mqCandidates;
@@ -78,6 +79,7 @@ public class WebpageMutator {
 		this.shorthand = shorthand;
 		this.numberOfMutants = i;
 		this.faultyXpaths = nodes;
+		this.faultyElements = new ArrayList<>();
 		random = new Random();
 		mqCandidates = new ArrayList<>();
 		ruleCandidates = new ArrayList<>();
@@ -155,43 +157,49 @@ public class WebpageMutator {
             Document doc = Jsoup.parse(contents);
             page = doc;
             for (Element e : doc.getAllElements()) {
-                if (e.children().size() == 0) {
-                    System.out.println(buildXpath(e, doc));
-                }
-        		// Load in information for HTML mutation
-                if (e.classNames().size() > 0) {
-                    for (String c : e.classNames()) {
-                        usedClassesHTML.add(c);
-                        classCandidates.add(e);
-                    }
-                }
-                if (!e.ownText().equals("")) {
-                	htmlCandidates.add(e);
-                }
-                if (!e.id().equals("")) {
-                    usedIdsHTML.add("#" + e.id());
-                }
-                try {
-                	usedTagsHTML.add(e.tagName());
-                } catch(Exception ex) {
+                String xp = buildXpath(e);
 
-                }
-                
-                
-                // Do the same for CSS mutation
-                if (!ignoreTag(e.tagName().toUpperCase())) {
+                if (faultyXpaths.contains(xp)) {
+                    System.out.println(xp);
+                    faultyElements.add(e);
+
+                    // Load in information for HTML mutation
                     if (e.classNames().size() > 0) {
                         for (String c : e.classNames()) {
-                            usedClassesCSS.add("." + c);
+                            usedClassesHTML.add(c);
+                            classCandidates.add(e);
                         }
                     }
+                    if (!e.ownText().equals("")) {
+                        htmlCandidates.add(e);
+                    }
                     if (!e.id().equals("")) {
-                        usedIdsCSS.add("#" + e.id());
+                        usedIdsHTML.add("#" + e.id());
                     }
                     try {
-                    	usedTagsCSS.add(e.tagName());
-                    } catch (Exception ex) {}
+                        usedTagsHTML.add(e.tagName());
+                    } catch(Exception ex) {
+
+                    }
+
+                    // Do the same for CSS mutation
+                    if (!ignoreTag(e.tagName().toUpperCase())) {
+                        if (e.classNames().size() > 0) {
+                            for (String c : e.classNames()) {
+                                usedClassesCSS.add("." + c);
+                            }
+                        }
+                        if (!e.id().equals("")) {
+                            usedIdsCSS.add("#" + e.id());
+                        }
+                        try {
+                            usedTagsCSS.add(e.tagName());
+                        } catch (Exception ex) {}
+                    }
+                } else {
+//                    System.out.println(xp + " AGAINST " );
                 }
+
             }
             this.htmlContent = contents;
             input.close();
@@ -201,18 +209,19 @@ public class WebpageMutator {
         }
     }
 
-    private String buildXpath(Element e, Document doc) {
+    private String buildXpath(Element e) {
 	    String result = "";
+	    Element work = e;
 	    ArrayList<String> tags = new ArrayList<>();
-	    while (e.parent() != null) {
-	        int id = getIDAddon(e, e.parent().children());
+	    while (work.parent() != null) {
+	        int id = getIDAddon(work, work.parent().children());
 	        if (id > 1) {
-                tags.add(e.tagName() + "[" + id + "]");
+                tags.add(work.tagName() + "[" + id + "]");
             } else {
-	            tags.add(e.tagName());
+	            tags.add(work.tagName());
             }
 
-            e = e.parent();
+            work = work.parent();
         }
         for (String t : tags) {
 	        result = "/" + t.toUpperCase() + result;
@@ -273,7 +282,6 @@ public class WebpageMutator {
         StyleSheet ss = null;
         for (String k : cssContent.keySet()) {
             String s = cssContent.get(k);
-//            System.out.println(k);
             try {
 //				String prettified = CSSMutator.prettifyCss(s, driver);
                 StyleSheet temp = CSSFactory.parse(s);
@@ -282,7 +290,7 @@ public class WebpageMutator {
 //                
                 for (RuleBlock rb : temp.asList()) {
                     if (rb instanceof RuleSet) {
-                        if (selectorUsed(((RuleSet) rb).getSelectors())) {
+                        if (ruleBlockApplied(((RuleSet) rb).getSelectors())) {
                             usedBlocks++;
                             RuleSet rs = (RuleSet) rb;
                             List<Declaration> decs = rs.asList();
@@ -301,7 +309,7 @@ public class WebpageMutator {
                             ArrayList<RuleSet> blocksToKeep = new ArrayList<RuleSet>();
                             List<RuleSet> sets = rm.asList();
                             for (RuleSet rs : sets) {
-                                if (selectorUsed(rs.getSelectors())) {
+                                if (ruleBlockApplied(rs.getSelectors())) {
                                     usedBlocks++;
                                     List<Declaration> decs = rs.asList();
                                     usedDeclarations += decs.size();
@@ -359,17 +367,59 @@ public class WebpageMutator {
         return false;
     }
 	
-	public boolean selectorUsed(List<CombinedSelector> sels) {
-        for (CombinedSelector s : sels) {
-            String[] splits = s.toString().split(" ");
-            String[] trimmedArray = splits[splits.length-1].split("[.#]");
-            String trimmed = trimmedArray[trimmedArray.length-1];
-            if (usedClassesCSS.contains(s.toString()) || usedTagsCSS.contains(s.toString()) || usedIdsCSS.contains(s.toString())) {
-                return true;
+	public boolean ruleBlockApplied(List<CombinedSelector> sels) {
+	    for (CombinedSelector s : sels) {
+//	        if (sels.toString().equals("[.list-inline>li]")) {
+//	            System.out.println(s.toString());
+            if (s.toString().contains(">")) {
+                String[] splits = s.toString().split(">");
+                String child = splits[splits.length-1];
+                String parent = splits[splits.length-2];
+//                System.out.println(selectorUsed(child, false));
+//                System.out.println(selectorUsed(parent, true));
+                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
+                    return true;
+                }
+            } else {
+                if (selectorUsed(s.toString(), false)) {
+                    return true;
+                }
             }
+
+//            if (usedClassesCSS.contains(s.toString()) || usedTagsCSS.contains(s.toString()) || usedIdsCSS.contains(s.toString())) {
+//                return true;
+//            }
         }
         return false;
 	}
+
+    private boolean selectorUsed(String selector, boolean b) {
+	    for (Element e : faultyElements) {
+
+            // Work out the element we're actually comparing against
+            Element toActuallyCheck;
+            if (!b) {
+                toActuallyCheck = e;
+            } else {
+                toActuallyCheck = e.parent();
+            }
+
+            // Check whether the id is a match
+            if (toActuallyCheck.id().equals(selector.replace("#", ""))) {
+                return true;
+
+            // Check whether the tag is a match
+            } else if (toActuallyCheck.tagName().equals(selector)) {
+	            return true;
+
+            // Check whether the element has the right class
+            } else if (toActuallyCheck.hasClass(selector.replace(".", ""))) {
+	            return true;
+            }
+        }
+        return false;
+    }
+
 
     private void copyResourcesDirectory(int num) {
         try {
