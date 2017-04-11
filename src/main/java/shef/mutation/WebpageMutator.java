@@ -160,7 +160,8 @@ public class WebpageMutator {
                 String xp = buildXpath(e);
 
                 if (faultyXpaths.contains(xp)) {
-                    System.out.println(xp);
+                    System.out.println(xp + " " + e.className());
+
                     faultyElements.add(e);
 
                     // Load in information for HTML mutation
@@ -320,6 +321,8 @@ public class WebpageMutator {
                                         rs.replaceAll(decsToKeep);
                                         blocksToKeep.add(rs);
                                     }
+                                } else {
+                                    System.out.println(rs.getSelectors() + " not applied?");
                                 }
                             }
                             rm.replaceAll(blocksToKeep);
@@ -369,14 +372,17 @@ public class WebpageMutator {
 	
 	public boolean ruleBlockApplied(List<CombinedSelector> sels) {
 	    for (CombinedSelector s : sels) {
-//	        if (sels.toString().equals("[.list-inline>li]")) {
-//	            System.out.println(s.toString());
             if (s.toString().contains(">")) {
                 String[] splits = s.toString().split(">");
-                String child = splits[splits.length-1];
-                String parent = splits[splits.length-2];
-//                System.out.println(selectorUsed(child, false));
-//                System.out.println(selectorUsed(parent, true));
+                String child = splits[splits.length - 1];
+                String parent = splits[splits.length - 2];
+                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
+                    return true;
+                }
+            } else if (s.toString().contains(" ")) {
+                String[] splits = s.toString().split(" ");
+                String child = splits[splits.length - 1];
+                String parent = splits[splits.length - 2];
                 if (selectorUsed(child, false) && selectorUsed(parent, true)) {
                     return true;
                 }
@@ -385,10 +391,6 @@ public class WebpageMutator {
                     return true;
                 }
             }
-
-//            if (usedClassesCSS.contains(s.toString()) || usedTagsCSS.contains(s.toString()) || usedIdsCSS.contains(s.toString())) {
-//                return true;
-//            }
         }
         return false;
 	}

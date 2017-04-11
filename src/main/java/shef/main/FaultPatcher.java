@@ -1,6 +1,8 @@
 package shef.main;
 
 import cz.vutbr.web.css.CSSFactory;
+import cz.vutbr.web.css.RuleBlock;
+import cz.vutbr.web.css.RuleMedia;
 import cz.vutbr.web.css.RuleSet;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -51,9 +53,9 @@ public class FaultPatcher {
 
             for (int i = 0; i < errors.length; i++) {
                 if (classifications[i].equals("TP")) {
-
                     // General setup
                     String error = errors[i];
+                    System.out.println(error);
                     ArrayList<String> nodes = getNodesFromError(error, categories[i]);
                     int[] fBounds = bounds.get(i);
 
@@ -73,6 +75,10 @@ public class FaultPatcher {
                     WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0, nodes);
                     for (RuleSet r : mutator.getRuleCandidates()) {
                         System.out.println(r);
+                    }
+
+                    for (RuleMedia rm : mutator.getMqCandidates()) {
+                        System.out.println(rm);
                     }
 
                     boolean faultFixed = false;
