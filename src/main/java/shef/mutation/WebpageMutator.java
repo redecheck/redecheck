@@ -322,7 +322,6 @@ public class WebpageMutator {
                                         blocksToKeep.add(rs);
                                     }
                                 } else {
-                                    System.out.println(rs.getSelectors() + " not applied?");
                                 }
                             }
                             rm.replaceAll(blocksToKeep);
@@ -422,12 +421,28 @@ public class WebpageMutator {
         return false;
     }
 
+    public String copyFromWebpageRepository() {
+	    try {
+	        String o = preamble2.replace("file://", "") + baseURL.split("/")[0];
+	        File original = new File(o);
+	        File copied = new File(new java.io.File( "." ).getCanonicalPath() + "/../fix-attempts/" + this.shorthand);
+	        System.out.println(copied.getAbsolutePath());
+            FileUtils.copyDirectory(original, copied, false);
+            return copied.getAbsolutePath();
+        } catch (Exception e) {
+	        e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private void copyResourcesDirectory(int num) {
         try {
             String current = new java.io.File( "." ).getCanonicalPath() + "/testing/"+ this.shorthand;
+            System.out.println(current);
             File original = new File(current + "/index/resources");
             File copied = new File(current + "/mutant" + num + "/resources");
+            System.out.println(copied.getAbsolutePath());
             FileUtils.copyDirectory(original, copied, false);
         } catch (Exception e ) {
             e.printStackTrace();
@@ -546,6 +561,35 @@ public class WebpageMutator {
         }
 
         return numDomNodes;
+    }
+
+    public void mutate(int i) {
+	    boolean mutated = false;
+	    while (!mutated) {
+            try {
+                Document toMutate = cloner.deepClone(page);
+                int selector = random.nextInt(4);
+                System.out.println(selector);
+                if (selector == 2 || selector == 3) {
+                    if (mqCandidates.size() == 0) {
+                        throw new Exception("No media queries");
+                    }
+                }
+                if (selector <= 3) {
+                    System.out.println("Mutating CSS");
+                    CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, i);
+                    cssMutator.mutate(selector);
+                    mutated = true;
+                } else {
+                    HTMLMutator htmlMutator = new HTMLMutator(baseURL, shorthand, stylesheets, classCandidates, htmlCandidates, toMutate, usedClassesHTML, usedIdsHTML, usedTagsHTML, i);
+                    htmlMutator.mutate(selector);
+                }
+//                copyFromWebpageRepository();
+//                copyResourcesDirectory(i);
+            } catch (Exception e) {
+//                e.printStackTrace();
+            }
+        }
     }
 
 //    public int getDeclarationCount() {

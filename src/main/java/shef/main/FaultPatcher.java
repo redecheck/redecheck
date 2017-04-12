@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import shef.layout.*;
+import shef.mutation.CSSMutator;
 import shef.mutation.WebpageMutator;
 import shef.utils.BrowserFactory;
 import shef.utils.ResultProcessor;
@@ -80,6 +81,12 @@ public class FaultPatcher {
                     for (RuleMedia rm : mutator.getMqCandidates()) {
                         System.out.println(rm);
                     }
+
+                    // Make a mutation
+                    String newUrl = mutator.copyFromWebpageRepository();
+                    webDriver.get(newUrl+"/index.html");
+
+                    mutator.mutate(1);
 
                     boolean faultFixed = false;
 //                    while (!faultFixed) {
