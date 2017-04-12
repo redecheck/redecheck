@@ -160,7 +160,7 @@ public class WebpageMutator {
                 String xp = buildXpath(e);
 
                 if (faultyXpaths.contains(xp)) {
-                    System.out.println(xp + " " + e.className());
+//                    System.out.println(xp + " " + e.className());
 
                     faultyElements.add(e);
 
@@ -327,6 +327,7 @@ public class WebpageMutator {
                             rm.replaceAll(blocksToKeep);
                             if (rm.asList().size() > 0) {
                                 mqCandidates.add(rm);
+//                                System.out.println("Keeping " + rm.toString());
                             }
                         }
                     }
@@ -426,7 +427,7 @@ public class WebpageMutator {
 	        String o = preamble2.replace("file://", "") + baseURL.split("/")[0];
 	        File original = new File(o);
 	        File copied = new File(new java.io.File( "." ).getCanonicalPath() + "/../fix-attempts/" + this.shorthand);
-	        System.out.println(copied.getAbsolutePath());
+//	        System.out.println(copied.getAbsolutePath());
             FileUtils.copyDirectory(original, copied, false);
             return copied.getAbsolutePath();
         } catch (Exception e) {
@@ -439,10 +440,10 @@ public class WebpageMutator {
     private void copyResourcesDirectory(int num) {
         try {
             String current = new java.io.File( "." ).getCanonicalPath() + "/testing/"+ this.shorthand;
-            System.out.println(current);
+//            System.out.println(current);
             File original = new File(current + "/index/resources");
             File copied = new File(current + "/mutant" + num + "/resources");
-            System.out.println(copied.getAbsolutePath());
+//            System.out.println(copied.getAbsolutePath());
             FileUtils.copyDirectory(original, copied, false);
         } catch (Exception e ) {
             e.printStackTrace();
@@ -563,25 +564,25 @@ public class WebpageMutator {
         return numDomNodes;
     }
 
-    public void mutate(int i) {
+    public void mutate(String newUrl) {
 	    boolean mutated = false;
 	    while (!mutated) {
             try {
                 Document toMutate = cloner.deepClone(page);
                 int selector = random.nextInt(4);
-                System.out.println(selector);
+//                System.out.println(selector);
                 if (selector == 2 || selector == 3) {
                     if (mqCandidates.size() == 0) {
                         throw new Exception("No media queries");
                     }
                 }
                 if (selector <= 3) {
-                    System.out.println("Mutating CSS");
-                    CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, i);
-                    cssMutator.mutate(selector);
+//                    System.out.println("Mutating CSS");
+                    CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
+                    cssMutator.mutate(selector, newUrl);
                     mutated = true;
                 } else {
-                    HTMLMutator htmlMutator = new HTMLMutator(baseURL, shorthand, stylesheets, classCandidates, htmlCandidates, toMutate, usedClassesHTML, usedIdsHTML, usedTagsHTML, i);
+                    HTMLMutator htmlMutator = new HTMLMutator(baseURL, shorthand, stylesheets, classCandidates, htmlCandidates, toMutate, usedClassesHTML, usedIdsHTML, usedTagsHTML, 0);
                     htmlMutator.mutate(selector);
                 }
 //                copyFromWebpageRepository();

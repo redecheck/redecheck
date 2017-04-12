@@ -66,7 +66,7 @@ public class CSSMutator {
             "PARAM", "S", "SCRIPT", "SMALL", "SPAN", "STRIKE", "STRONG",
             "STYLE", "TBODY", "TITLE", "TR", "TT", "U" };
 
-    String[] units = { "none", "px", "em", "%"};
+    String[] units = { "px", "em", "%"};
     String[] floatOptions = { "none", "left", "right", "initial", "inherit"};
     String[] positionOptions = { "static", "absolute","fixed","relative","initial", "inherit"};
     String[] displayOptions = {"none", "inline", "block", "inline-block", "initial", "inherit"};
@@ -145,6 +145,7 @@ public class CSSMutator {
         }
         t.setValue(mutated);
         writeMutantToFile(i, "Changed value from " + orig + " to " + mutated + " in \n" + rm);
+        System.out.println("Changed value from " + orig + " to " + mutated + " in \n" + rm);
     }
 
     public void changeCondition(MediaExpression me) {
@@ -153,6 +154,7 @@ public class CSSMutator {
         } else if (me.getFeature().equals("max-width")) {
             me.setFeature("min-width");
         }
+        System.out.println("Changed condition in " + me);
     }
 
 
@@ -226,15 +228,17 @@ public class CSSMutator {
         boolean mutatedARule = false;
         while (!mutatedARule) {
             try {
-                RuleSet selectedPruned;
+                RuleSet selectedPruned = null;
                 int controller = random.nextInt(10);
-                RuleSet toMutate;
+                RuleSet toMutate = null;
                 if (controller <= 3) {
+//                    System.out.println("No MQ");
                     // Mutate a rule with no MQ
                     Collections.shuffle(regCandidates);
                     selectedPruned = regCandidates.get(0);
                     toMutate = (RuleSet) getRuleBlockFromStyleSheet(toMutate2, selectedPruned);
-                } else {
+                } else if (mqCandidates.size() > 0){
+//                    System.out.println("Yes MQ");
                     Collections.shuffle(mqCandidates);
                     RuleMedia rm = mqCandidates.get(0);
 
@@ -253,7 +257,7 @@ public class CSSMutator {
                 String property = decToMutate.getProperty().toLowerCase();
                 boolean madeMutant = false;
                 Term t = null;
-                while(!madeMutant) {
+//                while(!madeMutant) {
 //                    try {
                         List<Term<?>> terms = decToMutate.asList();
                         int selector = random.nextInt(terms.size());
@@ -261,66 +265,80 @@ public class CSSMutator {
                         
                         // If the rule-value mutation operator is selected
                         if (selector2 == 0) {
-
-                            changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate);
 //                            System.out.println("Mutating rule-value");
-
-
-	                        
+                            changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate);
 	                    // If the rule-unit mutation operator is selected    
                         } else {
-                            int unitSelector = random.nextInt(units.length);
-                            String selectedUnit = units[unitSelector];
-
-	                        if ((t instanceof TermIntegerImpl) || (t instanceof TermLengthImpl)) {
-                                TermNumericImpl<Float> t2 = (TermNumericImpl<Float>) t;
-                                switch (selectedUnit) {
-                                    case "none":
-                                        t2.setUnit(TermNumeric.Unit.none);
-                                    case "px":
-                                        t2.setUnit(TermNumeric.Unit.px);
-                                    case "em":
-                                        t2.setUnit(TermNumeric.Unit.em);
-                                    case "%":
-                                        TermNumericImpl<Float> temp= (TermNumericImpl<Float>) t;
-                                        t2 = cloner.deepClone(getTermObject(toMutate2, false));
-                                        t2.setValue(temp.getValue());
-                                        terms.remove(selector);
-                                        terms.add(selector, t2);
-                                        break;
-                                }
-                                mutatedARule=true;
-	                        } else if (t instanceof TermPercentImpl) {
-                                TermNumericImpl<Float> tli = cloner.deepClone(getTermObject(toMutate2, true));
-	                        	TermNumericImpl<Float> t2 = (TermNumericImpl<Float>) t;
-                                tli.setValue(t2.getValue());
-                                switch (selectedUnit) {
-                                    case "none":
-                                        tli.setUnit(TermNumeric.Unit.none);
-                                    case "px":
-                                        tli.setUnit(TermNumeric.Unit.px);
-                                    case "em":
-                                        tli.setUnit(TermNumeric.Unit.em);
-                                    default:
-                                        break;
-                                }
-                                terms.remove(selector);
-                                terms.add(selector, tli);
-                                mutatedARule=true;
-	                        }
-                            writeMutantToFile(i, "Changed UNIT in " + t + " to " + terms + " in \n" + decToMutate);
-                            madeMutant = true;
-
+//                            System.out.println("Mutating rule-unit");
+                            changeRuleUnit(t, mutatedARule, madeMutant, toMutate2, terms, selector, i, decToMutate);
                         }
+                        mutatedARule = true;
                         
 //                    } catch (Exception e) {
 //                    	e.printStackTrace();
 //                    }
-                }
+//                }
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("WENT WRONG SOMEWHERE");
+//                e.printStackTrace();
+//                System.out.println("WENT WRONG SOMEWHERE");
             }
+        }
+    }
+
+    private void changeRuleUnit(Term t, boolean mutatedARule, boolean madeMutant, HashMap<String, StyleSheet> toMutate2, List<Term<?>> terms, int selector, int i, Declaration decToMutate) {
+        boolean mutated = false;
+
+        while (!mutated) {
+
+            int unitSelector = random.nextInt(units.length);
+            String selectedUnit = units[unitSelector];
+
+//            System.out.println("Mutating unit of " + t + " with new unit " + selectedUnit);
+            if ((t instanceof TermIntegerImpl) || (t instanceof TermLengthImpl)) {
+                TermNumericImpl<Float> t2 = (TermNumericImpl<Float>) t;
+                switch (selectedUnit) {
+                    case "none":
+                        t2.setUnit(TermNumeric.Unit.none);
+                        break;
+                    case "px":
+                        t2.setUnit(TermNumeric.Unit.px);
+                        break;
+                    case "em":
+                        t2.setUnit(TermNumeric.Unit.em);
+                        break;
+                    case "%":
+                        TermNumericImpl<Float> temp = (TermNumericImpl<Float>) t;
+                        t2 = cloner.deepClone(getTermObject(toMutate2, false));
+                        t2.setValue(temp.getValue());
+                        terms.remove(selector);
+                        terms.add(selector, t2);
+                        break;
+                }
+                mutatedARule = true;
+            } else if (t instanceof TermPercentImpl) {
+                TermNumericImpl<Float> tli = cloner.deepClone(getTermObject(toMutate2, true));
+                TermNumericImpl<Float> t2 = (TermNumericImpl<Float>) t;
+                tli.setValue(t2.getValue());
+                switch (selectedUnit) {
+                    case "none":
+                        tli.setUnit(TermNumeric.Unit.none);
+                        break;
+                    case "px":
+                        tli.setUnit(TermNumeric.Unit.px);
+                        break;
+                    case "em":
+                        tli.setUnit(TermNumeric.Unit.em);
+                        break;
+                    default:
+                        break;
+                }
+                terms.remove(selector);
+                terms.add(selector, tli);
+                mutatedARule = true;
+            }
+            writeMutantToFile(i, "Changed UNIT in " + t + " to " + terms + " in \n" + decToMutate);
+            System.out.println("Changed UNIT in " + t + " to " + terms + " in \n" + decToMutate);
+            mutated = true;
         }
     }
 
@@ -341,6 +359,7 @@ public class CSSMutator {
             }
             t.setValue(mutated);
             writeMutantToFile(i, "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
+            System.out.println("Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
             mutatedARule = true;
             madeMutant = true;
         } else {
@@ -363,6 +382,7 @@ public class CSSMutator {
                 t.setValue(newValue);
 //                                    System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
                 writeMutantToFile(i, "Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
+                System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
                 mutatedARule = true;
                 madeMutant = true;
             }
@@ -432,8 +452,7 @@ public class CSSMutator {
         return null;
     }
 
-    private Declaration getDeclarationFromRuleBlock(Declaration chosen,
-                                                    RuleSet toMutate) {
+    private Declaration getDeclarationFromRuleBlock(Declaration chosen, RuleSet toMutate) {
         for (Declaration d : toMutate.asList()) {
             if (chosen.getProperty().equals(d.getProperty())) {
                 return d;
@@ -462,27 +481,43 @@ public class CSSMutator {
 
     }
 
-    public static void writeToFile(int counter, HashMap<String, StyleSheet> toMutate, String shorthand) {
+    public static void writeToFile(int counter, HashMap<String, StyleSheet> toMutate, String shorthand, String newUrl) {
         PrintWriter output = null;
         for (String s : toMutate.keySet()) {
 	        try {
-	            String dirName = preamble.replace("file:///", "/") + shorthand + "/mutant" + counter + "/resources/";
-	            File theDir = new File(preamble.replace("file:///", "/") + shorthand + "/mutant" + counter + "/resources/");
-	            boolean result = false;
-	            if (!theDir.exists()) {
-	            	theDir.mkdirs();
-	            	result = true;
-	            }
-	            String[] splits = s.split("/");
-	            String actualName = splits[splits.length-1].replace(".css", "");
-	            String fileName = actualName + counter + ".css";
-	            File file = new File (dirName + fileName);
-	            output = new PrintWriter(new FileWriter(file));
-	            
-	            for (RuleBlock rb : toMutate.get(s).asList()) {
-	            	output.append(generateCSSString(rb));
-	            }
-	            output.close();
+	            if (newUrl == null) {
+                    String dirName = preamble.replace("file:///", "/") + shorthand + "/mutant" + counter + "/resources/";
+                    File theDir = new File(preamble.replace("file:///", "/") + shorthand + "/mutant" + counter + "/resources/");
+                    boolean result = false;
+                    if (!theDir.exists()) {
+                        theDir.mkdirs();
+                        result = true;
+                    }
+                    String[] splits = s.split("/");
+                    String actualName = splits[splits.length - 1].replace(".css", "");
+                    String fileName = actualName + counter + ".css";
+                    File file = new File(dirName + fileName);
+                    output = new PrintWriter(new FileWriter(file));
+
+                    for (RuleBlock rb : toMutate.get(s).asList()) {
+                        output.append(generateCSSString(rb));
+                    }
+                    output.close();
+                } else {
+	                // Fault fixing
+                    String[] splits = s.split("/");
+                    String actualName = splits[splits.length - 1];
+
+
+                    File file = new File(newUrl + "/" + actualName);
+//                    System.out.println(file.getAbsolutePath());
+                    output = new PrintWriter(new FileWriter(file));
+
+                    for (RuleBlock rb : toMutate.get(s).asList()) {
+                        output.append(generateCSSString(rb));
+                    }
+                    output.close();
+                }
 	        } catch (FileNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {
@@ -626,15 +661,17 @@ public class CSSMutator {
 
     
 
-    public void mutate(int selector) {
+    public void mutate(int selector, String newUrl) {
         HashMap<String, StyleSheet> toMutate = cloner.deepClone(this.stylesheets);
 
         if (selector <=1) {
+//            System.out.println("Mutating Rule");
             mutateRule(this.mutantNumber, toMutate, selector);
         } else {
+//            System.out.println("Mutating media query");
             mutateMediaQuery(this.mutantNumber, toMutate, selector);
         }
-        writeToFile(this.mutantNumber, toMutate, this.shorthand);
+        writeToFile(this.mutantNumber, toMutate, this.shorthand, newUrl);
         writeNewHtml(toMutate);
     }
 

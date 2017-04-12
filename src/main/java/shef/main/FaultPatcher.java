@@ -86,16 +86,26 @@ public class FaultPatcher {
                     String newUrl = mutator.copyFromWebpageRepository();
                     webDriver.get(newUrl+"/index.html");
 
-                    mutator.mutate(1);
+
 
                     boolean faultFixed = false;
-//                    while (!faultFixed) {
+                    while (!faultFixed) {
+                        mutator.mutate(newUrl);
+                        webDriver.get(newUrl+"/index.html");
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
+                            faultFixed = true;
+                        }
 //                        String script = generateRandomInjectionScript(nodes, error);
 ////                                "
 //                        System.out.println(script);
 //                        String result = (String) js.executeScript(script);
 //                        faultFixed = true;
-//                    }
+                    }
                 }
             }
 
