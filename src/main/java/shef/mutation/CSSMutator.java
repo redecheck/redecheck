@@ -223,6 +223,8 @@ public class CSSMutator {
         }
     }
 
+
+
     @SuppressWarnings("unchecked")
     public void mutateRule(int i, HashMap<String, StyleSheet> toMutate2, int selector2) {
         boolean mutatedARule = false;
@@ -268,9 +270,14 @@ public class CSSMutator {
 //                            System.out.println("Mutating rule-value");
                             changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate);
 	                    // If the rule-unit mutation operator is selected    
-                        } else {
+                        } else if (selector2 == 1){
 //                            System.out.println("Mutating rule-unit");
                             changeRuleUnit(t, mutatedARule, madeMutant, toMutate2, terms, selector, i, decToMutate);
+                        } else {
+//                            deleteDeclaration(decToMutate);
+                            // Try to remove the declaration from the ruleblock
+                            toMutate.remove(decToMutate);
+                            System.out.println("Removed " + decToMutate + " from " + decs.toString());
                         }
                         mutatedARule = true;
                         
@@ -282,6 +289,14 @@ public class CSSMutator {
 //                e.printStackTrace();
 //                System.out.println("WENT WRONG SOMEWHERE");
             }
+        }
+    }
+
+    private void deleteDeclaration(Declaration decToDelete) {
+        boolean mutated = false;
+
+        while (!mutated) {
+
         }
     }
 
@@ -664,16 +679,18 @@ public class CSSMutator {
     public void mutate(int selector, String newUrl) {
         HashMap<String, StyleSheet> toMutate = cloner.deepClone(this.stylesheets);
 
-        if (selector <=1) {
+        if (selector <=2) {
 //            System.out.println("Mutating Rule");
             mutateRule(this.mutantNumber, toMutate, selector);
-        } else {
+        } else if (selector <=4) {
 //            System.out.println("Mutating media query");
             mutateMediaQuery(this.mutantNumber, toMutate, selector);
         }
         writeToFile(this.mutantNumber, toMutate, this.shorthand, newUrl);
         writeNewHtml(toMutate);
     }
+
+
 
     @SuppressWarnings("rawtypes")
     public RuleBlock getRuleBlockFromStyleSheet(HashMap<String, StyleSheet> toMutate2, RuleBlock block) {

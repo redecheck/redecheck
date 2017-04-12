@@ -569,17 +569,21 @@ public class WebpageMutator {
 	    while (!mutated) {
             try {
                 Document toMutate = cloner.deepClone(page);
-                int selector = random.nextInt(4);
+                int selector = random.nextInt(5);
 //                System.out.println(selector);
-                if (selector == 2 || selector == 3) {
+                if (selector == 3 || selector == 4) {
                     if (mqCandidates.size() == 0) {
                         throw new Exception("No media queries");
                     }
                 }
-                if (selector <= 3) {
+
+                if (selector <= 4) {
 //                    System.out.println("Mutating CSS");
                     CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
                     cssMutator.mutate(selector, newUrl);
+                    if (selector == 2) {
+                        System.out.println();
+                    }
                     mutated = true;
                 } else {
                     HTMLMutator htmlMutator = new HTMLMutator(baseURL, shorthand, stylesheets, classCandidates, htmlCandidates, toMutate, usedClassesHTML, usedIdsHTML, usedTagsHTML, 0);
