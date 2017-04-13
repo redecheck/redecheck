@@ -89,23 +89,24 @@ public class FaultPatcher {
 
 
                     boolean faultFixed = false;
-                    while (!faultFixed) {
-                        mutator.mutate(newUrl);
-                        webDriver.get(newUrl+"/index.html");
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
-                            faultFixed = true;
-                        }
-//                        String script = generateRandomInjectionScript(nodes, error);
-////                                "
-//                        System.out.println(script);
-//                        String result = (String) js.executeScript(script);
-//                        faultFixed = true;
-                    }
+//                    while (!faultFixed) {
+//                        mutator.mutate(newUrl);
+//                        webDriver.get(newUrl+"/index.html");
+//                        try {
+//                            Thread.sleep(500);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
+//                            faultFixed = true;
+//                        }
+////                        String script = generateRandomInjectionScript(nodes, error);
+//////                                "
+////                        System.out.println(script);
+////                        String result = (String) js.executeScript(script);
+////                        faultFixed = true;
+//                    }
+//                    System.out.println("Fixed " + error);
                 }
             }
 

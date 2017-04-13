@@ -122,7 +122,7 @@ public class CSSMutator {
                     madeMutant = true;
                 } else {
                     changeCondition(me);
-                    writeMutantToFile(i, "Changed expression to " + me.getFeature() + " in \n" + rm);
+//                    writeMutantToFile(i, "Changed expression to " + me.getFeature() + " in \n" + rm);
                     madeMutant = true;
 
                 }
@@ -145,7 +145,7 @@ public class CSSMutator {
         }
         t.setValue(mutated);
         writeMutantToFile(i, "Changed value from " + orig + " to " + mutated + " in \n" + rm);
-        System.out.println("Changed value from " + orig + " to " + mutated + " in \n" + rm);
+        System.out.println("Changed value from " + orig + " to " + mutated + " in \n" + t);
     }
 
     public void changeCondition(MediaExpression me) {

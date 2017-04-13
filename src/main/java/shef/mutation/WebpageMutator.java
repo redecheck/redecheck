@@ -114,7 +114,9 @@ public class WebpageMutator {
         driver.quit();
 	}
 
-	@SuppressWarnings("unchecked")
+
+
+    @SuppressWarnings("unchecked")
     public void extractCssFiles(String baseURL) throws IOException {
 //    	DesiredCapabilities dCaps = new DesiredCapabilities();
 //        dCaps.setJavascriptEnabled(true);
@@ -164,39 +166,58 @@ public class WebpageMutator {
 
                     faultyElements.add(e);
 
-                    // Load in information for HTML mutation
-                    if (e.classNames().size() > 0) {
-                        for (String c : e.classNames()) {
-                            usedClassesHTML.add(c);
-                            classCandidates.add(e);
-                        }
-                    }
-                    if (!e.ownText().equals("")) {
-                        htmlCandidates.add(e);
-                    }
-                    if (!e.id().equals("")) {
-                        usedIdsHTML.add("#" + e.id());
-                    }
-                    try {
-                        usedTagsHTML.add(e.tagName());
-                    } catch(Exception ex) {
-
+                    // Add in the parent
+                    if (!faultyElements.contains(e.parent())) {
+                        faultyElements.add(e.parent());
                     }
 
-                    // Do the same for CSS mutation
-                    if (!ignoreTag(e.tagName().toUpperCase())) {
-                        if (e.classNames().size() > 0) {
-                            for (String c : e.classNames()) {
-                                usedClassesCSS.add("." + c);
-                            }
+                    // Add in the siblings
+                    for (Element sib : e.siblingElements()) {
+                        if (!faultyElements.contains(sib)) {
+                            faultyElements.add(sib);
                         }
-                        if (!e.id().equals("")) {
-                            usedIdsCSS.add("#" + e.id());
-                        }
-                        try {
-                            usedTagsCSS.add(e.tagName());
-                        } catch (Exception ex) {}
                     }
+
+                    // And finally, add in the children
+                    for (Element c : e.children()) {
+                        if (!faultyElements.contains(c)) {
+                            faultyElements.add(c);
+                        }
+                    }
+
+//                    // Load in information for HTML mutation
+//                    if (e.classNames().size() > 0) {
+//                        for (String c : e.classNames()) {
+//                            usedClassesHTML.add(c);
+//                            classCandidates.add(e);
+//                        }
+//                    }
+//                    if (!e.ownText().equals("")) {
+//                        htmlCandidates.add(e);
+//                    }
+//                    if (!e.id().equals("")) {
+//                        usedIdsHTML.add("#" + e.id());
+//                    }
+//                    try {
+//                        usedTagsHTML.add(e.tagName());
+//                    } catch(Exception ex) {
+//
+//                    }
+//
+//                    // Do the same for CSS mutation
+//                    if (!ignoreTag(e.tagName().toUpperCase())) {
+//                        if (e.classNames().size() > 0) {
+//                            for (String c : e.classNames()) {
+//                                usedClassesCSS.add("." + c);
+//                            }
+//                        }
+//                        if (!e.id().equals("")) {
+//                            usedIdsCSS.add("#" + e.id());
+//                        }
+//                        try {
+//                            usedTagsCSS.add(e.tagName());
+//                        } catch (Exception ex) {}
+//                    }
                 } else {
 //                    System.out.println(xp + " AGAINST " );
                 }
@@ -581,9 +602,6 @@ public class WebpageMutator {
 //                    System.out.println("Mutating CSS");
                     CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
                     cssMutator.mutate(selector, newUrl);
-                    if (selector == 2) {
-                        System.out.println();
-                    }
                     mutated = true;
                 } else {
                     HTMLMutator htmlMutator = new HTMLMutator(baseURL, shorthand, stylesheets, classCandidates, htmlCandidates, toMutate, usedClassesHTML, usedIdsHTML, usedTagsHTML, 0);
@@ -606,7 +624,7 @@ public class WebpageMutator {
 //            for (RuleBlock rb : ss) {
 //                numBlocks++;
 //                if (rb instanceof RuleSet) {
-//                    RuleSet casted = (RuleSet) rb;
+//                    RuleSet casted  = (RuleSet) rb;
 //                    for (Declaration d : casted.asList()) {
 //                        numDecs++;
 //                    }
