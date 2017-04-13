@@ -1,27 +1,17 @@
 package shef.main;
 
-import cz.vutbr.web.css.CSSFactory;
-import cz.vutbr.web.css.RuleBlock;
 import cz.vutbr.web.css.RuleMedia;
 import cz.vutbr.web.css.RuleSet;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import shef.layout.*;
-import shef.mutation.CSSMutator;
 import shef.mutation.WebpageMutator;
 import shef.utils.BrowserFactory;
 import shef.utils.ResultProcessor;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -81,31 +71,29 @@ public class FaultPatcher {
                     for (RuleMedia rm : mutator.getMqCandidates()) {
                         System.out.println(rm);
                     }
+//
+//                    // Make a mutation
+//                    String newUrl = mutator.copyFromWebpageRepository();
+//                    webDriver.get(newUrl+"/index.html");
 
-                    // Make a mutation
-                    String newUrl = mutator.copyFromWebpageRepository();
-                    webDriver.get(newUrl+"/index.html");
 
 
-
-                    boolean faultFixed = false;
+//                    boolean faultFixed = false;
 //                    while (!faultFixed) {
 //                        mutator.mutate(newUrl);
 //                        webDriver.get(newUrl+"/index.html");
-//                        try {
-//                            Thread.sleep(500);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
+////                        try {
+////                            Thread.sleep(100);
+////                        } catch (InterruptedException e) {
+////                            e.printStackTrace();
+////                        }
 //                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
 //                            faultFixed = true;
 //                        }
-////                        String script = generateRandomInjectionScript(nodes, error);
-//////                                "
-////                        System.out.println(script);
-////                        String result = (String) js.executeScript(script);
-////                        faultFixed = true;
+//
 //                    }
+//                    System.out.println("Think a fix has been found. VERIFYING NOW. . . . .");
+//                    Tool.runFaultDetector(current, url, browser, "uniformBP", true, 320, 1400, 60, false);
 //                    System.out.println("Fixed " + error);
                 }
             }
@@ -191,10 +179,15 @@ public class FaultPatcher {
             for (Relationship r : layout.getRelationships().values()) {
                 if (r instanceof Sibling) {
                     Sibling s = (Sibling) r;
-                    if (s.getNode1().getXpath().equals(wrapped) && nodes.contains(s.getNode2().getXpath()) && s.generateAttributeArray()[1]) {
-                        return true;
-                    } else if (s.getNode2().getXpath().equals(wrapped) && nodes.contains(s.getNode1().getXpath()) && s.generateAttributeArray()[0]) {
-                        return true;
+                    if (s.getNode1().getXpath().equals(wrapped) && nodes.contains(s.getNode2().getXpath())) {
+                        if (s.generateAttributeArray()[1]) {
+                            return true;
+                        }
+
+                    } else if (s.getNode2().getXpath().equals(wrapped) && nodes.contains(s.getNode1().getXpath())) {
+                        if (s.generateAttributeArray()[0]) {
+                            return true;
+                        }
                     }
                 }
             }

@@ -166,24 +166,7 @@ public class WebpageMutator {
 
                     faultyElements.add(e);
 
-                    // Add in the parent
-                    if (!faultyElements.contains(e.parent())) {
-                        faultyElements.add(e.parent());
-                    }
 
-                    // Add in the siblings
-                    for (Element sib : e.siblingElements()) {
-                        if (!faultyElements.contains(sib)) {
-                            faultyElements.add(sib);
-                        }
-                    }
-
-                    // And finally, add in the children
-                    for (Element c : e.children()) {
-                        if (!faultyElements.contains(c)) {
-                            faultyElements.add(c);
-                        }
-                    }
 
 //                    // Load in information for HTML mutation
 //                    if (e.classNames().size() > 0) {
@@ -222,6 +205,41 @@ public class WebpageMutator {
 //                    System.out.println(xp + " AGAINST " );
                 }
 
+            }
+            for (Element e : doc.getAllElements()) {
+                String xp = buildXpath(e);
+
+                if (faultyXpaths.contains(xp)) {
+
+                    // Add in the parent
+                    if (!faultyElements.contains(e.parent())) {
+//                        System.out.println("P: " + buildXpath(e.parent()));
+                        faultyElements.add(e.parent());
+                    } else {
+//                        System.out.println("Already contained " + buildXpath(e.parent()));
+                    }
+
+                    // Add in the siblings
+                    for (Element sib : e.siblingElements()) {
+                        if (!faultyElements.contains(sib)) {
+//                            System.out.println("S: " + sib);
+                            faultyElements.add(sib);
+                        } else {
+//                            System.out.println("Already contained " + buildXpath(sib));
+                        }
+                    }
+
+                    // And finally, add in the children
+                    for (Element c : e.children()) {
+                        if (!faultyElements.contains(c)) {
+//                            System.out.println("C: " + c);
+                            faultyElements.add(c);
+                        } else {
+//                            System.out.println("Already contained " + buildXpath(c));
+                        }
+                    }
+//                    System.out.println(faultyElements.size());
+                }
             }
             this.htmlContent = contents;
             input.close();
@@ -395,26 +413,59 @@ public class WebpageMutator {
 	    for (CombinedSelector s : sels) {
             if (s.toString().contains(">")) {
                 String[] splits = s.toString().split(">");
-                String child = splits[splits.length - 1];
-                String parent = splits[splits.length - 2];
-                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
-                    return true;
-                }
+//                String child = splits[splits.length - 1];
+//                String parent = splits[splits.length - 2];
+//                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
+//                    return true;
+//                }
+                return traceSelectors(splits);
             } else if (s.toString().contains(" ")) {
                 String[] splits = s.toString().split(" ");
-                String child = splits[splits.length - 1];
-                String parent = splits[splits.length - 2];
-                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
-                    return true;
-                }
+//                String child = splits[splits.length - 1];
+//                String parent = splits[splits.length - 2];
+//                if (selectorUsed(child, false) && selectorUsed(parent, true)) {
+//                    return true;
+//                }
+                return traceSelectors(splits);
             } else {
-                if (selectorUsed(s.toString(), false)) {
-                    return true;
-                }
+                return traceSelectors(new String[] {s.toString()});
+//                if (selectorUsed(s.toString(), false)) {
+//                    return true;
+//                }
             }
         }
         return false;
 	}
+
+	private boolean traceSelectors(String[] splits) {
+	    System.out.println(Arrays.toString(splits));
+	    if (Arrays.toString(splits).equals("[.list-inline]")) {
+	        System.out.println();
+        }
+        boolean foundMatch = false;
+        for (Element e : faultyElements) {
+            Element temp = e;
+            String currentSelector;
+            for (int i = splits.length-1; i >= 0; i--) {
+                currentSelector = splits[i];
+                if (((temp.id().equals(currentSelector.replace("#", "")) ||
+                        (temp.tagName().equals(currentSelector)) ||
+                        (temp.hasClass(currentSelector.replace(".", "")))))) {
+//                    break;
+                    // Update
+                    temp = e.parent();
+                } else {
+                    break;
+                }
+
+//                // Update
+//                temp = e.parent();
+            }
+            foundMatch = true;
+//            return true;
+        }
+        return foundMatch;
+    }
 
     private boolean selectorUsed(String selector, boolean b) {
 	    for (Element e : faultyElements) {

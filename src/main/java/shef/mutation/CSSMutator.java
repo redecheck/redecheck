@@ -145,7 +145,7 @@ public class CSSMutator {
         }
         t.setValue(mutated);
         writeMutantToFile(i, "Changed value from " + orig + " to " + mutated + " in \n" + rm);
-        System.out.println("Changed value from " + orig + " to " + mutated + " in \n" + t);
+        System.out.println("Changed value from " + orig + " to " + mutated + " in \n" + rm);
     }
 
     public void changeCondition(MediaExpression me) {
@@ -292,13 +292,7 @@ public class CSSMutator {
         }
     }
 
-    private void deleteDeclaration(Declaration decToDelete) {
-        boolean mutated = false;
 
-        while (!mutated) {
-
-        }
-    }
 
     private void changeRuleUnit(Term t, boolean mutatedARule, boolean madeMutant, HashMap<String, StyleSheet> toMutate2, List<Term<?>> terms, int selector, int i, Declaration decToMutate) {
         boolean mutated = false;

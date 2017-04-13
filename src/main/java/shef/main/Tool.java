@@ -33,7 +33,7 @@ public class Tool {
     public String url;
     String[] clArgs;
     public String current;
-    public String preamble;
+    public static String preamble;
     private int startWidth;
     private int finalWidth;
     private int stepSize;
@@ -120,7 +120,7 @@ public class Tool {
         // Setup for new version of tool
         layoutFactories = new HashMap<>();
         if (!results && !fix) {
-            runFaultDetector();
+            runFaultDetector(current, url, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, baselines);
         }
 
         if (fix) {
@@ -152,7 +152,7 @@ public class Tool {
         }
     }
 
-    private void runFaultDetector() {
+    public static void runFaultDetector(String current, String url, String browser, String sampleTechnique, boolean binarySearch, int startWidth, int finalWidth, int stepSize, boolean baselines) {
         try {
             Date date = new Date();
             Format formatter = new SimpleDateFormat("YYYY-MM-dd_hh-mm-ss");
@@ -176,9 +176,9 @@ public class Tool {
 //            int numACs = rlg.getAlignmentConstraints().size();
 //            writeRlgStats(url, timeStamp, numNodes, numVCs, numACs);
 //            writeTimes(url, thread.getSwf(), timeStamp);
-            if (timing) {
-                writeTimesSpecial(thread.swf, url, timingID);
-            }
+//            if (timing) {
+//                writeTimesSpecial(thread.swf, url, timingID);
+//            }
 
         } catch (IOException e) {
             e.printStackTrace();
