@@ -438,12 +438,10 @@ public class WebpageMutator {
 	}
 
 	private boolean traceSelectors(String[] splits) {
-//	    System.out.println(Arrays.toString(splits));
-//	    if (Arrays.toString(splits).equals("[.list-inline]")) {
-//	        System.out.println();
-//        }
         boolean foundMatch = false;
+
         for (Element e : faultyElements) {
+            boolean wholeElementMatch = true;
             Element temp = e;
             String currentSelector;
             for (int i = splits.length-1; i >= 0; i--) {
@@ -451,18 +449,15 @@ public class WebpageMutator {
                 if (((temp.id().equals(currentSelector.replace("#", "")) ||
                         (temp.tagName().equals(currentSelector)) ||
                         (temp.hasClass(currentSelector.replace(".", "")))))) {
-//                    break;
-                    // Update
                     temp = e.parent();
                 } else {
+                    wholeElementMatch = false;
                     break;
                 }
-
-//                // Update
-//                temp = e.parent();
             }
-            foundMatch = true;
-//            return true;
+            if (wholeElementMatch) {
+                foundMatch = true;
+            }
         }
         return foundMatch;
     }

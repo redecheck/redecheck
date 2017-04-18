@@ -73,13 +73,13 @@ public class FaultPatcher {
                     String oldDomString = domStrings.get(currentSize);
 
                     // Try and parse all the CSS
+                    System.out.println(mutator.getRuleCandidates().size());
+                    for (RuleSet r : mutator.getRuleCandidates()) {
+                        System.out.println(r);
+                    }
 
-//                    for (RuleSet r : mutator.getRuleCandidates()) {
-//                        System.out.println(r);
-//                    }
-//
 //                    for (RuleMedia rm : mutator.getMqCandidates()) {
-//                        System.out.println(rm);
+//                        System.out.println(rm.getMediaQueries().toString());
 //                    }
 //
 
@@ -87,24 +87,27 @@ public class FaultPatcher {
 
 
                     boolean faultFixed = false;
-                    while (!faultFixed) {
-                        mutator.mutate(newUrl);
-                        webDriver.get(newUrl+"/index.html");
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
-                            faultFixed = true;
-                        }
-                        String newDomString = domStrings.get(currentSize);
-                        LayoutFactory old = new LayoutFactory(oldDomString);
-                        LayoutFactory newLF = new LayoutFactory(newDomString);
-
-                        boolean layoutsEqual = areLayoutsEqual(old, newLF);
-                        System.out.println(layoutsEqual);
-                    }
+                    int numIterations = 0;
+//                    while (!faultFixed || numIterations < 20) {
+//                        numIterations++;
+//                        System.out.println(numIterations);
+//                        mutator.mutate(newUrl);
+//                        webDriver.get(newUrl+"/index.html");
+//                        try {
+//                            Thread.sleep(100);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
+//                            faultFixed = true;
+//                        }
+//                        String newDomString = domStrings.get(currentSize);
+//                        LayoutFactory old = new LayoutFactory(oldDomString);
+//                        LayoutFactory newLF = new LayoutFactory(newDomString);
+//
+//                        boolean layoutsEqual = areLayoutsEqual(old, newLF);
+//                        System.out.println(layoutsEqual + "\n");
+//                    }
 //                    System.out.println("Think a fix has been found. VERIFYING NOW. . . . .");
 //                    Tool.runFaultDetector(current, url, browser, "uniformBP", true, 320, 1400, 60, false);
 //                    System.out.println("Fixed " + error);
@@ -128,9 +131,9 @@ public class FaultPatcher {
             Element oldNode = oldMap.get(xpath);
             Element newNode = newMap.get(xpath);
             if (!oldNode.getRectangle().equals(newNode.getRectangle())) {
-                System.out.println(xpath);
-                System.out.println(oldNode.getRectangle());
-                System.out.println(newNode.getRectangle() +"\n");
+//                System.out.println(xpath);
+//                System.out.println(oldNode.getRectangle());
+//                System.out.println(newNode.getRectangle() +"\n");
                 foundDifferent = true;
             }
         }
