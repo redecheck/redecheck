@@ -83,9 +83,6 @@ public class ResultClassifier {
 				xpath = "";
 			}
 
-			if (xpath.contains("/HTML/BODY/DIV/DIV/DIV/DIV/DIV/A")) {
-				System.out.println(xpath);
-			}
 			String parent = null;
 			String parent2 = null;
 			try {
@@ -113,6 +110,7 @@ public class ResultClassifier {
 					}
 					if (parent.equals(parent2)) {
 						if (coordsMatch(toMatch.getCoords(), dn.getCoords())) {
+						    System.out.println("Matched " + xpath);
 							match = dn;
 						} else {
                             match = dn;
@@ -165,14 +163,15 @@ public class ResultClassifier {
 			return true;
 		} else {
 //            System.out.println("NOT EQUAL");
-//            for (DomNode dn : coordsDiff.keySet()) {
-//                DomNode pair = coordsDiff.get(dn);
-//                int[] coords1 = dn.getCoords();
-//                int[] coords2 = pair.getCoords();
-//                System.out.println(dn.getxPath());
-//                System.out.println(coords1[0] + ","+coords1[1] + ","+coords1[2] + ","+coords1[3]);
-//                System.out.println(coords2[0] + ","+coords2[1] + ","+coords2[2] + ","+coords2[3]);
-//            }
+            for (DomNode dn : coordsDiff.keySet()) {
+                DomNode pair = coordsDiff.get(dn);
+                int[] coords1 = dn.getCoords();
+                int[] coords2 = pair.getCoords();
+                System.out.println(dn.getxPath());
+                System.out.println(coords1[0] + ","+coords1[1] + ","+coords1[2] + ","+coords1[3]);
+                System.out.println(coords2[0] + ","+coords2[1] + ","+coords2[2] + ","+coords2[3]);
+                System.out.println();
+            }
 //			for (DomNode n : nonMatching) {
 //				System.out.println(n.getxPath() + " was not matched");
 //			}

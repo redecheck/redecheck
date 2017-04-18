@@ -426,11 +426,11 @@ public class Tool {
         driver = getNewDriver(dCaps);
         driver.get(oracle);
         System.out.println(oracle);
-        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
+        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
 //        System.out.println("O" + oDoms.size());
         driver.get(test);
         System.out.println(test);
-        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>());
+        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
 //        System.out.println("T" + tDoms.size());
         driver.close();
         driver.quit();
@@ -440,8 +440,9 @@ public class Tool {
      * This method samples the DOM of a webpage at a set of viewports, and saves the DOMs into a HashMap
      * @param url        The url of the webpage
      * @param widths    The viewport widths to sample
+     * @param domStrings
      */
-    public static void capturePageModel(String url, int[] widths, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories) {
+    public static void capturePageModel(String url, int[] widths, int sleep, boolean takeScreenshot, boolean saveDom, WebDriver wdriver, StopwatchFactory swf, HashMap<Integer, LayoutFactory> lFactories, HashMap<Integer, String> domStrings) {
         // Create a parser for the DOM strings
         JsonDomParser parser = new JsonDomParser();
         File domFile=null;
@@ -474,6 +475,7 @@ public class Tool {
                     if (previous.equals(extractedDom)) {
 
                         lFactories.put(w, new LayoutFactory(extractedDom));
+                        domStrings.put(w, extractedDom);
                         if (saveDom) {
                             FileUtils.writeStringToFile(domFile, extractedDom);
                         }

@@ -438,10 +438,10 @@ public class WebpageMutator {
 	}
 
 	private boolean traceSelectors(String[] splits) {
-	    System.out.println(Arrays.toString(splits));
-	    if (Arrays.toString(splits).equals("[.list-inline]")) {
-	        System.out.println();
-        }
+//	    System.out.println(Arrays.toString(splits));
+//	    if (Arrays.toString(splits).equals("[.list-inline]")) {
+//	        System.out.println();
+//        }
         boolean foundMatch = false;
         for (Element e : faultyElements) {
             Element temp = e;
@@ -664,6 +664,12 @@ public class WebpageMutator {
 //                e.printStackTrace();
             }
         }
+    }
+
+    public void writeInitialParsedCSS(String newUrl) {
+        Document toMutate = cloner.deepClone(page);
+        CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
+        CSSMutator.writeToFile(1, cssMutator.stylesheets, shorthand, newUrl);
     }
 
 //    public int getDeclarationCount() {

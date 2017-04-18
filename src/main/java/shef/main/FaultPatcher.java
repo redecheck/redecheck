@@ -2,10 +2,12 @@ package shef.main;
 
 import cz.vutbr.web.css.RuleMedia;
 import cz.vutbr.web.css.RuleSet;
+import edu.gatech.xpert.dom.DomNode;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import shef.layout.*;
+import shef.mutation.ResultClassifier;
 import shef.mutation.WebpageMutator;
 import shef.utils.BrowserFactory;
 import shef.utils.ResultProcessor;
@@ -24,6 +26,7 @@ public class FaultPatcher {
     ArrayList<int[]> bounds;
     public String browser, fullUrl, url, rPath, cPath;
     private HashMap<Integer, LayoutFactory> layoutFactories;
+    private HashMap<Integer, String> domStrings;
     File directory;
 
     public FaultPatcher(String fullUrl, String url, String browser, String current) {
@@ -37,6 +40,7 @@ public class FaultPatcher {
 //            System.out.println(directory);
 
             layoutFactories = new HashMap<>();
+            domStrings = new HashMap<>();
             errors = ResultProcessor.getFailureStrings(directory);
             classifications = ResultProcessor.getClassifications(directory, errors.length);
             categories = ResultProcessor.getCategories(directory, errors.length);
@@ -50,6 +54,11 @@ public class FaultPatcher {
                     ArrayList<String> nodes = getNodesFromError(error, categories[i]);
                     int[] fBounds = bounds.get(i);
 
+                    WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0, nodes);
+                    String newUrl = mutator.copyFromWebpageRepository();
+                    mutator.writeInitialParsedCSS(newUrl);
+                    webDriver.get(newUrl+"/index.html");
+
                     // Resize browser to upper bound of fault
                     int currentSize = fBounds[1];
                     webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
@@ -61,57 +70,46 @@ public class FaultPatcher {
                         webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
                         failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     }
+                    String oldDomString = domStrings.get(currentSize);
 
                     // Try and parse all the CSS
-                    WebpageMutator mutator = new WebpageMutator(url, url.split("/")[0], 0, nodes);
-                    for (RuleSet r : mutator.getRuleCandidates()) {
-                        System.out.println(r);
-                    }
 
-                    for (RuleMedia rm : mutator.getMqCandidates()) {
-                        System.out.println(rm);
-                    }
-//
-//                    // Make a mutation
-//                    String newUrl = mutator.copyFromWebpageRepository();
-//                    webDriver.get(newUrl+"/index.html");
-
-
-
-//                    boolean faultFixed = false;
-//                    while (!faultFixed) {
-//                        mutator.mutate(newUrl);
-//                        webDriver.get(newUrl+"/index.html");
-////                        try {
-////                            Thread.sleep(100);
-////                        } catch (InterruptedException e) {
-////                            e.printStackTrace();
-////                        }
-//                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
-//                            faultFixed = true;
-//                        }
-//
+//                    for (RuleSet r : mutator.getRuleCandidates()) {
+//                        System.out.println(r);
 //                    }
+//
+//                    for (RuleMedia rm : mutator.getMqCandidates()) {
+//                        System.out.println(rm);
+//                    }
+//
+
+
+
+
+                    boolean faultFixed = false;
+                    while (!faultFixed) {
+                        mutator.mutate(newUrl);
+                        webDriver.get(newUrl+"/index.html");
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
+                            faultFixed = true;
+                        }
+                        String newDomString = domStrings.get(currentSize);
+                        LayoutFactory old = new LayoutFactory(oldDomString);
+                        LayoutFactory newLF = new LayoutFactory(newDomString);
+
+                        boolean layoutsEqual = areLayoutsEqual(old, newLF);
+                        System.out.println(layoutsEqual);
+                    }
 //                    System.out.println("Think a fix has been found. VERIFYING NOW. . . . .");
 //                    Tool.runFaultDetector(current, url, browser, "uniformBP", true, 320, 1400, 60, false);
 //                    System.out.println("Fixed " + error);
                 }
             }
-
-
-
-//            try {
-//                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//                DocumentBuilder db = factory.newDocumentBuilder();
-//                File f = new File("../../../Resources/fault-examples/"+url);
-//                Document doc = db.parse(f);
-////            CSSFactory.getUsedStyles();
-//            } catch (ParserConfigurationException e) {
-//                e.printStackTrace();
-//            } catch (SAXException e) {
-//                e.printStackTrace();
-//            }
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -122,13 +120,31 @@ public class FaultPatcher {
         }
     }
 
+    private boolean areLayoutsEqual(LayoutFactory old, LayoutFactory newLF) {
+        HashMap<String, Element> oldMap = old.getElementMap();
+        HashMap<String, Element> newMap = newLF.getElementMap();
+        boolean foundDifferent = false;
+        for (String xpath : oldMap.keySet()) {
+            Element oldNode = oldMap.get(xpath);
+            Element newNode = newMap.get(xpath);
+            if (!oldNode.getRectangle().equals(newNode.getRectangle())) {
+                System.out.println(xpath);
+                System.out.println(oldNode.getRectangle());
+                System.out.println(newNode.getRectangle() +"\n");
+                foundDifferent = true;
+            }
+        }
+        return !foundDifferent;
+    }
+
     private String generateRandomInjectionScript(ArrayList<String> nodes, String error) {
         String result = "var element = document.evaluate(\"" +nodes.get(0) + "\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; var styles = window.getComputedStyle(element);  element.style.fontSize = '20px';";
         return result;
     }
 
     private boolean checkForFailure(ArrayList<String> nodes, String category, int fBound, String error) {
-        Tool.capturePageModel(fullUrl, new int[] {fBound}, 50, false, false, webDriver, null, layoutFactories);
+
+        Tool.capturePageModel(fullUrl, new int[] {fBound}, 50, false, false, webDriver, null, layoutFactories, domStrings);
         Layout layout = layoutFactories.get(fBound).layout;
 
         // Element collision or element protrusion check

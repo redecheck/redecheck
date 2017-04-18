@@ -6,13 +6,6 @@ import cz.vutbr.web.css.*;
 import edu.gatech.xpert.dom.DomNode;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGAnalyser;
 import shef.mutation.CSSMutator;
 import shef.layout.LayoutFactory;
@@ -124,7 +117,7 @@ public class RLGExtractor implements Runnable {
             initialDoms = sampleWidths.length;
 
             // Capture the layout of the page at each width
-            Tool.capturePageModel(fullUrl, sampleWidths, sleep, false, false, webDriver, swf, lFactories);
+            Tool.capturePageModel(fullUrl, sampleWidths, sleep, false, false, webDriver, swf, lFactories, new HashMap<>());
             ArrayList<LayoutFactory> oracleLFs = new ArrayList<>();
 
             // For each sampled width, analyse the DOM to construct the specific layout structure
@@ -215,7 +208,7 @@ public class RLGExtractor implements Runnable {
     }
 
     public static BufferedImage getScreenshot(int captureWidth, int errorID, HashMap<Integer, LayoutFactory> lfs, WebDriver d, String fullUrl) {
-        Tool.capturePageModel(fullUrl, new int[] {captureWidth}, Tool.sleep, false, false, d, new StopwatchFactory(), lfs);
+        Tool.capturePageModel(fullUrl, new int[] {captureWidth}, Tool.sleep, false, false, d, new StopwatchFactory(), lfs, new HashMap<>());
         return Utils.getScreenshot(fullUrl,captureWidth, Tool.sleep, d, errorID);
     }
 

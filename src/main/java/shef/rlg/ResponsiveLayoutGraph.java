@@ -858,7 +858,7 @@ public class ResponsiveLayoutGraph {
     		return lf;
     	} else {
             if (!lFactories.containsKey(width)) {
-                Tool.capturePageModel(url, new int[]{width}, 50, false, false, driver, swf, lFactories);
+                Tool.capturePageModel(url, new int[]{width}, 50, false, false, driver, swf, lFactories, new HashMap<>());
                 alreadyGathered.add(width);
             }
     		return lFactories.get(width);
@@ -1191,19 +1191,19 @@ public class ResponsiveLayoutGraph {
     public void captureExtraDoms(int[] widths) {
     	if (widths.length == 2) {
 	    	if ((!alreadyGathered.contains(widths[0])) && (!alreadyGathered.contains(widths[1]))) {
-	    		Tool.capturePageModel(url, widths, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, widths, sleep, false, false, wdriver, swf, lFactories, new HashMap<>());
 	    		alreadyGathered.add(widths[0]);
 	    		alreadyGathered.add(widths[1]);
 	    	} else if (!alreadyGathered.contains(widths[0])) {
-	    		Tool.capturePageModel(url, new int[]{widths[0]}, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[0]}, sleep, false, false, wdriver, swf, lFactories, new HashMap<>());
 	    		alreadyGathered.add(widths[0]);
 	    	} else if (!alreadyGathered.contains(widths[1])) {
-	    		Tool.capturePageModel(url, new int[]{widths[1]}, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[1]}, sleep, false, false, wdriver, swf, lFactories, new HashMap<>());
 	    		alreadyGathered.add(widths[1]);
 	    	}
     	} else if (widths.length == 1) {
     		if (!alreadyGathered.contains(widths[0])) {
-	    		Tool.capturePageModel(url, new int[]{widths[0]}, sleep, false, false, wdriver, swf, lFactories);
+	    		Tool.capturePageModel(url, new int[]{widths[0]}, sleep, false, false, wdriver, swf, lFactories, new HashMap<>());
 	    		alreadyGathered.add(widths[0]);
     		}
     	}
