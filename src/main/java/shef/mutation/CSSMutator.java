@@ -231,7 +231,11 @@ public class CSSMutator {
         String property = decToMutate.getProperty().toLowerCase();
         List<Term<?>> terms = decToMutate.asList();
         Term t = terms.get(termIndex);
-        changeRuleValue(property, t, true, true, i, ruleSet, toPrint, decToMutate, i);
+        if ((!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
+            changeRuleValueNumeric(property, t, true, true, i, ruleSet, toPrint, decToMutate, i);
+        } else {
+            changeRuleValueFixed(property, t, true, true, i, ruleSet, toPrint, decToMutate, i);
+        }
 
     }
 
@@ -278,7 +282,7 @@ public class CSSMutator {
                         // If the rule-value mutation operator is selected
                         if (selector2 == 0) {
 //                            System.out.println("Mutating rule-value");
-                            changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate, 0);
+//                            changeRuleValue(property, t, mutatedARule, madeMutant, i, toMutate, toPrint, decToMutate, 0);
 	                    // If the rule-unit mutation operator is selected
                         } else if (selector2 == 1){
 //                            System.out.println("Mutating rule-unit");
@@ -361,10 +365,10 @@ public class CSSMutator {
         }
     }
 
-    private void changeRuleValue(String property, Term t, boolean mutatedARule, boolean madeMutant, int i, RuleSet toMutate, RuleSet toPrint, Declaration decToMutate, int upOrDown) {
+    private void changeRuleValueNumeric(String property, Term t, boolean mutatedARule, boolean madeMutant, int i, RuleSet toMutate, RuleSet toPrint, Declaration decToMutate, int upOrDown) {
         int mutator, sign;
 
-        if ( (!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
+        if ((!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
             if (upOrDown == 0) {
                 mutator = random.nextInt(10) + 1;
                 sign = random.nextInt(10);
@@ -388,33 +392,45 @@ public class CSSMutator {
             }
             t.setValue(mutated);
             writeMutantToFile(i, "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
-            System.out.println("Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
+//            System.out.println("Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
             mutatedARule = true;
             madeMutant = true;
-        } else {
-//                                System.out.println(decToMutate.getProperty());
-            String current = (String) t.getValue();
-//                                System.out.println(current);
-            String newValue = "";
-            if (decToMutate.getProperty().equals("float")) {
+        }
+    }
+
+    private void changeRuleValueFixed(String property, Term t, boolean mutatedARule, boolean madeMutant, int i, RuleSet toMutate, RuleSet toPrint, Declaration decToMutate, int upOrDown) {
+        String current = (String) t.getValue();
+
+        String newValue = "";
+        if (decToMutate.getProperty().equals("float")) {
+            if (upOrDown < 0) {
                 int valSelector = random.nextInt(floatOptions.length);
                 newValue = floatOptions[valSelector];
-            } else if (decToMutate.getProperty().equals("position")) {
+            } else {
+                newValue = floatOptions[upOrDown];
+            }
+        } else if (decToMutate.getProperty().equals("position")) {
+            if (upOrDown < 0) {
                 int valSelector = random.nextInt(positionOptions.length);
                 newValue = positionOptions[valSelector];
-            } else if (decToMutate.getProperty().equals("display")) {
+            } else {
+                newValue = positionOptions[upOrDown];
+            }
+        } else if (decToMutate.getProperty().equals("display")) {
+            if (upOrDown < 0) {
                 int valSelector = random.nextInt(displayOptions.length);
                 newValue = displayOptions[valSelector];
+            } else {
+                newValue = displayOptions[upOrDown];
             }
+        }
 //                                System.out.println(newValue);
-            if (!newValue.equals(current)) {
-                t.setValue(newValue);
-//                                    System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
-                writeMutantToFile(i, "Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
-//                System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
-                mutatedARule = true;
-                madeMutant = true;
-            }
+        if (!newValue.equals(current)) {
+            t.setValue(newValue);
+            writeMutantToFile(i, "Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
+            System.out.println("Changed term from " + current + " to " + newValue + "\n" + toPrint + "\n" + toMutate);
+            mutatedARule = true;
+            madeMutant = true;
         }
     }
 
@@ -868,17 +884,43 @@ public class CSSMutator {
         ArrayList<LinkedHashMap<String,StyleSheet>> mutated = new ArrayList<>();
         for (RuleSet rs : regCandidates) {
             for (Declaration dec : rs) {
-
+                System.out.println(dec);
+                String property = dec.getProperty().toLowerCase();
                 // Iterate through all the different terms
-                for (int t = 0; t < dec.asList().size(); t++) {
-                    HashMap<String, StyleSheet> toMutate = cloner.deepClone(this.stylesheets);
-                    mutateRule(toMutate, rs, dec, t, 1);
-                    mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                if ((!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
+                    for (int t = 0; t < dec.asList().size(); t++) {
+                        HashMap<String, StyleSheet> toMutate = cloner.deepClone(this.stylesheets);
+                        mutateRule(toMutate, rs, dec, t, 1);
+                        mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
 
-                    toMutate = cloner.deepClone(this.stylesheets);
-                    mutateRule(toMutate, rs, dec, t, -1);
-                    mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                        toMutate = cloner.deepClone(this.stylesheets);
+                        mutateRule(toMutate, rs, dec, t, -1);
+                        mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                    }
+                } else {
+                    HashMap<String, StyleSheet> toMutate;
+                    if (property.equals("display")) {
+                        for (int d = 0; d < displayOptions.length; d++) {
+                            toMutate = cloner.deepClone(this.stylesheets);
+                            mutateRule(toMutate, rs, dec, 0, d);
+                            mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                        }
+                    } else if (property.equals("position")) {
+                        for (int d = 0; d < positionOptions.length; d++) {
+                            toMutate = cloner.deepClone(this.stylesheets);
+                            mutateRule(toMutate, rs, dec, 0, d);
+                            mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                        }
+                    } else if (property.equals("float")) {
+                        for (int d = 0; d < floatOptions.length; d++) {
+                            toMutate = cloner.deepClone(this.stylesheets);
+                            mutateRule(toMutate, rs, dec, 0, d);
+                            mutated.add((LinkedHashMap<String, StyleSheet>) toMutate);
+                        }
+                    }
                 }
+
+
 
 
             }
