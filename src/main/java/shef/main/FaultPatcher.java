@@ -2,6 +2,7 @@ package shef.main;
 
 import cz.vutbr.web.css.RuleMedia;
 import cz.vutbr.web.css.RuleSet;
+import cz.vutbr.web.css.StyleSheet;
 import edu.gatech.xpert.dom.DomNode;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by thomaswalsh on 03/04/2017.
@@ -73,18 +75,17 @@ public class FaultPatcher {
                     String oldDomString = domStrings.get(currentSize);
 
                     // Try and parse all the CSS
-                    System.out.println(mutator.getRuleCandidates().size());
                     for (RuleSet r : mutator.getRuleCandidates()) {
                         System.out.println(r);
                     }
 
-//                    for (RuleMedia rm : mutator.getMqCandidates()) {
-//                        System.out.println(rm.getMediaQueries().toString());
-//                    }
+                    for (RuleMedia rm : mutator.getMqCandidates()) {
+                        System.out.println(rm.getMediaQueries().toString());
+                    }
 //
-
-
-
+//                    ArrayList<LinkedHashMap<String, StyleSheet>> options = mutator.getMutationOptions();
+                    ArrayList<LinkedHashMap<String,StyleSheet>> options = mutator.getCSSMutator().getMutationOptions();
+                    System.out.println(options.size());
 
                     boolean faultFixed = false;
                     int numIterations = 0;

@@ -33,6 +33,7 @@ public class WebpageMutator {
     LinkedHashMap<String, StyleSheet> stylesheets;
     ArrayList<String> faultyXpaths;
     ArrayList<Element> faultyElements;
+    CSSMutator cssMutator;
 
     public ArrayList<RuleMedia> getMqCandidates() {
         return mqCandidates;
@@ -112,6 +113,7 @@ public class WebpageMutator {
 			e.printStackTrace();
 		}
         driver.quit();
+        cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, null, 0);
 	}
 
 
@@ -666,6 +668,11 @@ public class WebpageMutator {
         CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
         CSSMutator.writeToFile(1, cssMutator.stylesheets, shorthand, newUrl);
     }
+
+    public CSSMutator getCSSMutator() {
+        return cssMutator;
+    }
+
 
 //    public int getDeclarationCount() {
 //        int numBlocks = 0;
