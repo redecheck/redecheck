@@ -526,7 +526,7 @@ public class CSSMutator {
 
     }
 
-    public static void writeToFile(int counter, HashMap<String, StyleSheet> toMutate, String shorthand, String newUrl) {
+    public void writeToFile(int counter, HashMap<String, StyleSheet> toMutate, String shorthand, String newUrl) {
         PrintWriter output = null;
         for (String s : toMutate.keySet()) {
 	        try {

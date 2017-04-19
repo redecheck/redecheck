@@ -289,7 +289,7 @@ public class HTMLMutator {
         } else if (selector == 7) {
             mutateContent(toMutate);
         }
-        CSSMutator.writeToFile(this.mutantNumber, this.stylesheets, this.shorthand, "");
+//        CSSMutator.writeToFile(this.mutantNumber, this.stylesheets, this.shorthand, "");
 	    writeNewHtml(this.mutantNumber, toMutate);
 		
 	}

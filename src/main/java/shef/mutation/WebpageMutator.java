@@ -663,10 +663,14 @@ public class WebpageMutator {
         }
     }
 
+    public String getShorthand() {
+        return shorthand;
+    }
+
     public void writeInitialParsedCSS(String newUrl) {
         Document toMutate = cloner.deepClone(page);
         CSSMutator cssMutator = new CSSMutator(baseURL, shorthand, stylesheets, ruleCandidates, mqCandidates, toMutate, 0);
-        CSSMutator.writeToFile(1, cssMutator.stylesheets, shorthand, newUrl);
+        cssMutator.writeToFile(1, cssMutator.stylesheets, shorthand, newUrl);
     }
 
     public CSSMutator getCSSMutator() {

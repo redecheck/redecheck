@@ -8,6 +8,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import shef.layout.*;
+import shef.mutation.CSSMutator;
 import shef.mutation.ResultClassifier;
 import shef.mutation.WebpageMutator;
 import shef.utils.BrowserFactory;
@@ -84,8 +85,14 @@ public class FaultPatcher {
                     }
 //
 //                    ArrayList<LinkedHashMap<String, StyleSheet>> options = mutator.getMutationOptions();
-                    ArrayList<LinkedHashMap<String,StyleSheet>> options = mutator.getCSSMutator().getMutationOptions();
+                    CSSMutator cm = mutator.getCSSMutator();
+                    ArrayList<LinkedHashMap<String,StyleSheet>> options = cm.getMutationOptions();
                     System.out.println(options.size());
+
+                    // Go through each mutation option
+                    for (LinkedHashMap<String,StyleSheet> ss : options) {
+                        cm.writeToFile(0, ss, mutator.getShorthand(), newUrl);
+                    }
 
                     boolean faultFixed = false;
                     int numIterations = 0;
