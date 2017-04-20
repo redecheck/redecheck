@@ -4,6 +4,7 @@ import cz.vutbr.web.css.RuleMedia;
 import cz.vutbr.web.css.RuleSet;
 import cz.vutbr.web.css.StyleSheet;
 import edu.gatech.xpert.dom.DomNode;
+import org.mockito.internal.matchers.Null;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -86,15 +87,41 @@ public class FaultPatcher {
 //
 //                    ArrayList<LinkedHashMap<String, StyleSheet>> options = mutator.getMutationOptions();
                     CSSMutator cm = mutator.getCSSMutator();
-                    ArrayList<LinkedHashMap<String,StyleSheet>> options = cm.getMutationOptions();
-                    System.out.println(options.size());
+                    boolean faultFixed = false;
+                    ArrayList<LinkedHashMap<String,StyleSheet>> worklist = new ArrayList<>();
+                    worklist.add(cm.getStylesheets());
 
-                    // Go through each mutation option
-                    for (LinkedHashMap<String,StyleSheet> ss : options) {
-                        cm.writeToFile(0, ss, mutator.getShorthand(), newUrl);
+                    while (!faultFixed || !worklist.isEmpty()) {
+                        LinkedHashMap<String,StyleSheet> currentSS = worklist.remove(0);
+                        HashMap<String, LinkedHashMap<String,StyleSheet>> options = cm.getMutationOptions(currentSS);
+                        System.out.println(options.size() + " mutation options");
+//                        ArrayList<String> mutantsToFilterOut = new ArrayList<>();
+
+                        // Go through each mutation option
+                        for (String mDesc : options.keySet()) {
+                            System.out.println(mDesc);
+                            LinkedHashMap<String,StyleSheet> ss = options.get(mDesc);
+                            cm.writeToFile(0, ss, mutator.getShorthand(), newUrl);
+                            webDriver.get(newUrl+"/index.html");
+                            checkForFailure(nodes, categories[i], currentSize, error);
+                            String newDomString = domStrings.get(currentSize);
+                            LayoutFactory oldLF = new LayoutFactory(oldDomString);
+                            LayoutFactory newLF = new LayoutFactory(newDomString);
+                            boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
+                            if (!layoutsEqual) {
+                                worklist.add(ss);
+//                                mutantsToFilterOut.add(mDesc);
+                            }
+                        }
+//                        for (String toRemove : mutantsToFilterOut) {
+//                            options.remove(toRemove);
+//                        }
+
+                        System.out.println(worklist.size());
                     }
 
-                    boolean faultFixed = false;
+
+
                     int numIterations = 0;
 //                    while (!faultFixed || numIterations < 20) {
 //                        numIterations++;
@@ -138,11 +165,15 @@ public class FaultPatcher {
         for (String xpath : oldMap.keySet()) {
             Element oldNode = oldMap.get(xpath);
             Element newNode = newMap.get(xpath);
-            if (!oldNode.getRectangle().equals(newNode.getRectangle())) {
-//                System.out.println(xpath);
-//                System.out.println(oldNode.getRectangle());
-//                System.out.println(newNode.getRectangle() +"\n");
-                foundDifferent = true;
+            try {
+                if (!oldNode.getRectangle().equals(newNode.getRectangle())) {
+                    //                System.out.println(xpath);
+                    //                System.out.println(oldNode.getRectangle());
+                    //                System.out.println(newNode.getRectangle() +"\n");
+                    foundDifferent = true;
+                }
+            } catch (NullPointerException npe) {
+                return false;
             }
         }
         return !foundDifferent;
