@@ -36,7 +36,9 @@ The `pom.xml` file provided in the repository will handle the vast majority of d
 The resources provided in the repository are for use on MacOS machines, so if you're running Windows or Linux as your operating system, you'll need to replace them with the linux versions, from the links below:
 
 https://sites.google.com/a/chromium.org/chromedriver/
+
 https://github.com/mozilla/geckodriver/releases/
+
 http://phantomjs.org/
 
 ##### Java Version
