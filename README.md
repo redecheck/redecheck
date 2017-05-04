@@ -17,7 +17,7 @@ follow the installation guidelines at https://maven.apache.org/install.html.
 Clone the ReDeCheck project repository using either a graphical Git client or by running the following command at the
    prompt of your terminal window:
 
-   `git clone https://github.com/redecheck/redecheck-tool.git`
+   `git clone https://github.com/redecheck/redecheck.git`
 
 ## Installing ReDeCheck
 
@@ -31,6 +31,13 @@ are also provided.
 #### Dependencies
 
 The `pom.xml` file provided in the repository will handle the vast majority of dependencies needed for ReDeCheck to install and run correctly. However, before attempting to run ReDeCheck to test your websites, please ensure your setup is complete with the following requirements:
+
+##### Resources
+The resources provided in the repository are for use on MacOS machines, so if you're running Windows or Linux as your operating system, you'll need to replace them with the linux versions, from the links below:
+
+https://sites.google.com/a/chromium.org/chromedriver/
+https://github.com/mozilla/geckodriver/releases/
+http://phantomjs.org/
 
 ##### Java Version
 
