@@ -417,7 +417,7 @@ public class RLGExtractor implements Runnable {
                         cssUrl = new URL(("file://" + preamble + base.replace("/index.html", "") + "/" + cssFile.replace("./", "")));
                         //                    cssUrl = new URL(("file://" + preamble + base.split("/")[0] + "/" + base.split("/")[1] + "/" + cssFile.replace("./", "")));
                     }
-                    //                System.out.println(cssUrl);
+//                    System.out.println(cssUrl);
 
                     conn = cssUrl.openConnection();
 

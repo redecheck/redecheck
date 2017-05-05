@@ -6,11 +6,13 @@ import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.Layout;
 import shef.layout.LayoutFactory;
+import shef.main.Utils;
 import shef.reporting.inconsistencies.*;
 import shef.rlg.*;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -53,7 +55,7 @@ public class RLGAnalyser {
         detectOverflowOrOverlap(rlg.getAlignmentConstraints());
         checkForSmallRanges(rlg.getAlignmentConstraints());
         checkForWrappingElements();
-        filterOutDuplicateReports();
+//        filterOutDuplicateReports();
 //        FailureReportClusterBot clusterbot = new FailureReportClusterBot(errors);
         return errors;
     }
@@ -1316,17 +1318,37 @@ public class RLGAnalyser {
         PrintWriter output2 = null;
         PrintWriter output3 = null;
         try {
-        	File outputFile;
-        	if (!url.contains("www")) {
-	            String[] splits = url.split("/");
-	            String webpage = splits[0];
-	            String mutant = "index";
-	            outputFile = new File("../reports/"  + webpage + "/" + mutant + "-"+ts);
-        	} else {
-        		String[] splits = url.split("www.");
-        		outputFile = new File("../reports/" + splits[1] + "/" + ts);
-        	}
-            System.out.println(outputFile.getAbsolutePath());
+        	File outputFile = null;
+            if (!url.contains("www.") && (!url.contains("http://"))) {
+                String[] splits = url.split("/");
+                String webpage = splits[0];
+                String mutant = "index-" + ts;
+                //                    splits[1];
+                try {
+                    outputFile = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (url.contains("http://")) {
+                String[] splits = url.split("http://");
+                String webpage = splits[1];
+                String mutant = ts;
+                try {
+                    outputFile = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                String[] splits = url.split("www.");
+                String webpage = splits[1];
+                String mutant = ts;
+                try {
+                    outputFile = new File(new File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+//            System.out.println(outputFile.getAbsolutePath());
             FileUtils.forceMkdir(outputFile);
             File dir = new File(outputFile+"/fault-report.txt");
             File countDir = new File(outputFile + "/error-count.txt");

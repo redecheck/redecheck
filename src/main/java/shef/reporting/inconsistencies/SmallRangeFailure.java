@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
 import shef.main.RLGExtractor;
+import shef.main.Utils;
 import shef.rlg.AlignmentConstraint;
 import shef.rlg.Node;
 
@@ -35,49 +36,41 @@ public class SmallRangeFailure extends ResponsiveLayoutFailure {
 
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
-        int captureWidth = (ac.getMin()+ac.getMax())/2;
-        HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
-
-        BufferedImage img;
-//        if (imageMap.containsKey(captureWidth)) {
-//            img = imageMap.get(captureWidth);
-//        } else {
-            img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
-////            imageMap.put(captureWidth, img);
-//        }
-//        System.out.println(captureWidth + " " + (img == null));
-        LayoutFactory lf = lfs.get(captureWidth);
-        Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
-        Element e2 = lf.getElementMap().get(ac.getNode2().getXpath());
-
-        Graphics2D g2d = img.createGraphics();
-        g2d.setColor(Color.RED);
-        g2d.setStroke(new BasicStroke(3));
-        int[] coords1 = e1.getBoundingCoords();
-        g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
-
-        g2d.setColor(Color.CYAN);
-        int[] coords2 = e2.getBoundingCoords();
-        g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
-        g2d.dispose();
         try {
-            File output;
-            if (!url.contains("www.")) {
-                String[] splits = url.split("/");
-                String webpage = splits[0];
-                String mutant = "index-" + timeStamp;
-                //                    splits[1];
-                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-            } else {
-                String[] splits = url.split("www.");
-                String webpage = splits[1];
-                String mutant = timeStamp;
-                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-            }
+            int captureWidth = (ac.getMin()+ac.getMax())/2;
+
+            HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
+
+            BufferedImage img;
+        //        if (imageMap.containsKey(captureWidth)) {
+        //            img = imageMap.get(captureWidth);
+        //        } else {
+                img = RLGExtractor.getScreenshot(captureWidth, errorID, lfs, webDriver, fullUrl);
+        ////            imageMap.put(captureWidth, img);
+        //        }
+        //        System.out.println(captureWidth + " " + (img == null));
+            LayoutFactory lf = lfs.get(captureWidth);
+            Element e1 = lf.getElementMap().get(ac.getNode1().getXpath());
+            Element e2 = lf.getElementMap().get(ac.getNode2().getXpath());
+
+            Graphics2D g2d = img.createGraphics();
+            g2d.setColor(Color.RED);
+            g2d.setStroke(new BasicStroke(3));
+            int[] coords1 = e1.getBoundingCoords();
+            g2d.drawRect(coords1[0],coords1[1],coords1[2]-coords1[0],coords1[3]-coords1[1]);
+
+            g2d.setColor(Color.CYAN);
+            int[] coords2 = e2.getBoundingCoords();
+            g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
+            g2d.dispose();
+
+            File output = Utils.getOutputFilePath(url, timeStamp, errorID);
             FileUtils.forceMkdir(output);
             ImageIO.write(img, "png", new File(output+ "/smallrangeWidth" + captureWidth + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException npe) {
+            System.out.println("Could not find one of the offending elements in screenshot.");
         }
 
 //        captureWidth = (prev.getMin()+prev.getMax())/2;

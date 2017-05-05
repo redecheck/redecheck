@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
 import shef.main.RLGExtractor;
+import shef.main.Utils;
 import shef.rlg.Node;
 
 import javax.imageio.ImageIO;
@@ -47,7 +48,7 @@ public class ViewportProtrusionFailure extends ResponsiveLayoutFailure {
     @Override
     public void captureScreenshotExample(int errorID, String url, WebDriver webDriver, String fullUrl, String timeStamp) {
         try {
-            int captureWidth = (min+max)/2;
+            int captureWidth = (min + max) / 2;
             HashMap<Integer, LayoutFactory> lfs = new HashMap<>();
 
             BufferedImage img;
@@ -63,32 +64,22 @@ public class ViewportProtrusionFailure extends ResponsiveLayoutFailure {
             int[] coords = e1.getBoundingCoords();
 //            System.out.println(e1.getXpath());
 //            System.out.println(Arrays.toString(coords));
-            g2d.drawRect(coords[0],coords[1],coords[2]-coords[0],coords[3]-coords[1]);
+            g2d.drawRect(coords[0], coords[1], coords[2] - coords[0], coords[3] - coords[1]);
 
             g2d.setColor(Color.GREEN);
 //            g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
             int[] coords2 = body.getBoundingCoords();
 //            System.out.println(Arrays.toString(coords2));
-            g2d.drawRect(coords2[0],coords2[1],coords2[2]-coords2[0],coords2[3]-coords2[1]);
+            g2d.drawRect(coords2[0], coords2[1], coords2[2] - coords2[0], coords2[3] - coords2[1]);
 
             g2d.dispose();
-            File output;
-            if (!url.contains("www.")) {
-                String[] splits = url.split("/");
-                String webpage = splits[0];
-                String mutant = "index-" + timeStamp;
-                //                    splits[1];
-                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-            } else {
-                String[] splits = url.split("www.");
-                String webpage = splits[1];
-                String mutant = timeStamp;
-                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-            }
+            File output = Utils.getOutputFilePath(url, timeStamp, errorID);
             FileUtils.forceMkdir(output);
             ImageIO.write(img, "png", new File(output+ "/viewportOverflowWidth" + captureWidth + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException npe) {
+            System.out.println("Could not find one of the offending elements in screenshot.");
         }
     }
 

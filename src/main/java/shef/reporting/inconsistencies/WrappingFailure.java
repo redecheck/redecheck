@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import shef.layout.Element;
 import shef.layout.LayoutFactory;
 import shef.main.RLGExtractor;
+import shef.main.Utils;
 import shef.rlg.Node;
 
 import javax.imageio.ImageIO;
@@ -76,26 +77,14 @@ public class WrappingFailure extends ResponsiveLayoutFailure {
             }
             g2d.dispose();
             try {
-                File output;
-                if (!url.contains("www.")) {
-                    String[] splits = url.split("/");
-                    String webpage = splits[0];
-                    String mutant = "index-" + timeStamp;
-                    //                    splits[1];
-                    output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-                } else {
-                    String[] splits = url.split("www.");
-                    String webpage = splits[1];
-                    String mutant = timeStamp;
-                    output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
-                }
+                File output = Utils.getOutputFilePath(url, timeStamp, errorID);
                 FileUtils.forceMkdir(output);
                 ImageIO.write(img, "png", new File(output + "/wrappingWidth" + captureWidth + ".png"));
             } catch (IOException e) {
 //                e.printStackTrace();
             }
-        } catch (Exception e ) {
-            e.printStackTrace();
+        } catch (NullPointerException npe) {
+            System.out.println("Could not find one of the offending elements in screenshot.");
         }
     }
 

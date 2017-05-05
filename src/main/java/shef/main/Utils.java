@@ -90,8 +90,9 @@ public class Utils {
     }
 
     public static File getOutputFilePath(String url, String timeStamp, int errorID) {
+
         File output = null;
-        if (!url.contains("www.")) {
+        if (!url.contains("www.") && (!url.contains("http://"))) {
             String[] splits = url.split("/");
             String webpage = splits[0];
             String mutant = "index-" + timeStamp;
@@ -101,7 +102,16 @@ public class Utils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (url.contains("http://")) {
+            String[] splits = url.split("http://");
+            String webpage = splits[1];
+            String mutant = timeStamp;
+            try {
+                output = new File(new java.io.File(".").getCanonicalPath() + "/../reports/" + webpage + "/" + mutant + "/fault" + errorID + "/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
             String[] splits = url.split("www.");
             String webpage = splits[1];
             String mutant = timeStamp;
