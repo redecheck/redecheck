@@ -410,8 +410,8 @@ public class RLGExtractor implements Runnable {
                 try {
                     if (cssFile.contains("http")) {
                         cssUrl = new URL(cssFile);
-                    } else if (cssFile.substring(0, 2).equals("//")) {
-                        cssUrl = new URL("http:" + cssFile);
+                    } else if (cssFile.substring(0, 2).equals("//") || cssFile.substring(0, 1).equals("/")) {
+                        cssUrl = new URL(base + cssFile);
                     } else {
                         //                    System.out.println("LOCAL");
                         cssUrl = new URL(("file://" + preamble + base.replace("/index.html", "") + "/" + cssFile.replace("./", "")));
