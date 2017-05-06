@@ -6,6 +6,7 @@ import cz.vutbr.web.css.*;
 import edu.gatech.xpert.dom.DomNode;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Point;
 import shef.analysis.RLGAnalyser;
 import shef.mutation.CSSMutator;
 import shef.layout.LayoutFactory;
@@ -110,6 +111,7 @@ public class RLGExtractor {
                     webDriver.close();
                 }
             }
+            webDriver.manage().window().setPosition(new Point(0,0));
 
 
             // Calculate the initial sample widths
