@@ -20,6 +20,7 @@ import shef.rlg.ResponsiveLayoutGraph;
 import shef.utils.ResultProcessor;
 import shef.utils.StopwatchFactory;
 
+import java.awt.*;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.Format;
@@ -37,6 +38,7 @@ public class Tool {
     public static String preamble;
     private int startWidth;
     private int finalWidth;
+    private static int browserHeight;
     private int stepSize;
     private String sampleTechnique = "uniformBP";
     private boolean binarySearch = true;
@@ -87,6 +89,15 @@ public class Tool {
         
         startWidth = clp.startWidth;
         finalWidth = clp.endWidth;
+
+        java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        if (finalWidth > width) {
+            finalWidth = (int) width;
+        }
+        browserHeight = (int) (height - 100);
+
         if (clp.ss != -1) {
         	stepSize = clp.ss;
         }
@@ -468,7 +479,7 @@ public class Tool {
                 boolean consecutiveMatches = false;
 
                 // Resize the browser window
-                wdriver.manage().window().setSize(new Dimension(w, 1000));
+                wdriver.manage().window().setSize(new Dimension(w, browserHeight));
                 String previous = "";
 
 
