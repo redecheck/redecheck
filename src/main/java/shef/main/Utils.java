@@ -69,24 +69,19 @@ public class Utils {
 
     @SuppressWarnings("")
     public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
-        try {
-            d.manage().window().setSize(new Dimension(w, 1000));
-            Thread.sleep(sleep);
-            Screenshot screenshot = null;
-            File src = null;
-            if (d instanceof ChromeDriver) {
-                screenshot = new AShot().shootingStrategy(
-                        new ViewportPastingStrategy(500)).takeScreenshot(d);
-            } else {
-                screenshot = new AShot().takeScreenshot(d);
-            }
-            BufferedImage image;
-            image= screenshot.getImage();
-            return image;
-        } catch (InterruptedException ie) {
-            System.out.println("INTERRUPTED");
+        d.manage().window().setSize(new Dimension(w, 1000));
+//            Thread.sleep(sleep);
+        Screenshot screenshot = null;
+        File src = null;
+        if (d instanceof ChromeDriver) {
+            screenshot = new AShot().shootingStrategy(
+                    new ViewportPastingStrategy(500)).takeScreenshot(d);
+        } else {
+            screenshot = new AShot().takeScreenshot(d);
         }
-        return null;
+        BufferedImage image;
+        image= screenshot.getImage();
+        return image;
     }
 
     public static File getOutputFilePath(String url, String timeStamp, int errorID) {

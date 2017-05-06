@@ -463,11 +463,11 @@ public class RLGExtractor implements Runnable {
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } catch (CSSException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } catch (NullPointerException e) {
-                    System.out.println("Null pointer for some reason on " + i);
+//                    System.out.println("Null pointer for some reason on " + i);
                 }
             }
         }

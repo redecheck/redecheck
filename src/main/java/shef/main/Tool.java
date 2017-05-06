@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Tool {
     // Instance variables
@@ -470,7 +471,7 @@ public class Tool {
 
                 while (!consecutiveMatches) {
                     // Extract the DOM and save it to the HashMap.
-                    Thread.sleep(sleep);
+//                    wdriver.manage().timeouts().implicitlyWait(sleep, TimeUnit.MILLISECONDS);
                     String extractedDom = extractDOM(wdriver, scriptToExtract);
                     if (previous.equals(extractedDom)) {
 
