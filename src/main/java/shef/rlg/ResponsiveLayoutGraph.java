@@ -2,7 +2,7 @@ package shef.rlg;
 
 import com.google.common.collect.HashBasedTable;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
+//import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import shef.layout.*;
 import shef.layout.Sibling;
 import shef.main.Tool;
@@ -47,7 +47,7 @@ public class ResponsiveLayoutGraph {
     int[] widths;
     int[] restOfWidths;
     static HashSet<Integer> alreadyGathered;
-    PhantomJSDriver driver;
+//    PhantomJSDriver driver;
     WebDriver wdriver;
     int sleep;
 
@@ -858,7 +858,7 @@ public class ResponsiveLayoutGraph {
     		return lf;
     	} else {
             if (!lFactories.containsKey(width)) {
-                Tool.capturePageModel(url, new int[]{width}, 50, false, false, driver, swf, lFactories, new HashMap<>());
+                Tool.capturePageModel(url, new int[]{width}, 50, false, false, wdriver, swf, lFactories, new HashMap<>());
                 alreadyGathered.add(width);
             }
     		return lFactories.get(width);

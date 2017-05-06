@@ -16,8 +16,8 @@ import org.openqa.selenium.WebDriver;
 
 import com.rits.cloning.Cloner;
 
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+//import org.openqa.selenium.phantomjs.PhantomJSDriver;
+//import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.main.Utils;
 
@@ -101,10 +101,10 @@ public class WebpageMutator {
             DesiredCapabilities dCaps = new DesiredCapabilities();
             dCaps.setJavascriptEnabled(true);
             dCaps.setCapability("takesScreenshot", true);
-            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
-            String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
-            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-            driver = new PhantomJSDriver(dCaps);
+//            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
+//            String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
+//            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//            driver = new PhantomJSDriver(dCaps);
 			extractCssFiles(baseURL);
 			parseHTML(baseURL);
 			loadInCss(this.baseURL);

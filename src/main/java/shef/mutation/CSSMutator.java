@@ -24,7 +24,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+//import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import shef.main.Utils;
@@ -677,7 +677,7 @@ public class CSSMutator {
             String[] phantomArgs = new  String[] {
             	    "--webdriver-loglevel=NONE"
             	};
-            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
 //            Fire newdriver = new PhantomJSDriver(dCaps);
             d.get("http://mrcoles.com/blog/css-unminify/");
             JavascriptExecutor js = (JavascriptExecutor) d;
