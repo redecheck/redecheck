@@ -5,8 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+//import org.openqa.selenium.phantomjs.PhantomJSDriver;
+//import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
@@ -33,10 +33,10 @@ public class BrowserFactory {
             dCaps.setJavascriptEnabled(true);
             dCaps.setCapability("takesScreenshot", true);
             String current = new java.io.File( "." ).getCanonicalPath();
-            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
-            String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
-            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-            webDriver = new PhantomJSDriver(dCaps);
+//            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, current + "/../resources/phantomjs");
+//            String[] phantomArgs = new String[]{"--webdriver-loglevel=NONE"};
+//            dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//            webDriver = new PhantomJSDriver(dCaps);
         } else if (browser.equals("opera")) {
             DesiredCapabilities capabilities = DesiredCapabilities.operaBlink();
             capabilities.setJavascriptEnabled(true);

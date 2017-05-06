@@ -10,8 +10,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+//import org.openqa.selenium.phantomjs.PhantomJSDriver;
+//import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.analysis.RLGComparator;
 import shef.layout.LayoutFactory;
@@ -60,7 +60,7 @@ public class Tool {
     static HashMap<Integer, LayoutFactory> oFactories;
     static HashMap<Integer, LayoutFactory> tFactories;
     HashMap<Integer, LayoutFactory> layoutFactories;
-    private static PhantomJSDriver driver;
+//    private static PhantomJSDriver driver;
     public static JavascriptExecutor js;
     static String scriptToExtract;
     static String redecheck = "/Users/thomaswalsh/Documents/PhD/Code-Projects/Redecheck/";
@@ -344,101 +344,101 @@ public class Tool {
         }
     }
 
-    private void runXpert(String oracle, String test) throws IOException {
-        String oracleUrl = preamble + oracle + ".html";
-        String testUrl = preamble + test + ".html";
-        DesiredCapabilities dCaps = new DesiredCapabilities();
-        dCaps.setJavascriptEnabled(true);
-        dCaps.setCapability("takesScreenshot", true);
-        String[] phantomArgs = new String[]{
-                "--webdriver-loglevel=NONE"
-        };
-        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        scriptToExtract = Utils.readFile(current + "/../resources/webdiffOld.js");
-        driver = getNewDriver(dCaps);
-
-        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> oDNs = new HashMap<>();
-        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> tDNs = new HashMap<>();
-        driver.get(oracleUrl);
-        capturePageModel2(oracleUrl, manualWidths, oDNs, 50, true, driver);
-        driver.get(testUrl);
-        capturePageModel2(testUrl, manualWidths, tDNs, 50, true, driver);
-        driver.close();
-        driver.quit();
-        String result = "";
-        for (int sc : manualWidths) {
-//            System.out.println(sc);
-            ArrayList<String> totalIssues = new ArrayList<>();
-            edu2.gatech.xpert.dom.DomNode oDN = oDNs.get(sc);
-            edu2.gatech.xpert.dom.DomNode tDN = tDNs.get(sc);
-            edu2.gatech.xpert.dom.layout.AlignmentGraph oAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(oDN);
-            edu2.gatech.xpert.dom.layout.AlignmentGraph tAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(tDN);
-
-            edu2.gatech.xpert.dom.Matcher matcher = new edu2.gatech.xpert.dom.Matcher();
-            edu2.gatech.xpert.dom.MatchResult mr = matcher.newMatcher(oDN, tDN, sc);
-
-            Map<edu2.gatech.xpert.dom.DomNode, edu2.gatech.xpert.dom.DomNode> matchedNodes = mr.getMatched();
-
-            AGDiff agDiff = new AGDiff(matchedNodes, oAG, tAG);
-            for (edu2 .gatech.xpert.dom.DomNode a : matchedNodes.keySet()) {
-                edu2.gatech.xpert.dom.DomNode b = matchedNodes.get(a);
-                List<String> issues = agDiff.diff(a.getxPath(), b.getxPath());
-                totalIssues.addAll(issues);
-            }
-            if (totalIssues.size() > 0) {
-                result += sc + "\n\n";
-                for (String issue : totalIssues) {
-                    result += issue + "\n";
-                }
-            }
-        }
-        writeToFile(testUrl, result, "xpert-result", dataDirectory);
-//        oracleDoms = new HashMap<>();
-//        testDoms = new HashMap<>();
-//        oracleDomStrings = new HashMap<>();
-//        testDomStrings = new HashMap<>();
-//        scriptToExtract = Utils.readFile(current + "/../resources/webdiff2.js");
+//    private void runXpert(String oracle, String test) throws IOException {
+//        String oracleUrl = preamble + oracle + ".html";
+//        String testUrl = preamble + test + ".html";
+//        DesiredCapabilities dCaps = new DesiredCapabilities();
+//        dCaps.setJavascriptEnabled(true);
+//        dCaps.setCapability("takesScreenshot", true);
+//        String[] phantomArgs = new String[]{
+//                "--webdriver-loglevel=NONE"
+//        };
+//        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//        scriptToExtract = Utils.readFile(current + "/../resources/webdiffOld.js");
+//        driver = getNewDriver(dCaps);
 //
-//        gatherAllDoms(oracleDoms, testDoms, oracleDomStrings, testDomStrings, allWidths, oracleUrl, testUrl);
-//        System.out.println(oracleDomStrings.size());
-        TreeSet<Integer> diffWidths = ResultClassifier.diffAllDoms2(oDNs, tDNs, oracleDomStrings, testDomStrings, manualWidths);
-        System.out.println(diffWidths.size());
-        String domDiffResult = "";
-        int[] ssWidths = new int[diffWidths.size()];
-        int counter = 0;
-        for (Integer i : diffWidths) {
-            ssWidths[counter] = i;
-            domDiffResult += i + "\n";
-            counter++;
-        }
+//        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> oDNs = new HashMap<>();
+//        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> tDNs = new HashMap<>();
+//        driver.get(oracleUrl);
+//        capturePageModel2(oracleUrl, manualWidths, oDNs, 50, true, driver);
+//        driver.get(testUrl);
+//        capturePageModel2(testUrl, manualWidths, tDNs, 50, true, driver);
+//        driver.close();
 //        driver.quit();
-//        writeToFile(testUrl, domDiffResult, "dom-diff-result", dataDirectory);
-    }
+//        String result = "";
+//        for (int sc : manualWidths) {
+////            System.out.println(sc);
+//            ArrayList<String> totalIssues = new ArrayList<>();
+//            edu2.gatech.xpert.dom.DomNode oDN = oDNs.get(sc);
+//            edu2.gatech.xpert.dom.DomNode tDN = tDNs.get(sc);
+//            edu2.gatech.xpert.dom.layout.AlignmentGraph oAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(oDN);
+//            edu2.gatech.xpert.dom.layout.AlignmentGraph tAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(tDN);
+//
+//            edu2.gatech.xpert.dom.Matcher matcher = new edu2.gatech.xpert.dom.Matcher();
+//            edu2.gatech.xpert.dom.MatchResult mr = matcher.newMatcher(oDN, tDN, sc);
+//
+//            Map<edu2.gatech.xpert.dom.DomNode, edu2.gatech.xpert.dom.DomNode> matchedNodes = mr.getMatched();
+//
+//            AGDiff agDiff = new AGDiff(matchedNodes, oAG, tAG);
+//            for (edu2 .gatech.xpert.dom.DomNode a : matchedNodes.keySet()) {
+//                edu2.gatech.xpert.dom.DomNode b = matchedNodes.get(a);
+//                List<String> issues = agDiff.diff(a.getxPath(), b.getxPath());
+//                totalIssues.addAll(issues);
+//            }
+//            if (totalIssues.size() > 0) {
+//                result += sc + "\n\n";
+//                for (String issue : totalIssues) {
+//                    result += issue + "\n";
+//                }
+//            }
+//        }
+//        writeToFile(testUrl, result, "xpert-result", dataDirectory);
+////        oracleDoms = new HashMap<>();
+////        testDoms = new HashMap<>();
+////        oracleDomStrings = new HashMap<>();
+////        testDomStrings = new HashMap<>();
+////        scriptToExtract = Utils.readFile(current + "/../resources/webdiff2.js");
+////
+////        gatherAllDoms(oracleDoms, testDoms, oracleDomStrings, testDomStrings, allWidths, oracleUrl, testUrl);
+////        System.out.println(oracleDomStrings.size());
+//        TreeSet<Integer> diffWidths = ResultClassifier.diffAllDoms2(oDNs, tDNs, oracleDomStrings, testDomStrings, manualWidths);
+//        System.out.println(diffWidths.size());
+//        String domDiffResult = "";
+//        int[] ssWidths = new int[diffWidths.size()];
+//        int counter = 0;
+//        for (Integer i : diffWidths) {
+//            ssWidths[counter] = i;
+//            domDiffResult += i + "\n";
+//            counter++;
+//        }
+////        driver.quit();
+////        writeToFile(testUrl, domDiffResult, "dom-diff-result", dataDirectory);
+//    }
 
 
 
-    public static void gatherAllDoms(HashMap<Integer, DomNode> oDoms, HashMap<Integer, DomNode> tDoms,HashMap<Integer, String> oDomsS, HashMap<Integer, String> tDomsS, int[] widths, String oracle, String test) {
-        System.out.println("GATHERING ALL DOMS");
-        System.out.println(widths.length);
-        DesiredCapabilities dCaps = new DesiredCapabilities();
-        dCaps.setJavascriptEnabled(true);
-        dCaps.setCapability("takesScreenshot", true);
-        String[] phantomArgs = new  String[] {
-                "--webdriver-loglevel=NONE"
-        };
-        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        driver = getNewDriver(dCaps);
-        driver.get(oracle);
-        System.out.println(oracle);
-        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
-//        System.out.println("O" + oDoms.size());
-        driver.get(test);
-        System.out.println(test);
-        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
-//        System.out.println("T" + tDoms.size());
-        driver.close();
-        driver.quit();
-    }
+//    public static void gatherAllDoms(HashMap<Integer, DomNode> oDoms, HashMap<Integer, DomNode> tDoms,HashMap<Integer, String> oDomsS, HashMap<Integer, String> tDomsS, int[] widths, String oracle, String test) {
+//        System.out.println("GATHERING ALL DOMS");
+//        System.out.println(widths.length);
+//        DesiredCapabilities dCaps = new DesiredCapabilities();
+//        dCaps.setJavascriptEnabled(true);
+//        dCaps.setCapability("takesScreenshot", true);
+//        String[] phantomArgs = new  String[] {
+//                "--webdriver-loglevel=NONE"
+//        };
+//        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+//        driver = getNewDriver(dCaps);
+//        driver.get(oracle);
+//        System.out.println(oracle);
+//        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
+////        System.out.println("O" + oDoms.size());
+//        driver.get(test);
+//        System.out.println(test);
+//        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
+////        System.out.println("T" + tDoms.size());
+//        driver.close();
+//        driver.quit();
+//    }
 
     /**
      * This method samples the DOM of a webpage at a set of viewports, and saves the DOMs into a HashMap
@@ -525,9 +525,9 @@ public class Tool {
 
 
 
-    public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
-        return new PhantomJSDriver(dCaps);
-    }
+//    public static PhantomJSDriver getNewDriver(DesiredCapabilities dCaps) {
+//        return new PhantomJSDriver(dCaps);
+//    }
 
     public static void writeToFile(String testUrl, String content, String fileName, String directory) {
 //        System.out.println(fileName);
@@ -551,61 +551,61 @@ public class Tool {
     }
 
 
-    public static void capturePageModel2(String url, int[] widths, HashMap<Integer, edu2.gatech.xpert.dom.DomNode> doms, int sleep, boolean takeScreenshot, PhantomJSDriver driver) {
-        // Create a parser for the DOM strings
-        edu2.gatech.xpert.dom.JsonDomParser parser = new edu2.gatech.xpert.dom.JsonDomParser();
-        File domFile=null;
-        System.out.println("GATHERING " + url);
-        try {
-            String outFolder = "";
-
-//            if (url.contains("index")) {
-                String[] splits = url.split("/");
-                outFolder = redecheck + "output/" + splits[7] + "/" + splits[8];
-                File dir = new File(outFolder);
-                FileUtils.forceMkdir(dir);
+//    public static void capturePageModel2(String url, int[] widths, HashMap<Integer, edu2.gatech.xpert.dom.DomNode> doms, int sleep, boolean takeScreenshot, PhantomJSDriver driver) {
+//        // Create a parser for the DOM strings
+//        edu2.gatech.xpert.dom.JsonDomParser parser = new edu2.gatech.xpert.dom.JsonDomParser();
+//        File domFile=null;
+//        System.out.println("GATHERING " + url);
+//        try {
+//            String outFolder = "";
+//
+////            if (url.contains("index")) {
+//                String[] splits = url.split("/");
+//                outFolder = redecheck + "output/" + splits[7] + "/" + splits[8];
+//                File dir = new File(outFolder);
+//                FileUtils.forceMkdir(dir);
+////            }
+//
+//
+//            // Iterate through all viewport widths
+//            for (int w : widths) {
+//                domFile = new File(outFolder + "/" + w + ".js");
+//                if (domFile.exists()) {
+//////                    System.out.println("Reading");
+//                    String domStr = FileUtils.readFileToString(domFile);
+//                    doms.put(w, parser.parseJsonDom(domStr));
+//                } else {
+////                    System.out.println("Writing");
+//                    boolean consecutiveMatches = false;
+////                    System.out.println(w);
+//                    // Resize the browser window
+//                    driver.manage().window().setSize(new Dimension(w, 1000));
+//                    //                Thread.sleep(sleep);
+//                    String previous = "";
+//
+//                    while (!consecutiveMatches) {
+//                        // Extract the DOM and save it to the HashMap.
+//                        String extractedDom = extractDOM(driver, scriptToExtract);
+//
+//                        if (previous.equals(extractedDom)) {
+//                            doms.put(w, parser.parseJsonDom(extractedDom));
+//
+////                            if (url.contains("index")) {
+//                                FileUtils.writeStringToFile(domFile, extractedDom);
+////                            }
+//                            consecutiveMatches = true;
+//                        } else {
+//                            previous = extractedDom;
+//                            // Thread.sleep(sleep);
+//                        }
+//                    }
+//                }
+//
 //            }
-
-
-            // Iterate through all viewport widths
-            for (int w : widths) {
-                domFile = new File(outFolder + "/" + w + ".js");
-                if (domFile.exists()) {
-////                    System.out.println("Reading");
-                    String domStr = FileUtils.readFileToString(domFile);
-                    doms.put(w, parser.parseJsonDom(domStr));
-                } else {
-//                    System.out.println("Writing");
-                    boolean consecutiveMatches = false;
-//                    System.out.println(w);
-                    // Resize the browser window
-                    driver.manage().window().setSize(new Dimension(w, 1000));
-                    //                Thread.sleep(sleep);
-                    String previous = "";
-
-                    while (!consecutiveMatches) {
-                        // Extract the DOM and save it to the HashMap.
-                        String extractedDom = extractDOM(driver, scriptToExtract);
-
-                        if (previous.equals(extractedDom)) {
-                            doms.put(w, parser.parseJsonDom(extractedDom));
-
-//                            if (url.contains("index")) {
-                                FileUtils.writeStringToFile(domFile, extractedDom);
-//                            }
-                            consecutiveMatches = true;
-                        } else {
-                            previous = extractedDom;
-                            // Thread.sleep(sleep);
-                        }
-                    }
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Main method to handle execution of the whole tool
