@@ -166,10 +166,11 @@ public class Tool {
                 fullUrl = url;
             }
             System.out.println(fullUrl);
-            RLGExtractor thread = new RLGExtractor(current, fullUrl, url, oracleDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
-            Thread t = new Thread(thread);
-            t.start();
-            while(t.isAlive()){}
+            RLGExtractor extractor = new RLGExtractor(current, fullUrl, url, oracleDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
+//            Thread t = new Thread(thread);
+//            t.start();
+//            while(t.isAlive()){}
+            extractor.extract();
 
 //            ResponsiveLayoutGraph rlg = thread.getRlg();
 //            int numNodes = rlg.getNodes().size();
@@ -205,14 +206,16 @@ public class Tool {
         String testUrl = preamble + test + ".html";
         RLGExtractor rlg1 = new RLGExtractor(current, oracleUrl, test, oracleDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
         RLGExtractor rlg2 = new RLGExtractor(current, testUrl, test, testDoms, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, preamble, sleep, timeStamp, baselines);
-        Thread t1 = new Thread(rlg1);
-        Thread t2 = new Thread(rlg2);
+//        Thread t1 = new Thread(rlg1);
+//        Thread t2 = new Thread(rlg2);
 
-        t1.start();
-        t2.start();
-        while (t1.isAlive() || t2.isAlive()) {
+//        t1.start();
+//        t2.start();
+//        while (t1.isAlive() || t2.isAlive()) {
             // Let the RLGs get gathered.
-        }
+//        }
+        rlg1.extract();
+        rlg2.extract();
 
         System.out.println(oFactories.size()== tFactories.size());
         for (Integer i : tFactories.keySet()) {
@@ -593,7 +596,7 @@ public class Tool {
                             consecutiveMatches = true;
                         } else {
                             previous = extractedDom;
-                            Thread.sleep(sleep);
+                            // Thread.sleep(sleep);
                         }
                     }
                 }

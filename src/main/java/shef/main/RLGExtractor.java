@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Created by thomaswalsh on 15/02/2016.
  */
-public class RLGExtractor implements Runnable {
+public class RLGExtractor {
     public ResponsiveLayoutGraph rlg;
     public WebDriver webDriver;
     public String browser;
@@ -91,7 +91,7 @@ public class RLGExtractor implements Runnable {
     /**
      * Manages the whole RLG extraction process from start to finish
      */
-    public void run() {
+    public void extract() {
         try {
             // Start the timer
             this.swf.getRlg().start();
