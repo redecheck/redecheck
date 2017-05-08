@@ -96,7 +96,8 @@ public class Tool {
         if (finalWidth > width) {
             finalWidth = (int) width;
         }
-        browserHeight = (int) (height - 100);
+        browserHeight = 600;
+        // browserHeight = (int) (height - 100);
 
         if (clp.ss != -1) {
         	stepSize = clp.ss;
