@@ -1351,29 +1351,29 @@ public class RLGAnalyser {
 //            System.out.println(outputFile.getAbsolutePath());
             FileUtils.forceMkdir(outputFile);
             File dir = new File(outputFile+"/fault-report.txt");
-            File countDir = new File(outputFile + "/error-count.txt");
-            File typeFile = new File(outputFile + "/error-types.txt");
+//            File countDir = new File(outputFile + "/error-count.txt");
+//            File typeFile = new File(outputFile + "/error-types.txt");
             File classification = new File(outputFile + "/classification.txt");
             File actualFaultsFile = new File(outputFile + "/../actual-fault-count.txt");
-            classification.createNewFile();
-            actualFaultsFile.createNewFile();
+//            classification.createNewFile();
+//            actualFaultsFile.createNewFile();
             output = new PrintWriter(dir);
-            output2 = new PrintWriter(countDir);
-            output3 = new PrintWriter(typeFile);
+//            output2 = new PrintWriter(countDir);
+//            output3 = new PrintWriter(typeFile);
             if (errors.size() > 0) {
-                output2.append(Integer.toString(errors.size()));
+//                output2.append(Integer.toString(errors.size()));
                 for (ResponsiveLayoutFailure rle : errors) {
                     output.append(rle.toString() + "\n\n");
-                    output3.append(errorToKey(rle) + "\n");
+//                    output3.append(errorToKey(rle) + "\n");
                 }
             } else {
                 output.append("NO FAULTS DETECTED.");
-                output2.append("0");
+//                output2.append("0");
             }
 
             output.close();
-            output2.close();
-            output3.close();
+//            output2.close();
+//            output3.close();
 
         } catch (Exception e) {
             e.printStackTrace();

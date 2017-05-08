@@ -160,6 +160,7 @@ public class RLGExtractor {
 
         // Make sure the WebDriver is closed down
         if (webDriver != null) {
+            webDriver.close();
             webDriver.quit();
         }
 
