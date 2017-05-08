@@ -69,7 +69,7 @@ public class Utils {
 
     @SuppressWarnings("")
     public static BufferedImage getScreenshot(String url, int w, int sleep, WebDriver d, int errorID) {
-        d.manage().window().setSize(new Dimension(w, 1000));
+        d.manage().window().setSize(new Dimension(w, 600));
 //            Thread.sleep(sleep);
         Screenshot screenshot = null;
         File src = null;
