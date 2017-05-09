@@ -136,9 +136,9 @@ public class Tool {
             runFaultDetector(current, url, browser, sampleTechnique, binarySearch, startWidth, finalWidth, stepSize, baselines);
         }
 
-//        if (fix) {
-//            runFixer();
-//        }
+        if (fix) {
+            runFixer();
+        }
 
         if (results) {
             ResultProcessor rp = new ResultProcessor();
@@ -147,23 +147,23 @@ public class Tool {
         }
     }
 
-//    private void runFixer() {
-//        try {
-//            scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
-//            String fullUrl;
-//            if (preamble != null) {
-//                fullUrl = "file://" + preamble + url;
-//            } else {
-//                fullUrl = url;
-//            }
-//            System.out.println(fullUrl);
-//
-//            FaultPatcher patcher = new FaultPatcher(fullUrl, url, browser, current);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void runFixer() {
+        try {
+            scriptToExtract = Utils.readFile(current +"/../resources/webdiff2.js");
+            String fullUrl;
+            if (preamble != null) {
+                fullUrl = "file://" + preamble + url;
+            } else {
+                fullUrl = url;
+            }
+            System.out.println(fullUrl);
+
+            FaultPatcher patcher = new FaultPatcher(fullUrl, url, browser, current);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void runFaultDetector(String current, String url, String browser, String sampleTechnique, boolean binarySearch, int startWidth, int finalWidth, int stepSize, boolean baselines) {
         try {

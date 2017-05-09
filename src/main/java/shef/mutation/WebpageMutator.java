@@ -18,6 +18,7 @@ import com.rits.cloning.Cloner;
 
 //import org.openqa.selenium.phantomjs.PhantomJSDriver;
 //import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import shef.main.Utils;
 
@@ -127,7 +128,7 @@ public class WebpageMutator {
 //        	    "--webdriver-loglevel=NONE"
 //        	};
 //        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-//        driver = new FirefoxDriver();
+        driver = new FirefoxDriver();
 
         driver.get(preamble2 + baseURL);
         JavascriptExecutor js = (JavascriptExecutor) driver;

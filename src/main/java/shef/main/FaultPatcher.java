@@ -88,20 +88,20 @@ public class FaultPatcher {
 //                    ArrayList<LinkedHashMap<String, StyleSheet>> options = mutator.getMutationOptions();
                     CSSMutator cm = mutator.getCSSMutator();
                     boolean faultFixed = false;
-                    ArrayList<LinkedHashMap<String,StyleSheet>> worklist = new ArrayList<>();
-                    worklist.add(cm.getStylesheets());
+                    ArrayList<CSSMutator> worklist = new ArrayList<>();
+                    worklist.add(cm);
 
-                    while (!faultFixed || !worklist.isEmpty()) {
-                        LinkedHashMap<String,StyleSheet> currentSS = worklist.remove(0);
-                        HashMap<String, LinkedHashMap<String,StyleSheet>> options = cm.getMutationOptions(currentSS);
-                        System.out.println(options.size() + " mutation options");
-//                        ArrayList<String> mutantsToFilterOut = new ArrayList<>();
+//                    while (!faultFixed || !worklist.isEmpty()) {
+                        CSSMutator currentCM = worklist.remove(0);
+                        HashMap<String, CSSMutator> options = currentCM.getMutators(currentCM.getStylesheets());
+//                        System.out.println(options.size() + " mutation options to start with");
+                        ArrayList<String> mutantsToFilterOut = new ArrayList<>();
 
                         // Go through each mutation option
                         for (String mDesc : options.keySet()) {
-                            System.out.println(mDesc);
-                            LinkedHashMap<String,StyleSheet> ss = options.get(mDesc);
-                            cm.writeToFile(0, ss, mutator.getShorthand(), newUrl);
+//                            System.out.println(mDesc);
+                            CSSMutator newCM = options.get(mDesc);
+                            newCM.writeToFile(0, newCM.getStylesheets(), mutator.getShorthand(), newUrl);
                             webDriver.get(newUrl+"/index.html");
                             checkForFailure(nodes, categories[i], currentSize, error);
                             String newDomString = domStrings.get(currentSize);
@@ -109,7 +109,7 @@ public class FaultPatcher {
                             LayoutFactory newLF = new LayoutFactory(newDomString);
                             boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
                             if (!layoutsEqual) {
-                                worklist.add(ss);
+                                worklist.add(newCM);
 //                                mutantsToFilterOut.add(mDesc);
                             }
                         }
@@ -118,7 +118,7 @@ public class FaultPatcher {
 //                        }
 
                         System.out.println(worklist.size());
-                    }
+//                    }
 
 
 
