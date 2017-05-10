@@ -87,19 +87,29 @@ public class CSSMutator {
 		this.stylesheets = stylesheets2;
 		this.regCandidates = ruleCandidates;
 		this.mqCandidates = mqCandidates2;
-		regCandidatesCopy = (ArrayList<RuleSet>) regCandidates.clone();
+        cloner = new Cloner();
+		regCandidatesCopy = cloner.deepClone(regCandidates);
 		mqCandidatesCopy = (ArrayList<RuleMedia>) mqCandidates.clone();
-//		stylesheetsCopy = sty
+		stylesheetsCopy = cloner.deepClone(stylesheets);
 		this.mutantNumber = mutantNumber;
 		htmlDoc = page;
-		cloner = new Cloner();
+
 		random = new Random();
 		mutantDesc = "";
 	}
 
     private void resetCandidates() {
-        regCandidates = (ArrayList<RuleSet>) regCandidatesCopy.clone();
-        mqCandidates = (ArrayList<RuleMedia>) mqCandidatesCopy.clone();
+//        System.out.println("BEFORE");
+//        for (RuleSet rs2 : regCandidates) {
+//            System.out.println(rs2);
+//        }
+        regCandidates = cloner.deepClone(regCandidatesCopy);
+//        System.out.println("AFTER");
+//        for (RuleSet rs2 : regCandidates) {
+//            System.out.println(rs2);
+//        }
+//        mqCandidates = (ArrayList<RuleMedia>) mqCandidatesCopy.clone();
+//        stylesheets = cloner.deepClone(stylesheetsCopy);
     }
 
     public static boolean hasNumericQuery(RuleBlock rb) {
@@ -245,10 +255,13 @@ public class CSSMutator {
     private void mutateRule(HashMap<String, StyleSheet> sss, RuleSet rs, Declaration dec, int termIndex, int i) {
         System.out.println("Looking for " + rs);
         RuleSet ruleSet = (RuleSet) getRuleBlockFromStyleSheet(sss, rs);
+//        System.out.println("RETRIEVED " + (ruleSet!=null));
+        if (ruleSet == null) {
+            System.out.println(rs);
+        }
         RuleSet toPrint = cloner.deepClone(ruleSet);
         Declaration decToMutate = getDeclarationFromRuleBlock(dec, ruleSet);
         Declaration candidateDec = getCandidateFromSet(dec, regCandidates);
-//        System.out.println(decToMutate);
         String property = decToMutate.getProperty().toLowerCase();
         List<Term<?>> terms = decToMutate.asList();
         Term t = terms.get(termIndex);
@@ -426,7 +439,7 @@ public class CSSMutator {
             t.setValue(mutated);
             candidateTerm.setValue(mutated);
             writeMutantToFile(i, "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
-            mutantDesc = "Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate;
+            mutantDesc = "Changed term from " + orig + " to " + mutated + "\n" + toMutate;
 //            System.out.println("Changed term from " + orig + " to " + mutated + "\n" + toPrint + "\n" + toMutate);
             mutatedARule = true;
             madeMutant = true;
@@ -773,6 +786,7 @@ public class CSSMutator {
 	                    if (rb.equals((RuleSet)block)) {
 	                        return rb;
 	                    } else if (((RuleSet) rb).getSelectors().equals(((RuleSet)block).getSelectors())) {
+	                        System.out.println("WHAT ABOUT \n" + rb);
 	                        //Check the declarations
 	                        List<Declaration> d1 = ((RuleSet)rb).asList();
 	                        List<Declaration> d2 = ((RuleSet)block).asList();
@@ -975,36 +989,39 @@ public class CSSMutator {
     public HashMap<String, CSSMutator> getMutators(LinkedHashMap<String, StyleSheet> currentSS) {
         HashMap<String, CSSMutator> mutators = new HashMap<>();
         CSSMutator mutatedCM;
-        System.out.println("-------- NEW ONE --------");
-        for (RuleSet rs : regCandidates) {
-            System.out.println(rs);
-        }
-        ArrayList<RuleSet> regCanCloned = (ArrayList<RuleSet>) regCandidates.clone();
+        ArrayList<RuleSet> regCanCloned = cloner.deepClone(regCandidates);
         for (RuleSet rs : regCanCloned) {
 
+
             for (Declaration dec : rs) {
-                RuleSet rsClone = cloner.deepClone(rs);
-                Declaration decCloned = cloner.deepClone(dec);
+                RuleSet rsToMutate = regCandidates.get(regCanCloned.indexOf(rs));
+//                System.out.println("Planning to mutate " + rsToMutate);
                 String property = dec.getProperty().toLowerCase();
+                Declaration decToMutate = rsToMutate.asList().get(rs.asList().indexOf(dec));
                 // Iterate through all the different terms
                 if ((!property.equals("display")) && (!property.equals("position")) && (!property.equals("float"))) {
                     for (int t = 0; t < dec.asList().size(); t++) {
                         mutantDesc = "";
                         HashMap<String, StyleSheet> toMutate = cloner.deepClone(currentSS);
-                        resetCandidates();
 
-                        mutateRule(toMutate, rsClone, decCloned, t, 1);
+
+                        mutateRule(toMutate, rsToMutate, decToMutate, t, 1);
 //                        System.out.println("-------- JUST MUTATED --------");
-//                        for (RuleSet rs2 : regCanCloned) {
+//                        System.out.println(mutantDesc);
+//                        for (RuleSet rs2 : regCandidates) {
 //                            System.out.println(rs2);
 //                        }
+//                        System.out.println("-------- END OF MUTATION --------");
                         mutatedCM = new CSSMutator(baseURL, shorthand, (LinkedHashMap<String, StyleSheet>) toMutate, regCandidates, mqCandidates, htmlDoc, 0);
 
                         mutators.put(mutantDesc, mutatedCM);
+                        resetCandidates();
+//                        for (RuleSet rs2 : regCandidates) {
+//                            System.out.println(rs2);
+//                        }
+//                        System.out.println("-------- DONE THE RESET --------");
 
-
-
-//                        mutantDesc = "";
+                        mutantDesc = "";
 //                        toMutate = cloner.deepClone(currentSS);
 //                        resetCandidates();
 //

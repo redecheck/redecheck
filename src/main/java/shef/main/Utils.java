@@ -73,12 +73,11 @@ public class Utils {
 //            Thread.sleep(sleep);
         Screenshot screenshot = null;
         File src = null;
-        if (d instanceof ChromeDriver) {
-            screenshot = new AShot().shootingStrategy(
-                    new ViewportPastingStrategy(500)).takeScreenshot(d);
-        } else {
-            screenshot = new AShot().takeScreenshot(d);
-        }
+//        if (d instanceof ChromeDriver) {
+            screenshot = new AShot().shootingStrategy(new ViewportPastingStrategy(500)).takeScreenshot(d);
+//        } else {
+//            screenshot = new AShot().takeScreenshot(d);
+//        }
         BufferedImage image;
         image= screenshot.getImage();
         return image;

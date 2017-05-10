@@ -65,60 +65,77 @@ public class FaultPatcher {
 
                     // Resize browser to upper bound of fault
                     int currentSize = fBounds[1];
-                    webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+                    webDriver.manage().window().setSize(new Dimension(currentSize, 600));
 
                     // Verify failure manifests at the upper bound
                     boolean failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     while (!failureManifesting) {
                         currentSize--;
-                        webDriver.manage().window().setSize(new Dimension(currentSize, 1000));
+                        webDriver.manage().window().setSize(new Dimension(currentSize, 600));
                         failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
                     }
                     String oldDomString = domStrings.get(currentSize);
 
                     // Try and parse all the CSS
-                    for (RuleSet r : mutator.getRuleCandidates()) {
-                        System.out.println(r);
-                    }
+//                    for (RuleSet r : mutator.getRuleCandidates()) {
+//                        System.out.println(r);
+//                    }
 
-                    for (RuleMedia rm : mutator.getMqCandidates()) {
-                        System.out.println(rm.getMediaQueries().toString());
-                    }
+//                    for (RuleMedia rm : mutator.getMqCandidates()) {
+//                        System.out.println(rm.getMediaQueries().toString());
+//                    }
 //
 //                    ArrayList<LinkedHashMap<String, StyleSheet>> options = mutator.getMutationOptions();
                     CSSMutator cm = mutator.getCSSMutator();
                     boolean faultFixed = false;
                     ArrayList<CSSMutator> worklist = new ArrayList<>();
+                    ArrayList<String> mutationStrings = new ArrayList<>();
                     worklist.add(cm);
+                    mutationStrings.add("original");
 
 //                    while (!faultFixed || !worklist.isEmpty()) {
-                        CSSMutator currentCM = worklist.remove(0);
-                        HashMap<String, CSSMutator> options = currentCM.getMutators(currentCM.getStylesheets());
-//                        System.out.println(options.size() + " mutation options to start with");
-                        ArrayList<String> mutantsToFilterOut = new ArrayList<>();
-
-                        // Go through each mutation option
-                        for (String mDesc : options.keySet()) {
-//                            System.out.println(mDesc);
-                            CSSMutator newCM = options.get(mDesc);
-                            newCM.writeToFile(0, newCM.getStylesheets(), mutator.getShorthand(), newUrl);
-                            webDriver.get(newUrl+"/index.html");
+                    for (int x = 1; x < 3; x++) {
+                        ArrayList<CSSMutator> mutantsToKeep = new ArrayList<>();
+                        ArrayList<String> descsToKeep = new ArrayList<>();
+                        while (!worklist.isEmpty()) {
+                            CSSMutator currentCM = worklist.remove(0);
+                            String currentMD = mutationStrings.remove(0);
+                            System.out.println(currentMD);
+                            HashMap<String, CSSMutator> options = currentCM.getMutators(currentCM.getStylesheets());
+                            currentCM.writeToFile(0, currentCM.getStylesheets(), mutator.getShorthand(), newUrl);
+                            webDriver.get(newUrl + "/index.html");
                             checkForFailure(nodes, categories[i], currentSize, error);
-                            String newDomString = domStrings.get(currentSize);
-                            LayoutFactory oldLF = new LayoutFactory(oldDomString);
-                            LayoutFactory newLF = new LayoutFactory(newDomString);
-                            boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
-                            if (!layoutsEqual) {
-                                worklist.add(newCM);
-//                                mutantsToFilterOut.add(mDesc);
-                            }
-                        }
-//                        for (String toRemove : mutantsToFilterOut) {
-//                            options.remove(toRemove);
-//                        }
+                            oldDomString = domStrings.get(currentSize);
 
+                            // Go through each mutation option
+                            for (String mDesc : options.keySet()) {
+//                                System.out.println("----------");
+//                                System.out.println(mDesc);
+//                                System.out.println("----------");
+                                CSSMutator newCM = options.get(mDesc);
+                                newCM.writeToFile(0, newCM.getStylesheets(), mutator.getShorthand(), newUrl);
+                                webDriver.get(newUrl + "/index.html");
+                                checkForFailure(nodes, categories[i], currentSize, error);
+                                String newDomString = domStrings.get(currentSize);
+                                LayoutFactory oldLF = new LayoutFactory(oldDomString);
+                                LayoutFactory newLF = new LayoutFactory(newDomString);
+                                boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
+                                if (!layoutsEqual) {
+                                    mutantsToKeep.add(newCM);
+                                    descsToKeep.add(currentMD + mDesc);
+
+                                } else {
+//                                    System.out.println("Removing " + mDesc);
+                                }
+                            }
+                            System.out.println("FINISHED WITH " + currentMD);
+                        }
+                        worklist.addAll(mutantsToKeep);
+                        mutationStrings.addAll(descsToKeep);
                         System.out.println(worklist.size());
-//                    }
+                        System.out.println("END OF ITERATION " + x);
+
+                    }
 
 
 
@@ -167,9 +184,6 @@ public class FaultPatcher {
             Element newNode = newMap.get(xpath);
             try {
                 if (!oldNode.getRectangle().equals(newNode.getRectangle())) {
-                    //                System.out.println(xpath);
-                    //                System.out.println(oldNode.getRectangle());
-                    //                System.out.println(newNode.getRectangle() +"\n");
                     foundDifferent = true;
                 }
             } catch (NullPointerException npe) {
