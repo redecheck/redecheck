@@ -109,9 +109,6 @@ public class FaultPatcher {
 
                             // Go through each mutation option
                             for (String mDesc : options.keySet()) {
-//                                System.out.println("----------");
-//                                System.out.println(mDesc);
-//                                System.out.println("----------");
                                 CSSMutator newCM = options.get(mDesc);
                                 newCM.writeToFile(0, newCM.getStylesheets(), mutator.getShorthand(), newUrl);
                                 webDriver.get(newUrl + "/index.html");
@@ -122,13 +119,12 @@ public class FaultPatcher {
                                 boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
                                 if (!layoutsEqual) {
                                     mutantsToKeep.add(newCM);
-                                    descsToKeep.add(currentMD + mDesc);
+                                    descsToKeep.add(currentMD + "\n" + mDesc);
 
                                 } else {
 //                                    System.out.println("Removing " + mDesc);
                                 }
                             }
-                            System.out.println("FINISHED WITH " + currentMD);
                         }
                         worklist.addAll(mutantsToKeep);
                         mutationStrings.addAll(descsToKeep);
