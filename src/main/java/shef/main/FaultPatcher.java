@@ -101,22 +101,29 @@ public class FaultPatcher {
                             CSSMutator currentCM = worklist.remove(0);
                             String currentMD = mutationStrings.remove(0);
                             System.out.println(currentMD);
-                            HashMap<String, CSSMutator> options = currentCM.getMutators(currentCM.getStylesheets());
+
                             currentCM.writeToFile(0, currentCM.getStylesheets(), mutator.getShorthand(), newUrl);
                             webDriver.get(newUrl + "/index.html");
                             checkForFailure(nodes, categories[i], currentSize, error);
                             oldDomString = domStrings.get(currentSize);
+                            LayoutFactory oldLF = new LayoutFactory(oldDomString);
+                            int oldFitness = calculateFitness(oldLF, nodes, categories[i], error, fBounds[1]);
+                            System.out.println("OLD: " + oldFitness);
 
+                            HashMap<String, CSSMutator> options = currentCM.getMutators(currentCM.getStylesheets());
                             // Go through each mutation option
                             for (String mDesc : options.keySet()) {
+                                System.out.println(mDesc);
                                 CSSMutator newCM = options.get(mDesc);
                                 newCM.writeToFile(0, newCM.getStylesheets(), mutator.getShorthand(), newUrl);
                                 webDriver.get(newUrl + "/index.html");
                                 checkForFailure(nodes, categories[i], currentSize, error);
                                 String newDomString = domStrings.get(currentSize);
-                                LayoutFactory oldLF = new LayoutFactory(oldDomString);
+
                                 LayoutFactory newLF = new LayoutFactory(newDomString);
                                 boolean layoutsEqual = areLayoutsEqual(oldLF, newLF);
+                                int newFitness = calculateFitness(newLF, nodes, categories[i], error, fBounds[1]);
+                                System.out.println("NEW: " + newFitness);
                                 if (!layoutsEqual) {
                                     mutantsToKeep.add(newCM);
                                     descsToKeep.add(currentMD + "\n" + mDesc);
@@ -132,33 +139,6 @@ public class FaultPatcher {
                         System.out.println("END OF ITERATION " + x);
 
                     }
-
-
-
-                    int numIterations = 0;
-//                    while (!faultFixed || numIterations < 20) {
-//                        numIterations++;
-//                        System.out.println(numIterations);
-//                        mutator.mutate(newUrl);
-//                        webDriver.get(newUrl+"/index.html");
-//                        try {
-//                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                        if (!checkForFailure(nodes, categories[i], currentSize, error)) {
-//                            faultFixed = true;
-//                        }
-//                        String newDomString = domStrings.get(currentSize);
-//                        LayoutFactory old = new LayoutFactory(oldDomString);
-//                        LayoutFactory newLF = new LayoutFactory(newDomString);
-//
-//                        boolean layoutsEqual = areLayoutsEqual(old, newLF);
-//                        System.out.println(layoutsEqual + "\n");
-//                    }
-//                    System.out.println("Think a fix has been found. VERIFYING NOW. . . . .");
-//                    Tool.runFaultDetector(current, url, browser, "uniformBP", true, 320, 1400, 60, false);
-//                    System.out.println("Fixed " + error);
                 }
             }
         } catch (IOException e) {
@@ -170,6 +150,8 @@ public class FaultPatcher {
             }
         }
     }
+
+
 
     private boolean areLayoutsEqual(LayoutFactory old, LayoutFactory newLF) {
         HashMap<String, Element> oldMap = old.getElementMap();
@@ -192,6 +174,33 @@ public class FaultPatcher {
     private String generateRandomInjectionScript(ArrayList<String> nodes, String error) {
         String result = "var element = document.evaluate(\"" +nodes.get(0) + "\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; var styles = window.getComputedStyle(element);  element.style.fontSize = '20px';";
         return result;
+    }
+
+    private int calculateFitness(LayoutFactory lf, ArrayList<String> nodes, String category, String error, int fBound) {
+        if (category.equals("Wrapping")) {
+            if (!checkForFailure(nodes, category, fBound, error)) {
+                return 1000;
+            } else {
+                String wrapped = getWrappedNode(error);
+                Element parent = null;
+                int maxRight = 0;
+                for (String xp : nodes) {
+                    if (!wrapped.equals(xp)) {
+                        int rightCoord = lf.getElementMap().get(xp).getBoundingCoords()[2];
+                        if (rightCoord > maxRight) {
+                            maxRight = rightCoord;
+                        }
+                        if (parent == null) {
+                            parent = lf.getElementMap().get(xp).getParent();
+                        }
+                    }
+                }
+                return parent.getBoundingCoords()[2] - maxRight;
+            }
+
+
+        }
+        return 0;
     }
 
     private boolean checkForFailure(ArrayList<String> nodes, String category, int fBound, String error) {
