@@ -274,64 +274,6 @@ public class Tool {
         writeToFile(testUrl, results, "timings-" + sampleTechnique + "-" + stepSize+ "-" + binarySearch, dataDirectory);
     }
 
-    private void writeRlgStats(String url, String timeStamp, int numNodes, int numVCs, int numACs) {
-        String results = "";
-        results+= numNodes + ",";
-        results+= numVCs + ",";
-        results+= numACs;
-        try {
-            String outFolder = REPORT_DIRECTORY + url;
-
-            File dir = new File(outFolder+"/rlg-stats.csv");
-            PrintWriter output = new PrintWriter(dir);
-            output.append(results);
-            output.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void writeTimes(String url, StopwatchFactory swf, String timeStamp) {
-        String results = "";
-        DecimalFormat df = new DecimalFormat("#.##");
-        results+= getTimeStringFromStopwatch(swf.getRlg()) + ",";
-        results+= getTimeStringFromStopwatch(swf.getDetect()) + ",";
-        results+= getTimeStringFromStopwatch(swf.getReport()) + ",";
-
-        try {
-            String outFolder = REPORT_DIRECTORY + url;
-
-            File dir = new File(outFolder+"/index-" + timeStamp+"/timings.csv");
-            PrintWriter output = new PrintWriter(dir);
-            output.append(results);
-            output.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void writeTimesSpecial(StopwatchFactory swf, String url, int timingID) {
-        String results = "";
-        DecimalFormat df = new DecimalFormat("#.##");
-        results+= getTimeStringFromStopwatch(swf.getRlg()) + ",";
-        results+= getTimeStringFromStopwatch(swf.getDetect()) + ",";
-        results+= getTimeStringFromStopwatch(swf.getReport()) + ",";
-
-        try {
-            String outFolder = timesDirectory + url;
-
-            FileUtils.forceMkdir(new File(outFolder));
-            File dir = new File(outFolder+"/timings" + timingID + ".csv");
-            PrintWriter output = new PrintWriter(dir);
-            output.append(results);
-            output.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static String getTimeStringFromStopwatch(StopWatch sw) {
 //        System.out.println(sw.getTime());
@@ -355,102 +297,6 @@ public class Tool {
             e.printStackTrace();
         }
     }
-
-//    private void runXpert(String oracle, String test) throws IOException {
-//        String oracleUrl = preamble + oracle + ".html";
-//        String testUrl = preamble + test + ".html";
-//        DesiredCapabilities dCaps = new DesiredCapabilities();
-//        dCaps.setJavascriptEnabled(true);
-//        dCaps.setCapability("takesScreenshot", true);
-//        String[] phantomArgs = new String[]{
-//                "--webdriver-loglevel=NONE"
-//        };
-//        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-//        scriptToExtract = Utils.readFile(current + "/../resources/webdiffOld.js");
-//        driver = getNewDriver(dCaps);
-//
-//        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> oDNs = new HashMap<>();
-//        HashMap<Integer, edu2.gatech.xpert.dom.DomNode> tDNs = new HashMap<>();
-//        driver.get(oracleUrl);
-//        capturePageModel2(oracleUrl, manualWidths, oDNs, 50, true, driver);
-//        driver.get(testUrl);
-//        capturePageModel2(testUrl, manualWidths, tDNs, 50, true, driver);
-//        driver.close();
-//        driver.quit();
-//        String result = "";
-//        for (int sc : manualWidths) {
-////            System.out.println(sc);
-//            ArrayList<String> totalIssues = new ArrayList<>();
-//            edu2.gatech.xpert.dom.DomNode oDN = oDNs.get(sc);
-//            edu2.gatech.xpert.dom.DomNode tDN = tDNs.get(sc);
-//            edu2.gatech.xpert.dom.layout.AlignmentGraph oAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(oDN);
-//            edu2.gatech.xpert.dom.layout.AlignmentGraph tAG = new edu2.gatech.xpert.dom.layout.AlignmentGraph(tDN);
-//
-//            edu2.gatech.xpert.dom.Matcher matcher = new edu2.gatech.xpert.dom.Matcher();
-//            edu2.gatech.xpert.dom.MatchResult mr = matcher.newMatcher(oDN, tDN, sc);
-//
-//            Map<edu2.gatech.xpert.dom.DomNode, edu2.gatech.xpert.dom.DomNode> matchedNodes = mr.getMatched();
-//
-//            AGDiff agDiff = new AGDiff(matchedNodes, oAG, tAG);
-//            for (edu2 .gatech.xpert.dom.DomNode a : matchedNodes.keySet()) {
-//                edu2.gatech.xpert.dom.DomNode b = matchedNodes.get(a);
-//                List<String> issues = agDiff.diff(a.getxPath(), b.getxPath());
-//                totalIssues.addAll(issues);
-//            }
-//            if (totalIssues.size() > 0) {
-//                result += sc + "\n\n";
-//                for (String issue : totalIssues) {
-//                    result += issue + "\n";
-//                }
-//            }
-//        }
-//        writeToFile(testUrl, result, "xpert-result", dataDirectory);
-////        oracleDoms = new HashMap<>();
-////        testDoms = new HashMap<>();
-////        oracleDomStrings = new HashMap<>();
-////        testDomStrings = new HashMap<>();
-////        scriptToExtract = Utils.readFile(current + "/../resources/webdiff2.js");
-////
-////        gatherAllDoms(oracleDoms, testDoms, oracleDomStrings, testDomStrings, allWidths, oracleUrl, testUrl);
-////        System.out.println(oracleDomStrings.size());
-//        TreeSet<Integer> diffWidths = ResultClassifier.diffAllDoms2(oDNs, tDNs, oracleDomStrings, testDomStrings, manualWidths);
-//        System.out.println(diffWidths.size());
-//        String domDiffResult = "";
-//        int[] ssWidths = new int[diffWidths.size()];
-//        int counter = 0;
-//        for (Integer i : diffWidths) {
-//            ssWidths[counter] = i;
-//            domDiffResult += i + "\n";
-//            counter++;
-//        }
-////        driver.quit();
-////        writeToFile(testUrl, domDiffResult, "dom-diff-result", dataDirectory);
-//    }
-
-
-
-//    public static void gatherAllDoms(HashMap<Integer, DomNode> oDoms, HashMap<Integer, DomNode> tDoms,HashMap<Integer, String> oDomsS, HashMap<Integer, String> tDomsS, int[] widths, String oracle, String test) {
-//        System.out.println("GATHERING ALL DOMS");
-//        System.out.println(widths.length);
-//        DesiredCapabilities dCaps = new DesiredCapabilities();
-//        dCaps.setJavascriptEnabled(true);
-//        dCaps.setCapability("takesScreenshot", true);
-//        String[] phantomArgs = new  String[] {
-//                "--webdriver-loglevel=NONE"
-//        };
-//        dCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-//        driver = getNewDriver(dCaps);
-//        driver.get(oracle);
-//        System.out.println(oracle);
-//        capturePageModel(oracle, widths, sleep, false, true, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
-////        System.out.println("O" + oDoms.size());
-//        driver.get(test);
-//        System.out.println(test);
-//        capturePageModel(test, widths, sleep, false, false, driver, new StopwatchFactory(), new HashMap<Integer, LayoutFactory>(), new HashMap<>());
-////        System.out.println("T" + tDoms.size());
-//        driver.close();
-//        driver.quit();
-//    }
 
     /**
      * This method samples the DOM of a webpage at a set of viewports, and saves the DOMs into a HashMap
@@ -542,7 +388,6 @@ public class Tool {
 //    }
 
     public static void writeToFile(String testUrl, String content, String fileName, String directory) {
-//        System.out.println(fileName);
         PrintWriter output = null;
         String outFolder = "";
         try {
@@ -561,63 +406,6 @@ public class Tool {
             e.printStackTrace();
         }
     }
-
-
-//    public static void capturePageModel2(String url, int[] widths, HashMap<Integer, edu2.gatech.xpert.dom.DomNode> doms, int sleep, boolean takeScreenshot, PhantomJSDriver driver) {
-//        // Create a parser for the DOM strings
-//        edu2.gatech.xpert.dom.JsonDomParser parser = new edu2.gatech.xpert.dom.JsonDomParser();
-//        File domFile=null;
-//        System.out.println("GATHERING " + url);
-//        try {
-//            String outFolder = "";
-//
-////            if (url.contains("index")) {
-//                String[] splits = url.split("/");
-//                outFolder = redecheck + "output/" + splits[7] + "/" + splits[8];
-//                File dir = new File(outFolder);
-//                FileUtils.forceMkdir(dir);
-////            }
-//
-//
-//            // Iterate through all viewport widths
-//            for (int w : widths) {
-//                domFile = new File(outFolder + "/" + w + ".js");
-//                if (domFile.exists()) {
-//////                    System.out.println("Reading");
-//                    String domStr = FileUtils.readFileToString(domFile);
-//                    doms.put(w, parser.parseJsonDom(domStr));
-//                } else {
-////                    System.out.println("Writing");
-//                    boolean consecutiveMatches = false;
-////                    System.out.println(w);
-//                    // Resize the browser window
-//                    driver.manage().window().setSize(new Dimension(w, 1000));
-//                    //                Thread.sleep(sleep);
-//                    String previous = "";
-//
-//                    while (!consecutiveMatches) {
-//                        // Extract the DOM and save it to the HashMap.
-//                        String extractedDom = extractDOM(driver, scriptToExtract);
-//
-//                        if (previous.equals(extractedDom)) {
-//                            doms.put(w, parser.parseJsonDom(extractedDom));
-//
-////                            if (url.contains("index")) {
-//                                FileUtils.writeStringToFile(domFile, extractedDom);
-////                            }
-//                            consecutiveMatches = true;
-//                        } else {
-//                            previous = extractedDom;
-//                            // Thread.sleep(sleep);
-//                        }
-//                    }
-//                }
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Main method to handle execution of the whole tool

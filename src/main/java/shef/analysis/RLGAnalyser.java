@@ -1083,76 +1083,6 @@ public class RLGAnalyser {
         }
     }
 
-//    private void checkAlignments(HashMap<String, ArrayList<AlignmentConstraint>> rowColConstraints, String key, boolean isRow) {
-//        for (String nodes : rowColConstraints.keySet()) {
-//            ArrayList<AlignmentConstraint> constraints = rowColConstraints.get(nodes);
-//            ArrayList<AlignmentConstraint> aligned1 = new ArrayList<>();
-//            ArrayList<AlignmentConstraint> aligned2 = new ArrayList<>();
-//            ArrayList<AlignmentConstraint> aligned3 = new ArrayList<>();
-//
-//            HashSet<Node> alNodes1 = new HashSet<>();
-//            HashSet<Node> alNodes2 = new HashSet<>();
-//            HashSet<Node> alNodes3 = new HashSet<>();
-//            HashSet<Node> totalNodes = new HashSet<>();
-//
-//            for (AlignmentConstraint ac : constraints) {
-//
-//                boolean[] attkey = ac.generateAlignmentsOnly();
-//                boolean att1, att2, att3;
-//                if (isRow) {
-//                    att1 = attkey[0];
-//                    att2 = attkey[1];
-//                    att3 = attkey[2];
-//                } else {
-//                    att1 = attkey[3];
-//                    att2 = attkey[4];
-//                    att3 = attkey[5];
-//                }
-//                totalNodes.add(ac.getNode1());
-//                totalNodes.add(ac.getNode2());
-//
-//                if (att1) {
-//                    aligned1.add(ac);
-//                    alNodes1.add(ac.getNode1());
-//                    alNodes1.add(ac.getNode2());
-//                }
-//                if (att2) {
-//                    aligned2.add(ac);
-//                    alNodes2.add(ac.getNode1());
-//                    alNodes2.add(ac.getNode2());
-//                }
-//                if (att3) {
-//                    aligned3.add(ac);
-//                    alNodes3.add(ac.getNode1());
-//                    alNodes3.add(ac.getNode2());
-//                }
-//            }
-//
-//            int sum = (totalNodes.size()-1)*(totalNodes.size())/2;
-//            if (constraints.size() > 1 && constraints.size() == sum) {
-//                // Check if not all nodes were aligned, and if enough were to consider it a pattern
-//                HashSet<Node> notAligned = (HashSet<Node>) totalNodes.clone();
-//                if ((alNodes1.size() < totalNodes.size()) && (alNodes1.size() >= 2)) {
-//                    for (Node n : alNodes1) {
-//                        notAligned.remove(n);
-//                    }
-//                    if (alNodes1.size() > notAligned.size() && alNodes3.size() < totalNodes.size()) {
-//                        MisalignedFailure me = new MisalignedFailure(alNodes1, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
-//                        errors.add(me);
-//                    }
-//                } else if ((alNodes2.size() < totalNodes.size()) && (alNodes2.size() >= 2)) {
-//                    for (Node n : alNodes2) {
-//                        notAligned.remove(n);
-//                    }
-//                    if (alNodes2.size() > notAligned.size() && alNodes3.size() < totalNodes.size() && alNodes1.size() < totalNodes.size()) {
-//                        MisalignedFailure me = new MisalignedFailure(alNodes2, notAligned, key, getNumberFromKey(key,0), getNumberFromKey(key,1));
-//                        errors.add(me);
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 
     public String setOfNodesToString(ArrayList<Node> nodes) {
         String result = "";
@@ -1348,7 +1278,6 @@ public class RLGAnalyser {
                     e.printStackTrace();
                 }
             }
-//            System.out.println(outputFile.getAbsolutePath());
             FileUtils.forceMkdir(outputFile);
             File dir = new File(outputFile+"/fault-report.txt");
 //            File countDir = new File(outputFile + "/error-count.txt");

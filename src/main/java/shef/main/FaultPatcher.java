@@ -99,8 +99,6 @@ public class FaultPatcher {
 
                     boolean changeFixedTheFault;
                     for (int x = 1; x < 3; x++) {
-                        // Resize if one of the previous changes fixed the fault at the last viewport width
-//                        resizeBrowserUntilFaulty(failureManifesting, currentSize, error, i, nodes);
 
                         changeFixedTheFault = false;
                         ArrayList<CSSMutator> mutantsToKeep = new ArrayList<>();
@@ -111,8 +109,20 @@ public class FaultPatcher {
                             CSSMutator currentCM = worklist.remove(0);
                             String currentMD = mutationStrings.remove(0);
                             int currentFitness = fitnessScores.get(currentMD);
-                            System.out.println(currentMD + " " + currentFitness);
+                            System.out.println(currentMD + "" + currentFitness);
                             LayoutFactory currentLF = layouts.get(currentMD, currentSize);
+
+                            // Resize if one of the previous changes fixed the fault at the last viewport width
+                            currentCM.writeToFile(0, currentCM.getStylesheets(), mutator.getShorthand(), newUrl);
+                            webDriver.get(newUrl + "/index.html");
+                            if (currentFitness == 1000) {
+                                resizeBrowserUntilFaulty(false, currentSize, error, i, nodes);
+                                checkForFailure(nodes, categories[i], currentSize, error);
+                                currentLF = new LayoutFactory(domStrings.get(currentSize));
+                                layouts.put(currentMD, currentSize, currentLF);
+                                currentFitness = calculateFitness(currentLF, nodes, categories[i], error, fBounds[1]);
+                                System.out.println("Changed fitness to " + currentFitness);
+                            }
 
 //                            currentCM.writeToFile(0, currentCM.getStylesheets(), mutator.getShorthand(), newUrl);
 //                            webDriver.get(newUrl + "/index.html");
@@ -186,6 +196,7 @@ public class FaultPatcher {
             webDriver.manage().window().setSize(new Dimension(currentSize, 600));
             failureManifesting = checkForFailure(nodes, categories[i], currentSize, error);
         }
+        System.out.println("Failure manifesting again");
     }
 
 

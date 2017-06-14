@@ -59,7 +59,7 @@ public class RLGExtractor {
 
 
 
-    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp, boolean baselines) throws IOException{
+    public RLGExtractor(String current, String fullUrl, String shortUrl, HashMap<Integer, DomNode> doms, String b, String st, boolean bs, int start, int end, int ss, String preamble, int sleep, String timeStamp, boolean baselines)  throws IOException{
         this.current = current;
         this.fullUrl = fullUrl;
         this.shortUrl = shortUrl;

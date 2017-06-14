@@ -319,7 +319,6 @@ public class RLGComparator {
      */
     public void writeRLGDiffToFile(String folder, String fileName, boolean toDataDirectory) {
         PrintWriter output = null;
-//        System.out.println(folder);
         String outFolder = "";
         try {
             if (toDataDirectory) {
@@ -428,57 +427,6 @@ public class RLGComparator {
             }
         }
         return true;
-    }
-    
-    
-    public void writeDiffToGraphViz() {
-    	PrintWriter output = null;
-        try {
-            output = new PrintWriter("diff.gv");
-        } catch (FileNotFoundException e) {
-        }
-
-        output.append("digraph G {");
-
-        for (AlignmentConstraint ac : rlg1.getAlignmentConstraints().values()) {
-            if (ac.type == Type.PARENT_CHILD) {
-                Node parent = ac.node1;
-                Node child = ac.node2;
-//                output.append("\n\t");
-                output.append(parent.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" -> ");
-                output.append(child.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-
-                output.append(" [ label= \"" + ac.getMin() + " ==> " + ac.getMax() + " " + ac.generateGraphVizLabelling() + "\" ];");
-
-                output.append("\n\t");
-                output.append(parent.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" [ label = \"" + parent.generateGraphVizLabel() + " \" shape=box];");
-
-                output.append("\n\t");
-                output.append(child.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" [ label = \"" + child.generateGraphVizLabel() + " \" shape=box];");
-            }
-            else {
-                Node node1 = ac.node1;
-                Node node2 = ac.node2;
-//                output.append("\n\t");
-                output.append(node1.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" -> ");
-                output.append(node2.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" [ style=dotted, label= \"" + ac.getMin() + " ==> " + ac.getMax() + " " + ac.generateGraphVizLabelling() + " \" ];");
-                output.append("\n\t");
-                output.append(node1.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" [ label = \"" + node1.generateGraphVizLabel() + " \" shape=box];");
-
-                output.append("\n\t");
-                output.append(node2.getXpath().replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                output.append(" [ label = \"" + node2.generateGraphVizLabel() + " \" shape=box];");
-            }
-        }
-
-        output.append("\n}");
-        output.close();
     }
 
 

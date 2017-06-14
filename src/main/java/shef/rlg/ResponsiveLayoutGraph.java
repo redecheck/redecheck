@@ -89,10 +89,6 @@ public class ResponsiveLayoutGraph {
 
         extractVisibilityConstraints();
         extractAlignmentConstraints();
-//        printAlignmentConstraints();
-//
-//        System.out.println(this.getNodes().get("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV"));
-//        System.out.println(this.getNodes().get("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV/H4"));
 
     }
 
@@ -100,31 +96,13 @@ public class ResponsiveLayoutGraph {
      * Prints the alignment constraints to the terminal for debugging purposes
      */
     public void printAlignmentConstraints() {
-//        System.out.println("SIBLINGS");
         for (String s : this.getAlignmentConstraints().rowKeySet()) {
             Map<int[],AlignmentConstraint> map = this.getAlignmentConstraints().row(s);
-
             for (AlignmentConstraint ac : map.values()) {
-//                if ((ac.getMax() < 780) && (ac.getMin() > 760))
-//                if (ac.getType() == Type.SIBLING) {
-                    if (ac.getNode1().getXpath().contains("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV") ||
-                            ac.getNode2().getXpath().contains("/HTML/BODY/DIV[3]/DIV/DIV/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[6]/DIV/DIV/DIV")) {
-                        System.out.println(ac);
-                    }
-//                }
+                System.out.println(ac);
             }
         }
-//        System.out.println("PARENT-CHILDS");
-//        for (String s : this.getAlignmentConstraints().rowKeySet()) {
-//            Map<int[], AlignmentConstraint> map = this.getAlignmentConstraints().row(s);
-//            for (AlignmentConstraint ac : map.values()) {
-//                if (ac.getType() == Type.PARENT_CHILD) {
-//                    if (ac.getNode2().getXpath().equals("/HTML/BODY/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV[2]/DIV/DIV")) {
-//                        System.out.println(ac);
-//                    }
-//                }
-//            }
-//        }
+
     }
 
 
@@ -250,11 +228,6 @@ public class ResponsiveLayoutGraph {
             int disappearPoint = 0;
             try {
             	// Find the point at which it disappears
-//                if (binarySearch) {
-//                    disappearPoint = findDisappearPoint(prevUM, widths[restOfLayouts.indexOf(lf)], widths[restOfLayouts.indexOf(lf) + 1], true, "");
-//                } else {
-//                    disappearPoint = widths[restOfLayouts.indexOf(lf) + 1];
-//                }
                 disappearPoint = searchForLayoutChange(prevUM, widths[restOfLayouts.indexOf(lf)], widths[restOfLayouts.indexOf(lf) + 1], true, "", false);
             } catch (InterruptedException e) {
             }
@@ -292,9 +265,6 @@ public class ResponsiveLayoutGraph {
     public void setUpVisibilityConstraints(HashMap<String, Element> elements, HashMap<String, VisibilityConstraint> cons) {
         // Iterate through all elements
     	for (Element e : elements.values()) {
-//            for (String s : e.getStyles().keySet()) {
-//                System.out.println(s + " : " + e.getStyles().get(s));
-//            }
 
             // Add each node to overall set
             String xpath = e.getXpath();
@@ -322,10 +292,6 @@ public class ResponsiveLayoutGraph {
 
         for (LayoutFactory lf : restOfLayouts) {
             currentWidth = this.widths[restOfLayouts.indexOf(lf)+1];
-//            System.out.println(currentWidth);
-//            if (currentWidth == 1400) {
-//                System.out.println();
-//            }
             prevToMatch = (HashMap<String, Relationship>) prev.clone();
             curr = lf.getRelationships();
             currToMatch = (HashMap<String, Relationship>) curr.clone();
@@ -337,7 +303,6 @@ public class ResponsiveLayoutGraph {
             // Pair any unmatched edges and update the alignment constraints
             HashMap<Relationship, Relationship> matchedChangingEdges = pairUnmatchedEdges(prevToMatch, currToMatch);
             updatePairedEdges(matchedChangingEdges, getAlignmentConstraints(), alCons, lf);
-//            System.out.println("PAIRED EDGES");
 
             // If there are still some disappearing edges left
             if (prevToMatch.size() != 0) {
@@ -347,7 +312,6 @@ public class ResponsiveLayoutGraph {
             	// Update any remaining disappearing edges
             	updateDisappearingEdges(prevToMatch, getAlignmentConstraints(), lf);
             }
-//            System.out.println("DISAPPEARED EDGES");
 
             // If there are still appearing edges left
             if (currToMatch.size() !=0) {
@@ -366,8 +330,6 @@ public class ResponsiveLayoutGraph {
         LayoutFactory last = restOfLayouts.get(restOfLayouts.size()-1);
         updateRemainingEdges(alCons, last);
         addParentConstraintsToNodes();
-//        this.alignments = alCons;
-//        System.out.println("FINISHED");
     }
 
 
@@ -390,8 +352,6 @@ public class ResponsiveLayoutGraph {
 
                 // Checks to see if both node1 and node2 are the same.
                 if ( (e1.getXpath().equals(e1m.getXpath())) && (e2.getXpath().equals(e2m.getXpath())) && (r.getClass() == r2.getClass())) {
-
-//                    System.out.println("PAIRED " + r + " and " +r2);
                     paired.put(r, r2);
                     previous.remove(s);
                     curr.remove(s2);
@@ -402,7 +362,6 @@ public class ResponsiveLayoutGraph {
                     curr.remove(s2);
                 // Check for matching child, but differing parents
                 } else if ( ((!e1.getXpath().equals(e1m.getXpath())) && (e2.getXpath().equals(e2m.getXpath())) && (r instanceof ParentChild) && (r2 instanceof ParentChild)) ) {
-//
                     paired.put(r, r2);
                     previous.remove(s);
                     curr.remove(s2);
@@ -417,13 +376,6 @@ public class ResponsiveLayoutGraph {
         for (Relationship e : matchedChangingEdges.keySet()) {
             String pairedkey1 = LayoutFactory.generateKey(e);
             Relationship matched = matchedChangingEdges.get(e);
-
-//            if (e.getNode2().getXpath().equals("/HTML/BODY/DIV[2]/DIV/DIV[11]") && e.getNode1().getXpath().contains("DIV[17]")) {
-//                System.out.println("PAIRING " + e);
-//            }
-//            if (matched.getNode2().getXpath().equals("/HTML/BODY/DIV[2]/DIV/DIV/DIV[2]/DIV[2]/DIV[2]/DIV/DIV/DIV/DIV[6]")) {
-//                System.out.println(e);
-//            }
 
             int disappearPoint = 0;
             String flip="";
@@ -443,7 +395,6 @@ public class ResponsiveLayoutGraph {
 
             if (cons.size() > 0) {
                 updateAlignmentConstraint(cons, disappearPoint-1);
-//
             }
             if ((cons2.size() > 0)) {
                 updateAlignmentConstraint(cons2, disappearPoint-1);
@@ -476,8 +427,6 @@ public class ResponsiveLayoutGraph {
             Relationship r = rels.get(stilVis);
             if (r instanceof ParentChild) {
                 ParentChild cTemp = (ParentChild) r;
-//                AlignmentConstraint ac = alCons.get(stilVis);
-//                if (ac != null) {
                 Map<int[], AlignmentConstraint> cons = getAlignmentConstraints().row(stilVis);
                 if (cons.size() != 0) {
                     updateAlignmentConstraint(cons, widths[widths.length-1]);
@@ -1130,63 +1079,7 @@ public class ResponsiveLayoutGraph {
 //        return dn.getCoords()[2]-dn.getCoords()[0];
 //    }
 
-    /**
-     * Takes the RLG and presents it in a visual format so it can be further examined if required.
-     * Visibility, alignment and width constraints are added to the graph so all aspects can be inspected.
-     * @param graphName the file name of the GraphViz file you wish to create
-     */
-    public void writeToGraphViz(String graphName, String dir) {
-        PrintWriter output = null;
-        try {
-            output = new PrintWriter(dir + graphName + ".gv");
-            output.append("digraph G {");
-
-            for (AlignmentConstraint ac : this.getAlignmentConstraints().values()) {
-                if (ac.type == Type.PARENT_CHILD) {
-                    Node parent = ac.node1;
-                    Node child = ac.node2;
-                    output.append("\n\t");
-                    output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" -> ");
-                    output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-
-                    output.append(" [ label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + "\" ];");
-
-                    output.append("\n\t");
-                    output.append(parent.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" [ label = \"" + parent.generateGraphVizLabel() + " \" ];");
-
-                    output.append("\n\t");
-                    output.append(child.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" [ label = \"" + child.generateGraphVizLabel() + " \" ];");
-                }
-                else {
-                    Node node1 = ac.node1;
-                    Node node2 = ac.node2;
-                    output.append("\n\t");
-                    output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" -> ");
-                    output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" [ style=dotted, label= \"" + ac.min + " ==> " + ac.max + " " + ac.generateLabelling() + " \" ];");
-                    output.append("\n\t");
-                    output.append(node1.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" [ label = \"" + node1.generateGraphVizLabel() + " \" ];");
-
-                    output.append("\n\t");
-                    output.append(node2.xpath.replaceAll("\\[|\\]", "").replaceAll("/", ""));
-                    output.append(" [ label = \"" + node2.generateGraphVizLabel() + " \" ];");
-                }
-            }
-
-            output.append("\n}");
-            output.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
+    
 
     public void captureExtraDoms(int[] widths) {
     	if (widths.length == 2) {
