@@ -150,16 +150,16 @@ public class Layout {
         return false;
     }
 
-
+    /*
+    Thanks to Sonal Mahajan (sonalmahajan), who wrote this method for her tool WebSee.
+    I have modified it slightly for use in ReDeCheck.
+    */
     public List<Integer> getChildren(final int elementId) {
         final ArrayList<Integer> children = new ArrayList<>();
         rtree.contains(rectangles.get(elementId), new TIntProcedure() {
             @Override
             public boolean execute(int i) {
                 if (i != elementId) {
-//                    if (elementId == 24 && i == 25) {
-//                        System.out.println(xpaths.get(elementId) + " contains!!! " + xpaths.get(i));
-//                    }
                     // Check for children same size as parents
                     if (!xpaths.get(elementId).contains(xpaths.get(i))) {
                         children.add(i);
