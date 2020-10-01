@@ -23,9 +23,11 @@ Clone the ReDeCheck project repository using either a graphical Git client or by
 
 As ReDeCheck has been implemented as a Maven project using the Java programming language, the easiest method of
 generating the executable tool involves importing the project into an integrated development environment (IDE) and
-generating the Java archive (JAR) from inside the IDE. Instructions are presented for doing this using two common IDEs:
-Eclipse (https://www.eclipse.org/downloads/) and IntelliJ (https://www.jetbrains.com/idea/download/). However, if you
-would prefer to build the project using the command line in an appropriate terminal emulator, then instructions to do so
+generating the Java archive (JAR) from inside the IDE.
+Instructions are presented for doing this using two common IDEs are as follows:
+1. Eclipse (https://www.eclipse.org/downloads/) 
+2. IntelliJ (https://www.jetbrains.com/idea/download/)
+However, if you would prefer to build the project using the command line in an appropriate terminal emulator, then instructions to do so
 are also provided.
 
 #### Dependencies
@@ -149,7 +151,7 @@ Each issue listed in `fault-report.txt` is also highlighted in an accompanying s
 
 **Please note** - If the tool detects no issues with the test web page, the directory for the report will not contain any `/fault*` subdirectories and `fault-report.txt` will simply state `NO ERRORS DETECTED`.
 
-To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as is possible to locate and fix any detected problems.
+To get the most out of ReDeCheck, it is important to learn how to interpret these reports, thus making it as easy as possible to locate and fix any detected problems.
 
 As ReDeCheck is currently capable of detecting five different types of responsive layout failure, an example of each is presented below so you know what to expect when going through your own test reports.
 
