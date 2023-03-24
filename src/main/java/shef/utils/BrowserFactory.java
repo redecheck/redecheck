@@ -20,7 +20,11 @@ public class BrowserFactory {
         WebDriver webDriver = null;
         // Set up the web driver depending on the browser being used.
         if (browser.equals("firefox")) {
-            webDriver = new FirefoxDriver();
+            DesiredCapabilities Tcap = new DesiredCapabilities().firefox();
+            Tcap.setCapability("marionette", false);
+            //cap = DesiredCapabilities().FIREFOX;
+            //cap["marionette"] = false;
+            webDriver = new FirefoxDriver(Tcap);
         } else if (browser.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("test-type");
